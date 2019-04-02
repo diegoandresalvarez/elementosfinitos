@@ -1,0 +1,2 @@
+En el siguiente problema se quiere mostrar que un problema fundamental en el caso del análisis de esfuerzos, deformaciones y desplazamientos en 3D es su representación gráfica. Hacer este tipo de análisis es complicado. El siguiente video muestra los esfuerzos de von Mises en un sólido deformado utilizando el software libre [[http://download.gna.org/getfem/html/homepage/|GetFEM++]].
+[[media type="youtube" key="J3yH7Uz68bQ?fs=1" height="385" width="480"]]

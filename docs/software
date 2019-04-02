@@ -1,0 +1,375 @@
+**<span style="color: #000000; font-size: 250%">SOFTWARE</span>**
+
+[[image:http://imgs.xkcd.com/comics/tech_support_cheat_sheet.png]]
+Tomada de: http://imgs.xkcd.com/comics/tech_support_cheat_sheet.png
+Diagrama de flujo: [[http://en.wikipedia.org/wiki/Flowchart|artículo de wikipedia]]
+
+=MATLAB=
+Durante el curso se hará fuerte uso del lenguaje de programación MATLAB. A continuación se recomiendan algunas páginas donde el estudiante puede aprender por cuenta propia dicho lenguaje:
+
+* The Mathworks. MATLAB 7. Getting started guide. 2008. URL: http://www.mathworks.com/access/helpdesk/help/pdf_doc/matlab/getstart.pdf
+* Videos donde se enseña MATLAB. URL: http://www.mathworks.com/demos/matlab/getting-started-with-matlab-video-tutorial.html
+* Video demostraciones de MATLAB. URL: http://www.mathworks.com/products/matlab/demos.html
+* Video tutoriales de MATLAB en español: http://matlablatino.blogspot.com/ **(RECOMENDADO!)**
+* Unos tutoriales para principiantes que alguien me recomendó:
+** [[http://evergreen.loyola.edu/cxenophontos/www/pubs/other/beginners_guide_to_matlab.pdf|tutorial 1]]
+** tutorial 2: [[file:guia_matlab.rar]]
+* Lista de tutoriales en MATHWORKS: http://www.mathworks.com/academia/student_center/tutorials/launchpad.html
+
+----
+
+=GNU OCTAVE=
+
+GNU Octave es un programa libre para realizar cálculos numéricos. MATLAB es considerado su equivalente comercial. Ambos lenguajes de programación son bastante parecidos.
+
+* Disponible en: http://www.gnu.org/software/octave/
+* Octave Wiki: http://wiki.octave.org/
+* Manual: http://www.network-theory.co.uk/octave/manual/
+* Octave Online: http://hara.mimuw.edu.pl/weboctave/
+* Página en Wikipedia: http://en.wikipedia.org/wiki/GNU_Octave
+
+----
+
+=OTRAS ALTERNATIVAS=
+
+Algunas alternativas a MATLAB, algunas software comercial, otras software libre, se pueden encontrar en:
+
+* Wikipedia http://en.wikipedia.org/wiki/Comparison_of_numerical_analysis_software
+* [[http://imechanica.org/node/1394|Software de código abierto]]
+
+----
+
+=ANSYS=
+* http://www.mece.ualberta.ca/tutorials/ansys/index.html
+* http://www.ansys.com/techmedia/structural_tutorial_videos.html
+* http://www.andrew.cmu.edu/course/24-ansys/course_info.htm
+
+----
+
+=BESLABS, BEPLATES=
+Dos programas para cálculo de esfuerzos y deformaciones en losas y estructuras 2D: http://winfem.de/software.htm
+
+
+----
+----
+----
+Code_Aster within the Salome_Meca platform (CAD, mesh, computing and post-treatment) see : http://www.code-aster.org/forum2/.
+There exist also a Code_Aster Professional Network, see:
+http://www.code-aster.org/V2/spip.php?rubrique62
+
+Z88 is also open source but quite limited. It is good to study some academic problem but if you need to analyse a large structure I suggest to use code-aster.
+http://z88.uni-bayreuth.de/
+
+FreeFEM++ is a FEM package that you can try. I believe the distinct features are: i) you can solve a PDE in 2D or 3D by writing your own weak form and boundary conditions, ii) has a good support iii) and it can be run on Windows/Linux/Mac and the best of all its free!
+
+Elmer, for example.
+http://www.csc.fi/english/pages/elmer
+Elmer which can be considered more or less as an opensource alternative for Comsol (definitely not as advanced as Comsol but it is worth a shot). More info can be found on http://www.csc.fi/english/pages/elmer
+
+OpenSees is one of the best open source finite element softwares.
+
+Deal II (http://www.dealii.org/)
+
+http://fenicsproject.org
+Fenics is geared towards automated solution of differential equations, which makes it very suitable for academic work in which you want to add your own contributions.
+
+DUNE is open source and a very good one. http://www.dune-project.org/
+
+LISA is a user-friendly finite element analysis package for Windows with an integrated modeler, multi-threaded solver and graphical post-processor.
+http://lisafea.com/
+
+GETFEM: http://download.gna.org/getfem/html/homepage/
+
+You can try CAST3M. It is a free French FEM code with a large number of models and case studies in source files etc..
+http://www-cast3m.cea.fr/
+I suggest you Cast3M. It is definitely not the easiest to begin with but it is definitely the most powerful.
+Cast3m is the open source FEM package for future academic works that you are looking for. Cast3M is a computer code for the analysis of structures by the finit element method ( FEM ) and the Computational Fluids Dynamics. See :
+http://www-cast3m.cea.fr/index.php?xml=presentation
+This code has been developed since more than 30 years in the Service of mechanical and thermal studies (SEMT) of the Department of modelling of the systems and the structures (DM2S, formerly Department of Mechanics and Technology (DMT) of the French Atomic Energy and Alternative Energies Commission (CEA).
+
+I will suggest LIRA and SCAD for you. These softwares are mostly used in Russia
+
+I have been using Calculix (http://www.calculix.de/), which takes input files of abaqus format. It is available for Linux or Windows and you can really do a lot with it. For generating the meshes I write Matlab programs that incorporate the iso2mesh toolbox (http://iso2mesh.sourceforge.net/)
+
+It is also worth mentioning OpenFOAM (http://www.openfoam.org); it is predominantly used for CFD but there are a number of solid mechanics applications in the foam extend branch (http://wikki.gridcore.se/foam-extend/foam-extend-3-0-jeju).
+
+
+ADINA
+
+FEAP
+PCFEAP is a small general purpose finite element analysis program which is designed for research and educational use. The program is described in the references: The Finite Element Method, 4th ed., Vols. 1 and 2, by O.C. Zienkiewicz and R.L. Taylor, McGraw-Hill, London, 1987 and 1991. The program has been modified to include elements from both volumes and to be compatible for compilation in both UNIX and PC environments:http://www.ce.berkeley.edu/~rlt/pcfeap/
+There is the known book for PCFEAP. For learning and educational purposes the PCFEAP is definitely the best choice.
+FEAP is a Fortran (77) based code, you can use Paraview for post processing. It is available here:
+http://www.ce.berkeley.edu/projects/feap/feappv/
+http://www.ce.berkeley.edu/projects/feap/
+I should mention that I did not find it user-friendly but i am using it at the moment! Maybe it is not the best :) 
+
+Gmsh - mesh generation (all major OS)  geuz.org/gmsh
+
+
+The MOOSE framework (mooseframework.org) is an open source framework for multiphysics simulations and it has two mechanics modules. One is built on the matrix form of the elasticity tensor (moose/modules/solid_mechanics) and one is based on the tensor forms (moose/modules/tensor_mechanics). Both have options for small and finite strains. The documentation for the mechanics modules is still forthcoming, but it should be available soon.
+If you would like to couple solid mechanics to other physics (like heat conduction, chemistry, microstructure models, etc.) then take a look at MOOSE: http://mooseframework.computing
+
+If you are looking for ealstodynamic simulations I would strongly suggest SPECFEM3D (it is freely available here http://geodynamics.org/cig/software/specfem3d/) 
+
+SPECFEM3D exploits a spectral finite elements approach that possess far higher acurancy than a FEM still retaining a similar structure of the code.
+
+
+IMPACT http://www.impact-fem.org/
+
+getdp is a solver for gmsh pre/post processor http://geuz.org/getdp/
+
+WARP 3D
+
+Kratos (www.cimne.com/kratos).
+
+I have a list that I have collected.  I have used Salome-Meca (Salome as preprcessor and Code Aster as FE engine and it is very powerful.  I have also used Elmer which is good for combined thermal/stress analysis.  And CAELinux is an excellent way to try out a number of these, as they are all preinstalled.  Code-Aster is updated twice a year, so don't expect the CAELinux version of Code Aster to be the latest version.
+
+Here is the list:
+
+http://www.advancedmcode.org/free-open-source-fem-softwares.html review of three packages
+http://en.wikipedia.org/wiki/List_of_finite_element_software_packages
+support.sdtools.com/gf/project/openfem Test and FE of vibration of a structure written in Matlab
+http://www.freebyte.com/cad/fea.htm List of open source and limited node free packages
+http://www.mathtools.net/MATLAB/Mathematics/Finite_Element_Analysis/index.html FEA related stuff
+http://www.csc.fi/english/pages/elmer Open source finnish program that seems very capable
+http://directory.fsf.org/category/science/ free software foundation
+http://www.ce.berkeley.edu/projects/feap/ seems powerful but limited in pre/post processing
+http://impact.sourceforge.net/ large scale deformation FEA software
+http://www.bodrum-bodrum.com/vorteks/arsenal/grid.htm summary of programs available
+http://gid.cimne.upc.es/ Pre-post processor that Zdzislaw uses
+http://www.mmech.com/gid-software More Gid stuff
+CAElinux Ubuntu with Open Source Mech Eng Software
+http://www.roshaz.com/ Inexpensive pre/post processor
+http://bconverged.com/ Inexpensive Calculix for windows
+search on scartek tuba and find Paul Krezel's website Salome preprossor for pipe stress
+http://www-cast3m.cea.fr/index.php?xml=presentation FEA & CFD - open source for academics and licence for commercial
+www.cimne.com/kratos from a FEA research center
+http://www-epx.cea.fr/ scaled down free version- includes fluid structure interaction
+
+If you are looking at trying out a few codes, I would suggest http://caelinux.com/CMS/.  I believe it includes all of the above mentioned codes, as well as Linux.  For trial purposes, it can be run from DVD or put on a USB drive and run from there.  The wiki is extremely informative.
+
+http://www.freelem.com/
+http://www.researchgate.net/post/Who_can_recommend_some_good_nonlinear_solvers_for_FEM_with_available_source_codes
+
+
+PARA GEOTECNIA
+TOCHNOG http://tochnog.sourceforge.net/
+OPENSEES
+
+Comparación de diferentes programas: http://feacompare.com/
+----
+
+
+=AxisVM=
+(revisión por Sebastián Jaramillo Moreno)
+
+¿Qué tal la experiencia con el software?
+* Es un software bastante llamativo a primera vista, se ve muy bien estructurado y es de manejo bastante simple, su manual es claro y está en múltiples idiomas, además que incluye diferentes ejemplos para familiarzarse con él.
+
+¿Qué les pareció chévere?
+* Me pareció chévere el hecho de que dibujar una estructura en él es bastante simple, igual que aplicar las cargas, materiales y demás.
+
+¿Qué limitaciones tiene el programa?
+* El problema del programa es que es un software de pago, aunque tiene bastantes herramientas, no se deja configurar si se desea hacer algo más; solo permite el uso de elementos 1D y 2D.
+
+¿Qué no les gustó del programa?
+* El hecho de que no permitiese cambiar las gráficas, no arrojaba esfuerzos principales y las gráficas de las deformaciones eran bastante extrañas.
+
+Consejos varios
+* Realmente del programa no se encuentra mucha información en internet diferente de la página, en YouTube son demasiado pocos los vídeos, pero considero que con la información que hay en la página del programa es suficiente.
+
+=CivilFEM=
+(revisión por Luisa Fernanda Moreno)
+
+Es un software  bastante amigable gráficamente en el cual se pueden hacer múltiples estructuras, tiene la posibilidad de si es el caso hacer análisis dinámicos. Su interfaz es intuitiva y es fácil ir siguiendo los pasos para poder correr cualquier estructura, se crea la geometría, las cargas y los apoyos y por último estos son todos seleccionados en diferentes casos de carga. Falta información en cuanto a como importar estructuras sin embargo la mejor opción es usar la extensión .dxf para poder hacer la malla. La versión estudiantil es bastante completa para lo que se necesita realizar, sin embargo tiene muchas más herramientas para estudios más especializados en diferentes temas. Permite usar elementos finitos de lados tanto lineales como cuadráticos y calcula los esfuerzos en los puntos óptimos. Las cargas se pueden poner de muchos tipos y sus direcciones se hacen tomando los ejes coordenados. Descargarlo e instarlo es bastante sencillo, sin embargo, para poder hacerlo es necesario pedir una autorización inscribiéndose con el correo institucional y a más tardar ocho horas después se podrá acceder a la página. La mayor parte de la documentación está en ingles pese a esto es un ingles fácil de entender incluso en los vídeos, tiene una pagina en youtube donde se pueden ver los tutoriales (son mas que suficientes para crear la estructura en 2D sin embargo para el 3D es necesario buscar un poco mas a fondo en el manual de teoría) e incluso tiene una pagina de foros que enseñan diferentes herramientas. Una de sus falencias es que solo se puede abrir un archivo a la vez y debido a esto es un software que no es tan pesado y funciona bien en casi cualquier computador. En su pagina quieren incentivar el uso del Internet y por esta razón tienen un link para hacer cursos y aprender de diferentes programas e incluso de elementos finitos como lo  es http://www.icaeec.com/ . Es una experiencia demasiado enriquecedora ya que es poner en practica cada uno de los conceptos vistos no solo en elementos finitos sino también en mecánica de sólidos, por esta razón, a pesar de que en ocasiones es un poco desalentador que la estructura no corra, luego de unas cuantas modificaciones, ya que los errores son nombrados por el programa para poder corregirlos fácil y rápido, es posible obtener los resultados esperados.  Lo mas importante a la hora de correr la estructura en este software es crear el caso de carga (load case) en el cual como se mencionó anteriormente se van a poner todas las restricciones y cargas de la estructura. A continuación se deja el link de la pagina oficial donde se registran y se puede descargar: http://www.civilfem.com/
+
+CALIFICACION 9/10
+
+[[image:CivilFEM_2017.jpg width="600"]]
+
+=Autodesk Simulation=
+(revisión por Luisa Fernanda Moreno)
+
+https://www.autodesk.com/solutions/simulation/overview#
+Versión estudiantil, es un poco complejo y tedioso de instalar, es básicamente instalar nuevamente un Autocad, es fácil de utilizar y quizás tan intuitivo como CivilFEM sin embargo al momento de poner las cargas no fue posible poner una carga distribuida sobre longitud. Tiene buena documentación, la cual se encuentra en casi su totalidad sin embargo esta se encuentra un poco desactualizada ya que los componentes gráficos y los comandos no siempre funcionan,  las ayudas encontradas en internet muestran una cosa y a la hora de ir hacer eso en el software, esto no es posible,  es un poco pesado, abrirlo puede tardar varios minutos lo cual a la hora de utilizarlo puede tener dificultades ya que si por ejemplo tiene otro programa de la familia Autodesk como lo es Autocad para un computador normal puede ser muy difícil. Falta información en cuanto a las cargas. Una buena característica de este software es que poner la malla es bastante sencillo por lo menos en 2D.
+
+[[image:Autodesk_Simulation_2017.jpg width="600"]]
+
+=AUTODESK INVENTOR=
+(revisión por Raphael Valencia Alvarez)
+
+Este software de elementos finitos no me pareció muy agradable. Si bien dibujar en él es fácil, la parte en donde se ponen las cargas no admite muchas posibilidades, es decir, cargas inclinadas o que no sean uniformes no pude implementarlas en el modelo de mi estructura. Es de fácil instalación y tiene una versión gratuita que se puede descargar rápidamente, pero creo que le falta mucho por mejorar además de que su manejo no es tan sencillo como pareciera. 
+
+=SimScale=
+(revisión por Brayanath Moreno Castañeda)
+
+Este software de elementos finitos es de hecho una plataforma web que permite modelar gran variedad de problemas con bajas limitaciones de uso. Es fácil empezar a modelar en la plataforma, en realidad se requiere de crear únicamente una cuenta de usuario y se obtendrán 3000 horas de uso. Desde el siguiente enlace se ingresa: 
+https://www.simscale.com
+Hay disponibilidad de más de 40.000 proyectos y la posibilidad de interactuar activamente con información de otros usuarios. Existe una amplia gama de documentos que permite un activo aprendizaje y un foro para la resolución de dudas; en YouTube se encuentran también una diversa variedad de video tutoriales.
+La plataforma es muy intuitiva; posee 3 pestañas que separan el pre proceso, proceso y pos proceso. En ella se observa un paso a paso rápido. Parte de la importación del modelo desde una exportación en AutoCAD en archivos IGES, IGS entre otros.
+Quizá la mayor ventaja radica en la facilidad de uso en cualquier computador, Tablet y hasta smartphone si se tiene el adecuado.
+Limitaciones:
+Modelamiento de 4 millones de elementos.
+Modelamiento únicamente en 3D. 
+Hasta la fecha en el post proceso no se permite la visualización de animaciones del modelado.
+
+Recomendaciones:
+Después de cada paso es necesario ir a la pestaña guardar para que se pueda abrir el siguiente.
+Usar los filtros para visualizar las funciones en el post proceso.
+
+CALIFICACION 10/10
+
+=Salome Meca=
+(revisión por Brayanath Moreno Castañeda)
+
+Es un software de pre proceso y post proceso que requiere de un software que realice el proceso; no es muy intuitivo, salome meca permite la importación de archivos exportados de AutoCAD.
+A pesar de no ser muy intuitivo tiene una plataforma que es buena después de tener un contexto general del manejo.
+Tiene buena cantidad de documentos del manejo en la siguiente página web: http://docs.salome-platform.org/7/gui/GEOM/
+Es aconsejable usarla si se tiene un buen programa de “proceso” y se tiene clara la integración de ambos.
+
+=AutoFem=
+(revisión por Brayanath Moreno Castañeda)
+
+Es una extensión al programa AutoCAD, que le deja el modelado del objeto.
+Permite modelación de elementos finitos, pero de una forma no muy intuitiva, no es muy claro en aspectos como la ubicación de las cargas y la definición del tipo de elemento finito junto con sus dimensiones. Tuve problemas al respecto a pesar de que algunos video tutoriales parecen verlo sencillo.
+De cualquier forma, existe una buena cantidad de video tutoriales en YouTube.
+
+=Calculix=
+(revisión por Brayanath Moreno Castañeda)
+
+Es u programa que permite la realización del proceso matemático, pero es poco intuitivo, no es fácil de manejar e integrar con el pre proceso y post proceso.
+No son muy claros algunos video tutoriales en cuanto al manejo de éste.
+En el siguiente canal de YouTube se encuentra buena cantidad de tutoriales: Calculix09.
+
+=Aster=
+(revisión por Brayanath Moreno Castañeda)
+
+Es un software de procesamiento que permite integrar con Salome Meca.
+No es recomendable ya que no es nada intuitivo y presenta dificultades en su instalación; los video tutoriales no son muy claros frente al software.
+
+=RFEM=
+(revisión por Santiago Castro Carmona)
+
+Versión analizada: 5.10
+
+Es un software de análisis con elementos finitos dirigido a la modelación de estructuras en ingeniería civil. Es de la casa matriz Dlubal con casa en Leipzig. Tienen versión estudiantil por un año con posibilidad de renovación.
+
+¿Qué tal la experiencia con el software?
+
+Es un software muy bueno, pues tiene licencia estudiantil casi que completa, al solicitarla te piden certificado de estudio y documento de identificación; y te envían la licencia del programa principal RFEM 5 y alrededor de 8 complementos que permiten realizar estructuras en acero, concreto, madera, aluminio; análisis de cimentaciones y tuberías, todos ellos con las características propias de los materiales, además de un modulo complementario que permite modelar el suelo con todas las características que se pueden obtener de un estudio de suelos
+
+¿Qué les pareció chévere?
+
+* Es muy completo y gratuito.
+* Permite realizar dibujar estructuras muy realistas tanto en 2 como en 3D.
+* Tiene buena capacidad de elementos finitos.
+* Es muy intuitivo y fácil de manejar
+* Viene configurado en varios idiomas entre ellos el español.
+* Permite exportar e importar datos desde dos herramientas de la vida diaria del ingeniero civil, Excel y AutoCAD, además de muchas más extensiones
+* Viene con 5 ejemplos precargados, donde se puede aprender mucho del software.
+* Manuales y videotutoriales en muchos idiomas, entre ellos el español.
+* Permite realizar estructuras con huecos, curvas, esbeltas.
+* Permite cargas con formas raras.
+
+¿Qué no les gustó del programa?
+
+* La aprobación de la licencia se demora mínimo una semana, por lo tanto, no se puede pedir con prisa.
+* Es un poco pesado el software, pero no mucho
+
+Consejos varios
+
+* Buscar videos en YouTube y leer los manuales y tutoriales. De esta manera aprenderá a manejar el software fácilmente.
+* Lea las suposiciones que hace, las ecuaciones que resuelve y los elementos que usa, esto le podrá servir en un futuro para no cometer los errores míos.
+
+CALIFICACION 10/10
+
+[[image:RFEM.png width="600"]]
+
+=SAP 2000=
+(revisión por Valentina Valencia Álvarez)
+
+SAP2000 se caracteriza por ser un software de análisis y diseño estructural que se basa en el método de los elementos finitos para llevar a cabo sus procesos. Sin embargo, un software de elementos finitos como tal, no lo es, y por ello radican parte de sus limitaciones a la hora de la elección del elemento finito a usar, entre otros.
+
+En sí, el programa posee una interfaz gráfica muy amigable, es muy fácil hacer uso de ella, además que posee una ayuda constante por parte del programa. El programa permite analizar y diseñar cualquier tipo de estructura en la ingeniería civil, desde una simple viga hasta una cercha, puente, edificio, etc. Permite hacer el diseño de estructuras en concreto, acero y aluminio, importando de las normas de diseño más conocidas y recientes a nivel mundial. Permite realizar análisis sísmico, análisis de capacidad, curva Pushover, analizar los modo de vibración de las estructuras, entre otras aplicaciones a la ingeniería civil.
+
+La gran ventaja de SAP2000 es que posee versión estudiantil, la cual es gratis, aunque su licencia tiene limitación de tiempo, es por ello que dispone de 3 versiones libres al alcance de los estudiantes para hacer uso de él. Permite también su programación por medio de programas como Python, Matlab, Visual Basic, entre otros. Es un programa muy conocido, y por ello en youtube se pueden encontrar muchos videos que pueden ayudar a la solución de los ejercicios. 
+
+En cuanto a las limitaciones del programa, SAP2000 no permite la elección de un elemento finito en especial, simplemente utiliza el mismo elemento (el cuadrado o cubo en caso de 3D) para modelar. En ocasiones, al asignarle una malla automática si logra obtener un EF diferente al habitual, pero a la hora de realizar discretizaciones en puntos en específicos, no hace correctamente la malla, generando mecanismos.
+
+No me agradó del programa la poca posibilidad de elegir un elemento finito, a gusto de diseñador, para modelar las estructuras. En general, es muy fácil realizar el diseño (modelo, dibujo) de las estructuras, pero a la hora de analizar, por el método de los elementos finitos, se queda corto.
+
+Mi recomendación es no hacer uso de este programa para realizar el análisis por elementos finitos dado que, basados en las exigencias del curso, este programa no permite llevar a cabo el uso de otros elementos y parámetros básicos para poder realizar los análisis pedidos en el curso.
+
+CALIFICACION 5/10
+
+=SOLIDWORKS=
+(revisión por Raphael Valencia Alvarez)
+
+El programa es amigable en cuanto a interface y presentación, si se desea modelar una estructura sencilla no hay que saber mucho para obtener los resultados deseados. La parte del pre-proceso, es decir, dibujar la malla de elementos finitos y las características de la malla son (diría yo) la parte más demorada pero no por ello la más difícil, es por ello que SolidWorks trae consigo una serie de herramientas que hacen al momento de realizar el dibujo, una experiencia fascinante por su metodología de dibujo totalmente distinta a otros programas (pruébala). Después de conocer cómo funcionan las herramientas que el software ofrece, seguro vas a poder crear tus diseños de forma rápida y sencilla.
+ Este es un software diseñado específicamente para el modelado de piezas mecánicas (Su fuerte no es el análisis estructural pero aun así hay mucho de este implementado) es por ello que algunas empresas lo utilizan para economizar costos de construcción de piezas pues el modelado ofrece la posibilidad de verificar como es su comportamiento al momento de su uso, con esto se pueden optimizar formas y comprobar que debe mejorarse dentro del objeto para mejorar su funcionamiento. La mayoría de tutoriales que encontrarás en YouTube son acerca de cómo hacer piezas mecánicas mas no de análisis estructural, los que hay son de elementos sencillos como una simple viga en voladizo o ejemplos similares. 
+En cuanto a materiales, el software ofrece una gran cantidad ya prediseñados (La mayoría acero), sin embargo si se desea utilizar otro material como el concreto es posible su uso pero se deben conocer sus propiedades y características mecánicas.
+Este software viene con una gran cantidad de Toolbox, Rutinas y Complementos que pueden ser entretenidos para quien quiera dedicarles su tiempo y viene con un menú de asesores que facilitan el entendimiento, uno por ejemplo es aquel que te ayuda a reconocer los tipos de análisis que puedes hacer a tu estructura y cómo implementarlos: análisis estático, Térmico, estudio de frecuencia, Pandeo, Caída, Fatiga, Presión, análisis no lineales y dinámicos.
+Lo malo:
+ El software solo permite elementos finitos de tipo tetraedros, además su fuerte no es el análisis estructural. Su instalación requiere alrededor de 8 Gb de memoria interna además, se instala con varios complementos que pueden no ser de agrado. Para un adecuado uso y que el programa no moleste recomendaría unas 4 Gb de RAM ya que en 2 Gb puede trabarse el programa (Pero aun así funciona). Su instalación puede ser un poco incomoda porque no es fácil adquirir la licencia gratuita (La cual existe). 
+
+CALIFICACION 8/10
+
+=ELMER=
+(revisión por Sebastián Jaramillo Moreno)
+
+¿Qué tal la experiencia con el software?
+Es un software solamente de procesamiento, simple a la vista, su interfaz gráfica no cuenta con muchas opciones pero es bastante completo pues se puede programar. Es ideal para 3D, aunque para 1D y 2D se pueden descargar librerías.
+
+¿Qué les pareció chévere?
+Me pareció chévere el hecho de que puede ser programado y así uno no está sujeto a unas pocas posibilidades, si no que puede hacerse todo lo que la capacidad de programación permita.
+
+¿Qué limitaciones tiene el programa?
+El problema del programa es que se necesita saber manejar otros programas para la elaboración de la malla y para el procesamiento de los resultados.
+
+¿Qué no les gustó del programa?
+Sería ideal que incluyera pre y post procesamiento, así como una interfaz gráfica más amigable.
+
+Consejos varios
+Es un software recomendado para quienes sepan programar, aunque puede que esto sea un poco confuso, existen foros con gran cantidad de información, así como unos videos bastante explicativos.
+
+CALIFICACION 4/10
+
+
+=LISA=
+(revisión por Sebastián Jaramillo Moreno)
+
+¿Qué tal la experiencia con el software?
+Es un software bastante simple, con un enfoque mucho más general de los elementos finitos, permite el manejo en 1D, 2D y 3D.
+
+¿Qué les pareció chévere?
+El modelado es bastante simple e intuitivo, por lo que una compleja estructura puede ser modelada en un corto tiempo.
+
+¿Qué limitaciones tiene el programa?
+El problema del programa es justamente su simplicidad, lo que hace que la manera en la que muestra los resultados sea bastante pobre.
+
+¿Qué no les gustó del programa?
+No me gustaron sus gráficas tan pobres.
+
+Consejos varios
+Existen tutoriales de este software muy bien montados en la página web, no se necesitan más.
+
+=ABAQUS=
+(revisión por Luis Felipe Serna Jaramillo)
+https://www.3ds.com/es/productos-y-servicios/simulia/productos/abaqus/
+
+Es un software de elementos finitos aplicado a todas las ramas de la ingenieria, bastante poderoso que modela todo tipo de geometria. Ademas de ser poderoso, su interfaz es demasiado grafica, tiene accesos directos para todas las herramientas y se organiza de una manera tal, que su aprendizaje no se hace para nada tedioso. Es un programa que saca graficos de resultados facilmente y de gran calidad. 
+
+Encantador desde el principio por la facilidad en su aprendizaje, aun sabiendo cuan poderoso es.
+
+Abaqus posee una licencia estudiantil, la cual tiene una limitacion de 1000 nodos. Su desventaja es que su licencia completa es demasiado costosa. 
+
+En el momento de aprender el programa segui un curso introdutorio tutorial (al final dejo el link),  y ademas me guie de el manual de usuarios que se encuentra en la pagina de abaqus. 
+Lo recomiendo por su facilidad para entender lo que el programa pide para hacer los calculos.
+https://youtu.be/TIMgOMs_NMw. Carlos Santiuste. Abaqus Basico
+
+CALIFICACION 10/10
+
+=NX11=
+CALIFICACION 9/10
+

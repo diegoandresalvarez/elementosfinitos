@@ -1,0 +1,146 @@
+<span style="font-size: 300%;">TAREAS</span>
+
+<span style="color: #ff00ff;
+font-size: 200%;">Nota: por cada día de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final. El trabajo es sustentable. Si no se aprueba la sustentación se obtendrá un cero en la nota de dicho trabajo.  De otro lado, si el informe se escribe utilizando LaTeX, se tendrá una nota 15% mayor.</span>
+
+=Criterios de Calificación=
+Codigo de MATLAB sin comentarios = -1.0 por ejercicio
+Código de MATLAB feo/desordenado = -0.5 por ejercicio (ya que se dificulta la legibilidad del ejercicio)
+Errores en código de MATLAB = -1.0 por ejercicio
+No interpretar información dada por el programa de MATLAB = -1.0 por ejercicio
+Sin relacionar resultados de MATLAB en el informe final = -1.0 por ejercicio
+Hacer algo más en el código de MATLAB que lo dado en clase y que mejore notablemente la presentación de los resultados = +1.0 por ejercicio
+No hacer comparación con otro software en caso que los resultados no coincidan = -0.4 por ejercicio
+Tardanza por día = -0.30 por informe
+
+
+== Consejos para presentar el informe ==
+Haga una tabla de dos columnas. En la izquierda, haga el gráfico, en la derecha, su interpretación. Explique porqué el comportamiento visto en el gráfico, localice los puntos con los valores máximos y mínimos mostrados, las zonas críticas de la estructura, y cualquier otro apunte que se considere conveniente.
+
+
+=CAPITULO 1. ANALISIS MATRICIAL DE ESTRUCTURAS (Trabajo individual. Fecha máxima de entrega: Octubre 2, 2013 a las 23:59)=
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica y <span style="color: #1c7800;
+font-size: 200%;">en formato PDF</span> (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados y cualquier otra información que usted considere necesaria. Extensión máxima 9 hojas.</span>
+
+1. Escriba un programa en MATLAB (o su equivalente en el software libre GNU OCTAVE) para determinar el desplazamiento nodal y las fuerzas en cada resorte y las reacciones de la estructura mostrada en la siguiente figura:
+[[image:c1_tarea_1d.gif]]
+El análisis de resultados debe incluir un diagrama con las fuerzas axiales, las reacciones en cada resorte y la deformada de la estructura.
+
+2. Escriba un programa en MATLAB (o su equivalente en el software libre GNU OCTAVE) para determinar el desplazamiento nodal, las fuerzas en cada barra y las reacciones en los apoyos de la __cercha__ mostrada en la figura. Suponga que los nodos 1 y 2 son articulados y que E=200 GPa y A = 25 cm^2 para cada uno de los elementos. Compare sus resultados con aquellos dados por el software de análisis estructural de su predilección.
+[[image:c1_tarea_15_bar_truss.png]]
+El análisis de resultados debe incluir un diagrama con las fuerzas axiales en cada barra, las reacciones en los apoyos y la deformada de la estructura.
+
+3. Escriba un programa en MATLAB (o su equivalente en el software libre GNU OCTAVE) para determinar el desplazamiento nodal, las fuerzas cortantes, momentos flectores y fuerzas axiales en los extremos de cada barra y las reacciones en los apoyos del __marco__ mostrado en la figura. Grafique los diagramas de momento y cortante para cada barra. Suponga que E=200 GPa y que cada elemento es una barra circular 5cm de radio. Compare sus resultados con aquellos dados por el software de análisis estructural de su predilección.
+[[image:c1_tarea_frame.png]]
+El análisis de resultados debe incluir un diagrama de las fuerzas axiales, fuerzas cortantes y momentos flectores en cada uno de los miembros de la estructura. Adicionalmente debe incluir un diagrama con la deformada de la estructura y las reacciones en los apoyos. Incluya un gráfico que muestre los grados de libertad asociados a cada nodo.
+
+4. Repita el ejercicio anterior inclinando el apoyo derecho 30 grados en el sentido antihorario. (No se solicita hacer este punto. Sin embargo daré +1 unidad extra en el taller a quien lo presente y sustente correctamente)
+
+----
+
+=CAPITULO 2. ELEMENTOS FINITOS DE BARRA (Trabajo individual. Fecha máxima de entrega: Octubre 2, 2013 a las 23:59)=
+<span style="color: #ff0000;">
+Recuerde que [[software|GNU OCTAVE]] y MATLAB son totalmente compatibles, por lo tanto si no cuenta con MATLAB descargue GNU OCTAVE.</span>
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica y <span style="color: #1c7800;
+font-size: 200%;">en formato PDF</span> (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados, la explicación de como se dedujeron las ecuaciones y la explicación de cómo se resolvió el Problema 2. Incluya cualquier otra información que usted considere necesaria. Extensión máxima 10 hojas.</span>
+
+1. 
+* a) Hacer un programa en MATLAB para calcular el Ejemplo 2.1 de Oñate, dado un número arbitrario de elementos finitos. Suponga valores apropiados para Ao, E, L, P.
+
+* b) Reproducir la gráfica 2.6 de Oñate variando el número de elementos hasta 20
+
+* c) PUNTO EXTRA OPCIONAL +1 UNIDAD: incluir aproximación por extrapolaciones de Richardson
+
+Ver páginas: Oñate, Ejemplo 2.1 + Gráfica 2.6 : [[file:02_ejemplo_2_1.pdf]]
+
+2. Considere la barra doblemente empotrada, de módulo de elasticidad E constante, mostrada en la figura:
+[[image:c2_barra_sec_variable.png]]
+
+Suponga que esta barra tiene una sección transversal circular, módulo de elasticidad E=200 GPa, y que la carga distribuída que actúa sobre esta (no mostrada) está dada por la parábola:
+[[math]]
+b(x) = \frac{1}{5} \frac{kN}{m^3} x^2 \quad \text{ para } x\in[0 \text{ m}, 3\text{ m}]
+[[math]]
+
+* a) Haga un programa en MATLAB para calcular la matriz de rigidez **//K//** y el vector de fuerzas nodales equivalentes **//f//** para elementos finitos con sección transversal [[http://es.wikipedia.org/wiki/Tronco_de_cono|cónica truncada]] y bases de radio izquierdo r1 (en x=x1) y radio derecho r2 (en x=x2). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito.
+
+* b) Haga un programa en MATLAB para resolver el ejemplo mostrado usando 12 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra.
+
+* c) Deduzca manualmente cual es la ecuación diferencial con sus correspondientes condiciones de frontera que describen el desplazamiento de la barra. 
+
+* d) PUNTO EXTRA OPCIONAL +1 UNIDAD: calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra)  utilizando la función bvp4c de MATLAB y compararla con la solución por elementos finitos. Compare la solución con aquella dada por el método de los elementos finitos (cual es el error del método de los EFs?). Pista: estudiar el código: [[file:c2_ejemplo_barra_con_carga_axial_exacta_vs_bvp4c.m]] (ver la Sección Código 1, Capítulo 2).
+
+<span style="color: #ffffff;">* e). Repita el punto b) y c) pero esta vez suponiendo que el área de la sección transversal varía en la región 0m < x < 1m de acuerdo con
+%[[math]]
+%A(x) = \frac{3}{25} x^2 -\frac{1 \text{ m}}{50} x + \frac{\text{m}^2}{10} \quad \text{ para } x\in[0 \text{ m}, 1\text{ m}]
+%[[math]]
+y suponiendo que el borde derecho está libre.</span>
+
+----
+
+=CAPITULO 3. ELEMENTOS FINITOS DE BARRA LAGRANGIANOS DE VARIOS NODOS (Trabajo individual. Fecha máxima de entrega: Octubre 18, 2013 a las 23:59. Enviar los códigos por email. Los programas deben estar super comentados)=
+<span style="color: #ff0000;">
+Recuerde que [[software|GNU OCTAVE]] y MATLAB son totalmente compatibles, por lo tanto si no cuenta con MATLAB descargue GNU OCTAVE.</span>
+
+
+
+1. Calcular y graficar las funciones de forma de los elementos finitos de barra Lagrangianos de 6 nodos.
+
+2a. Calcule las integrales definidas:
+[[math]]
+\int_3^4 [\ln(1/x)]^4\,dx
+[[math]]
+[[math]]
+\int_0^\frac{\pi}{2}\sin^5{x}\,dx
+[[math]]
+utilizando cuadraturas de Gauss-Legendre
+
+Solución analítica:
+[[math]]
+\int_0^\frac{\pi}{2}\sin^n{x}\,dx=\int_0^\frac{\pi}{2}\cos^n{x}\,dx=\frac{2 \cdot 4 \cdot 6 \cdot \cdots \cdot (n-1)}{3 \cdot 5 \cdot 7 \cdot \cdots \cdot n} \text{(si $n$ es un entero impar mayor que 3 ($n \ge 3$))}
+[[math]]
+
+Haga gráficos que ilustren el error de integración en función del número de puntos de la cuadratura utilizados.
+
+2b. PUNTO EXTRA OPCIONAL +1 UNIDAD: Se le otorgará una unidad extra a quien realice las mismas integrales anteriores utilizando  [[http://mathworld.wolfram.com/RadauQuadrature.html|cuadraturas de Radau]] y compare la precisión de la respuesta con la obtenida utilizando las cuadraturas de Gauss-Legendre. Los puntos se otorgarán si se escribe un programa de MATLAB que calcule efectivamente las raíces y los pesos asociados a dichas cuadraturas para un orden dado.
+
+3. Calcular la matriz de rigidez y el vector de fuerzas nodales equivalentes de un elemento isoparamétrico de barra lagrangiano cuártico (de cinco nodos), suponiendo que E, A y b son constantes en el elemento y que los nodos están igualmente espaciados.
+
+4. Modificar los programas [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m]] y [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m]] de modo que se calculen las deformaciones y las fuerzas axiales en la barra en consideración utilizando 4 elementos finitos cúbicos de barra que calculó en el punto anterior.
+
+5. PUNTO EXTRA OPCIONAL +1 UNIDAD: Resolver el ejemplo ejercicio propuesto 2b del capítulo 2 utilizando 5 EFs de barra de cinco nodos. Desarrolle la formulación correspondiente al elemento finito con sección variable. Compare la respuesta con la obtenida al resolver con bvp4c la ecuación diferencial resultante.
+
+----
+
+=CAPITULO 5. ELEMENTOS FINITOS BIDIMENSIONALES (Trabajo individual. Entregar en Diciembre 8, 2013 a las 23:59. Enviar los códigos por email. Los programas deben estar super comentados. Entregar un informe (PDF) con el análisis de resultados de los puntos 1 y 5.)=
+
+1. Repetir el ejemplo 
+[[image:c5_viga_ejemplo.png]]
+esta vez utilizando elementos finitos rectangulares de cuatro nodos. Comparar los resultados con el ejemplo resuelto (que usó triángulos de tres nodos) y con el programa de elementos finitos de su predilección.
+
+2. Calcular y graficar las funciones de forma de los elementos rectangulares lagrangianos mostrados suponiendo que estos se expresan en coordenadas naturales:
+[[image:c5_elem_2D_lagrangianos_diferente_numero_nodos_cada_lado.png]]
+
+3. Calcular y graficar las funciones de forma del elemento serendípito rectangular de 17 nodos, expresándolas en coordenadas naturales.
+
+4. Calcular y graficar las funciones de forma del elemento triangular de 6 nodos, expresándolas en coordenadas naturales.
+
+5. Calcule los campos de esfuerzos, desplazamientos y deformaciones de la estructura mostrada:
+[[image:c5_isoparametric_triang_6_nodos.jpg]]
+
+----
+
+=CAPITULO 6. SOLIDOS DE REVOLUCION (Trabajo individual. Entregar en Enero 20, 2014. Enviar los códigos por email. Los programas deben estar super comentados. Se debe entregar un informe escrito de no más de 7 hojas con la comparación y el análisis de resultados.)=
+
+1. Calcular analíticamente la matriz de rigidez de un elemento triangular de tres nodos para el caso de un sólido de revolución.
+
+2. Resolver el problema de Boussinesq utilizando elementos finitos serendípitos rectangulares de 8 nodos. Comparar con la solución analítica (ver el libro de Braja M. DAS o en http://research.engr.oregonstate.edu/usucger/PandD/PandD.htm). Asuma una carga, módulo de elasticidad del suelo y coeficiente de Poisson adecuados. Resuelva el problema para a). una carga puntual, b). para una carga circular constante (una llanta).
+[[image:c6_boussinesq.png]]
+[[image:c6_Boussinesq_2.jpg]]
+
+----
+
+=CAPITULO 8. LOSAS DE KIRCHKOFF (Trabajo individual. Entregar en Enero 20, 2014. Enviar los códigos por email. Los programas deben estar super comentados)=
+
+Repetir el ejercicio hecho con elementos de losa MZC, pero esta vez utilizando elementos de losa de Tocher. Para tal fin se puede utilizar la malla suministrada en el archivo: [[file:c8_losa_rect_tocher.zip]].
+
+----

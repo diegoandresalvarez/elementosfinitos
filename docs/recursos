@@ -1,0 +1,60 @@
+=RECURSOS=
+Estos son algunos buenos links que he encontrado en internet (si conoce algunos otros, por favor comparta la información):
+* [[http://hdl.handle.net/10171/19068|Celigüeta-Lizarza (2011). Análisis de estructuras con no linealidad geométrica]]
+* [[http://hdl.handle.net/10171/19069|Celigüeta-Lizarza (2011). Método de los elementos finitos para el análisis estructural. 4 ed. ]] 
+* [[http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/VEM-EN.pdf|Ádám Kovács, István Moharos, István Oldal, András Szekrényes (2012). Finite element Methode]]. Disponible en: http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/adatok.html.
+
+* http://www.colorado.edu/engineering/cas/courses.d/IFEM.d/
+
+* [[@http://ocw.mit.edu/courses/mechanical-engineering/2-092-finite-element-analysis-of-solids-and-fluids-i-fall-2009/|Prof. K.J. Bathe. 2.092 / 2.093 Finite Element Analysis of Solids and Fluids I. MIT. USA.]]
+
+* [[@http://ocw.mit.edu/courses/mechanical-engineering/2-094-finite-element-analysis-of-solids-and-fluids-spring-2008/index.htm|Prof. K.J. Bathe. 
+2.094 Finite Element Analysis of Solids and Fluids. MIT. USA.]]
+
+* Eugenio Oñate. Structural Analysis with the Finite Element Method: Linear Statics, Springer, 2009. Se puede descargar gratis de la base de datos de la universidad (y dentro de la universidad): http://link.springer.com/book/10.1007/978-1-4020-8733-2/page/1
+
+* Dominique Chapelle, Klaus-Jürgen Bathe The Finite Element Analysis of Shells - Fundamentals. Springer, 2011. Se puede descargar gratis de la base de datos de la universidad (y dentro de la universidad): http://link.springer.com/book/10.1007/978-3-642-16408-8/page/1
+
+
+=VIDEO TUTORIALES=
+No se preocupen por el inglés que es muy fácil de entender:
+
+* 1.a. [[@http://nptel.iitm.ac.in/video.php?subjectId=112106135|Dr. R. Krishnakumar. Introduction to Finite Element Method. Department of Engineering Design. IIT Madras. INDIA]]
+
+* 1.b. [[@http://nptel.iitm.ac.in/video.php?subjectId=112106130|Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA]]
+
+* 2. [[@http://nptel.iitm.ac.in/video.php?subjectId=112104115|Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA]]
+
+* 3. [[@http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/index.htm|Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.]]
+
+* 3a. [[@http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/linear/|Prof. J. Bathe. Finite Element Procedures for Solids and Structures (LINEAR ANALYSIS). MIT. USA.]]
+
+* 3b. [[@http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/nonlinear/|Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.]]
+
+
+=SOFTWARE LIBRE PARA EL ANALISIS DE ESTRUCTURAS=
+* http://www.structural-engineering.fsnet.co.uk/free.htm
+
+=OTROS=
+* http://homepage.usask.ca/~ijm451/finite/fe_resources/fe_resources.html
+* [[http://download.fine.cz/manuals/T08_Geo_FEM_EN.pdf|Finite Element Method in Geotechnical Engineering]]
+* [[http://www.ima.umn.edu/~arnold/disasters/sleipner.html|El hundimiento de la plataforma petrolera Sleipner]]: una plataforma que falló debido a un mal análisis de elementos finitos.
+
+=DISEÑO UTILIZANDO ELEMENTOS FINITOS=
+Rombach, G. A. (2004). Finite Element Design of Concrete Structures: practical problems and their solutions. Thomas Telford:London
+How to design reinforced concrete flat slabs using Finite Element Analysis 
+
+=DISEÑO CON EL METODO PUNTAL-TENSOR (STRUT-AND-TIE-MODEL): NSR10 Apéndice C-A=
+Singh, Mohammadi, Kaushik (2005). Design of a double corbel using the strut-and-tie method. Asian Journal of Civil Engineering. Vol 6, No. 1-2. p. 21--33
+
+* [[http://www.bhrc.ac.ir/english/Publication/AJCE/PDF/Vol7-No5/Sing-2.pdf|Singh, Mohammadi, Kaushik (2006). Design of continuous deep beam using the strut-and-tie method. Asian Journal of Civil Engineering. Vol 7, No. 5. p. 461--477]]
+
+* American Concrete Institute (2002). Examples for the design of structural concrete with strut-and.tie models. REINECK, Karl-Heinz, editor. ACI SP-208. USA.
+
+
+----
+Curso elementos finitos II: http://www.ibk.ethz.ch/ch/education/education/index_EN
+
+
+=Libros en la biblioteca=
+Kindmann, Rolf and Kraus, Matthias. Steel structures :design using FEM. Berlin : Wilhelm Ernst & Sohn, c2011. 540 páginas 

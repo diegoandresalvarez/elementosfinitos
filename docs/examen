@@ -1,0 +1,32 @@
+* En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación.
+
+* Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, texto explicativo, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohibe explícitamente traer fotocopias/impresiones/reducciones).
+
+
+=Aplicaciones de elementos finitos=
+<span style="font-size: 100%;color: #ff0000;">Examen 1 (jueves, abril 5 de 2018)</span>
+* Capítulo 1, 2 del libro de Oñate
+* Diapositivas 0, 1, 2
+** Repaso de mecánica de sólidos: [[file:00_Repaso_Mecanica_de_Solidos.pdf]]
+** Capítulo 1 Oñate: Repaso de análisis matricial de estructuras: [[file:01_Repaso_Calculo_Matricial.pdf]]
+** Capítulo 2 Oñate: Elementos finitos de barra de dos nodos [[file:02_EF_barra.pdf]]
+* Diapositivas de como pasar el PTV de 3D a 1D
+** Conversión del principio del trabajo virtual de 3D a 1D  [[file:PTV_3D_a_1D.pdf]]
+* Capítulo 11 del main.pdf (Métodos elasto energéticos)
+* MATLAB
+
+NOTA: para la parte de la evaluacion del capitulo 11 del main.pdf se permite traer todos los apuntes que quieran. Unicamente se permitiran traer apuntes hechos por ustedes mismos, nada de fotocopias, reducciones o apuntes realizados por compañerr@s.
+
+
+
+<span style="font-size: 100%;color: #ff0000;">Examen 2 (fecha por definir)
+</span>
+* Capítulo 3 Oñate
+* Diapositivas 3
+* Todos los comandos de MATLAB vistos en clase hasta la fecha y todos aquellos que aparecen en los programas.
+
+<span style="font-size: 100%;color: #ff0000;">Examen 3 (fecha por definir)</span>
+
+* Capítulos 5, 6, 7, 8 del libro de Oñate
+* Diapositivas 6, 7, 8
+* Todos los comandos de MATLAB vistos en clase hasta la fecha y todos aquellos que aparecen en los programas.

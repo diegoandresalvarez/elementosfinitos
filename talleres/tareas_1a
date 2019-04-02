@@ -1,0 +1,132 @@
+<span style="font-size: 300%;">TAREAS</span>
+
+<span style="color: #ff00ff;
+font-size: 200%;">Nota: por cada día de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final. De otro lado, si el informe se escribe utilizando LaTeX, se tendrá una nota 15% mayor.</span>
+
+
+=Criterios de Calificación=
+
+Codigo de MATLAB sin comentarios = -1.0 por ejercicio
+Código de MATLAB feo/desordenado = -0.5 por ejercicio (ya que se dificulta la legibilidad del ejercicio)
+Errores en código de MATLAB = -1.0 por ejercicio
+No interpretar información dada por el programa de MATLAB = -1.0 por ejercicio
+Sin relacionar resultados de MATLAB en el informe final = -1.0 por ejercicio
+Hacer algo más en el código de MATLAB que lo dado en clase y que mejore notablemente la presentación de los resultados = +1.0 por ejercicio
+No hacer comparación con otro software en caso que los resultados no coincidan = -0.4 por ejercicio
+Tardanza por día = -0.30 por informe
+
+
+== Consejos para presentar el informe ==
+Haga una tabla de dos columnas. En la izquierda, haga el gráfico, en la derecha, su interpretación. Explique porqué el comportamiento visto en el gráfico, localice los puntos con los valores máximos y mínimos mostrados, las zonas críticas de la estructura, y cualquier otro apunte que se considere conveniente.
+
+=CAPITULO 1. ANALISIS MATRICIAL DE ESTRUCTURAS (Trabajo individual. Fecha máxima de entrega: Abril 24, 2014 a las 23:59)=
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica y <span style="color: #1c7800;
+font-size: 200%;">en formato PDF</span> (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados y cualquier otra información que usted considere necesaria. Extensión máxima 9 hojas.</span>
+
+1. Escriba un programa en MATLAB simbólico para determinar el desplazamiento nodal, las fuerzas en cada resorte y las reacciones de la estructura mostrada en la siguiente figura:
+[[image:c1_tarea_barras_1d.png]]
+El análisis de resultados debe incluir un diagrama con las fuerzas axiales en cada resorte, las reacciones y la deformada de la estructura.
+
+2. Escriba un programa en MATLAB para determinar el desplazamiento nodal, las fuerzas en cada barra y las reacciones en los apoyos de la __cercha__ mostrada en la figura. Suponga que L=2m, F=100 kN, E=200 GPa y A=10 cm^2 para cada uno de los elementos. Compare sus resultados con aquellos dados por el software de análisis estructural de su predilección.
+[[image:c1_tarea_7_bar_truss.png]]
+El análisis de resultados debe incluir un diagrama con las fuerzas axiales en cada barra, las reacciones en los apoyos y la deformada de la estructura.
+
+3. Repita el ejercicio anterior inclinando el apoyo central 30 grados en el sentido antihorario (no se solicita hacer este punto. Sin embargo daré +1 unidad extra en el taller a quien lo presente correctamente).
+
+4. Escriba un programa en MATLAB para determinar el desplazamiento nodal, las fuerzas cortantes, momentos flectores, las fuerzas axiales en los extremos de cada barra y las reacciones en los apoyos del __marco__ mostrado en la figura. Grafique los diagramas de momento y cortante para cada barra. Suponga que E=200 GPa y que cada elemento es una barra circular 5cm de radio. Suponga que el apoyo derecho tiene 2 cm de asentamiento. Compare sus resultados con aquellos dados por el software de análisis estructural de su predilección.
+[[image:c1_tarea_frame2.png]]
+El análisis de resultados debe incluir un diagrama de las fuerzas axiales, fuerzas cortantes y momentos flectores en cada uno de los miembros de la estructura. Adicionalmente debe incluir un diagrama con la deformada de la estructura y las reacciones en los apoyos.
+
+
+----
+
+
+=CAPITULO 2. ELEMENTOS FINITOS DE BARRA (Trabajo en parejas. Fecha máxima de entrega: Abril 28, 2014 a las 23:59)=
+<span style="color: #ff0000;">
+Recuerde que [[software|GNU OCTAVE]] y MATLAB son totalmente compatibles, por lo tanto si no cuenta con MATLAB descargue GNU OCTAVE.</span>
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica y <span style="color: #1c7800;
+font-size: 200%;">en formato PDF</span> (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados, la explicación de como se dedujeron las ecuaciones y la explicación de cómo se resolvió el Problema 2. Incluya cualquier otra información que usted considere necesaria. Extensión máxima 10 hojas.</span>
+
+1. Considere la barra empotrada a la izquierda (x=0m) y libre a la derecha (x=2m) mostrada en la figura siguiente:
+[[image:c2_barra_sec_variable_2.png]]
+(NOTA: esa flecha al final de la barra indica el eje de las X, no es una carga puntual)
+
+Suponga que esta barra tiene una sección transversal circular, que varía en la región 0m < x < 1m de acuerdo con A = (x+1)/10 m^2 y una sección transversal constante de área A = 0.2 m^2 en la región 1m < x < 2m. El módulo de elasticidad de la barra es E=50 MPa. La barra está sujeta a una carga puntual de -20kN en x=0.75m y una carga distribuída que varía parabólicamente de acuerdo con:
+[[math]]
+b(x) =  x^2 \frac{kN}{m^3} \quad \text{ para } x\in[1 \text{ m}, 2\text{ m}]
+[[math]]
+
+* a) Haga un programa en MATLAB para calcular la matriz de rigidez **//K//** y el vector de fuerzas nodales equivalentes **//f//** para elementos finitos con sección transversal [[http://es.wikipedia.org/wiki/Tronco_de_cono|cónica truncada]] y bases de radio izquierdo r1 (en x=x1) y radio derecho r2 (en x=x2). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito.
+
+* b) Haga un programa en MATLAB para resolver el ejemplo mostrado usando 8 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra.
+
+* c) Deduzca manualmente cual es la ecuación diferencial con sus correspondientes condiciones de frontera que describen el desplazamiento de la barra. 
+
+* d) PUNTO EXTRA OPCIONAL +1 UNIDAD: calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra)  utilizando la función bvp4c de MATLAB y compararla con la solución por elementos finitos. Compare la solución con aquella dada por el método de los elementos finitos (cual es el error del método de los EFs?) Pista: estudiar el código: [[file:c2_ejemplo_barra_con_carga_axial_exacta_vs_bvp4c.m]] (ver la Sección Código 1, Capítulo 2).
+
+* e). Repita el punto b) y c) pero esta vez suponiendo que el área de la sección transversal varía en la región 0m < x < 1m de acuerdo con
+[[math]]
+A(x) = \frac{3}{25} x^2 -\frac{1 \text{ m}}{50} x + \frac{\text{m}^2}{10} \quad \text{ para } x\in[0 \text{ m}, 1\text{ m}]
+[[math]]
+y suponiendo que el borde derecho está empotrado.
+
+
+2. 
+* a) Hacer un programa en MATLAB para calcular el Ejemplo 2.1 de Oñate, dado un número arbitrario de elementos finitos. Suponga valores apropiados para Ao, E, L, P. Utilice para la solución el tipo de elemento deducido en el punto 1a).
+
+* b) Reproducir la gráfica 2.6 de Oñate variando el número de elementos hasta 20
+
+* c) PUNTO EXTRA OPCIONAL +1 UNIDAD: incluir aproximación por extrapolaciones de Richardson
+
+Ver páginas: Oñate, Ejemplo 2.1 + Gráfica 2.6 : [[file:02_ejemplo_2_1.pdf]]
+
+
+----
+
+
+=CAPITULO 3. ELEMENTOS FINITOS DE BARRA LAGRANGIANOS DE VARIOS NODOS (Trabajo en parejas. Fecha de entrega: Mayo 19, 2014 a las 23:59)=
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados, y cualquier otra información que usted considere necesaria. Extensión máxima 9 hojas.</span>
+
+1. Calcular y graficar las funciones de forma de los elementos finitos de barra Lagrangianos de 5 nodos.
+
+2. Calcule las integrales definidas:
+[[math]]
+\int_3^4 x^2 + 1\,dx
+[[math]]
+[[math]]
+\int_2^3 \frac{x}{x^2+1}\,dx
+[[math]]
+utilizando cuadraturas de Gauss-Legendre. Compare dicha solución con la solución analítica (pueden calcularla utilizando el toolbox de álgebra simbólica de MATLAB/MAXIMA).
+
+Haga gráficos que ilustren el error de integración en función del número de puntos de la cuadratura utilizados.
+
+2b. PUNTO EXTRA OPCIONAL +1 UNIDAD: Se le otorgará una unidad extra a quien realice las mismas integrales anteriores utilizando [[http://mathworld.wolfram.com/LobattoQuadrature.html|cuadraturas de Lobatto]] y compare la precisión de la respuesta con la obtenida utilizando las cuadraturas de Gauss-Legendre. Los puntos se otorgarán si se escribe un programa de MATLAB que calcule efectivamente las raíces y los pesos asociados a dichas cuadraturas para un orden dado.
+
+3. Calcular la matriz de rigidez y el vector de fuerzas nodales equivalentes de un elemento isoparamétrico de barra lagrangiano cúbico (de cuatro nodos), suponiendo que E, A y b son constantes en el elemento y que los nodos están igualmente espaciados.
+
+4. Modificar los programas [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m]] y [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m]] de modo que se calculen las deformaciones y las fuerzas axiales en la barra en consideración utilizando 4 elementos finitos cúbicos de barra que calculó en el punto anterior.
+
+5. PUNTO EXTRA OPCIONAL +1 UNIDAD: Resolver la barra analizada en Oñate, Ejemplo 2.1 + Gráfica 2.6 : [[file:02_ejemplo_2_1.pdf]] utilizando 4 EFs de barra de cuatro nodos cada uno y a) sección constante b) sección cónica. Compare la solución con la respuesta exacta.
+
+
+----
+
+=CAPITULO 5 (Trabajo en parejas. Fecha de entrega: Junio 26, 2014 a las 14:00)=
+<span style="color: #ff0000;">Los trabajos se deben entregar preferiblemente de forma electrónica (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). Adjuntar los códigos por email **SUPERCOMENTADOS**. El reporte debe incluir el análisis de resultados, y cualquier otra información que usted considere necesaria. Extensión máxima 9 hojas.</span>
+
+
+1. Calcular y graficar las funciones de forma del elemento serendípito rectangular de 12 nodos, expresándolas en coordenadas naturales.
+
+2. Calcular y graficar las funciones de forma del elemento lagrangiano rectangular de 25 nodos, expresándolas en coordenadas naturales.
+
+3. Calcule los campos de esfuerzos, desplazamientos y deformaciones de la estructura mostrada. Utilice E=200 GPa, Poisson=0.33, espesor = 0.3 m, rho = 2400 kg/m^3 y considere que la estructura se encuentra en un estado de tensión plana. Genere la malla de elementos finitos utilizando el programa GiD (ver: http://elementosfinitosunalmzl.wikispaces.com/GiD) y utilice elementos rectangulares de 4 nodos.
+[[image:c5_taller_banco.png]]
+
+
+4. Calcular y graficar las funciones de forma del elemento triangular de 15 nodos, expresándolas en coordenadas naturales.
+
+5. Reproduzca el gráfico siguiente, que muestra los mecanismos propagables del elemento finito rectangular serendípito de 4 nodos, integrando con uno y dos puntos de Gauss-Legendre. Reproduzca el mimos gráfico para un elemento rectangular serendípito de 8 nodos. Utilice E=200 GPa, Poisson=0.33, espesor = 0.3 m, rho = 2400 kg/m^3 y considere que la estructura se encuentra en un estado de tensión plana. La única carga a la cual está sometida es su peso propio. 
+[[image:c5_mecanismos_propagables.png]] 
+
+6. PUNTO OPCIONAL: Utilizando la malla de GiD (creada por Alejandro Cardona Jiménez) [[file:gancho_ef_triangular_6_nodos.gid.rar]], reproduzca el ejemplo del gacho. + 1 unidad. Para generar la malla en un formato leíble por MATLAB abra la malla y luego utilce el menú Files > Export > GiD Mesh para generar un archivo de texto con las coordenadas de los nodos y de matriz LaG de los triángulos.
+----
