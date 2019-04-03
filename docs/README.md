@@ -1,9 +1,9 @@
-# Análisis estructural por elementos finitos
+# Análisis estructural por elementos finitos 1 y 2
 
 <p float="left">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="450" />
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="470" />
 
-  <img src="../figs/catedral.png" height="450" /> 
+  <img src="../figs/catedral.png" height="470" /> 
 </p>
 
 Tomado de:
@@ -22,9 +22,10 @@ Tomado de:
 - Créditos: 3
 
 ## Tabla de contenido: 
-- [Temario y observaciones generales del curso](python3/temario_y_observaciones_generales.md)
+- [Temario y observaciones generales del curso 1](temario_y_observaciones_generales_1.md)
+- [Temario y observaciones generales del curso 2](temario_y_observaciones_generales_2.md)
 - [Códigos y diapositivas](codigos_y_diapositivas.md)
-- [Recursos](python3/recursos.md)
+- [Recursos](recursos.md)
 
 ## Examenes y talleres
 - [Tema de los exámenes](examenes.md)
