@@ -1,8 +1,10 @@
 # Análisis estructural por elementos finitos
 
-![Image](https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg)
+<p float="left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="300" />
 
-![Image](figs/catedral.png)
+  <img src="../figs/catedral.png" height="300" /> 
+</p>
 
 Tomado de:
 * ![Omar Darío Cardona. Vulnerabilidad sísmica estructural y diseño del refuerzo sismorresistente de la Catedral Basílica de Manizales, Colombia]. Revista Internacional de Ingeniería de Estructuras. Vol 7. No. 1 2002. págs 47-66](http://idea.manizales.unal.edu.co/gestion_riesgos/descargas/gestion/Catedralm1.pdf)
