@@ -31,7 +31,9 @@ Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ej
 ## Deducción de la matriz de rigidez de un pórtico en 2D
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbolica**
-![\renewcommand\arraystretch{1.4}
+<!---
+
+\renewcommand\arraystretch{1.4}
 \begin{bmatrix}
 X_i\\
 Y_i\\
@@ -56,12 +58,13 @@ v_i\\
 u_j\\
 v_j\\
 \theta_j
-\end{bmatrix}](https://latex.codecogs.com/svg.latex?%5Clarge%20%5Cbegin%7Bbmatrix%7D%20X_i%5C%5C%20Y_i%5C%5C%20M_i%5C%5C%20X_j%5C%5C%20Y_j%5C%5C%20M_j%20%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%5C%5C%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%20u_i%5C%5C%20v_i%5C%5C%20%5Ctheta_i%5C%5C%20u_j%5C%5C%20v_j%5C%5C%20%5Ctheta_j%20%5Cend%7Bbmatrix%7D)
+\end{bmatrix}
+--->
+
+![](https://latex.codecogs.com/svg.latex?%5Clarge%20%5Cbegin%7Bbmatrix%7D%20X_i%5C%5C%20Y_i%5C%5C%20M_i%5C%5C%20X_j%5C%5C%20Y_j%5C%5C%20M_j%20%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%5C%5C%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%20u_i%5C%5C%20v_i%5C%5C%20%5Ctheta_i%5C%5C%20u_j%5C%5C%20v_j%5C%5C%20%5Ctheta_j%20%5Cend%7Bbmatrix%7D)
 
 
 <!---
-
-
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.jpg
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.pdf%20
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco.m
