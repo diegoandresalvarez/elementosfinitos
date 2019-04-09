@@ -28,6 +28,7 @@ Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ej
 
 
 # Análisis matricial de pórticos 2D
+
 ## Deducción de la matriz de rigidez de un pórtico en 2D
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbolica**
@@ -65,23 +66,16 @@ v_j\\
 ![](https://tex.s2cms.ru/svg/%5Crenewcommand%5Carraystretch%7B1.4%7D%0A%5Cbegin%7Bbmatrix%7D%0AX_i%5C%5C%0AY_i%5C%5C%0AM_i%5C%5C%0AX_j%5C%5C%0AY_j%5C%5C%0AM_j%0A%5Cend%7Bbmatrix%7D%0A%3D%0A%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%5C%5C%0A%20%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Au_i%5C%5C%0Av_i%5C%5C%0A%5Ctheta_i%5C%5C%0Au_j%5C%5C%0Av_j%5C%5C%0A%5Ctheta_j%0A%5Cend%7Bbmatrix%7D)
 
 
+## Ejemplo 11.23 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
+
+![Image](portico_2d/c1_portico_2d_uribe_escamilla.svg)
+
+* Solución Uribe Escamilla: [c1_ej_11_23_uribe_escamilla.pdf](portico_2d/c1_ej_11_23_uribe_escamilla.pdf)
+* Código MATLAB (versión sencilla): [c1_ejemplo_marco.m](portico_2d/c1_ejemplo_marco.m) 
+* Código MATLAB (versión que grafica diagramas y deformada) [c1_ejemplo_marco_2D_con_deformada_matlab.zip](portico_2d/c1_ejemplo_marco_2D_con_deformada_matlab.zip) (nota la versión MATLAB está mucho más completa que la de PYTHON)
+* Código PYTHON 3 (versión que grafica diagramas y deformada) [c1_ejemplo_marco_2D_con_deformada_python3.zip](portico_2d/c1_ejemplo_marco_2D_con_deformada_python3.zip)
+
 <!---
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.jpg
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.pdf%20
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco.m
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco_2D_con_deformada_matlab.zip
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco_2D_con_deformada_python3.zip
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_portico_2d_uribe_escamilla.svg
-
-
-
-* Ejemplo 11.23 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
-[[image:c1_portico_2d_uribe_escamilla.svg width="600"]]
-** Solución Uribe Escamilla: [[file:c1_ej_11_23_uribe_escamilla.pdf]]
-** Código MATLAB (versión sencilla): [[file:c1_ejemplo_marco.m]] 
-** Código MATLAB (versión que grafica diagramas y deformada) [[file:c1_ejemplo_marco_2D_con_deformada_matlab.zip]] (nota la versión MATLAB está mucho más completa que la de PYTHON)
-** Código PYTHON 3 (versión que grafica diagramas y deformada) [[file:c1_ejemplo_marco_2D_con_deformada_python3.zip]]
-
 
 * Cálculo de la carga nodal equivalente para una carga triangular: 
 [[image:c1_carga_nodal_equivalente_carga_triangular.svg width="900"]]
@@ -130,16 +124,16 @@ Analice como si fuera:
 Solución en MATLAB y SAP2000: [[file:c1_taller_estructura_fink.zip]]
 
 
-=Análisis matricial de una cercha en 3D=
-[[image:c1_ejemplo_cercha_3D_configuracion.png width="900"]]
-[[image:c1_ejemplo_cercha_3D.png width="900"]]
-Código MATLAB: [[file:c1_ejemplo_cercha_3D.zip]]
+--->
+
+## Análisis matricial de una cercha en 3D
+![Image](cercha_3d/c1_ejemplo_cercha_3D_configuracion.png)
+![Image](cercha_3d/c1_ejemplo_cercha_3D.png)
+
+Código MATLAB: [c1_ejemplo_cercha_3D.zip](cercha_3d/c1_ejemplo_cercha_3D.zip)
 
 
+## Análisis matricial de un pórtico en 3D (nota: falta comparar con un programa de cálculo estructural)
+![Image](portico_3d/c1_portico_3D.png)
 
-=Análisis matricial de un pórtico en 3D (nota: falta comparar con un programa de cálculo estructural)=
-[[image:c1_portico_3D.png]]
-Código MATLAB:  [[file:c1_ejemplo_portico_3D.zip]]
-
-just --->
-
+Código MATLAB:  [c1_ejemplo_portico_3D.zip](portico_3d/c1_ejemplo_portico_3D.zip)
