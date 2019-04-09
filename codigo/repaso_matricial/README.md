@@ -1,38 +1,36 @@
-**<span style="font-size: 300%">CODIGOS DE PROGRAMACION: CAPITULO 1</span>**
+# Análisis matricial de estructuras de barras en 1D
 
-[[image:http://imgs.xkcd.com/comics/ballmer_peak.png]]
-Fuente: [[http://xkcd.com/323/]]
-----
+![Image](http://imgs.xkcd.com/comics/ballmer_peak.png)
+Fuente: <http://xkcd.com/323/>
 
-=Análisis matricial de estructuras de barras en 1D=
-* Ejemplo 1.1 Oñate: análisis de 3 barras trabajando a tracción
-[[image:tres_barras_a_traccion_onate_1_1.svg width="600"]]
-* [[file:c1_ejemplo_barra_v1.m]] (dada la matriz K resuelve el sistema de ecuaciones Ka - f = q)  **usa el toolbox de álgebra simbolica**
-* [[file:c1_ejemplo_barra_v2.m]] (ensambla la matriz K y resuelve el sistema de ecuaciones) **usa el toolbox de álgebra simbolica**
+##  Ejemplo 1.1 Oñate: análisis de 3 barras trabajando a tracción
+![Image](barras/01_tres_barras_a_traccion_onate_1_1.svg)
 
+* [c1_ejemplo_barra_v1.m](barras/c1_ejemplo_barra_v1.m) (dada la matriz K resuelve el sistema de ecuaciones Ka - f = q)  **usa el toolbox de álgebra simbolica**
+* [c1_ejemplo_barra_v2.m](barras/c1_ejemplo_barra_v2.m) (ensambla la matriz K y resuelve el sistema de ecuaciones) **usa el toolbox de álgebra simbolica**
 
 
-=Análisis matricial de cerchas 2D=
-* Ejemplo 11.3 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
-Resuelva la estructura mostrada. El material es acero con E=2040 ton/m2. Las aŕeas están dadas entre paréntesis en cm2:
-[[image:c1_ej_11_3_uribe_escamilla.svg width="600"]]
-Solución Uribe Escamilla: [[file:c1_ej_11_3_uribe_escamilla.pdf]]
-Código solución MATLAB: [[file:c1_ejemplo_cercha.m]] 
-Código solución Python 3: [[file:c1_ejemplo_cercha.py]] 
+# Análisis matricial de cerchas 2D
+## Ejemplo 11.3 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
+Resuelva la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
+![Image](cercha_2d/c1_ej_11_3_uribe_escamilla.svg)
+
+* Solución Uribe Escamilla: [c1_ej_11_3_uribe_escamilla.pdf](cercha_2d/c1_ej_11_3_uribe_escamilla.pdf)
+* Código solución MATLAB: [c1_ejemplo_cercha.m](cercha_2d/c1_ejemplo_cercha.m)
+* Código solución Python 3: [c1_ejemplo_cercha.py](cercha_2d/c1_ejemplo_cercha.py)
 
 
+## Análisis matricial de cerchas 2D con apoyos inclinados
+Resuelva la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
+![Image](cercha_2d/c1_ejemplo_cercha_inclined_support.svg)
+
+Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ejemplo_cercha_inclined_support.m)
 
 
-=Análisis matricial de cerchas 2D con apoyo inclinado=
-[[image:c1_cercha2d_apoyo_inclinado_uribe_escamilla.svg width="600"]]
-Resuelva la estructura mostrada. El material es acero con E=2040 ton/m2. Las aŕeas están dadas entre paréntesis en cm2:
-Código solución MATLAB: [[file:c1_ejemplo_cercha_inclined_support.m]]
-
-
-
-=Análisis matricial de marcos 2D=
-* Deducción de la matriz de rigidez de un pórtico en 2D: [[file:c1_deduccion_K_portico2D.m]] **usa el toolbox de álgebra simbolica**
-[[math]]
+# Análisis matricial de pórticos 2D
+## Deducción de la matriz de rigidez de un pórtico en 2D
+* [[file:c1_deduccion_K_portico2D.m]] **usa el toolbox de álgebra simbolica**
+```latex
 \renewcommand\arraystretch{1.4}
 \begin{bmatrix}
 X_i\\
@@ -60,6 +58,20 @@ v_j\\
 \theta_j
 \end{bmatrix}
 [[math]]
+```
+![eq](https://latex.codecogs.com/svg.latex?\begin{bmatrix} X_i\\ Y_i\\ M_i\\ X_j\\ Y_j\\ M_j \end{bmatrix} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & -\frac{EA}{L} & 0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & -\frac{12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{2EI}{L} \\ -\frac{EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & -\frac{12EI}{L^3} & -\frac{6EI}{L^2} & 0 & \frac{12EI}{L^3} & -\frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{4EI}{L} \end{bmatrix} \begin{bmatrix} u_i\\ v_i\\ \theta_i\\ u_j\\ v_j\\ \theta_j \end{bmatrix})
+
+
+<!---
+
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_deduccion_K_portico2D.m
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.jpg
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.pdf%20
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco.m
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco_2D_con_deformada_matlab.zip
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco_2D_con_deformada_python3.zip
+file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_portico_2d_uribe_escamilla.svg
+
 
 
 * Ejemplo 11.23 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
@@ -127,3 +139,6 @@ Código MATLAB: [[file:c1_ejemplo_cercha_3D.zip]]
 =Análisis matricial de un pórtico en 3D (nota: falta comparar con un programa de cálculo estructural)=
 [[image:c1_portico_3D.png]]
 Código MATLAB:  [[file:c1_ejemplo_portico_3D.zip]]
+
+just --->
+
