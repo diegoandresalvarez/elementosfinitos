@@ -61,7 +61,7 @@ v_j\\
 \end{bmatrix}
 --->
 
-![](http://bit.ly/2U750mr)
+<img src="http://bit.ly/2U750mr" align="center" border="0" alt="\begin{bmatrix}X_i\\Y_i\\M_i\\X_j\\Y_j\\M_j\end{bmatrix}=\begin{bmatrix}  \frac{EA}{L} & 0 & 0 & -\frac{EA}{L} & 0 & 0 \\  0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & -\frac{12EI}{L^3} & \frac{6EI}{L^2} \\  0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{2EI}{L} \\  -\frac{EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\  0 & -\frac{12EI}{L^3} & -\frac{6EI}{L^2} & 0 & \frac{12EI}{L^3} & -\frac{6EI}{L^2} \\  0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{4EI}{L}\end{bmatrix}\begin{bmatrix}u_i\\v_i\\\theta_i\\u_j\\v_j\\\theta_j\end{bmatrix}" width="646" height="183" />
 
 
 <!---
