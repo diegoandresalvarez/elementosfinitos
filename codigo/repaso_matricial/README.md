@@ -29,9 +29,10 @@ Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ej
 
 # Análisis matricial de pórticos 2D
 ## Deducción de la matriz de rigidez de un pórtico en 2D
+
 * [[file:c1_deduccion_K_portico2D.m]] **usa el toolbox de álgebra simbolica**
-```latex
-\renewcommand\arraystretch{1.4}
+
+![\renewcommand\arraystretch{1.4}
 \begin{bmatrix}
 X_i\\
 Y_i\\
@@ -56,10 +57,7 @@ v_i\\
 u_j\\
 v_j\\
 \theta_j
-\end{bmatrix}
-[[math]]
-```
-![eq](https://latex.codecogs.com/svg.latex?\begin{bmatrix} X_i\\ Y_i\\ M_i\\ X_j\\ Y_j\\ M_j \end{bmatrix} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & -\frac{EA}{L} & 0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & -\frac{12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{2EI}{L} \\ -\frac{EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & -\frac{12EI}{L^3} & -\frac{6EI}{L^2} & 0 & \frac{12EI}{L^3} & -\frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & -\frac{6EI}{L^2} & \frac{4EI}{L} \end{bmatrix} \begin{bmatrix} u_i\\ v_i\\ \theta_i\\ u_j\\ v_j\\ \theta_j \end{bmatrix})
+\end{bmatrix}](https://latex.codecogs.com/svg.latex?%5Clarge%20%5Cbegin%7Bbmatrix%7D%20X_i%5C%5C%20Y_i%5C%5C%20M_i%5C%5C%20X_j%5C%5C%20Y_j%5C%5C%20M_j%20%5Cend%7Bbmatrix%7D%20%3D%20%5Cbegin%7Bbmatrix%7D%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%5C%5C%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%5Cend%7Bbmatrix%7D%20%5Cbegin%7Bbmatrix%7D%20u_i%5C%5C%20v_i%5C%5C%20%5Ctheta_i%5C%5C%20u_j%5C%5C%20v_j%5C%5C%20%5Ctheta_j%20%5Cend%7Bbmatrix%7D)
 
 
 <!---
