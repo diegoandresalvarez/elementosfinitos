@@ -30,8 +30,7 @@ Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ej
 # Análisis matricial de pórticos 2D
 ## Deducción de la matriz de rigidez de un pórtico en 2D
 
-* [[file:c1_deduccion_K_portico2D.m]] **usa el toolbox de álgebra simbolica**
-
+* [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbolica**
 ![\renewcommand\arraystretch{1.4}
 \begin{bmatrix}
 X_i\\
@@ -62,7 +61,7 @@ v_j\\
 
 <!---
 
-file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_deduccion_K_portico2D.m
+
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.jpg
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ej_11_23_uribe_escamilla.pdf%20
 file:///home/daalvarez/github/elementosfinitos/codigo/repaso_matricial/portico_2d/c1_ejemplo_marco.m
