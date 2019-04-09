@@ -32,6 +32,7 @@ Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ej
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbolica**
 <!---
+Compile en: https://tex.s2cms.com
 
 \renewcommand\arraystretch{1.4}
 \begin{bmatrix}
