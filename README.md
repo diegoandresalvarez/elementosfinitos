@@ -6,7 +6,7 @@
 <p float="left">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="485" />
 
-  <img src="../figs/catedral.png" height="485" /> 
+  <img src="figs/catedral.png" height="485" /> 
 </p>
 
 Tomado de:
