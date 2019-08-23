@@ -24,7 +24,7 @@
 
 ## Diseño de estructuras de concreto utilizando el método de los elementos finitos
 * [D1 - Diseño de estructuras de concreto reforzado utilizando EFs](../diapositivas/D1_FE_design.pdf)
-* [D2 - Modelación de estructuras aporticadas con EFs](../diapositivas/D2_-_porticos.pdf)
+* [D2 - Modelación de estructuras aporticadas con EFs](../diapositivas/D2_porticos.pdf)
 * [D3 - Diseño de vigas de gran altura y muros de cortante utilizando el MEF](../diapositivas/D3_vigas_altas.pdf)
 * [D4 - Diseño de estructuras de concreto utilizando análisis lineal del esfuerzo](../diapositivas/D4_disenio_con_analisis_elastico_lineal.pdf)
 * [D5 - Uso del método de los elementos finitos en los modelo puntal-tensor](../diapositivas/D5_metodo_puntal_tensor.pdf)
@@ -34,10 +34,5 @@
 ### Otros documentos
 * [Rombach, G. A. (2004). Finite Element Design of Concrete Structures: practical problems and their solutions. Thomas Telford:London](https://www.scribd.com/document/367033645/Finite-element-Design-of-Concrete-Structures-Practical-problems-and-their-solutions-Second-edition-G-A-Rombach-University-of-Hamburg-Harburg-pd)
 * http://www.scribd.com/doc/19184786/How-to-Design-rc-Flat-Slabs-Using-Finite-Element-Analysis
-
-### Diseño con el metodo puntal-tensor (strut-and-tie-model): NSR10 Apéndice C-A
-* [Singh, Mohammadi, Kaushik (2005). Design of a double corbel using the strut-and-tie method. Asian Journal of Civil Engineering. Vol 6, No. 1-2. p. 21--33)](http://www.bhrc.ac.ir/english/Publication/AJCE/PDF/Vol6No1-2/Singh-2.pdf)
-
-* [Singh, Mohammadi, Kaushik (2006). Design of continuous deep beam using the strut-and-tie method. Asian Journal of Civil Engineering. Vol 7, No. 5. p. 461--477)](http://www.bhrc.ac.ir/english/Publication/AJCE/PDF/Vol7-No5/Sing-2.pdf)
 
 * American Concrete Institute (2002). Examples for the design of structural concrete with strut-and.tie models. REINECK, Karl-Heinz, editor. ACI SP-208. USA.
