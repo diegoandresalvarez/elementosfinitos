@@ -1,4 +1,7 @@
-## Análisis estructural por elementos finitos
+# Universidad Nacional de Colombia - Sede Manizales
+# Análisis estructural por elementos finitos
+# 4101210 - G2 - Aplicaciones de elementos finitos 1
+# 4200685 - G1 - Aplicaciones de elementos finitos 2
 
 You can use the [editor on GitHub](https://github.com/diegoandresalvarez/elementosfinitosunalmzl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
