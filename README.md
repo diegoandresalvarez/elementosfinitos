@@ -3,38 +3,21 @@
 # 4101210 - G2 - Aplicaciones de elementos finitos 1
 # 4200685 - G1 - Aplicaciones de elementos finitos 2
 
-You can use the [editor on GitHub](https://github.com/diegoandresalvarez/elementosfinitosunalmzl/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+<p float="left">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="485" />
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+  <img src="../figs/catedral.png" height="485" /> 
+</p>
 
-### Markdown
+Tomado de:
+* [Omar Darío Cardona. Vulnerabilidad sísmica estructural y diseño del refuerzo sismorresistente de la Catedral Basílica de Manizales, Colombia. Revista Internacional de Ingeniería de Estructuras. Vol 7. No. 1 2002. págs 47-66](http://idea.manizales.unal.edu.co/gestion_riesgos/descargas/gestion/Catedralm1.pdf)
+* [WIKIMEDIA Fotografía de la Catedral Basílica de Manizales por Pablo Andrés Toro Arias](https://commons.wikimedia.org/wiki/File:2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Tabla de contenido: 
+- [Temario y observaciones generales del curso 1](docs/01_temario_y_observaciones_generales_1.md)
+- [Temario y observaciones generales del curso 2](docs/01_temario_y_observaciones_generales_2.md)
+- [Códigos y diapositivas](docs/codigos_y_diapositivas.md)
+- [Recursos](docs/recursos.md)
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/diegoandresalvarez/elementosfinitosunalmzl/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Examenes y talleres
+- [Tema de los exámenes](docs/examenes.md)
