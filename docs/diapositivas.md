@@ -4,7 +4,7 @@
 * [Repaso de mecánica de sólidos](../diapositivas/00_Repaso_Mecanica_de_Solidos.pdf)
 * [Capítulo 1 Oñate: Repaso de análisis matricial de estructuras](../diapositivas/01_Repaso_Calculo_Matricial.pdf)
 * [Capítulo 2 Oñate: Elementos finitos de barra de dos nodos](../diapositivas/02_EF_barra.pdf)
-  * [Conversión del principio del trabajo virtual de 3D a 1D](../diapositivas/PTV_3D_a_1D.pdf)
+  * [Conversión del principio del trabajo virtual de 3D a 1D](../diapositivas/02_PTV_3D_a_1D.pdf)
 * [Capítulo 3 Oñate: Elementos finitos de barra de varios nodos](../diapositivas/03_EF_barra_avanzados.pdf)
 * [Capítulo 4 Oñate: Elementos finitos de flexión de vigas](../diapositivas/04_EF_vigas.pdf)
 * [Capítulo 5 Oñate: Elementos finitos para tensión y deformación plana](../diapositivas/05_EF_bidimensionales.pdf)
