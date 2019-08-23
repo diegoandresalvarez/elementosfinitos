@@ -1,10 +1,10 @@
-# Observaciones generales y temario del curso xxxxxx - Aplicaciones de elementos finitos 2
+# Observaciones generales y temario del curso "4200685 - Aplicaciones de elementos finitos 2"
 
 ## Detalles del curso
 - Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
 - Intensidad horaria semanal presencial: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
-  - Jueves 7:00-9:00 C412
-  - Viernes 14:00-16:00 C210
+  - ~~Lunes     14:00-16:00 C410~~
+  - ~~Miércoles 14:00-16:00 C410~~
 - Tiempo de actividad autónoma por semana: 8 horas
 - Semanas: 16
 - Créditos: 3
@@ -12,14 +12,12 @@
 ## Citas para preguntas
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
-## Criterio de evaluación
-Se harán exámenes sorpresa que comprenderán el tema enseñado en las últimas 4 clases y/o el material que el profesor haya puesto a leer antes de clase. Cada 8 clases se seleccionarán al azar 2 de los exámenes realizados en dicho periodo y la nota obtenida será la nota de ese corte.
-
-- Exámenes Corte 1: 22% (ago 13 - sep  9) 
-- Exámenes Corte 2: 22% (sep 10 - oct 10)
-- Exámenes Corte 3: 22% (nov 11 - dic 5)
-- Trabajos: 20% (talleres de programación en MATLAB/Python)
-- Taller final: 14% (uso de un software profesional de elementos finitos)
+## Evaluaciones y trabajos
+- 17% - Exámen 1: ~~diciembre 25, 2019~~
+- 17% - Exámen 2: ~~octubre 23, 2019~~
+- 17% - Exámen 3: ~~noviembre 20, 2019~~
+- 17% - Exámen 4: ~~diciembre 18, 2019~~
+- 32% - Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 

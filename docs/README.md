@@ -1,4 +1,7 @@
-# Análisis estructural por elementos finitos 1 y 2
+# Universidad Nacional de Colombia - Sede Manizales
+# Análisis estructural por elementos finitos
+# 4101210 - G2 - Aplicaciones de elementos finitos 1
+# 4200685 - G1 - Aplicaciones de elementos finitos 2
 
 <p float="left">
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg/266px-2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg" height="485" />
