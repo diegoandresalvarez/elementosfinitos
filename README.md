@@ -17,7 +17,7 @@ Tomado de:
 - [Temario y observaciones generales del curso 1](docs/01_temario_y_observaciones_generales_1.md)
 - [Temario y observaciones generales del curso 2](docs/01_temario_y_observaciones_generales_2.md)
 - [Diapositivas](docs/diapositivas.md)
-- [Códigos](docs/codigos.md)
+- [Códigos](./codigo/)
 - [Recursos](docs/recursos.md)
 
 ## Examenes y talleres
