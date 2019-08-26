@@ -3,12 +3,12 @@
 ![Image](http://imgs.xkcd.com/comics/ballmer_peak.png)
 Fuente: <http://xkcd.com/323/>
 
-##  Ejemplo 1.1 Oñate: análisis de 3 barras trabajando a tracción
-![Image](barras/01_tres_barras_a_traccion_onate_1_1.svg)
+##  Análisis de 3 barras trabajando a tracción
+Subdirectorio: [barra_1d](./barra_1d/)
 
-* [c1_ejemplo_barra_v1.m](barras/c1_ejemplo_barra_v1.m) (dada la matriz K resuelve el sistema de ecuaciones Ka - f = q)  **usa el toolbox de álgebra simbolica**
-* [c1_ejemplo_barra_v2.m](barras/c1_ejemplo_barra_v2.m) (ensambla la matriz K y resuelve el sistema de ecuaciones) **usa el toolbox de álgebra simbolica**
+Los programas de esta carpeta, estiman las reacciones en los apoyos (nodos 1 y 2), los desplazamientos en los nodos no restringidos (nodos 3 y 4) y las fuerzas axiales en los nodos y barras de la estructura mostrada:
 
+![figura](barra_1d/01_tres_barras_a_traccion_onate_1_1.svg)
 
 # Análisis matricial de cerchas 2D
 ## Ejemplo 11.3 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
