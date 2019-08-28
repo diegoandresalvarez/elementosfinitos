@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #%% Ejemplo 11.3 Uribe Escamilla
 
 import numpy as np
@@ -11,7 +13,7 @@ np.sind = lambda x : np.sin(np.deg2rad(x))
 #%% defino las variables
 X = 0
 Y = 1
-ang   = np.degrees(np.arctan2(300,400)) # angulo especificado en grados
+ang   = np.degrees(np.arctan2(300,400)) # ángulo especificado en grados
 
 #barra              1    2     3    4    5
 theta = np.array([ang,   0, -ang,   0, -90 ])*np.pi/180 # angulo de inclinacion
@@ -27,8 +29,8 @@ LaG = np.array([[1, 3],   # (se lee la barra x va del nodo i al nodo j)
 
 # gdl: grados de libertad
 gdl = np.array([[1, 2],  # fila = nodo
-                [3, 4],  # col1 = gdl en direccion x
-                [5, 6],  # col2 = gdl en direccion y
+                [3, 4],  # col1 = gdl en dirección x
+                [5, 6],  # col2 = gdl en dirección y
                 [7, 8]]) - 1
 
 # propiedades del material
