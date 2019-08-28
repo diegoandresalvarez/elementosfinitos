@@ -31,7 +31,7 @@ def ensamblar(K, idx, Ke):
             K[idx[i], idx[j]] += Ke[i,j]
 
 # %% defino las variables
-E, A, L, P = sp.symbols('E A L P')         # define las variables simbolicas
+E, A, L, P = sp.symbols('E A L P')         # define las variables simbólicas
 
 long = [L,  L,  L/2]                       # longitud de la barra
 
@@ -41,9 +41,9 @@ LaG = np.array([[1, 3],         # fila = barra
                 [2, 3],         # col1 = nodo global asociado a nodo local 1
                 [3, 4]]) - 1    # col2 = nodo global asociado a nodo local 2
 
-k = [E*A/longitud for longitud in long]    # (k minuscula) rigidez de cada barra
+k = [E*A/longitud for longitud in long]    # (k minúscula) rigidez de cada barra
 
-# %% ensamblo la matriz de rigidez global (K mayuscula)
+# %% ensamblo la matriz de rigidez global (K mayúscula)
 K = sp.zeros(4)       # separa memoria para matriz de rigidez global K
 for e in range(3):    # para cada una de las barras e = 1, 2 y 3
    idx = LaG[e,:]     # extrae indices de los nodos globales de la barra e
