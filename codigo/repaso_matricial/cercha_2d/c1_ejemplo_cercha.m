@@ -43,7 +43,7 @@ for e = 1:5  % para cada barra
                 -1  0  1  0;   % barra e
                  0  0  0  0 ];
    K(idx,idx) = K(idx,idx) + T{e}'*Kloc*T{e}; % sumo a K global
-end;
+end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = [1 2 4];    d = [3 5 6 7 8];
@@ -79,7 +79,7 @@ N = zeros(5,1);
 for e = 1:5 % para cada barra
    idx = [gdl(LaG(e,1),:) gdl(LaG(e,2),:)]; % saco los 4 gdls de la barra e
    N(e) = k(e)*[-1 0 1 0]*T{e}*a(idx);
-end;
+end
 
 %% imprimo los resultados
 a, q, N 
