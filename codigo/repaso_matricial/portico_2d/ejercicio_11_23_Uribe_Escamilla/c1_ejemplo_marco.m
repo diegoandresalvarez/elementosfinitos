@@ -5,26 +5,26 @@
 clear; clc % borra memoria y pantalla
 
 %% defino las variables
-Aviga = .30*.35;       Acol  = .30*.30;       % m^2    area
-Iviga = .30*.35^3/12;  Icol  = .30*.30^3/12;  % m^4    inercia_y
+Aviga = 0.30*0.35;       Acol  = 0.30*0.30;       % m^2    area
+Iviga = 0.30*0.35^3/12;  Icol  = 0.30*0.30^3/12;  % m^4    inercia_y
 
 %barra         1          2          3
 A     = [ Aviga         Acol       Acol          ]; % areas
 I     = [ Iviga         Icol       Icol          ]; % inercias_y
 theta = [ atan2(2,4)    atan2(4,3) atan2(-6,2)   ]*180/pi; % angulo inclinacion (grados)
-long  = [ sqrt(4^2+2^2) 5          sqrt(2^2+6^2) ]; % long barra (m)
+long  = [ hypot(4,2)    5          hypot(2,6)    ]; % long barra (m)
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
 % (se lee la barra x va del nodo i al nodo j)
-LaG = [1 2;   % fila = barra
-       4 1;   % col1 = nodo global asociado a nodo local 1
+LaG = [1 2    % fila = barra
+       4 1    % col1 = nodo global asociado a nodo local 1
        2 3];  % col2 = nodo global asociado a nodo local 2
 
 % gdl: grados de libertad
 ngdl = 12; % numero de grados de libertad
-gdl  = [ 4  5  6;  % fila = nodo
-         7  8  9;  % col1 = gdl en direccion x
-        10 11 12;  % col2 = gdl en direccion y
+gdl  = [ 4  5  6   % fila = nodo
+         7  8  9   % col1 = gdl en direccion x
+        10 11 12   % col2 = gdl en direccion y
          1  2  3]; % col3 = gdl en direccion angular antihoraria
 
 E = 190*10000; %ton/m^2  modulo de elasticidad
