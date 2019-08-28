@@ -17,12 +17,14 @@ k = E.*A./long;       % (k minuscula) rigidez de cada barra
 K = sym(zeros(4));    % separa memoria para matriz de rigidez global K
 for e = 1:3           % para cada una de las barras e = 1, 2 y 3
    idx = LaG(e,:);    % extrae indices de los nodos globales de la barra e
-   K(idx,idx) = K(idx,idx) + k(e)*[1 -1; -1 1]; % suma matriz de rigidez local
-end;
+   Ke = k(e)*[1 -1; -1 1];       % matriz de rigidez local
+   K(idx,idx) = K(idx,idx) + Ke; % suma matriz de rigidez local
+end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = [1 2];    d = setdiff(1:4,c);
 
+%% extraigo las submatrices y especifico las cantidades conocidas
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
@@ -31,7 +33,6 @@ c = [1 2];    d = setdiff(1:4,c);
 %|    | = |         ||    | - |    |
 %| qc |   | Kdc Kdd || ad |   | fc |     en este caso en particular fd=0
 
-%% extraigo las submatrices y especifico las cantidades conocidas
 Kcc = K(c,c); Kcd = K(c,d); ac = sym([0; 0]);
 Kdc = K(d,c); Kdd = K(d,d);                    fc = sym([0; P]);
 
@@ -49,7 +50,7 @@ a(d) = ad;         % q(d) = qc = 0;
 N = sym(zeros(3,1));
 for e = 1:3
    N(e) = k(e)*(a(LaG(e,2)) - a(LaG(e,1)));
-end;
+end
 
 %% imprimo los resultados
 fprintf('\n\n a = \n'); pretty(a)
