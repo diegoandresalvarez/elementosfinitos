@@ -1,8 +1,10 @@
 %% Ejemplo 11.3 Uribe Escamilla 
 
-%% Unidades en tonedadas y cm
+%% Unidades en toneladas y cm
 
 %% defino las variables
+X = 1;
+Y = 2;
 ang   = atan2(300,400)*180/pi; % angulo especificado en grados
 
 %barra    1       2       3       4       5
@@ -11,17 +13,17 @@ long  = [ 500     400     500     400      300 ]; % longitud barra
 area  = [ 100     40      150     40       30  ]; % area barra
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
-LaG = [1 3;   % fila = barra
-       1 4;   % col1 = nodo global asociado a nodo local 1
-       3 2;   % col2 = nodo global asociado a nodo local 2
-       4 2; 
+LaG = [1 3    % fila = barra
+       1 4    % col1 = nodo global asociado a nodo local 1
+       3 2    % col2 = nodo global asociado a nodo local 2
+       4 2  
        3 4 ]; % (se lee la barra x va del nodo i al nodo j)
 
 % gdl: grados de libertad
-gdl   = [1 2;  % fila = nodo
-         3 4;  % col1 = gdl en direccion x
-         5 6;  % col2 = gdl en direccion y
-         7 8]; 
+gdl = [1 2    % fila = nodo
+       3 4    % col1 = gdl en direccion x
+       5 6    % col2 = gdl en direccion y
+       7 8]; 
       
 % propiedades del material
 E = 2040;           % ton/cm^2
@@ -30,7 +32,7 @@ k = E.*area./long;  % rigidez de cada barra
 %% ensamblo la matriz de rigidez global
 K = zeros(8); T = cell(5,1); % separo memoria
 for e = 1:5  % para cada barra
-   idx = [gdl(LaG(e,1),:) gdl(LaG(e,2),:)]; % saco los 4 gdls de la barra
+   idx = [gdl(LaG(e,X),:) gdl(LaG(e,Y),:)]; % saco los 4 gdls de la barra
    c = cosd(theta(e)); s = sind(theta(e));  % sin y cos de la inclinacion
    T{e} = [ c  s  0  0         % matriz de transformacion de coordenadas
            -s  c  0  0         % para la barra e
