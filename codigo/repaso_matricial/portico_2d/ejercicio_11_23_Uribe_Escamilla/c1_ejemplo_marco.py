@@ -127,9 +127,9 @@ print(a)
 # %% imprimo las fuerzas internas en cada barra referidas a las coordenadas
 #    globales
 for e in range(nb): # para cada barra
-    print(f'\n\nFuerzas internas para barra {e} en coordenadas globales = ')
+    print(f'\n\nFuerzas internas para barra {e+1} en coordenadas globales = ')
     qe_coord_glob = Ke[e]@a[idx[e,:]] - fe[e]
     print(qe_coord_glob)
     
-    print(f'\nFuerzas internas para barra {e} en coordenadas locales =')
+    print(f'\nFuerzas internas para barra {e+1} en coordenadas locales =')
     print(T[e]@qe_coord_glob)
