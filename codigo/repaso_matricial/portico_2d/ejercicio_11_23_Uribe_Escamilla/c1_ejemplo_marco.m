@@ -5,14 +5,16 @@
 clear; clc % borra memoria y pantalla
 
 %% defino las variables
+X = 0; Y = 1; % variables que ayudan a la legibilidad del codigo
+
 Aviga = 0.30*0.35;       Acol  = 0.30*0.30;       % m^2    area
 Iviga = 0.30*0.35^3/12;  Icol  = 0.30*0.30^3/12;  % m^4    inercia_y
 
-%barra         1          2          3
+% barra   1             2          3
 A     = [ Aviga         Acol       Acol          ]; % areas
 I     = [ Iviga         Icol       Icol          ]; % inercias_y
-theta = [ atan2(2,4)    atan2(4,3) atan2(-6,2)   ]*180/pi; % angulo inclinacion (grados)
 long  = [ hypot(4,2)    5          hypot(2,6)    ]; % long barra (m)
+theta = [ atan2(2,4)    atan2(4,3) atan2(-6,2)   ]*180/pi; % angulo inclinacion (grados)
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
 % (se lee la barra x va del nodo i al nodo j)
@@ -83,8 +85,10 @@ end;
 f(4) = f(4) + 1.5;
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
-c = [1 2 3 10 11 12];    d = setdiff(1:ngdl, c); % d = [4 5 6 7 8 9];
+c = [1 2 3 10 11 12];    
+d = setdiff(1:ngdl, c); % d = [4 5 6 7 8 9];
 
+%% extraigo las submatrices y especifico las cantidades conocidas
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
@@ -93,7 +97,6 @@ c = [1 2 3 10 11 12];    d = setdiff(1:ngdl, c); % d = [4 5 6 7 8 9];
 %|    | = |         ||    | - |    |
 %| qc |   | Kdc Kdd || ad |   | fc |    en este caso en particular fd=0
 
-%% extraigo las submatrices y especifico las cantidades conocidas
 Kcc = K(c,c); Kcd = K(c,d); fd = f(c);
 Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 
@@ -103,18 +106,21 @@ ac = [0; 0; 0; 0; 0; 0]; % desplazamientos conocidos
 %% resuelvo el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);   % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd; % calculo fuerzas de equilibrio desconocidas
-a = zeros(ngdl,1);  a(c) = ac;   a(d) = ad; % desplazamientos 
-q = zeros(ngdl,1);  q(c) = qd;  %q(d) = qc; % fuerzas de equilibrio
 
-fprintf('\n\n Desplazamientos de los nodos en coord. globales = \n'); a
+% armo los vectores de desplazamientos (a) y fuerzas (q)
+a = zeros(ngdl,1);  q = zeros(ngdl,1);   % separo la memoria
+a(c) = ac;   a(d) = ad; % desplazamientos 
+q(c) = qd;  %q(d) = qc; % fuerzas nodales de equilibrio
+
+fprintf('Desplazamientos de los nodos en coord. globales = \n'); a
 
 %% imprimo las fuerzas internas en cada barra referidas a las coordenadas
 %% globales
 for e = 1:nb % para cada barra
-   fprintf('\n\n Fuerzas internas para barra %d en coord. globales = \n', e);
+   fprintf('\n\nFuerzas internas para barra %d en coord. globales = \n', e);
    qe_coord_glob = Ke{e}*a(idx(e,:)) - fe{e};
    disp(qe_coord_glob)
    
-   fprintf('\n\n Fuerzas internas para barra %d en coord. locales = \n', e);
+   fprintf('\nFuerzas internas para barra %d en coord. locales = \n', e);
    disp(T{e}*qe_coord_glob)
 end;
