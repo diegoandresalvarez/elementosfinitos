@@ -21,6 +21,9 @@ for e = 1:3           % para cada una de las barras e = 1, 2 y 3
    K(idx,idx) = K(idx,idx) + Ke; % suma matriz de rigidez local
 end
 
+disp('Imprimamos la matriz de rigidez =')   
+K
+
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = [1 2];    d = setdiff(1:4,c);
 
