@@ -38,8 +38,11 @@ c = [1 2];    d = setdiff(1:4,c);
 %|    | = |         ||    | - |    |
 %| qc |   | Kdc Kdd || ad |   | fc |     en este caso en particular fd=0
 
-Kcc = K(c,c); Kcd = K(c,d); ac = sym([0; 0]);
-Kdc = K(d,c); Kdd = K(d,d);                    fc = sym([0; P]);
+Kcc = K(c,c); Kcd = K(c,d);
+Kdc = K(d,c); Kdd = K(d,d);
+
+ac = sym([0; 0]);
+fc = sym([0; P]);
 
 %% resuelvo el sistema de ecuaciones
 % recuerde que \ es para resolver el sistema de ecuaciones eficientemente
