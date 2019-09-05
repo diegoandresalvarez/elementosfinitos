@@ -42,4 +42,4 @@ El programa [c1_calcular_carga_nodal_equivalente_carga_triangular.m](c1_calcular
 
 ![Image](c1_carga_nodal_equivalente_carga_triangular.svg)
 
-Dicho programa utiliza el **toolbox de álgebra simbólica**.
+para un elemento finito de pórtico bidimensional. Dicho programa utiliza el **toolbox de álgebra simbólica**.
