@@ -2,9 +2,10 @@
 
 %% Unidades en toneladas y cm
 
+%% se definen algunas constantes que hacen el código más legible
+NL1 = 1; NL2 = 2;
+
 %% defino las variables
-X = 1;
-Y = 2;
 ang   = atan2(300,400)*180/pi; % angulo especificado en grados
 
 %barra    1       2       3       4       5
@@ -29,20 +30,32 @@ gdl = [1 2    % fila = nodo
 E = 2040;           % ton/cm^2
 k = E.*area./long;  % rigidez de cada barra
 
+%% separo memoria
+K = zeros(8); 
+T = cell(5,1); 
+idx = cell(5,1);
+
 %% ensamblo la matriz de rigidez global
-K = zeros(8); T = cell(5,1); % separo memoria
 for e = 1:5  % para cada barra
-   idx = [gdl(LaG(e,X),:) gdl(LaG(e,Y),:)]; % saco los 4 gdls de la barra
+   % saco los 4 gdls de la barra
+   idx{e} = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)]; 
+
+   % matriz de transformacion de coordenadas para la barra e
    c = cosd(theta(e)); s = sind(theta(e));  % sin y cos de la inclinacion
-   T{e} = [ c  s  0  0         % matriz de transformacion de coordenadas
-           -s  c  0  0         % para la barra e
+   T{e} = [ c  s  0  0         
+           -s  c  0  0
             0  0  c  s 
             0  0 -s  c ];
-   Kloc = k(e)*[ 1  0 -1  0;   % matriz de rigidez local expresada en el 
-                 0  0  0  0;   % sistema de coordenadas locales para la                  
-                -1  0  1  0;   % barra e
+
+   % matriz de rigidez local expresada en el sistema de coordenadas locales para
+   % la barra e
+   Kloc = k(e)*[ 1  0 -1  0   
+                 0  0  0  0
+                -1  0  1  0
                  0  0  0  0 ];
-   K(idx,idx) = K(idx,idx) + T{e}'*Kloc*T{e}; % sumo a K global
+
+   % sumo a K global
+   K(idx{e},idx{e}) = K(idx{e},idx{e}) + T{e}'*Kloc*T{e};
 end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
@@ -70,15 +83,14 @@ ad = Kdd\(fc-Kdc*ac); % = linsolve(Kdd, fc-Kdc*ac)
 qd = Kcc*ac + Kcd*ad;
 
 % armo los vectores de desplazamientos (a) y fuerzas (q)
-a = zeros(8,1); q = zeros(8,1);  % separo la memoria
+a = zeros(8,1);  q = zeros(8,1);  % separo la memoria
 a(c) = ac;       q(c) = qd;
 a(d) = ad;     % q(d) = qc = 0
 
 %% calculo las cargas axiales (N) en cada barra
 N = zeros(5,1);
 for e = 1:5 % para cada barra
-   idx = [gdl(LaG(e,1),:) gdl(LaG(e,2),:)]; % saco los 4 gdls de la barra e
-   N(e) = k(e)*[-1 0 1 0]*T{e}*a(idx);
+   N(e) = k(e)*[-1 0 1 0]*T{e}*a(idx{e});
 end
 
 %% imprimo los resultados

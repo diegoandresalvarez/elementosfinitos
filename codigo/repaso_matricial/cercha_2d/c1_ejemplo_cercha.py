@@ -2,23 +2,24 @@
 
 #%% Ejemplo 11.3 Uribe Escamilla
 
+# Unidades en tonedadas y cm
+
 import numpy as np
 
 # define sin() y cos(), pero con un argumento en grados (como en MATLAB)
 np.cosd = lambda x : np.cos(np.deg2rad(x))
 np.sind = lambda x : np.sin(np.deg2rad(x))
 
-# Unidades en tonedadas y cm
+# se definen algunas constantes que hacen el código más legible
+NL1, NL2 = 0, 1
 
 #%% defino las variables
-X = 0
-Y = 1
 ang   = np.degrees(np.arctan2(300,400)) # ángulo especificado en grados
 
 #barra              1    2     3    4    5
-theta = np.array([ang,   0, -ang,   0, -90 ])*np.pi/180 # angulo de inclinacion
-long  = np.array([500, 400,  500, 400, 300 ])           # longitud barra
-area  = np.array([100,  40,  150,  40,  30 ])           # area barra
+theta = np.array([ang,   0, -ang,   0, -90 ]) # angulo de inclinacion
+long  = np.array([500, 400,  500, 400, 300 ]) # longitud barra
+area  = np.array([100,  40,  150,  40,  30 ]) # area barra
 
 # LaG: local a global: matriz que relaciona nodos locales y globales
 LaG = np.array([[1, 3],   # (se lee la barra x va del nodo i al nodo j)
@@ -38,20 +39,29 @@ E = 2040         # ton/cm^2
 k = E*area/long  # rigidez de cada barra
 
 #%% ensamblo la matriz de rigidez global
-K = np.zeros((8,8))
-T = 5*[None]        # MATLAB = cell(5,1) -> separo memoria
+K   = np.zeros((8,8))
+T   = 5*[None]        # MATLAB = cell(5,1) -> separo memoria
+idx = 5*[None]
 for e in range(5):  # para cada barra
-    idx = np.r_[gdl[LaG[e,X],:], gdl[LaG[e,Y],:]]   # saco los 4 gdls de la barra
-    c = np.cos(theta[e]); s = np.sin(theta[e]) # sin y cos de la inclinacion
-    T[e] = np.array([[ c,  s,  0,  0],         # matriz de transformacion de coordenadas
-                     [-s,  c,  0,  0],         # para la barra e
+    # saco los 4 gdls de la barra
+    idx[e] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
+
+    # matriz de transformacion de coordenadas para la barra e
+    c = np.cosd(theta[e]); s = np.sind(theta[e]) # sin y cos de la inclinación
+    T[e] = np.array([[ c,  s,  0,  0],           
+                     [-s,  c,  0,  0],           
                      [ 0,  0,  c,  s],
                      [ 0,  0, -s,  c]])
-    Kloc = k[e]*np.array([[ 1,  0, -1,  0],    # matriz de rigidez local expresada en el
-                          [ 0,  0,  0,  0],    # sistema de coordenadas locales para la
-                          [-1,  0,  1,  0],    # barra e
+
+    # matriz de rigidez local expresada en el sistema de coordenadas locales 
+    # para la barra e
+    Kloc = k[e]*np.array([[ 1,  0, -1,  0],    
+                          [ 0,  0,  0,  0],    
+                          [-1,  0,  1,  0],    
                           [ 0,  0,  0,  0]])
-    K[np.ix_(idx,idx)] += T[e].T@Kloc@T[e] # sumo a K global
+
+    # sumo a K global
+    K[np.ix_(idx[e],idx[e])] += T[e].T@Kloc@T[e]
 
 # %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = np.array([1, 2, 4])-1;    d = np.array([3, 5, 6, 7, 8])-1
@@ -79,14 +89,13 @@ qd = Kcc@ac + Kcd@ad
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
 a = np.zeros(8); q = np.zeros(8)  # separo la memoria
-a[c] = ac;     q[c] = qd
-a[d] = ad    # q[d] = qc = 0
+a[c] = ac;       q[c] = qd
+a[d] = ad      # q[d] = qc = 0
 
 # %% calculo las cargas axiales (N) en cada barra
 N = np.zeros(5)
 for e in range(5): # para cada barra
-    idx = np.r_[gdl[LaG[e,X],:], gdl[LaG[e,Y],:]] # saco los 4 gdls de la barra e
-    N[e] = k[e]*np.array([-1, 0, 1, 0])@T[e]@a[idx]
+    N[e] = k[e]*np.array([-1, 0, 1, 0])@T[e]@a[idx[e]]
 
 #%% imprimo los resultados
 print('a = \n', a, '\n')

@@ -1,5 +1,8 @@
 % Ejemplo 1.1. Oñate
 
+% se definen algunas constantes que hacen el código más legible
+NL1 = 1; NL2 = 2;
+
 %% defino las variables
 syms E A L P          % define las variables simbolicas
 
@@ -49,7 +52,7 @@ a(d) = ad;         % q(d) = qc = 0;
 %% calculo las cargas axiales en cada barra
 N = sym(zeros(3,1));
 for e = 1:3
-   N(e) = k(e)*(a(LaG(e,2)) - a(LaG(e,1)));
+   N(e) = k(e)*(a(LaG(e,NL2)) - a(LaG(e,NL1)));
 end
 
 %% imprimo los resultados

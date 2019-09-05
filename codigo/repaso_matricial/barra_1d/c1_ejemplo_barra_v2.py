@@ -5,6 +5,9 @@
 import numpy as np
 import sympy as sp
 
+# se definen algunas constantes que hacen el código más legible
+NL1, NL2 = 0, 1
+
 def ensamblar(K, idx, Ke):
     ''' Ensambla la matriz de rigidez local Ke en la matriz de rigidez global K
 
@@ -85,7 +88,7 @@ for i in range(len(d)):
 # %% calculo las cargas axiales en cada barra
 N = sp.zeros(3,1)
 for e in range(3):
-   N[e] = k[e]*(a[LaG[e,2-1]] - a[LaG[e,1-1]])
+   N[e] = k[e]*(a[LaG[e,NL2]] - a[LaG[e,NL1]])
 
 # %% imprimo los resultados
 print('\n\na = \n'); sp.pprint(a)
