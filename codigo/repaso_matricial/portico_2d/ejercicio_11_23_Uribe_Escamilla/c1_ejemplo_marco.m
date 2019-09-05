@@ -2,11 +2,11 @@
 
 %% Unidades en toneladas y metros
 
-clear; clc % borra memoria y pantalla
+% se definen algunas constantes que hacen el código más legible
+NL1 = 1; NL2 = 2;
+X = 1;   Y = 2;
 
 %% defino las variables
-X = 0; Y = 1; % variables que ayudan a la legibilidad del codigo
-
 Aviga = 0.30*0.35;       Acol  = 0.30*0.30;       % m^2    area
 Iviga = 0.30*0.35^3/12;  Icol  = 0.30*0.30^3/12;  % m^4    inercia_y
 
@@ -54,7 +54,7 @@ idx = zeros(nb,6);    % almacena los 6 gdls de las barras
 %% ensamblo la matriz de rigidez global (K) y vector de fuerzas global (f)
 for e = 1:nb  % para cada barra
    % saco los 6 gdls de la barra e
-   idx(e,:) = [gdl(LaG(e,1),:) gdl(LaG(e,2),:)];
+   idx(e,:) = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)];
    
    % matriz de transformacion de coordenadas para la barra e
    c = cosd(theta(e)); s = sind(theta(e));  % sin y cos de la inclinacion
