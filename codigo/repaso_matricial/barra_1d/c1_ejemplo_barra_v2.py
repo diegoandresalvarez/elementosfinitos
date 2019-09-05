@@ -53,6 +53,9 @@ for e in range(3):    # para cada una de las barras e = 1, 2 y 3
    Ke  = k[e]*np.array([[1, -1],[-1, 1]])  # matriz de rigidez local
    ensamblar(K, idx, Ke)                   # ensamblaje matricial
 
+print("Imprimamos la matriz de rigidez =")   
+sp.pprint(K)
+
 # %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = np.array([1, 2]) - 1;    d = np.setdiff1d(np.arange(4), c)
 c = sp.Matrix(c);            d = sp.Matrix(d)   # se convierten de Numpy a SymPy

@@ -24,6 +24,11 @@ for e = 1:3           % para cada una de las barras e = 1, 2 y 3
    K(idx,idx) = K(idx,idx) + Ke; % suma matriz de rigidez local
 end
 
+disp('Imprimamos la matriz de rigidez =')   
+sympref('AbbreviateOutput', false);
+pretty(K)
+sympref('AbbreviateOutput','default');
+
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 c = [1 2];    d = setdiff(1:4,c);
 
@@ -36,8 +41,11 @@ c = [1 2];    d = setdiff(1:4,c);
 %|    | = |         ||    | - |    |
 %| qc |   | Kdc Kdd || ad |   | fc |     en este caso en particular fd=0
 
-Kcc = K(c,c); Kcd = K(c,d); ac = sym([0; 0]);
-Kdc = K(d,c); Kdd = K(d,d);                    fc = sym([0; P]);
+Kcc = K(c,c); Kcd = K(c,d);
+Kdc = K(d,c); Kdd = K(d,d);
+
+ac = sym([0; 0]);
+fc = sym([0; P]);
 
 %% resuelvo el sistema de ecuaciones
 % recuerde que \ es para resolver el sistema de ecuaciones eficientemente
