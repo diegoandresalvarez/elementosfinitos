@@ -52,7 +52,7 @@ f =
 ## Ejemplo
 Considere la barra mostrada a continuación:
 
-![barraempotrada.svg](barraempotrada.svg)
+![c2_ejemplo_barra_con_carga_axial.svg](c2_ejemplo_barra_con_carga_axial.svg)
 
 ### Solución mediante el método de los elementos finitos
 [[image:c3_ejemplo_barra.png]]
