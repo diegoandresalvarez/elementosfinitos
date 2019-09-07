@@ -1,5 +1,3 @@
-clear, clc, close all        % borro la memoria, la pantalla y las figuras
-
 %% definicion del problema
 % Calcule los desplazamientos y las reacciones en el empotramiento 
 % de la barra mostrada
@@ -40,7 +38,7 @@ for e = 1:nef % ciclo sobre todos los elementos finitos
 end;
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
-c = 1;    d = 2:ngdl;
+c = 1;    d = setdiff(1:ngdl, c);
 
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
@@ -69,8 +67,8 @@ q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 faxial = zeros(nef,1);
 for e = 1:nef % ciclo sobre todas los elementos finitos
    Be = [-1/Le(e) 1/Le(e)];
-   ae = [a(LaG(e,1)); a(LaG(e,2))];
-   faxial(e) = (E*A)*Be*; % = D*B(e)*a(e)
+   ae = a(LaG(e,:));
+   faxial(e) = (E*A)*Be*ae; % = D*B(e)*a(e)
 end;
 
 %% imprimo los resultados
