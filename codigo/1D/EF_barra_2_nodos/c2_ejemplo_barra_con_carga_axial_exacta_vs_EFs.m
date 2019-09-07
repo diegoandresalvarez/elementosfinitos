@@ -2,7 +2,7 @@ clear, clc, close all        % borro la memoria, la pantalla y las figuras
 
 %% definicion del problema
 % Calcule los desplazamientos y las reacciones en el empotramiento 
-% de la viga mostrada
+% de la barra mostrada
 % 
 % | b (carga distribuida de magnitud b)
 % |->->->->->->->->->->->->->->->->
@@ -20,9 +20,9 @@ L   = 2;        % m           % longitud de la barra
 b   = 1000;     % N/m         % fuerza axial aplicada sobre cada EF
 P   = 250;      % N           % carga nodal al final de la barra
 
-xnod = linspace(0,L,nno);     % posicion de los nodos
-le  = diff(xnod);             % longitud de cada EF (= repmat(L/nef, nef, 1))
-k   = E.*A./le;               % rigidez de cada EF
+xnod = linspace(0, L, nno);   % posicion de los nodos
+Le  = diff(xnod);             % longitud de cada EF (= repmat(L/nef, nef, 1))
+k   = E.*A./Le;               % rigidez de cada EF
 
 LaG = [(1:(nno-1))' (2:nno)']; % definicion de EFs con respecto a nodos
 
@@ -36,7 +36,7 @@ K = zeros(ngdl);   % matriz de rigidez global
 for e = 1:nef % ciclo sobre todos los elementos finitos
    idx = LaG(e,:);
    K(idx,idx) = K(idx,idx) + k(e)*[1 -1; -1 1];
-   f(idx,:)   = f(idx,:)   + ((b*le(e))/2)*[1; 1];
+   f(idx,:)   = f(idx,:)   + ((b*Le(e))/2)*[1; 1];
 end;
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
@@ -68,7 +68,9 @@ q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 %% calculo las cargas axiales en cada elemento finito
 faxial = zeros(nef,1);
 for e = 1:nef % ciclo sobre todas los elementos finitos
-   faxial(e) = (E*A)*[-1/le(e) 1/le(e)]*[a(LaG(e,1)); a(LaG(e,2))]; % = D*B(e)*a(e)
+   Be = [-1/Le(e) 1/Le(e)];
+   ae = [a(LaG(e,1)); a(LaG(e,2))];
+   faxial(e) = (E*A)*Be*; % = D*B(e)*a(e)
 end;
 
 %% imprimo los resultados
