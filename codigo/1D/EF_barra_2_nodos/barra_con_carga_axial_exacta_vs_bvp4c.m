@@ -1,5 +1,3 @@
-clear, clc, close all        % borro la memoria, la pantalla y las figuras
-
 %% Definicion del problema
 % Calcule los desplazamientos y las reacciones en el empotramiento 
 % de la viga mostrada resolviendo la ecuacion diferencial numericamente con
@@ -24,20 +22,12 @@ P = 250;      % N           % carga nodal al final de la barra
 % ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0)=0
 %  dx \            dx    /                                faxial(L) = P
 %
-% bvp4c is a finite difference code that implements the three-stage Lobatto
-% IIIa formula. This is a collocation formula and the collocation polynomial
-% provides a C1-continuous solution that is fourth-order accurate uniformly 
-% in [a,b]. Mesh selection and error control are based on the residual of 
-% the continuous solution. 
 
 % En el caso mas general E, A y b son funciones. Escriba aqui las funciones
 % como tal en caso de tener un caso mas general
 EE = @(x) E;
 AA = @(x) A;
 bb = @(x) b;
-
-% Por favor, antes de continuar mirar la ayuda de MATLAB de los comandos
-% bvpinit, bvp4c, deval
 
 % Se define la ecuacion diferencial, expresada como un sistema de dos
 % ecuaciones diferenciales
@@ -55,11 +45,11 @@ cond_frontera = @ (ya,yb) [ ya(1)         % u(x=0)      = 0 (desplazamiento)
                             yb(2) - P ];  % faxial(x=L) = P (carga axial)
 
 % Solucion tentativa de la ecuacion diferencial
-x = linspace(0,L,30);           % 30 puntos uniformemente distrib. entre 0 y L
-sol_inicial = bvpinit(x,[0 0]); % el [ 0 0 ] hace sol_inicial.y = zeros(2,30)
+x = linspace(0,L,30);         % 30 puntos uniformemente distrib. entre 0 y L
+y_inicial = bvpinit(x,[0 0]); % el [ 0 0 ] hace y_inicial.y = zeros(2,30)
 
 % Solucion como tal de la ecuacion diferencial
-sol = bvp4c(sist_eq_dif, cond_frontera, sol_inicial);
+sol = bvp4c(sist_eq_dif, cond_frontera, y_inicial);
 
 % Evaluar la respuesta en los puntos x
 y = deval(sol,x);
@@ -68,35 +58,36 @@ y = deval(sol,x);
 u_exacta      = @(x) (-b*x.^2/2 + (P + b*L)*x)/(E*A); % desplazamiento
 faxial_exacta = @(x) (P + b*(L-x));                   % carga axial
 
-%% Grafico la solucion analitica y la solucion por el la funcion bvp4c
-figure                             % cree un nuevo lienzo
-
-% 1) grafico los desplazamientos de la barra
-subplot(2,1,1);                    % grafique en la parte superior (1) del lienzo
-plot(x, u_exacta(x), 'r');         % grafico solucion analitica
-hold on;                           % no borre el lienzo 
-plot(x, y(1,:), 'bx');             % grafico solucion por bvp4c
-title('Comparacion de la solucion analitica vs la funcion bvp4c para el desplazamiento');
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Desplazamiento (m)')       % titulo del eje Y
-legend('solucion exacta','solucion por bvp4c', 'Location','SouthEast');
-
-error_en_u = 100*max(abs((u_exacta(x) - y(1,:))./u_exacta(x)));
-fprintf('Maximo porcentaje de error en el calculo del desplazamiento = %g%%\n', error_en_u);
-
-
-% 2) grafico la carga axial de la barra
-subplot(2,1,2);                    % grafique en la parte inferior (2) del lienzo
-plot(x, faxial_exacta(x), 'r');    % grafico solucion analitica
-hold on;                           % no borre el lienzo
-plot(x, y(2,:), 'bx');             % grafico solucion por bvp4c
-title('Comparacion de la solucion analitica vs la funcion bvp4c para la carga axial');
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Carga axial (N)')          % titulo del eje Y
-legend('solucion exacta','solucion por bvp4c', 'Location','NorthEast');
+%% Se reportan los errores en el calculo
+error_en_u = max(abs(u_exacta(x) - y(1,:)));
+fprintf('Maximo error en el calculo del desplazamiento = %g m\n', error_en_u);
 
 error_en_faxial = 100*max(abs((faxial_exacta(x) - y(2,:))./faxial_exacta(x)));
-fprintf('Maximo porcentaje de error en el calculo de la fuerza axial = %g%%\n', error_en_faxial);
+fprintf('Maximo error en el calculo de la fuerza axial = %g N\n', error_en_faxial);
 
+%% Grafico la solucion analitica y la solucion por el la funcion bvp4c
+figure                       % cree un nuevo lienzo
+
+% 1) grafico los desplazamientos de la barra
+subplot(2,1,1);              % grafique en la parte superior (1) del lienzo
+plot(x, u_exacta(x), 'r');   % grafico solucion analitica
+hold on;                     % no borre el lienzo 
+plot(x, y(1,:), 'bx');       % grafico solucion por bvp4c()
+title('Comparacion de la solucion analitica vs la funcion bvp4c() para el desplazamiento');
+xlabel('Eje X (m)')          % titulo del eje X
+ylabel('Desplazamiento (m)') % titulo del eje Y
+legend('solucion exacta de u(x)','solucion por bvp4c()', ...
+                                                   'Location','SouthEast');
+
+% 2) grafico la carga axial de la barra
+subplot(2,1,2);              % grafique en la parte inferior (2) del lienzo
+plot(x, faxial_exacta(x), 'r');  % grafico solucion analitica
+hold on;                     % no borre el lienzo
+plot(x, y(2,:), 'bx');       % grafico solucion por bvp4c()
+title('Comparacion de la solucion analitica vs la funcion bvp4c() para la carga axial');
+xlabel('Eje X (m)')          % titulo del eje X
+ylabel('Carga axial (N)')    % titulo del eje Y
+legend('solucion exacta de f_{axial}(x)','solucion por bvp4c()', ...
+                                                   'Location','NorthEast');
 %% bye, bye!!!
 return;
