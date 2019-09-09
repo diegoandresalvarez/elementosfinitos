@@ -1,0 +1,185 @@
+% !TeX spellcheck = en_US
+% !TeX document-id = {cf032f19-4427-4a50-b0ba-ddee651fb980}
+% !TeX program = txs:///dvi-ps-pdf-chain
+% TeX program = txs:///dvi-chain
+%DVI -> PS -> PDF
+% 10.1016/j.compstruc.2017.04.006 
+% OJO VERIFICAR IDIOMA GB
+
+%\documentclass[preprint,12pt,authoryear,letterpaper,times]{elsarticle}
+%\documentclass[final,1p,times,twocolumn,authoryear]{elsarticle}
+\documentclass[12pt,landscape,letterpaper]{article}
+
+\usepackage{parskip} 
+\usepackage[margin=3cm,left=5cm,right=5cm]{geometry}
+\usepackage{parskip}
+%\usepackage{times}
+\usepackage{braket}
+\usepackage{mathtools} \mathtoolsset{showonlyrefs} %show only referenced equations
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{psfrag}
+\usepackage[spanish]{babel}
+\usepackage{mathrsfs}  % mathscr
+\usepackage{bbm} % R Q N Z symbols
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+% FOR USE WITH THE TODONOTES PACKAGE:
+\usepackage{xcolor}
+\usepackage[spanish,textwidth=2cm]{todonotes} %todonotes goes after xcolor (messages, what to do!)
+\newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{\begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
+
+\newcommand{\pf}{P_\text{\textnormal{f}}}
+\newcommand{\LP}{\underline{P_{\Gamma}}}
+\newcommand{\UP}{\overline{P_{\Gamma}}}
+\newcommand{\rv}[1]{{\uppercase{#1}}}    %random variable
+\newcommand{\ve}[1]{{\boldsymbol{#1}}}
+\newcommand{\ma}[1]{{\boldsymbol{#1}}}
+\newcommand{\dd}{\operatorname{d} \!}
+%\newcommand{\nuevo}[1]{\textsf{\textcolor{red}{#1}}}
+\newcommand{\nuevo}[1]{#1}
+\def\bigtimes{\mathbin{\vcenter{\hbox{\Large $\times$}}}} %\mbox{\Large$\times$} = \bigtimes
+%\newcommand{\nuevo}[1]{{#1}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+
+\usepackage[dvips,%
+colorlinks=true,citecolor=blue,%
+plainpages=false,pdfpagelabels,%
+breaklinks]{hyperref}
+\hypersetup{pdffitwindow=false}
+
+\usepackage{hypernat} % in this way [sort&compress]{natbib} and hyperref will work together
+
+\usepackage{breakurl}
+
+\begin{document}
+
+\section{Se definen los campos vectoriales de desplazamientos y  de desplazamientos virtuales}
+
+Desplazamientos al interior del elemento:
+\begin{align}
+u^{(e)}(x) 
+&= N_1^{(e)}(x) u_1^{(e)} + N_2^{(e)}(x) u_2^{(e)} 
+= \sum_{i=1}^2 N_i^{(e)}(x) u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+N_1^{(e)}(x) & N_2^{(e)}(x)
+\end{bmatrix}}_{\ma{N}^{(e)}(x)}
+\underbrace{\begin{bmatrix}
+   u_1^{(e)} \\ u_2^{(e)}
+   \end{bmatrix}}_{\ma{a}^{(e)}} = \ma{N}^{(e)}(x)  \ve{a}^{(e)}
+\end{align}
+
+Desplazamientos virtuales al interior del elemento:
+\begin{align}
+\delta u^{(e)}(x) 
+&= N_1^{(e)}(x) \delta u_1^{(e)} + N_2^{(e)}(x) \delta u_2^{(e)} = \sum_{i=1}^2 N_i^{(e)}(x) \delta u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+   N_1^{(e)}(x) & N_2^{(e)}(x)
+   \end{bmatrix}}_{\ma{N}^{(e)}(x)}
+\underbrace{\begin{bmatrix}
+   \delta u_1^{(e)} \\ \delta u_2^{(e)}
+   \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{N}^{(e)}(x) \delta \ve{a}^{(e)}
+\end{align}
+
+$\ma{N}^{(e)}(x)$ se conoce como la \emph{matriz de funciones de forma del elemento} $e$.
+
+\newpage
+
+\section{Se definen los campos vectoriales de deformaciones y  de deformaciones virtuales}
+
+Deformaciones al interior del elemento:
+\begin{align}
+\varepsilon^{(e)}(x) = \frac{\dd u^{(e)}(x)}{\dd x} 
+&= \sum_{i=1}^2 \frac{\dd N_i^{(e)}(x)}{\dd x} u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+  \frac{\dd N_1^{(e)}(x)}{\dd x} & \frac{\dd N_2^{(e)}(x)}{\dd x}
+   \end{bmatrix}}_{\ma{B}^{(e)}(x)}
+\underbrace{\begin{bmatrix}
+   u_1^{(e)} \\ u_2^{(e)}
+   \end{bmatrix}}_{\ma{a}^{(e)}} = \ma{B}^{(e)}(x)  \ve{a}^{(e)}
+\end{align}
+
+Deformaciones virtuales al interior del elemento:
+\begin{align}
+\delta \varepsilon^{(e)}(x) &= \delta \left(\frac{\dd u^{(e)}(x)}{\dd x}\right) = \frac{\dd \delta u^{(e)}(x)}{\dd x} 
+= \sum_{i=1}^2 \frac{\dd N_i^{(e)}(x)}{\dd x} \delta u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+   \frac{\dd N_1^{(e)}(x)}{\dd x} & \frac{\dd N_2^{(e)}(x)}{\dd x}
+   \end{bmatrix}}_{\ma{B}^{(e)}(x)}
+\underbrace{\begin{bmatrix}
+  \delta u_1^{(e)} \\ \delta u_2^{(e)}
+   \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{B}^{(e)}(x) \delta \ve{a}^{(e)}
+\end{align}
+
+$\ma{B}^{(e)}(x)$ se conoce como la \emph{matriz de deformaciones del elemento} $e$.
+
+\newpage
+\section{Se define el campo vectorial de esfuerzos}
+\begin{align}
+\sigma^{(e)}(x) 
+&= E^{(e)}(x) \varepsilon^{(e)}(x) \\
+&= E^{(e)}(x) \ma{B}^{(e)}(x) \ve{a}^{(e)}
+\end{align}
+
+Tenga en cuenta que las fuerzas axiales al interior del elemento están dadas por:
+\begin{align}
+f^{(e)}_{\text{axial}}(x) 
+&= A^{(e)}(x) \sigma^{(e)}(x) \\
+&= \underbrace{E^{(e)}(x) A^{(e)}(x)}_{\ma{D}^{(e)}(x)} \ma{B}^{(e)}(x) \ve{a}^{(e)} \\
+&= \ma{D}^{(e)}(x) \ma{B}^{(e)}(x) \ve{a}^{(e)}
+\end{align}
+$\ma{D}^{(e)}(x)$ se conoce como la \emph{matriz constitutiva del elemento} $e$.
+
+\newpage
+\section{Se reemplaza en el PTV}
+\begin{align}
+\iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_2^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \delta u_1^{(e)} R_1^{(e)} + \delta u_2^{(e)} R_2^{(e)}
+\end{align}
+
+Teniendo en cuenta que para un escalar $c$ se tiene que $c = c^T$ tenemos que:
+\begin{equation}
+\iiint_{V^{(e)}} \underbrace{\delta \ve{a}_{(e)}^T \ma{B}_{(e)}^T(x)}_{\delta\varepsilon_{(e)}^T(x)} \underbrace{E^{(e)}(x) \ma{B}^{(e)}(x) \ve{a}^{(e)}}_{\sigma^{(e)}(x)} \dd V = %\\
+%
+\int_{x_1^{(e)}}^{x_2^{(e)}} \underbrace{\delta \ve{a}_{(e)}^T \ma{N}_{(e)}^T(x)}_{\delta u_{(e)}^T(x)} b^{(e)}(x) \dd x +
+\underbrace{\begin{bmatrix}
+   \delta u_1^{(e)} & \delta u_2^{(e)}
+   \end{bmatrix}}_{\delta \ma{a}_{(e)}^T}
+\underbrace{\begin{bmatrix}
+R_1^{(e)} \\ R_2^{(e)}
+   \end{bmatrix}}_{\ma{q}^{(e)}}
+\end{equation}
+Y como los vectores $\ve{a}^{(e)}$ y $\delta \ve{a}^{(e)}$  son independientes de $x$, salen de las integrales:
+\begin{equation}
+\delta \ve{a}_{(e)}^T \int_{x_1^{(e)}}^{x_2^{(e)}} \iint_{A^{(e)}(x)}  \ma{B}_{(e)}^T(x) E^{(e)}(x) \ma{B}^{(e)}(x) \dd A \dd x\  \ve{a}^{(e)}  %\\
+%
+- \delta \ve{a}_{(e)}^T \int_{x_1^{(e)}}^{x_2^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x 
+- \delta \ma{a}_{(e)}^T \ma{q}^{(e)} = 0
+\end{equation}
+Se factoriza $\delta \ma{a}_{(e)}^T$ y se tiene en cuenta que el integrando de la primera integral no depende de $A$
+\begin{equation}
+\delta \ve{a}_{(e)}^T 
+\left[ \int_{x_1^{(e)}}^{x_2^{(e)}} \ma{B}_{(e)}^T(x) E^{(e)}(x) A^{(e)}(x) \ma{B}^{(e)}(x) \dd x \ve{a}^{(e)}  
+%
+- \int_{x_1^{(e)}}^{x_2^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x 
+- \ma{q}^{(e)}\right] = 0
+\end{equation}
+Teniendo en cuenta que $\ma{D}^{(e)}(x) = E^{(e)}(x) A^{(e)}(x)$ y que el vector de desplazamientos virtuales $\delta \ma{a}^{(e)}$ es arbitrario, se tiene que el término entre corchetes debe valer cero, por lo que:
+\begin{equation}
+\underbrace{\int_{x_1^{(e)}}^{x_2^{(e)}} \ma{B}_{(e)}^T(x) \ma{D}^{(e)}(x) \ma{B}^{(e)}(x) \dd x}_{\ma{K}^{(e)}} \ve{a}^{(e)} 
+- \underbrace{\int_{x_1^{(e)}}^{x_2^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x}_{\ma{f}^{(e)}} 
+= \ma{q}^{(e)}
+\end{equation}
+es decir,
+\begin{equation}
+\ma{K}^{(e)} \ve{a}^{(e)} - \ma{f}^{(e)} = \ma{q}^{(e)}
+\end{equation}
+\end{document}

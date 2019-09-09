@@ -1,0 +1,144 @@
+% !TeX spellcheck = en_US
+% !TeX document-id = {cf032f19-4427-4a50-b0ba-ddee651fb980}
+% !TeX program = txs:///dvi-ps-pdf-chain
+% TeX program = txs:///dvi-chain
+%DVI -> PS -> PDF
+% 10.1016/j.compstruc.2017.04.006 
+% OJO VERIFICAR IDIOMA GB
+
+%\documentclass[preprint,12pt,authoryear,letterpaper,times]{elsarticle}
+%\documentclass[final,1p,times,twocolumn,authoryear]{elsarticle}
+\documentclass[12pt,letterpaper,landscape]{article}
+
+\usepackage{parskip} 
+\usepackage[margin=3cm,left=5cm,right=5cm]{geometry}
+\usepackage{parskip}
+%\usepackage{times}
+\usepackage{braket}
+\usepackage{mathtools} \mathtoolsset{showonlyrefs} %show only referenced equations
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{psfrag}
+\usepackage[spanish]{babel}
+\usepackage{mathrsfs}  % mathscr
+\usepackage{bbm} % R Q N Z symbols
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+% FOR USE WITH THE TODONOTES PACKAGE:
+\usepackage{xcolor}
+\usepackage[spanish,textwidth=2cm]{todonotes} %todonotes goes after xcolor (messages, what to do!)
+\newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{\begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
+
+\newcommand{\pf}{P_\text{\textnormal{f}}}
+\newcommand{\LP}{\underline{P_{\Gamma}}}
+\newcommand{\UP}{\overline{P_{\Gamma}}}
+\newcommand{\rv}[1]{{\uppercase{#1}}}    %random variable
+\newcommand{\ve}[1]{{\boldsymbol{#1}}}
+\newcommand{\ma}[1]{{\boldsymbol{#1}}}
+\newcommand{\dd}{\operatorname{d} \!}
+%\newcommand{\nuevo}[1]{\textsf{\textcolor{red}{#1}}}
+\newcommand{\nuevo}[1]{#1}
+\def\bigtimes{\mathbin{\vcenter{\hbox{\Large $\times$}}}} %\mbox{\Large$\times$} = \bigtimes
+%\newcommand{\nuevo}[1]{{#1}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+
+\usepackage[dvips,%
+colorlinks=true,citecolor=blue,%
+plainpages=false,pdfpagelabels,%
+breaklinks]{hyperref}
+\hypersetup{pdffitwindow=false}
+
+\usepackage{hypernat} % in this way [sort&compress]{natbib} and hyperref will work together
+
+\usepackage{breakurl}
+
+\begin{document}
+
+\section{Se definen los campos vectoriales de desplazamientos y  de desplazamientos virtuales}
+
+Desplazamientos en cualquier punto de la barra:
+\begin{align}
+u(x) = \sum_{i=1}^n N_i^{(g)}(x) u_i = \ma{N}^{(g)}(x)  \ve{a}
+\end{align}
+
+Desplazamientos virtuales en cualquier punto de la barra:
+\begin{align}
+\delta u(x) = \sum_{i=1}^n N_i^{(g)}(x) \delta u_i = \ma{N}^{(g)}(x) \delta \ve{a}
+\end{align}
+
+$\ma{N}^{(g)}(x) = \left[N_1^{(g)}(x),\ \ldots, \ N_n^{(g)}(x)\right]$ es la \emph{matriz de funciones de forma globales}.
+
+$\ve{a} = [u_1,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
+
+\newpage
+
+\section{Se definen los campos vectoriales de deformaciones y  de deformaciones virtuales}
+
+Deformaciones  en cualquier punto de la barra:
+\begin{align}
+\varepsilon(x) = \frac{\dd u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} u_i = \ma{B}^{(g)}(x)  \ve{a}
+\end{align}
+
+Deformaciones virtuales  en cualquier punto de la barra:
+\begin{align}
+\delta \varepsilon(x) = \delta \left(\frac{\dd u(x)}{\dd x}\right) = \frac{\dd \delta u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} \delta u_i = \ma{B}^{(g)}(x) \delta \ve{a}
+\end{align}
+
+$\ma{B}^{(g)}(x) = \left[\frac{N_1^{(g)}(x)}{\dd x},\ \ldots, \ \frac{N_n^{(g)}(x)}{\dd x}\right]$ es la \emph{matriz de deformaciones globales}.
+
+\newpage
+
+\section{Se define el campo vectorial de esfuerzos}
+Los esfuerzos en cualquier punto de la barra están dados por:
+\begin{align}
+\sigma(x) = E(x) \varepsilon(x) = E(x) \ma{B}^{(g)}(x) \ve{a}
+\end{align}
+
+Tenga en cuenta que las fuerzas axiales en cualquier punto de la barra están dadas por:
+\begin{align}
+f_{\text{axial}}(x) = A(x) \sigma(x) &= \underbrace{E(x) A(x)}_{\ma{D}(x)} \ma{B}^{(g)}(x)
+\ve{a} = \ma{D}(x) \ma{B}^{(g)}(x) \ve{a}
+\end{align}
+$\ma{D}(x)$ se conoce como la \emph{matriz constitutiva}
+
+\newpage
+\section{Se reemplaza en el PTV}
+\begin{align}
+\iiint_{V} \delta\varepsilon(x) \sigma(x) \dd V = \int_{x_1}^{x_2} \delta u(x) b(x) \dd x + \sum_{i=1}^n \delta u_i R_i
+\end{align}
+Aquí $\ve{q} = [R_1,\ \ldots,\ R_n]^T$ es el \emph{vector de fuerzas nodales de equilibrio}. Teniendo en cuenta que para un escalar $c$ se tiene que $c = c^T$ tenemos que:
+\begin{equation}
+\iiint_{V} \underbrace{\delta \ve{a}^T \ma{B}_{(g)}^T(x)}_{\delta\varepsilon^T(x)} \underbrace{E(x) \ma{B}^{(g)}(x) \ve{a}}_{\sigma(x)} \dd V = \int_{x_1}^{x_2} \underbrace{\delta \ve{a}^T \ma{N}_{(g)}^T(x)}_{\delta u^T(x)} b(x) \dd x +
+\delta \ma{a}^T \ma{q}
+\end{equation}
+
+Y como los vectores $\ve{a}$ y $\delta \ve{a}$  son independientes de $x$, salen de las integrales:
+\begin{equation}
+\delta \ve{a}^T \int_{x_1}^{x_2} \iint_{A(x)}  \ma{B}_{(g)}^T(x) E(x) \ma{B}^{(g)}(x) \dd A \dd x\ \ve{a} - \delta \ve{a}^T \int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x 
+- \delta \ma{a}^T \ma{q} = 0
+\end{equation}
+Se factoriza $\delta \ma{a}^T$ y se tiene en cuenta que el integrando de la primera integral no depende de $A$
+\begin{equation}
+\delta \ve{a}^T 
+\left[ \int_{x_1}^{x_2} \ma{B}_{(g)}^T(x) E(x) A(x) \ma{B}^{(g)}(x) \dd x \ve{a}
+%
+- \int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x 
+- \ma{q}\right] = 0
+\end{equation}
+
+Teniendo en cuenta que $\ma{D}(x) = E(x) A(x)$ y que el vector de desplazamientos virtuales $\delta \ma{a}$ es arbitrario, se tiene que el término entre corchetes debe valer cero, por lo que:
+\begin{equation}
+\underbrace{\int_{x_1}^{x_2} \ma{B}_{(g)}^T(x) \ma{D}(x) \ma{B}^{(g)}(x) \dd x}_{\ma{K}} \ve{a} 
+- \underbrace{\int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x}_{\ma{f}} 
+= \ma{q}
+\end{equation}
+es decir,
+\begin{equation}
+\ma{K}\ve{a} - \ma{f} = \ma{q}
+\end{equation}
+\end{document}
