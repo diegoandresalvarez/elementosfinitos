@@ -2,13 +2,13 @@
 
 El elemento finito considerado es el siguiente:
 
-![c2_barra_con_carga.svg](c2_barra_con_carga.svg)
+![EF_barra_2_nodos.svg](EF_barra_2_nodos.svg)
 
 se asume que está sometido a una carga axial de magnitud constante.
 
 ## Deducción de las funciones de forma
 
-La salida de [c2_deduccion_func_forma_EF_barra_2_nodos.m](c2_deduccion_func_forma_EF_barra_2_nodos.m) es:
+La salida de [deduccion_func_forma_EF_barra_2_nodos.m](deduccion_func_forma_EF_barra_2_nodos.m) es:
 ```
           u1 x2 - u2 x1
 a0 =   - -------------
@@ -24,7 +24,7 @@ u =   | ------- - ------- | u1 + | ------- - ------- | u2
 ```
 
 ## Deducción de las matriz de rigidez K y el vector de fuerzas nodales equivalentes
-La salida de [c2_deduccion_K_y_f_EF_barra_2_nodos.m](c2_deduccion_K_y_f_EF_barra_2_nodos.m) es:
+La salida de [deduccion_K_y_f_EF_barra_2_nodos.m](deduccion_K_y_f_EF_barra_2_nodos.m) es:
 ```
 K = 
   +-              -+
@@ -52,11 +52,11 @@ f =
 ## Ejemplo
 Considere la barra mostrada a continuación:
 
-![c2_ejemplo_barra_con_carga_axial.svg](c2_ejemplo_barra_con_carga_axial.svg)
+![barra_con_carga_axial.svg](barra_con_carga_axial.svg)
 
 ### Solución mediante el método de los elementos finitos
-* [c2_ejemplo_barra_con_carga_axial_exacta_vs_EFs.m](c2_ejemplo_barra_con_carga_axial_exacta_vs_EFs.m)
+* [barra_con_carga_axial_exacta_vs_EFs.m](barra_con_carga_axial_exacta_vs_EFs.m)
 
 ### Solución resolviendo la ecuación diferencial asociada
 NOTA: El siguiente programa hace uso de la función `bvp4c` de MATLAB.
-* [c2_ejemplo_barra_con_carga_axial_exacta_vs_bvp4c.m](c2_ejemplo_barra_con_carga_axial_exacta_vs_bvp4c.m)
+* [barra_con_carga_axial_exacta_vs_bvp4c.m](barra_con_carga_axial_exacta_vs_bvp4c.m)
