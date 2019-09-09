@@ -55,8 +55,10 @@ Considere la barra mostrada a continuación:
 ![barra_con_carga_axial.svg](barra_con_carga_axial.svg)
 
 ### Solución mediante el método de los elementos finitos
-* [barra_con_carga_axial_exacta_vs_EFs.m](barra_con_carga_axial_exacta_vs_EFs.m)
+* MATLAB: [barra_con_carga_axial_exacta_vs_EFs.m](barra_con_carga_axial_exacta_vs_EFs.m)
+* PYTHON: [barra_con_carga_axial_exacta_vs_EFs.py](barra_con_carga_axial_exacta_vs_EFs.py)
 
 ### Solución resolviendo la ecuación diferencial asociada
 NOTA: El siguiente programa hace uso de la función `bvp4c` de MATLAB.
-* [barra_con_carga_axial_exacta_vs_bvp4c.m](barra_con_carga_axial_exacta_vs_bvp4c.m)
+* MATLAB: [barra_con_carga_axial_exacta_vs_bvp4c.m](barra_con_carga_axial_exacta_vs_bvp4c.m)
+* PYTHON: [barra_con_carga_axial_exacta_vs_bvp4c.py](barra_con_carga_axial_exacta_vs_bvp4c.py)
