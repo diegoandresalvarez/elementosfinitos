@@ -7,7 +7,7 @@ clear, clc, close all        % borro la memoria, la pantalla y las figuras
 % 
 % | b (carga distribuida de magnitud b)
 % |->->->->->->->->->->->->->->->->
-% |================================o--> P (carga puntual P en nodo nno)
+% |================================o--> P (carga puntual P en extremo derecho)
 % |<----longitud L de la barra---->|    el area transversal de la barra es A
 
 %% Defino las variables

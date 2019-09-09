@@ -89,13 +89,13 @@ print('Fuerzas nodales equivalentes(N) = \n',                 f[:,np.newaxis])
 print('Fuerzas nodales de equilibrio (N) = \n',               q[:,np.newaxis])
 print('Cargas axiales en cada elemento finito (N) = \n', faxial[:,np.newaxis])
 
-# %% Grafico la solucion analitica y la solucion por el MEF
+# %% Grafico la solución analítica y la solución por el MEF
 # 1) grafico los desplazamientos de la barra
 u = lambda x : (-b*x**2/2 + (P + b*L)*x)/(E*A) # solución analítica para el despl.
 
 plt.figure                        # cree un nuevo lienzo
 plt.subplot(2,1,1)                # grafique en la parte superior (1) del lienzo
-xx = np.linspace(0, L, 100)       # 100 puntos unif/ distrib. entre 0 y L
+xx = np.linspace(0, L, 100)       # 100 puntos equidistantes entre 0 y L
 plt.plot(xx, u(xx), 'r', label='solución exacta de $u(x)$')
 plt.plot(xnod, a, 'b.-', label='solución por el MEF')
 plt.title('Comparación de la solución analítica con el MEF para el desplazamiento')

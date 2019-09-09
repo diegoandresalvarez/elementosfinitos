@@ -84,7 +84,7 @@ u = @(x) (-b*x.^2/2 + (P + b*L)*x)/(E*A); % solucion analitica para el despl.
 
 figure                             % cree un nuevo lienzo
 subplot(2,1,1);                    % grafique en la parte superior (1) del lienzo
-xx = linspace(0,L,100);            % 100 puntos unif/ distrib. entre 0 y L
+xx = linspace(0,L,100);            % 100 puntos equidistantes entre 0 y L
 plot(xx, u(xx), 'r');              % grafico solucion analitica
 hold on;                           % no borre el lienzo 
 plot(xnod, a, 'b.-');              % grafico solucion por MEF
