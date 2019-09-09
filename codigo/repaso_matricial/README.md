@@ -10,26 +10,17 @@ Los programas de esta carpeta, estiman las reacciones en los apoyos (nodos 1 y 2
 
 ![figura](barra_1d/01_tres_barras_a_traccion_onate_1_1.svg)
 
-# Análisis matricial de cerchas 2D
-## Ejemplo 11.3 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
-Resuelva la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
+## Análisis matricial de cerchas 2D
+Los programas de esta carpeta, resuelven la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
 ![Image](cercha_2d/c1_ej_11_3_uribe_escamilla.svg)
 
-* Solución Uribe Escamilla: [c1_ej_11_3_uribe_escamilla.pdf](cercha_2d/c1_ej_11_3_uribe_escamilla.pdf)
-* Código solución MATLAB: [c1_ejemplo_cercha.m](cercha_2d/c1_ejemplo_cercha.m)
-* Código solución Python 3: [c1_ejemplo_cercha.py](cercha_2d/c1_ejemplo_cercha.py)
-
-
 ## Análisis matricial de cerchas 2D con apoyos inclinados
-Resuelva la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
+Los programas de esta carpeta, resuelven la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
 ![Image](cercha_2d/c1_ejemplo_cercha_inclined_support.svg)
 
-Código solución MATLAB: [c1_ejemplo_cercha_inclined_support.m](cercha_2d/c1_ejemplo_cercha_inclined_support.m)
+## Análisis matricial de pórticos 2D
 
-
-# Análisis matricial de pórticos 2D
-
-## Deducción de la matriz de rigidez de un pórtico en 2D
+### Deducción de la matriz de rigidez de un pórtico en 2D
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbolica**
 <!---
