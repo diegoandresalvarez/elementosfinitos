@@ -66,7 +66,16 @@ breaklinks]{hyperref}
 
 Desplazamientos en cualquier punto de la barra:
 \begin{align}
-u(x) = \sum_{i=1}^n N_i^{(g)}(x) u_i = \ma{N}^{(g)}(x)  \ve{a}
+u(x) = \sum_{i=1}^n N_i^{(g)}(x) u_i = 
+\underbrace{%
+   \begin{bmatrix}
+   N_1^{(g)}(x) & N_2^{(g)}(x) & \cdots &N_n^{(g)}(x)
+   \end{bmatrix}}_{\ma{N}^{(g)}(x)}
+   \underbrace{\begin{bmatrix}
+      u_1 \\ u_2 \\ \vdots \\u_n
+   \end{bmatrix}%
+}_{\ma{a}}
+= \ma{N}^{(g)}(x)  \ve{a}
 \end{align}
 
 Desplazamientos virtuales en cualquier punto de la barra:
@@ -74,7 +83,7 @@ Desplazamientos virtuales en cualquier punto de la barra:
 \delta u(x) = \sum_{i=1}^n N_i^{(g)}(x) \delta u_i = \ma{N}^{(g)}(x) \delta \ve{a}
 \end{align}
 
-$\ma{N}^{(g)}(x) = \left[N_1^{(g)}(x),\ \ldots, \ N_n^{(g)}(x)\right]$ es la \emph{matriz de funciones de forma globales}.
+$\ma{N}^{(g)}(x)$ es la \emph{matriz de funciones de forma globales}.
 
 $\ve{a} = [u_1,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
 
@@ -84,15 +93,30 @@ $\ve{a} = [u_1,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales
 
 Deformaciones  en cualquier punto de la barra:
 \begin{align}
-\varepsilon(x) = \frac{\dd u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} u_i = \ma{B}^{(g)}(x)  \ve{a}
+\varepsilon(x) = \frac{\dd u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} u_i = 
+\underbrace{%
+   \begin{bmatrix}
+      \frac{\dd N_1^{(g)}(x)}{\dd x} & 
+      \frac{\dd N_2^{(g)}(x)}{\dd x} & 
+      \cdots &
+      \frac{\dd N_n^{(g)}(x)}{\dd x}
+      \end{bmatrix}%
+   }_{\ma{B}^{(g)}(x)}
+   \underbrace{%
+      \begin{bmatrix}
+         u_1 \\ u_2 \\ \vdots \\ u_n
+      \end{bmatrix}%
+   }_{\ma{a}} = 
+\ma{B}^{(g)}(x)  \ve{a}
 \end{align}
 
 Deformaciones virtuales  en cualquier punto de la barra:
 \begin{align}
-\delta \varepsilon(x) = \delta \left(\frac{\dd u(x)}{\dd x}\right) = \frac{\dd \delta u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} \delta u_i = \ma{B}^{(g)}(x) \delta \ve{a}
+\delta \varepsilon(x) = \delta \left(\frac{\dd u(x)}{\dd x}\right) = \frac{\dd \delta u(x)}{\dd x} = \sum_{i=1}^n \frac{\dd N_i^{(g)}(x)}{\dd x} \delta u_i =
+\ma{B}^{(g)}(x) \delta \ve{a}
 \end{align}
 
-$\ma{B}^{(g)}(x) = \left[\frac{N_1^{(g)}(x)}{\dd x},\ \ldots, \ \frac{N_n^{(g)}(x)}{\dd x}\right]$ es la \emph{matriz de deformaciones globales}.
+$\ma{B}^{(g)}(x)$ es la \emph{matriz de deformaciones globales}.
 
 \newpage
 
