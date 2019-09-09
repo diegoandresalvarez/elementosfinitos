@@ -10,9 +10,11 @@ import numpy as np
 np.cosd = lambda x : np.cos(np.deg2rad(x))
 np.sind = lambda x : np.sin(np.deg2rad(x))
 
-# %% defino las variables
-X, Y = 0, 1     # variables que ayudan a la legibilidad del código
+# se definen algunas constantes que hacen el código más legible
+NL1, NL2 = 0 ,1
+X,   Y   = 0, 1
 
+# %% defino las variables
 Aviga = 0.30*0.35;        Acol  = 0.30*0.30        # m^2    área
 Iviga = 0.30*0.35**3/12;  Icol  = 0.30*0.30**3/12  # m^4    inercia_y
 
@@ -62,7 +64,7 @@ idx = np.zeros((nb, 6), dtype=int) # almacena los 6 gdls de las barras
 # %% ensamblo la matriz de rigidez global (K) y vector de fuerzas global (f)
 for e in range(nb): # para cada barra
     # saco los 6 gdls de la barra e
-    idx[e,:] = np.r_[gdl[LaG[e,X],:], gdl[LaG[e,Y],:]]
+    idx[e,:] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
     
     # matriz de transformaciÓn de coordenadas para la barra e
     c = np.cosd(theta[e]); s = np.sind(theta[e]);  # sin y cos de la inclinación
@@ -118,8 +120,8 @@ qd = Kcc@ac + Kcd@ad                   # calculo fuerzas de equilibrio desconoci
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
 a = np.zeros(ngdl); q = np.zeros(ngdl)  # separo la memoria
-a[c] = ac;    a[d] = ad                 # desplazamientos 
-q[c] = qd   # q[d] = qc = 0             # fuerzas nodales de equilibrio
+a[c] = ac;          a[d] = ad           # desplazamientos 
+q[c] = qd         # q[d] = qc = 0       # fuerzas nodales de equilibrio
 
 print('Desplazamientos de los nodos en coord. globales = ')
 print(a)

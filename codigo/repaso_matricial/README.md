@@ -68,12 +68,6 @@ v_j\\
 
 <!---
 
-* Cálculo de la carga nodal equivalente para una carga triangular: 
-[[image:c1_carga_nodal_equivalente_carga_triangular.svg width="900"]]
-** Código compatible con MATLAB 2013a: [[file:c1_calcular_carga_nodal_equivalente_carga_triangular_MATLAB2013a.m]] **usa el toolbox de álgebra simbolica**
-** Código MATLAB: [[file:c1_calcular_carga_nodal_equivalente_carga_triangular.m]] **usa el toolbox de álgebra simbolica**
-
-
 =Análisis matricial de barras 2D con empotramiento en un extremo y rótula en el otro=
 ** Cálculo de las matrices de rigidez empotrado-rótula, rótula-empotrado: 
 *** Código compatible con MATLAB 2013a: [[file:c1_K_elemento_empotrado_rodillo_matlab2013a.m]] **usa el toolbox de álgebra simbolica**
