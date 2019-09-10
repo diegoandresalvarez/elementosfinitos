@@ -8,7 +8,11 @@ se asume que está sometido a una carga axial de magnitud constante.
 
 ## Deducción de las funciones de forma
 
-La salida de [deduccion_func_forma_EF_barra_2_nodos.m](deduccion_func_forma_EF_barra_2_nodos.m) es:
+La salida de 
+* [deduccion_func_forma_EF_barra_2_nodos.m](deduccion_func_forma_EF_barra_2_nodos.m)
+* [deduccion_func_forma_EF_barra_2_nodos.py](deduccion_func_forma_EF_barra_2_nodos.py)
+
+es:
 ```
           u1 x2 - u2 x1
 a0 =   - -------------
@@ -24,7 +28,11 @@ u =   | ------- - ------- | u1 + | ------- - ------- | u2
 ```
 
 ## Deducción de las matriz de rigidez K y el vector de fuerzas nodales equivalentes
-La salida de [deduccion_K_y_f_EF_barra_2_nodos.m](deduccion_K_y_f_EF_barra_2_nodos.m) es:
+La salida de 
+* [deduccion_K_y_f_EF_barra_2_nodos.m](deduccion_K_y_f_EF_barra_2_nodos.m)
+* [deduccion_K_y_f_EF_barra_2_nodos.py](deduccion_K_y_f_EF_barra_2_nodos.py)
+
+es:
 ```
 K = 
   +-              -+
