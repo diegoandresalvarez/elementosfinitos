@@ -61,6 +61,7 @@ breaklinks]{hyperref}
 \date{}
 \begin{document}
 \maketitle
+\vspace{-3cm}
 
 \section{Se definen los campos vectoriales de desplazamientos y  de desplazamientos virtuales}
 
@@ -91,7 +92,11 @@ Desplazamientos virtuales al interior del elemento:
    \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{N}^{(e)}(x) \delta \ve{a}^{(e)}
 \end{align}
 
-$\ma{N}^{(e)}(x)$ se conoce como la \emph{matriz de funciones de forma del elemento} $e$.
+$\ma{N}^{(e)}(x)$ se conoce como la \emph{matriz de funciones de forma (locales) del elemento} $e$.
+
+$\ve{a}^{(e)} = [u_1^{(e)},\ u_2^{(e)}]^T$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
+$\delta\ve{a} = [\delta u_1,\ \delta u_2]^T$ es el \emph{vector de desplazamientos virtuales nodales del elemento} $e$.
 
 \newpage
 
@@ -125,6 +130,10 @@ Deformaciones virtuales al interior del elemento:
 
 $\ma{B}^{(e)}(x)$ se conoce como la \emph{matriz de deformaciones del elemento} $e$.
 
+$\ve{a}^{(e)} = [u_1^{(e)},\ u_2^{(e)}]^T$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
+$\delta\ve{a} = [\delta u_1,\ \delta u_2]^T$ es el \emph{vector de desplazamientos virtuales nodales del elemento} $e$.
+
 \newpage
 \section{Se define el campo vectorial de esfuerzos}
 \begin{align}
@@ -142,8 +151,12 @@ f^{(e)}_{\text{axial}}(x)
 \end{align}
 $\ma{D}^{(e)}(x)$ se conoce como la \emph{matriz constitutiva del elemento} $e$.
 
+$\ma{B}^{(e)}(x)$ se conoce como la \emph{matriz de deformaciones del elemento} $e$.
+
+$\ve{a}^{(e)} = [u_1^{(e)},\ u_2^{(e)}]^T$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
 \newpage
-\section{Se reemplaza en el PTV}
+\section{Se reemplaza en el principio de los trabajos virtuales}
 \begin{align}
 \iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_2^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \delta u_1^{(e)} R_1^{(e)} + \delta u_2^{(e)} R_2^{(e)}
 \end{align}
