@@ -57,7 +57,7 @@ breaklinks]{hyperref}
 
 \usepackage{breakurl}
 
-\title{Deducción de la ecuación $\ma{K}\ve{a} - \ma{f} = \ma{q}$ empleando funciones de forma globales para el EF de barra de 2 nodos}
+\title{Deducción de la ecuación $\ma{K}\ve{a} - \ma{f} = \ma{q}$ empleando funciones de forma globales para una barra con $n$ nodos}
 \date{}
 \begin{document}
    \maketitle
@@ -85,7 +85,9 @@ Desplazamientos virtuales en cualquier punto de la barra:
 
 $\ma{N}^{(g)}(x)$ es la \emph{matriz de funciones de forma globales}.
 
-$\ve{a} = [u_1,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
+$\ve{a} = [u_1,\ u_2, \ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
+
+$\delta\ve{a} = [\delta u_1,\ \delta u_2,\ \ldots, \ \delta u_n]^T$ es el \emph{vector de desplazamientos virtuales nodales}.
 
 \newpage
 
@@ -118,6 +120,10 @@ Deformaciones virtuales  en cualquier punto de la barra:
 
 $\ma{B}^{(g)}(x)$ es la \emph{matriz de deformaciones globales}.
 
+$\ve{a} = [u_1,\ u_2,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
+
+$\delta\ve{a} = [\delta u_1,\ \delta u_2,\ \ldots, \ \delta u_n]^T$ es el \emph{vector de desplazamientos virtuales nodales}.
+
 \newpage
 
 \section{Se define el campo vectorial de esfuerzos}
@@ -133,35 +139,42 @@ f_{\text{axial}}(x) = A(x) \sigma(x) &= \underbrace{E(x) A(x)}_{\ma{D}(x)} \ma{B
 \end{align}
 $\ma{D}(x)$ se conoce como la \emph{matriz constitutiva}
 
+$\ma{B}^{(g)}(x)$ es la \emph{matriz de deformaciones globales}.
+
+$\ve{a} = [u_1,\ u_2,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos nodales}.
+
 \newpage
-\section{Se reemplaza en el PTV}
+\section{Se reemplaza en el principio de los trabajos virtuales}
 \begin{align}
-\iiint_{V} \delta\varepsilon(x) \sigma(x) \dd V = \int_{x_1}^{x_2} \delta u(x) b(x) \dd x + \sum_{i=1}^n \delta u_i R_i
+\iiint_{V} \delta\varepsilon(x) \sigma(x) \dd V = \int_{0}^{L} \delta u(x) b(x) \dd x + \sum_{i=1}^n \delta u_i R_i
 \end{align}
 Aquí $\ve{q} = [R_1,\ \ldots,\ R_n]^T$ es el \emph{vector de fuerzas nodales de equilibrio}. Teniendo en cuenta que para un escalar $c$ se tiene que $c = c^T$ tenemos que:
 \begin{equation}
-\iiint_{V} \underbrace{\delta \ve{a}^T \ma{B}_{(g)}^T(x)}_{\delta\varepsilon^T(x)} \underbrace{E(x) \ma{B}^{(g)}(x) \ve{a}}_{\sigma(x)} \dd V = \int_{x_1}^{x_2} \underbrace{\delta \ve{a}^T \ma{N}_{(g)}^T(x)}_{\delta u^T(x)} b(x) \dd x +
+\iiint_{V} \underbrace{\delta \ve{a}^T \ma{B}_{(g)}^T(x)}_{\delta\varepsilon^T(x)} \underbrace{E(x) \ma{B}^{(g)}(x) \ve{a}}_{\sigma(x)} \dd V = \int_{0}^{L} \underbrace{\delta \ve{a}^T \ma{N}_{(g)}^T(x)}_{\delta u^T(x)} b(x) \dd x +
 \delta \ma{a}^T \ma{q}
 \end{equation}
 
 Y como los vectores $\ve{a}$ y $\delta \ve{a}$  son independientes de $x$, salen de las integrales:
 \begin{equation}
-\delta \ve{a}^T \int_{x_1}^{x_2} \iint_{A(x)}  \ma{B}_{(g)}^T(x) E(x) \ma{B}^{(g)}(x) \dd A \dd x\ \ve{a} - \delta \ve{a}^T \int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x 
+\delta \ve{a}^T \int_{0}^{L} \iint_{A(x)}  \ma{B}_{(g)}^T(x) E(x) \ma{B}^{(g)}(x) \dd A \dd x\ \ve{a} - \delta \ve{a}^T \int_{0}^{L}  \ma{N}_{(g)}^T(x) b(x) \dd x 
 - \delta \ma{a}^T \ma{q} = 0
 \end{equation}
+
+Tenga en cuenta que $A(x)$ se tiene dos connotaciones dependientes del contexto: la primera es la región de la sección transversal que se encuentra en la posición $x$ (se utiliza como la región de integración de $\iint_{A(x)} \cdot \dd x$); la segunda es el área de la región anterior. 
+
 Se factoriza $\delta \ma{a}^T$ y se tiene en cuenta que el integrando de la primera integral no depende de $A$
 \begin{equation}
 \delta \ve{a}^T 
-\left[ \int_{x_1}^{x_2} \ma{B}_{(g)}^T(x) E(x) A(x) \ma{B}^{(g)}(x) \dd x \ve{a}
+\left[ \int_{0}^{L} \ma{B}_{(g)}^T(x) E(x) A(x) \ma{B}^{(g)}(x) \dd x \ve{a}
 %
-- \int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x 
+- \int_{0}^{L}  \ma{N}_{(g)}^T(x) b(x) \dd x 
 - \ma{q}\right] = 0
 \end{equation}
 
 Teniendo en cuenta que $\ma{D}(x) = E(x) A(x)$ y que el vector de desplazamientos virtuales $\delta \ma{a}$ es arbitrario, se tiene que el término entre corchetes debe valer cero, por lo que:
 \begin{equation}
-\underbrace{\int_{x_1}^{x_2} \ma{B}_{(g)}^T(x) \ma{D}(x) \ma{B}^{(g)}(x) \dd x}_{\ma{K}} \ve{a} 
-- \underbrace{\int_{x_1}^{x_2}  \ma{N}_{(g)}^T(x) b(x) \dd x}_{\ma{f}} 
+\underbrace{\int_{0}^{L} \ma{B}_{(g)}^T(x) \ma{D}(x) \ma{B}^{(g)}(x) \dd x}_{\ma{K}} \ve{a} 
+- \underbrace{\int_{0}^{L}  \ma{N}_{(g)}^T(x) b(x) \dd x}_{\ma{f}} 
 = \ma{q}
 \end{equation}
 es decir,
