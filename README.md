@@ -18,6 +18,7 @@ Tomado de:
 - [Temario y observaciones generales del curso 2](docs/01_temario_y_observaciones_generales_2.md)
 - [Diapositivas](docs/diapositivas.md)
 - [Códigos](./codigo/)
+- [Tema a evaluar en los exámenes](docs/tema_examenes.md)
 - [Recursos](docs/recursos.md)
 
 ## Examenes y talleres
