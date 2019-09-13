@@ -1,6 +1,29 @@
-# Elementos finitos para barras (1D)
+# Elemento finito de barra de `n` nodos
 
-=CAPITULO 3=
+## Deducción de la matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f`
+A continuación se hace la deducción de la matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f` de un elemento isoparamétrico de barra lagrangiano cuadrático (de tres nodos), suponiendo que `E`, `A` y `b` son constantes en el elemento y que los nodos están igualmente espaciados.
+
+La salida de 
+* [calculo_K_y_f.m](calculo_K_y_f.m)
+* [calculo_K_y_f.py](calculo_K_y_f.m)
+
+es:
+```
+K = 
+    ⎡14   -16   2 ⎤
+A⋅E ⎢             ⎥
+───⋅⎢-16  32   -16⎥
+6⋅L ⎢             ⎥
+    ⎣ 2   -16  14 ⎦
+
+f = 
+    ⎡1⎤
+L⋅b ⎢ ⎥
+───⋅⎢4⎥
+ 6  ⎢ ⎥
+    ⎣1⎦
+```
+
 
 ==Comparación de varios algoritmos de interpolación implementados en MATLAB==
 * Código MATLAB: [[file:c3_comparing_interpolation_algorithms.m]] 
@@ -85,29 +108,6 @@ NN3 =
 [[code]]
 
 
-==Cálculo de la matriz de rigidez y el vector de fuerzas nodales equivalentes de un elemento isoparamétrico de barra lagrangiano cuadrático (de tres nodos), suponiendo que E, A y b son constantes en el elemento y que los nodos están igualmente espaciados==
-
-* Código MATLAB: [[file:c3_calculo_K.m]] 
-El resultado de la ejecución es:
-[[code]]
-K = ((A*E)/(6*L))*
-  +-               -+
-  |   14, -16,  2   |
-  |                 |
-  |  -16,  32, -16  |
-  |                 |
-  |   2,  -16,  14  |
-  +-               -+
-
-f = ((b*L)/6)*
-  +-   -+
-  |  1  |
-  |     |
-  |  4  |
-  |     |
-  |  1  |
-  +-   -+
-[[code]]
 
 ==Cuadraturas de Gauss-Legendre==
 * [[http://mathworld.wolfram.com/Legendre-GaussQuadrature.html|Cuadraturas de Gauss-Legendre]]. Una tabla bonita con los pesos se encuentra [[http://de.wikipedia.org/wiki/Gau%C3%9F-Quadratur|aquí]]
