@@ -1,3 +1,6 @@
+%% Programa para obtener K y f correspondientes al elemento de barra de 
+%% 2 nodos unidimensional, utilizando funciones de forma locales
+
 syms x x1 x2 E A L b;          % definicion de las variables simbolicas
  
 % Defino las funciones de forma

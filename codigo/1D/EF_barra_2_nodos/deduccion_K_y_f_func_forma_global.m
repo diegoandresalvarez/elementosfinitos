@@ -1,3 +1,6 @@
+%% Programa para obtener K y f correspondientes al elemento de barra de 
+%% 2 nodos unidimensional, utilizando funciones de forma globales
+
 syms x L E A b N1(x) N2(x) N3(x) N4(x)
 
 % Defino las funciones de forma

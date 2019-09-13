@@ -27,7 +27,7 @@ u =   | ------- - ------- | u1 + | ------- - ------- | u2
       \ x1 - x2   x1 - x2 /      \ x1 - x2   x1 - x2 /
 ```
 
-## Deducción de las matriz de rigidez K y el vector de fuerzas nodales equivalentes
+## Deducción de la matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f`
 La salida de 
 * [deduccion_K_y_f_EF_barra_2_nodos.m](deduccion_K_y_f_EF_barra_2_nodos.m)
 * [deduccion_K_y_f_EF_barra_2_nodos.py](deduccion_K_y_f_EF_barra_2_nodos.py)

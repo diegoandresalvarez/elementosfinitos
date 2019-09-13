@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+
+# %% Programa para obtener K y f correspondientes al elemento de barra de 
+# % 2 nodos unidimensional, utilizando funciones de forma globales
+
 import sympy as sp
 from sympy.matrices import Matrix
 sp.init_printing(pretty_print=True)

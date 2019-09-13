@@ -1,7 +1,12 @@
+# -*- coding: utf-8 -*-
+
+# %% Programa para obtener K y f correspondientes al elemento de barra de 
+# 2 nodos unidimensional, utilizando funciones de forma locales
+
 import sympy as sp
 from sympy.matrices import Matrix
 
-# Defino las variables simbolicas
+# Defino las variables simbólicas
 x, x1, x2, E, A, L, b = sp.symbols('x x1 x2 E A L b')
 
 # Defino las funciones de forma
