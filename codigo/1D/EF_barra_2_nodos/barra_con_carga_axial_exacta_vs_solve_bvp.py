@@ -28,7 +28,7 @@ P   = 250       # N           # carga nodal al final de la barra
 
 # Solución numérica usando solve_bvp (boundary value problem)
 #   d /           du(x)  \
-# ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0)=0
+# ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0) = 0
 #  dx \            dx    /                                faxial(L) = P
 #
 
@@ -52,7 +52,7 @@ sist_eq_dif = lambda x,y : np.vstack([ y[faxial,:]/(EE(x)*AA(x)),    # = u
 # y_der = condiciones de frontera del lado derecho   (x=L)
 # y_der[0] = u(x=L)          y_der[1] = faxial(x=L)
 cond_frontera = lambda y_izq,y_der : \
-                        [ y_izq[u],           # u(x=0)     = 0 (desplazamiento)
+                        [ y_izq[u],           # u(x=0)      = 0 (desplazamiento)
                           y_der[faxial] - P ] # faxial(x=L) = P (carga axial)    
 
 # Solución tentativa de la ecuacion diferencial

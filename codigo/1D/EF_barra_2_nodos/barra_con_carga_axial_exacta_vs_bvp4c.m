@@ -19,7 +19,7 @@ P = 250;      % N           % carga nodal al final de la barra
 
 % Solucion numerica usando bvp4c (boundary value problem - MATLAB)
 %   d /           du(x)  \
-% ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0)=0
+% ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0) = 0
 %  dx \            dx    /                                faxial(L) = P
 %
 
