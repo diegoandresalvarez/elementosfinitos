@@ -20,9 +20,13 @@ B = sp.diff(N,x)                           # matriz de deformación
 D = E*A                                    # matriz constitutiva
 
 # Matriz de rigidez (ecuación 2.83)
+fc = A*E # factor común
 K = sp.simplify(sp.integrate(B.T*D*B, (x, 0, L)))
+K = sp.MatMul(fc, K/fc, evaluate = False)
 print('K = '); sp.pprint(K, num_columns=150); print()
 
 # Vector de fuerzas nodales equivalentes (ecuación 2.83)
+fc = b
 f = sp.simplify(sp.integrate(N.T*b, (x, 0, L)))
+f = sp.MatMul(fc, f/fc, evaluate = False)
 print('f = '); sp.pprint(f)
