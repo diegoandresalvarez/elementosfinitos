@@ -41,20 +41,16 @@ bb = lambda x : np.tile(b, x.shape)
 
 # Se define la ecuación diferencial expresada como un sistema de dos 
 # ecuaciones diferenciales
-# y[0] = u(x)
-# y[1] = faxial(x)    
-sist_eq_dif = lambda x,y : np.vstack([ y[1,:]/(EE(x)*AA(x)),    # = u
-                                      -bb(x)                 ]) # = faxial
+u      = 0 # y[0] = u(x)      constantes para facilitar la lectura del código
+faxial = 1 # y[1] = faxial(x)    
+sist_eq_dif = lambda x,y : np.vstack([ y[faxial,:]/(EE(x)*AA(x)),    # = u
+                                      -bb(x)                      ]) # = faxial
 
 # Se definen las condiciones de frontera
 # y_izq = condiciones de frontera del lado izquierdo (x=0)
 # y_izq[0] = u(x=0)          y_izq[1] = faxial(x=0)
 # y_der = condiciones de frontera del lado derecho   (x=L)
 # y_der[0] = u(x=L)          y_der[1] = faxial(x=L)
-
-# Se definen las siguientes constantes para facilitar la lectura del código
-u, faxial = 0, 1
-
 cond_frontera = lambda y_izq,y_der : \
                         [ y_izq[u],           # u(x=0)     = 0 (desplazamiento)
                           y_der[faxial] - P ] # faxial(x=L) = P (carga axial)    

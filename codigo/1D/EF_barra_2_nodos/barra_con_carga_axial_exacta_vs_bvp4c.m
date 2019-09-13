@@ -31,20 +31,16 @@ bb = @(x) b;
 
 % Se define la ecuacion diferencial, expresada como un sistema de dos
 % ecuaciones diferenciales
-% y(1) = u(x)
-% y(2) = faxial(x)
-sist_eq_dif = @(x,y) [ y(2)/(EE(x)*AA(x)) 
-                       -bb(x)             ];
+u      = 1; % y(1) = u(x)       
+faxial = 2; % y(2) = faxial(x)
+sist_eq_dif = @(x,y) [ y(faxial)/(EE(x)*AA(x)) 
+                       -bb(x)                  ];
 
 % Se definen las condiciones de frontera
 % y_izq = condiciones de frontera del lado izquierdo (x=0)
 % y_izq(1) = u(x=0)          y_izq(2) = faxial(x=0)
 % y_der = condiciones de frontera del lado derecho   (x=L)
 % y_der(1) = u(x=L)          y_der(2) = faxial(x=L)
-
-% Se definen las siguientes constantes para facilitar la lectura del código
-u = 1;  faxial = 2;
-
 cond_frontera = @ (y_izq,y_der) ...
                  [ y_izq(u)             % u(x=0)      = 0 (desplazamiento)
                    y_der(faxial) - P ]; % faxial(x=L) = P (carga axial)
