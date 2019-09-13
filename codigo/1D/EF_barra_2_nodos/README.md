@@ -58,7 +58,7 @@ Considere la barra mostrada a continuación:
 
 ![barra_con_carga_axial.svg](barra_con_carga_axial.svg)
 
-### Solución teórica utilizando funciones de forma locales
+### Solución teórica utilizando funciones de forma globales
 * MATLAB: [deduccion_K_y_f_func_forma_global.m](deduccion_K_y_f_func_forma_global.m)
 * PYTHON: [deduccion_K_y_f_func_forma_global.py](deduccion_K_y_f_func_forma_global.py)
 
