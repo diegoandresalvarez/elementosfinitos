@@ -16,13 +16,13 @@ fprintf('\n\nN2 = \n'), pretty(N2)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = ezplot(N1, [-1 1]); set(h1, 'Color', 'r', 'LineWidth', 2);   
-h2 = ezplot(N2, [-1 1]); set(h2, 'Color', 'b', 'LineWidth', 2);   
-legend('N1(\xi)','N2(\xi)','Location','Best'); % Caja de dialogo
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
 title('Funciones de Forma Lagrangianas de DOS nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
 plot([-1 1],[0 0], 'ko', [-1 1],[1 1], 'ko') % grafico los nodos
+legend([h1, h2], 'N1(\xi)','N2(\xi)','Location','Best');
 
 %% -------------------------------------------------------------------------
 %% Funciones de Forma Lagrangianas de tres nodos
@@ -43,14 +43,14 @@ fprintf('\n\nN3 = \n'), pretty(N3)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = ezplot(N1, [-1 1]); set(h1, 'Color', 'r', 'LineWidth', 2);   
-h2 = ezplot(N2, [-1 1]); set(h2, 'Color', 'b', 'LineWidth', 2);   
-h3 = ezplot(N3, [-1 1]); set(h3, 'Color', 'c', 'LineWidth', 2);    
-legend('N1(\xi)','N2(\xi)','N3(\xi)','Location','Best'); % Caja de dialogo
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
+h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);    
 title('Funciones de Forma Lagrangianas de TRES nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
 plot([-1 0 1],[0 0 0], 'ko', [-1 0 1],[1 1 1], 'ko') % grafico los nodos
+legend([h1, h2, h3], 'N1(\xi)','N2(\xi)','N3(\xi)','Location','Best');
 
 %% -------------------------------------------------------------------------
 %% Funciones de Forma Lagrangianas de cuatro nodos
@@ -71,15 +71,13 @@ fprintf('\n\nN3 = \n'), pretty(N3);  fprintf('\n\nN4 = \n'), pretty(N4)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = ezplot(N1, [-1 1]); set(h1, 'Color', 'r', 'LineWidth', 2);   
-h2 = ezplot(N2, [-1 1]); set(h2, 'Color', 'b', 'LineWidth', 2);   
-h3 = ezplot(N3, [-1 1]); set(h3, 'Color', 'c', 'LineWidth', 2);    
-h4 = ezplot(N4, [-1 1]); set(h4, 'Color', 'm', 'LineWidth', 2);    
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
+h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);    
+h4 = fplot(N4, [-1 1], 'Color', 'm', 'LineWidth', 2);    
 title('Funciones de Forma Lagrangianas de CUATRO nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
 plot([-1 -1/3 1/3 1],[0 0 0 0], 'ko', [-1 -1/3 1/3 1],[1 1 1 1], 'ko')
 axis([-1 1 -0.4 1.2])
 legend([h1 h2 h3 h4], 'N1(\xi)','N2(\xi)','N3(\xi)','N4(\xi)','Location','Best');
-
-
