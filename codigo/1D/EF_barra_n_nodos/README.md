@@ -163,18 +163,27 @@ grid
 [[code]]
 
 Salida:
-[[image:03_cuadratura_sin.png]]
+[image:03_cuadratura_sin.png]
 
 **Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y  1 - 1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**)
 
-==Ejemplo de una barra sometida a carga axial constante (solución con elementos finitos de tres nodos)==
-[[image:c3_ejemplo_barra.png]]
-* Código MATLAB que utiliza la matriz de rigidez deducida en el curso: [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m]] <span style="color: #ff0000;">(Este programa corre también en GNU OCTAVE)</span>
 
-* Código MATLAB que utiliza las cuadraturas de Gauss-Legendre: [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m]] <span style="color: #ff0000;">(Para ejecutar este programa se requiere el archivo [[file:gausslegendre_quad.m]])</span>
-* Código de JULIA 0.5.1. (experimental): [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre_julia_0.51.zip]]
 
-Las UNICAS diferencia entre ambos programas se muestran a continuación:
-[[image:c3_diferencia_entre_progs.png]]
+## Ejemplo de una barra sometida a carga axial constante (solución con elementos finitos de tres nodos)
 
-----
+Considere la barra mostrada a continuación:
+
+![barra_con_carga_axial.svg](../EF_barra_2_nodos/barra_con_carga_axial.svg)
+
+Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
+
+![interpolacion_isoparametrica.svg](interpolacion_isoparametrica.svg)
+
+* MATLAB, utilizando la matriz de rigidez deducida anteriormente: [c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m](c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m)
+* MATLAB, utilizando las cuadraturas de Gauss-Legendre: [c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m](c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
+
+Las UNICAS diferencia entre los dos programas anteriores se muestran a continuación:
+
+![c3_diferencia_entre_progs.png](c3_diferencia_entre_progs.png)
+
+* JULIA 0.5.1. (experimental): [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre_julia_0.51.zip]]
