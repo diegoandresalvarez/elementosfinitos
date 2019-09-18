@@ -47,8 +47,7 @@
 \newtheorem{thm}{Theorem}
 \newtheorem{cor}{Corollary}
 
-\usepackage[dvips,%
-colorlinks=true,citecolor=blue,%
+\usepackage[colorlinks=true,citecolor=blue,%
 plainpages=false,pdfpagelabels,%
 breaklinks]{hyperref}
 \hypersetup{pdffitwindow=false}
@@ -196,12 +195,12 @@ $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
 
 A partir del PTV:
 \begin{align}
-\iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_2^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \sum_{i=1}^n \delta u_i^{(e)} R_i^{(e)}
+\iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_n^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \sum_{i=1}^n \delta u_i^{(e)} R_i^{(e)}
 \end{align}
 y siguiendo unos pasos similares a los que se realizaron con el EF de barra de 2 nodos, obtenemos que:
 \begin{equation}
-\underbrace{\int_{x_1^{(e)}}^{x_2^{(e)}} \ma{B}_{(e)}^T(x) \ma{D}^{(e)}(x) \ma{B}^{(e)}(x) \dd x}_{\ma{K}^{(e)}} \ve{a}^{(e)} 
-- \underbrace{\int_{x_1^{(e)}}^{x_2^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x}_{\ma{f}^{(e)}} 
+\underbrace{\int_{x_1^{(e)}}^{x_n^{(e)}} \ma{B}_{(e)}^T(x) \ma{D}^{(e)}(x) \ma{B}^{(e)}(x) \dd x}_{\ma{K}^{(e)}} \ve{a}^{(e)} 
+- \underbrace{\int_{x_1^{(e)}}^{x_n^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x}_{\ma{f}^{(e)}} 
 = \ma{q}^{(e)}
 \end{equation}
 es decir,
