@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import numpy as np
 import sympy as sp
 from sympy.polys.polyfuncs import interpolate
 sp.init_printing(pretty_print=True)
@@ -107,5 +108,35 @@ p[3].label = r'$N_4(\xi)$'
 p.xlabel = r'$\xi$'
 p.ylabel = ' '
 p.title  = 'Funciones de Forma Lagrangianas de CUATRO nodos'
+p.legend = True
+p.show()
+
+# %% -------------------------------------------------------------------------
+# Funciones de Forma Lagrangianas de cinco nodos
+
+# Calculo las funciones de forma
+xi = sp.symbols('xi')
+N = 5*[None]
+for i in range(5):
+    coef = np.polyfit([-1, -1/2, 0, 1/2, 1], [i==0, i==1, i==2, i==3, i==4], 4)
+    coef[abs(coef) < 1e-7] = 0 # se eliminan los errores de redondeo
+    N[i] = sp.Poly(coef, xi).as_expr()      
+
+# Imprimo las funciones de forma
+print('\n\nFunciones de Forma Lagrangianas de CINCO nodos:\n')
+for i in range(5):
+    print(f'\n\nN{i+1}({sp.pretty(xi)}) ='); sp.pprint(N[i])
+
+# Grafico las funciones de forma
+p = sp.plot(*[(N[i], (xi, -1, 1)) for i in range(5)], show=False)
+
+line_color = [ 'red', 'blue', 'cyan', 'magenta', 'black' ]
+for i in range(5):
+    p[i].line_color = line_color[i]
+    p[i].label = f'$N_{i+1}(\\xi)$'
+           
+p.xlabel = r'$\xi$'
+p.ylabel = ' '
+p.title  = 'Funciones de Forma Lagrangianas de CINCO nodos'
 p.legend = True
 p.show()
