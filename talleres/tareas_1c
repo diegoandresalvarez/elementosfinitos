@@ -1,30 +1,5 @@
 <span style="font-size: 300%;">TAREAS</span>
 
-<span style="color: #ff00ff;
-font-size: 200%;">Nota: por cada día de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final. El trabajo es sustentable. Si no se aprueba la sustentación se obtendrá un cero en la nota de dicho trabajo.</span>
-
-
-=Criterios de Calificación=
-* Trabajo presentado utilizando LaTeX = +15%
-* Codigo de MATLAB sin comentarios = -1.0 por ejercicio
-* Código de MATLAB feo/desordenado = -1.0 por ejercicio (ya que se dificulta la legibilidad del ejercicio)
-* Errores en código de MATLAB = -1.0 por ejercicio
-* No interpretar información dada por el programa de MATLAB = -1.0 por ejercicio
-* Sin relacionar resultados de MATLAB en el informe final = -1.0 por ejercicio
-* Hacer algo más en el código de MATLAB que lo dado en clase y que mejore notablemente la presentación de los resultados = +1.0 por ejercicio
-* No hacer comparación con otro software en caso que los resultados no coincidan (es decir, explicar porque difieren los resultados) = -0.4 por ejercicio
-
-
-== Consejos/reglas para presentar el informe ==
-* Haga una tabla de dos columnas. En la izquierda, haga el gráfico, en la derecha, su interpretación. Explique porqué el comportamiento visto en el gráfico, localice los puntos con los valores máximos y mínimos mostrados, las zonas críticas de la estructura, y cualquier otro apunte que se considere conveniente.
-* No incluya en el informe código de MATLAB. Limítese a hacer un análisis de resultados en los informes. Incluya la deducción de las ecuaciones o formulaciones que tuvo que emplear en caso que estas no se hayan discutido en clase.
-* Los trabajos se deben entregar preferiblemente de forma electrónica y en formato PDF (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). 
-* Adjuntar los códigos por correo electrónico SUPERCOMENTADOS. 
-* El reporte debe incluir el análisis de resultados y cualquier otra información que usted considere necesaria.
-* Extensión máxima 15 hojas
-
-
-=CAPITULO 1. ANALISIS MATRICIAL DE ESTRUCTURAS (Trabajo en grupos de máximo dos personas. Fecha máxima de entrega: Septiembre 23, 2014 a las 23:59)=
 
 NOTA MAXIMA: 8.5
 

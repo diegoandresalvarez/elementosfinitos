@@ -61,7 +61,7 @@ Considere la barra doblemente empotrada, de módulo de elasticidad E constante, 
 Suponga que esta barra tiene una sección transversal circular, con radio que varía según:
 
 ```
-y = 0.04 + 0.2*exp(-3*x) - 0.1*exp(-2.5*(2.5-x)) para x \in [0 m, 2 m].
+r(x) = 0.04 + 0.2*exp(-3*x) - 0.1*exp(-2.5*(2.5-x)) para x \in [0 m, 2 m].
 ```
 
 módulo de elasticidad E=200 GPa, y que la carga distribuida que actúa sobre esta (no mostrada) está dada por la parábola:
