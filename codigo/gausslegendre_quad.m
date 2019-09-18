@@ -25,11 +25,13 @@ axis([-1 1 -1.1 1.1]);
 
 a = 0; b = 0.8;
 f = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5;
-fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - 3076/1875))
+sol = 3076/1875;
+fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol))
 
 a = 0; b = pi/2;
 f = @(x) sin(x);
-fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - 1))
+sol = 1;
+fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol))
 %}
 
 % WHO   DATE            WHAT
