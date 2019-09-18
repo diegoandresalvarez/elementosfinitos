@@ -7,52 +7,54 @@ m = 4;
 
 [xi,w,P] = gausslegendre_quad(m);
 
-xx = linspace(-1,1,100);
-yy = zeros(m+1,100);
+x = linspace(-1,1,100);
+y = zeros(m+1,100);
 for i = 1:m+1
-   yy(i,:) = polyval(P{i},xx);
+   y(i,:) = polyval(P{i},x);
 end;
 
 figure
-plot(xx,yy);
+h = plot(x, y);
 hold on;
-legend(num2str((0:m)'));
 plot(xi,zeros(size(xi)),'ro');
+legend(h, num2str((0:m)'), 'Location', 'Best');
+title(sprintf('Primeros %d polinomios de Legendre', m+1))
 grid on
 
 axis([-1 1 -1.1 1.1]);
 
 a = 0; b = 0.8;
 f = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5;
-abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - 3076/1875)
+sol = 3076/1875;
+fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol))
 
 a = 0; b = pi/2;
 f = @(x) sin(x);
-abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - 1)
+sol = 1;
+fprintf('Error = %g\n', abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol))
 %}
 
 % WHO   DATE            WHAT
-% DAA   Mar 11, 2010    First algorithm
+% DAAM   Mar 11, 2010    First algorithm
+% DAAM   Sep 18, 2019    Better readability, MATLAB 2019a
 %
-% DAA - Diego Andres Alvarez Marin - daalvarez@unal.edu.co
+% DAAM - Diego Andres Alvarez Marin - daalvarez@unal.edu.co
 
 %% Gaussian quadrature xi and w
 %% Polynomials (Bonnet's recursion): 
-% Observe that P_0 = P{1}, P_1 = P{2}, ... P_{n-1} = P{n}, P_n = P{n+1}
-% in as much as MATLAB does not make 0-based indexing of arrays:
-P = cell(m+1,1);
-P{1} = 1;
-P{2} = [1 0];
+P = cell(m+1, 1);
+P{0 + 1} = 1;
+P{1 + 1} = [1 0];
 for n = 2:m
-   P{n+1} = ((2*n-1)*[P{n} 0] - (n-1)*[0 0 P{n-1}])/n;
+   P{n + 1} = ((2*n-1)*[P{n-1 + 1} 0] - (n-1)*[0 0 P{n-2 + 1}])/n;
 end
 
 %% Roots
-xi = sort(roots(P{m+1}));
+xi = sort(roots(P{m + 1}));
 
 %% Weights: VERSION 1
-s = polyder(P{m+1});
-w = 2./((1-xi.^2).*polyval(s,xi).^2);
+s = polyder(P{m + 1});
+w = 2./((1 - xi.^2).*polyval(s,xi).^2);
 
 %% Weights: VERSION 2
 %{
@@ -80,18 +82,20 @@ end
 
 syms xi;
 
+% Polynomials (Bonnet's recursion): 
 P = cell(m+1,1);
-P{1} = 1;
-P{2} = xi;
+P{0 + 1} = 1;
+P{1 + 1} = xi;
 for n = 2:m
-   P{n+1} = (1/n)*((2*n-1)*xi*P{n} - (n-1)*P{n-1});
+   P{n + 1} = (1/n)*((2*n-1)*xi*P{n-1 + 1} - (n-1)*P{n-2 + 1});
 end
 
-xir = simple(solve(P{m+1},'xi'));
+% Roots
+xir = simplify(solve(P{m + 1} == 0, xi))
 
-w = simple(2./((1-xir.^2).*subs(diff(P{m+1}), 'xi', xir).^2));
+% Weights
+w = simplify(2./((1-xir.^2).*subs(diff(P{m + 1}), 'xi', xir).^2));
 
+% Print the results
 [xir w]
 %}
-%%
-

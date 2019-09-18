@@ -28,7 +28,7 @@ P   = 250       # N           # carga nodal al final de la barra
 
 # Solución numérica usando solve_bvp (boundary value problem)
 #   d /           du(x)  \
-# ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0)=0
+# ----| E(x) A(x)------- | + b(x) en x \in [0,L]     dado u(0) = 0
 #  dx \            dx    /                                faxial(L) = P
 #
 
@@ -41,18 +41,19 @@ bb = lambda x : np.tile(b, x.shape)
 
 # Se define la ecuación diferencial expresada como un sistema de dos 
 # ecuaciones diferenciales
-# y[0] = u(x)
-# y[1] = faxial(x)    
-sist_eq_dif = lambda x,y : np.vstack([ y[1,:]/(EE(x)*AA(x)),    # = u
-                                      -bb(x)                 ]) # = faxial
+u      = 0 # y[0] = u(x)      constantes para facilitar la lectura del código
+faxial = 1 # y[1] = faxial(x)    
+sist_eq_dif = lambda x,y : np.vstack([ y[faxial,:]/(EE(x)*AA(x)),    # = u
+                                      -bb(x)                      ]) # = faxial
 
 # Se definen las condiciones de frontera
-# ya = condiciones de frontera del lado izquierdo (x=0)
-#     ya[0] = u(x=0)          ya[1] = faxial(x=0)
-# yb = condiciones de frontera del lado derecho   (x=L)
-#     yb[0] = u(x=L)          yb[1] = faxial(x=L)
-cond_frontera = lambda ya,yb : [ ya[0],       # u(x=0)     = 0 (desplazamiento)
-                                 yb[1] - P ] # faxial(x=L) = P (carga axial)    
+# y_izq = condiciones de frontera del lado izquierdo (x=0)
+# y_izq[0] = u(x=0)          y_izq[1] = faxial(x=0)
+# y_der = condiciones de frontera del lado derecho   (x=L)
+# y_der[0] = u(x=L)          y_der[1] = faxial(x=L)
+cond_frontera = lambda y_izq,y_der : \
+                        [ y_izq[u],           # u(x=0)      = 0 (desplazamiento)
+                          y_der[faxial] - P ] # faxial(x=L) = P (carga axial)    
 
 # Solución tentativa de la ecuacion diferencial
 x         = np.linspace(0, L, 30)   # 30 puntos uniformemente distrib. entre 0 y L
@@ -69,10 +70,10 @@ u_exacta      = lambda x : (-b*x**2/2 + (P + b*L)*x)/(E*A); # desplazamiento
 faxial_exacta = lambda x : (P + b*(L-x));                   # carga axial
 
 # %% Se reportan los errores en el calculo
-error_en_u = max(abs(u_exacta(x) - y[0,:]))
+error_en_u = max(abs(u_exacta(x) - y[u,:]))
 print(f'Maximo error en el calculo del desplazamiento = {error_en_u} m')
 
-error_en_faxial = max(abs(faxial_exacta(x) - y[1,:]))
+error_en_faxial = max(abs(faxial_exacta(x) - y[faxial,:]))
 print(f'Maximo error en el calculo de la fuerza axial = {error_en_faxial} N')
 
 # %% Grafico la solución analítica y la solución por el la funcion solve_bvp
@@ -81,7 +82,7 @@ plt.figure                        # cree un nuevo lienzo
 # 1) grafico los desplazamientos de la barra
 plt.subplot(2,1,1)                # grafique en la parte superior (1) del lienzo
 plt.plot(x, u_exacta(x), 'r', label='solución exacta de $u(x)$')
-plt.plot(x, y[0,:], 'bx',     label='solución aproximada por solve_bvp()')
+plt.plot(x, y[u,:], 'bx',     label='solución aproximada por solve_bvp()')
 plt.title('Comparación de la solución analítica vs la función solve_bvp() para el desplazamiento')
 plt.xlabel('Eje X (m)')           # titulo del eje X
 plt.ylabel('Desplazamiento (m)')  # titulo del eje Y
@@ -90,7 +91,7 @@ plt.legend(loc='lower right')
 # 2) grafico la carga axial de la barra
 plt.subplot(2,1,2)                # grafique en la parte inferior (2) del lienzo
 plt.plot(x, faxial_exacta(x), 'r', label='solución exacta de $f_{axial}(x)$')
-plt.plot(x, y[1,:], 'bx',          label='solución aproximada por solve_bvp()')
+plt.plot(x, y[faxial,:], 'bx',     label='solución aproximada por solve_bvp()')
 plt.title('Comparación de la solución analítica vs la función solve_bvp() para la carga axial')
 plt.xlabel('Eje X (m)')           # titulo del eje X
 plt.ylabel('Carga axial (N)')     # titulo del eje Y

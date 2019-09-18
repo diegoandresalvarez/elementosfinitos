@@ -29,85 +29,38 @@ L⋅b ⎢ ⎥
 * MATLAB: [c3_comparing_interpolation_algorithms.m](c3_comparing_interpolation_algorithms.m)
 
 
-==Funciones de forma lagrangianas para EFs de 2, 3 y 4 nodos==
-* [[http://es.wikipedia.org/wiki/Interpolaci%C3%B3n_polin%C3%B3mica_de_Lagrange|Interpolación polinómica de Lagrange]]
+## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
 
-* Código MATLAB: [[file:c3_funciones_forma_lagrangianos1D.m]] 
+* [funciones_forma_lagrangianos1D.m](funciones_forma_lagrangianos1D.m)
+* [funciones_forma_lagrangianos1D.py](funciones_forma_lagrangianos1D.py)
+
 Al ejecutar este código obtenemos no solo la función de forma sino su dibujo, por ejemplo en el caso de las funciones lagrangianas cúbicas, tenemos:
-[[code]]
-Funciones de Forma Lagrangianas de CUATRO nodos:
-
+```
+Funciones de forma lagrangianas de CUATRO nodos:
 
 N1 = 
     (xi - 1) (3 xi - 1) (3 xi + 1)
   - ------------------------------
                   16
 
-
 N2 = 
   9 (xi - 1) (3 xi - 1) (xi + 1)
   ------------------------------
                 16
-
 
 N3 = 
     9 (xi - 1) (3 xi + 1) (xi + 1)
   - ------------------------------
                   16
 
-
 N4 = 
   (3 xi - 1) (3 xi + 1) (xi + 1)
   ------------------------------
                 16
-[[code]]
-[[image:c3_shape_func_lagrangianas_1D.png]]
+```
+Y la imagen:
 
-
-==Como manejar los errores de redondeo con MATLAB==
-
-A veces sucede que cuando se calculan las funciones de forma aparecen unos términos racionales extraños. Esto se debe al error de redondeo. Por ejemplo:
-[[code format="matlab"]]
->> format long
-
->> syms x
-
->> N3 = poly2sym(polyfit([-1 -0.5 0 0.5 1],[0 0 1 0 0],4),x);
-
->> pretty(N3)
-
-                                 3
-     4         1777463176020049 x              2
-  4 x  - -------------------------------- - 5 x  + 1
-         10141204801825835211973625643008
-[[code]]
-
-Observe que dicho término racional tiene un valor de -1.752714012540238e-16:
-[[code format="matlab"]]
->> NN3 = polyfit([-1 -0.5 0 0.5 1],[0 0 1 0 0],4)
-NN3 =
-   4.000000000000001  -0.000000000000000  -5.000000000000000                   0   1.000000000000000
-
->> NN3(2)
-ans =
-    -1.752714012540238e-16
-[[code]]
-
-Para eliminar dicho error de redondeo debemos obligar a MATLAB a que haga dichas cifras iguales a cero y de este modo, si se procede con el cálculo, encontramos la función de forma correcta:
-[[code format="matlab"]]
->> NN3(abs(NN3) < 1e-10) = 0
-NN3 =
-   4.000000000000001                   0  -5.000000000000000                   0   1.000000000000000
-
->> N3 = poly2sym(NN3,x);
-
->> pretty(N3)
-
-     4      2
-  4 x  - 5 x  + 1
-[[code]]
-
-
+![funciones_forma_lagrangianos1D.png](funciones_forma_lagrangianos1D.png)
 
 ## Cuadraturas de Gauss-Legendre
 La teoría asociada con las cuadraturas de Gauss-Legendre se encuentra en:
@@ -221,14 +174,23 @@ Salida:
 
 
 
-==Ejemplo de una barra sometida a carga axial constante (solución con elementos finitos de tres nodos)==
-[[image:c3_ejemplo_barra.png]]
-* Código MATLAB que utiliza la matriz de rigidez deducida en el curso: [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m]] <span style="color: #ff0000;">(Este programa corre también en GNU OCTAVE)</span>
 
-* Código MATLAB que utiliza las cuadraturas de Gauss-Legendre: [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m]] <span style="color: #ff0000;">(Para ejecutar este programa se requiere el archivo [[file:gausslegendre_quad.m]])</span>
-* Código de JULIA 0.5.1. (experimental): [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre_julia_0.51.zip]]
 
-Las UNICAS diferencia entre ambos programas se muestran a continuación:
-[[image:c3_diferencia_entre_progs.png]]
+## Ejemplo de una barra sometida a carga axial constante (solución con elementos finitos de tres nodos)
 
-----
+Considere la barra mostrada a continuación:
+
+![barra_con_carga_axial.svg](../EF_barra_2_nodos/barra_con_carga_axial.svg)
+
+Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
+
+![interpolacion_isoparametrica.svg](interpolacion_isoparametrica.svg)
+
+* MATLAB, utilizando la matriz de rigidez deducida anteriormente: [c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m](c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m)
+* MATLAB, utilizando las cuadraturas de Gauss-Legendre: [c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m](c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
+
+Las UNICAS diferencia entre los dos programas anteriores se muestran a continuación:
+
+![c3_diferencia_entre_progs.png](c3_diferencia_entre_progs.png)
+
+* JULIA 0.5.1. (experimental): [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre_julia_0.51.zip]]
