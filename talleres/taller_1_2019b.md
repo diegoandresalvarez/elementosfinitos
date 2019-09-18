@@ -72,8 +72,8 @@ b(x) = 2 kN/m^3 * x^2 para x \in [0 m, 2 m]
 
 * Haga un programa que use matemática simbólica para calcular la matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f` para elementos finitos con sección transversal [cónica truncada](http://es.wikipedia.org/wiki/Tronco_de_cono) y bases de radio izquierdo r1 (en x=x1) y radio derecho rn (en x=xn). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito. El elemento finito tendrá 4 nodos igualmente espaciados. (+0.5 puntos).
 
-* Resuelva el ejemplo mostrado usando 6 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra. (+0.5 puntos).
+* Resuelva el ejemplo mostrado usando 2, 4 y 6 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra. Muestre tablas/gŕaficos que muestren las respuestas para cada número de elementos finitos (+0.5 puntos).
 
 * Resuelva el punto anterior utilizando integración numérica con cuadraturas de Gauss-Legendre, en vez de la matriz `K` deducida. (+0.5 puntos).
 
-* Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función `bvp4c()` de MATLAB o `solve_bvp()` de PYTHON, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con la solución por el método de los EFs. ¿Cual es el error del método de los EFs? (+1 punto).
+* Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función `bvp4c()` de MATLAB o `solve_bvp()` de PYTHON, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con las soluciones estimadas por el método de los EFs. ¿Cual es el error del método de los EFs? (+1 punto).
