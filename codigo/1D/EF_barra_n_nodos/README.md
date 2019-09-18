@@ -29,7 +29,7 @@ L⋅b ⎢ ⎥
 * [comparing_interpolation_algorithms.m](comparing_interpolation_algorithms.m)
 
 
-## Funciones de forma lagrangianas para EFs de 2, 3 y 4 nodos==
+## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
 
 * [funciones_forma_lagrangianos1D.m](funciones_forma_lagrangianos1D.m)
 * [funciones_forma_lagrangianos1D.py](funciones_forma_lagrangianos1D.py)
@@ -62,7 +62,7 @@ Y la imagen:
 
 ![funciones_forma_lagrangianos1D.png](funciones_forma_lagrangianos1D.png)
 
-==Cuadraturas de Gauss-Legendre==
+## Cuadraturas de Gauss-Legendre
 * [[http://mathworld.wolfram.com/Legendre-GaussQuadrature.html|Cuadraturas de Gauss-Legendre]]. Una tabla bonita con los pesos se encuentra [[http://de.wikipedia.org/wiki/Gau%C3%9F-Quadratur|aquí]]
 
 Recuerde que:
