@@ -1,6 +1,7 @@
 # Análisis matricial de estructuras de barras en 1D
 
 ![Image](http://imgs.xkcd.com/comics/ballmer_peak.png)
+
 Fuente: <http://xkcd.com/323/>
 
 ##  Análisis de 3 barras trabajando a tracción
@@ -16,7 +17,7 @@ Los programas de esta carpeta, resuelven la estructura mostrada. El material es 
 
 ## Análisis matricial de cerchas 2D con apoyos inclinados
 Los programas de esta carpeta, resuelven la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
-![Image](cercha_2d/c1_ejemplo_cercha_inclined_support.svg)
+![Image](cercha_2d_apoyo_inclinado/c1_ejemplo_cercha_inclined_support.svg)
 
 ## Análisis matricial de pórticos 2D
 
@@ -59,7 +60,7 @@ v_j\\
 
 ## Ejemplo 11.23 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
 
-![Image](portico_2d/c1_portico_2d_uribe_escamilla.svg)
+![Image](portico_2d/ejercicio_11_23_Uribe_Escamilla/c1_portico_2d_uribe_escamilla.svg)
 
 * Solución Uribe Escamilla: [c1_ej_11_23_uribe_escamilla.pdf](portico_2d/c1_ej_11_23_uribe_escamilla.pdf)
 * Código MATLAB (versión sencilla): [c1_ejemplo_marco.m](portico_2d/c1_ejemplo_marco.m) 
