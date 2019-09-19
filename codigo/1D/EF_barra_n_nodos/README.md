@@ -26,7 +26,7 @@ L⋅b ⎢ ⎥
 
 
 ## Comparación de varios algoritmos de interpolación implementados en MATLAB
-* [comparing_interpolation_algorithms.m](comparing_interpolation_algorithms.m)
+* MATLAB: [c3_comparing_interpolation_algorithms.m](c3_comparing_interpolation_algorithms.m)
 
 
 ## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
@@ -63,7 +63,11 @@ Y la imagen:
 ![funciones_forma_lagrangianos1D.png](funciones_forma_lagrangianos1D.png)
 
 ## Cuadraturas de Gauss-Legendre
-* [[http://mathworld.wolfram.com/Legendre-GaussQuadrature.html|Cuadraturas de Gauss-Legendre]]. Una tabla bonita con los pesos se encuentra [[http://de.wikipedia.org/wiki/Gau%C3%9F-Quadratur|aquí]]
+La teoría asociada con las cuadraturas de Gauss-Legendre se encuentra en:
+* http://mathworld.wolfram.com/Legendre-GaussQuadrature.html
+
+Una tabla bonita con los pesos se encuentra en:
+* https://de.wikipedia.org/wiki/Gau%C3%9F-Quadratur
 
 Recuerde que:
 [[math]]
@@ -86,45 +90,46 @@ y utilizando las cuadraturas de Gauss-Legendre la integral anterior se puede exp
 \int_a^b f(x) \mathrm{d} x \approx \frac{b-a}{2}\sum_{i=1}^m w_i f\left(\frac{a+b}{2} + \frac{b-a}{2}\xi_i\right)
 [[math]]
 
+Código para generar los pesos y puntos de Gauss para la cuadratura de Gauss-Legendre:
+* MATLAB: [gausslegendre_quad.m](gausslegendre_quad.m)
 
-* Código MATLAB para generar los pesos de la cuadratura: [[file:gausslegendre_quad.m]]
+Ejemplos:
 
-* Integración de:
+Dada la integral:
 [[math]]
-\int_0^{0.8} 0.2 + 25 x - 200 x^2 + 675x^3 - 900x^4 + 400x^5 \ \mathrm{d}x
+\int_0^{0.8} 0.2 + 25 x - 200 x^2 + 675x^3 - 900x^4 + 400x^5 \ \mathrm{d}x 
 [[math]]
 
-Solución exacta:
-[[code format="matlab"]]
+Lla solución exacta se obtiene con el código de MATLAB: 
+```matlab
 syms x
 int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5,x,0,0.8)
-[[code]]
-Siendo la respuesta
-[[code]]
-ans =
-3076/1875
-[[code]]
+```
+Siendo la respuesta ```3076/1875```.
 
-Integración con las cuadraturas de Gauss-Legendre:
-[[code format="matlab"]]
+Ahora, la integración con las cuadraturas de Gauss-Legendre es:
+```matlab
 err = zeros(10,1);        % Separo la memoria
 a = 0; b = 0.8;           % Limites de integracion
-f = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5; % la funcion
-solucion = 3076/1875;     % la solucion exacta
-for m = 1:10;             % Vario el numero de puntos de la cuadratura
+f = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5; % la función
+solucion = 3076/1875;     % la solución exacta
+for m = 1:10;             % Vario el número de puntos de la cuadratura
    [xi,w] = gausslegendre_quad(m);  % calculo w y c de la cuadratura
    err(m) = abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - solucion);
 end;
 figure                    % creo un lienzo
-plot(err)                 % grafico el error
-xlabel('Numero de puntos en la cuadratura');
+plot(err)                 % gráfico el error
+xlabel('Número de puntos en la cuadratura');
 ylabel('Error');
 title('Cuadratura de Gauss Legendre');
 grid                      % pongo la rejilla
-[[code]]
+```
 
-Salida:
+El resultado de la ejecución de este código es:
+![cuadratura_GL_polinomio.png](cuadratura_GL_polinomio.png)
 [[image:03_cuadratura_poly.png]]
+
+
 
 **Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado 2n-1 o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden)
 
@@ -145,7 +150,7 @@ ans =
 [[code]]
 
 Integración con las cuadraturas de Gauss-Legendre:
-[[code format="matlab"]]
+```matlab
 err = zeros(10,1);
 a = 0; b = pi/2;
 f = @(x) sin(x);
@@ -160,12 +165,14 @@ xlabel('Numero de puntos en la cuadratura');
 ylabel('Error');
 title('Cuadratura de Gauss Legendre');
 grid
-[[code]]
+```
 
 Salida:
-[image:03_cuadratura_sin.png]
+![cuadratura_GL_sin.png](cuadratura_GL_sin.png)
 
-**Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y  1 - 1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**)
+**Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y  1-1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**)
+
+
 
 
 

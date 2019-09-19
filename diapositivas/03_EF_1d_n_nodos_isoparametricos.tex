@@ -1,0 +1,237 @@
+% !TeX spellcheck = en_US
+% !TeX document-id = {cf032f19-4427-4a50-b0ba-ddee651fb980}
+% !TeX program = txs:///dvi-ps-pdf-chain
+% TeX program = txs:///dvi-chain
+%DVI -> PS -> PDF
+% 10.1016/j.compstruc.2017.04.006 
+% OJO VERIFICAR IDIOMA GB
+
+%\documentclass[preprint,12pt,authoryear,letterpaper,times]{elsarticle}
+%\documentclass[final,1p,times,twocolumn,authoryear]{elsarticle}
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage{parskip} 
+\usepackage[margin=3cm]{geometry}
+\usepackage{parskip}
+%\usepackage{times}
+\usepackage{braket}
+\usepackage{mathtools} \mathtoolsset{showonlyrefs} %show only referenced equations
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{psfrag}
+\usepackage[spanish]{babel}
+\usepackage{mathrsfs}  % mathscr
+\usepackage{bbm} % R Q N Z symbols
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+
+% FOR USE WITH THE TODONOTES PACKAGE:
+\usepackage{xcolor}
+\usepackage[spanish,textwidth=2cm]{todonotes} %todonotes goes after xcolor (messages, what to do!)
+\newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{\begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
+
+\newcommand{\pf}{P_\text{\textnormal{f}}}
+\newcommand{\LP}{\underline{P_{\Gamma}}}
+\newcommand{\UP}{\overline{P_{\Gamma}}}
+\newcommand{\rv}[1]{{\uppercase{#1}}}    %random variable
+\newcommand{\ve}[1]{{\boldsymbol{#1}}}
+\newcommand{\ma}[1]{{\boldsymbol{#1}}}
+\newcommand{\dd}{\operatorname{d} \!}
+%\newcommand{\nuevo}[1]{\textsf{\textcolor{red}{#1}}}
+\newcommand{\nuevo}[1]{#1}
+\def\bigtimes{\mathbin{\vcenter{\hbox{\Large $\times$}}}} %\mbox{\Large$\times$} = \bigtimes
+%\newcommand{\nuevo}[1]{{#1}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}{Corollary}
+
+\usepackage[colorlinks=true,citecolor=blue,%
+plainpages=false,pdfpagelabels,%
+breaklinks]{hyperref}
+\hypersetup{pdffitwindow=false}
+
+\usepackage{hypernat} % in this way [sort&compress]{natbib} and hyperref will work together
+
+\usepackage{breakurl}
+
+\title{Deducción de la ecuación $\ma{K}^{(e)} \ve{a}^{(e)} - \ma{f}^{(e)} = \ma{q}^{(e)}$ para el EF de barra isoparamétrico de $n$ nodos}
+\date{}
+\begin{document}
+\maketitle
+
+\section{Se interpola la geometría utilizando las mismas funciones de forma que interpolan el desplazamiento}
+
+Se interpola la geometría utilizando las mismas funciones de forma que se emplearán para interpolar los desplazamientos:
+\begin{align}
+x^{(e)}(\xi) 
+&= N_1^{(e)}(\xi) x_1^{(e)} + N_2^{(e)}(\xi) x_2^{(e)} + \ldots + N_n^{(e)}(\xi) x_n^{(e)} 
+= \sum_{i=1}^n N_i^{(e)}(\xi) x_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+    N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
+    \end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+\underbrace{\begin{bmatrix}
+    x_1^{(e)} \\ x_2^{(e)} \\ \vdots \\ x_n^{(e)}
+    \end{bmatrix}}_{\ma{x}^{(e)}} = \ma{N}^{(e)}(\xi)  \ve{x}^{(e)}
+\end{align}
+
+\begin{itemize}
+    \item $\ma{N}^{(e)}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales) del elemento} $e$.
+    \item $\ve{x}^{(e)}$ es el \emph{vector de coordenadas nodales del elemento} $e$.
+\end{itemize}    
+
+Se calcula el jacobiano de la transformación
+\begin{align}
+J^{(e)}(\xi) = \frac{\dd x^{(e)}(\xi)}{\dd \xi} = 
+\end{align}
+y la derivada
+\begin{align}
+\frac{\dd \xi(x)}{\dd x} = 
+\end{align}
+
+Recuerde que la transformación isoparamétrica es válida siempre y cuando $J^{(e)}(\xi)>0$ en todos los puntos del EF.
+
+
+
+\newpage
+
+\section{Se definen los campos vectoriales de desplazamientos y  de desplazamientos virtuales}
+Se interpolan los desplazamientos al interior del EF utilizando las mismas funciones de forma que se emplearon para interpolar la geometría:
+\begin{align}
+u^{(e)}(\xi) 
+&= N_1^{(e)}(\xi) u_1^{(e)} + N_2^{(e)}(\xi) u_2^{(e)} + \ldots + N_n^{(e)}(\xi) u_n^{(e)} 
+= \sum_{i=1}^n N_i^{(e)}(\xi) u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
+\end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+\underbrace{\begin{bmatrix}
+   u_1^{(e)} \\ u_2^{(e)} \\ \vdots \\ u_n^{(e)}
+   \end{bmatrix}}_{\ma{a}^{(e)}} = \ma{N}^{(e)}(\xi)  \ve{a}^{(e)}
+\end{align}
+
+Desplazamientos virtuales al interior del elemento:
+\begin{align}
+\delta u^{(e)}(\xi) 
+&= N_1^{(e)}(\xi) \delta u_1^{(e)} + N_2^{(e)}(\xi) \delta u_2^{(e)} + \cdots + N_n^{(e)}(\xi) \delta u_n^{(e)} = \sum_{i=1}^n N_i^{(e)}(\xi) \delta u_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+   N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
+   \end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+\underbrace{\begin{bmatrix}
+   \delta u_1^{(e)} \\ \delta u_2^{(e)} \\ \vdots \\ \delta u_n^{(e)} 
+   \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{N}^{(e)}(\xi) \delta \ve{a}^{(e)}
+\end{align}
+
+$\ma{N}^{(e)}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales) del elemento} $e$.
+
+$\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
+$\delta\ve{a}^{(e)}$ es el \emph{vector de desplazamientos virtuales nodales del elemento} $e$.
+
+\newpage
+
+\section{Se definen los campos vectoriales de deformaciones y  de deformaciones virtuales}
+
+Deformaciones al interior del elemento:
+\begin{align}
+\varepsilon^{(e)}(\xi) &= \frac{\dd u^{(e)}(\xi)}{\dd x} =
+ \frac{\dd u^{(e)}(\xi)}{\dd \xi}\frac{\dd \xi(x)}{\dd x} = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
+ &= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{\dd \xi(x)}{\dd x} = 
+\underbrace{\begin{bmatrix}
+  \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
+   \end{bmatrix}\frac{\dd \xi(x)}{\dd x}}_{\ma{B}^{(e)}(\xi)}
+\underbrace{\begin{bmatrix}
+   u_1^{(e)} \\ u_2^{(e)} \\ \vdots \\ u_n^{(e)}
+   \end{bmatrix}}_{\ma{a}^{(e)}} \\
+&= \ma{B}^{(e)}(\xi)  \ve{a}^{(e)}
+\end{align}
+
+Deformaciones virtuales al interior del elemento:
+\begin{align}
+\delta \varepsilon^{(e)}(\xi) &= \delta \left(\frac{\dd u^{(e)}(\xi)}{\dd x}\right) = \frac{\dd}{\dd x}\left(\delta u^{(e)}(\xi)\right)
+= \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
+&= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} = 
+\underbrace{\begin{bmatrix}
+   \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
+   \end{bmatrix} \frac{\dd \xi(x)}{\dd x} }_{\ma{B}^{(e)}(\xi)}
+\underbrace{\begin{bmatrix}
+  \delta u_1^{(e)} \\ \delta u_2^{(e)} \\ \vdots \\ \delta u_n^{(e)} 
+   \end{bmatrix}}_{\delta \ma{a}^{(e)}} \\
+&= \ma{B}^{(e)}(\xi) \delta \ve{a}^{(e)}
+\end{align}
+
+$\ma{B}^{(e)}(\xi)$ se conoce como la \emph{matriz de deformaciones del elemento} $e$.
+
+$\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
+$\delta\ve{a}^{(e)}$ es el \emph{vector de desplazamientos virtuales nodales del elemento} $e$.
+
+\newpage
+\section{Se define el campo vectorial de esfuerzos}
+\begin{align}
+\sigma^{(e)}(\xi) 
+&= E^{(e)}(\xi) \varepsilon^{(e)}(\xi) \\
+&= E^{(e)}(\xi) \ma{B}^{(e)}(\xi) \ve{a}^{(e)}
+\end{align}
+
+Tenga en cuenta que las fuerzas axiales al interior del elemento están dadas por:
+\begin{align}
+f^{(e)}_{\text{axial}}(\xi) 
+&= A^{(e)}(\xi) \sigma^{(e)}(\xi) \\
+&= \underbrace{E^{(e)}(\xi) A^{(e)}(\xi)}_{\ma{D}^{(e)}(\xi)} \ma{B}^{(e)}(\xi) \ve{a}^{(e)} \\
+&= \ma{D}^{(e)}(\xi) \ma{B}^{(e)}(\xi) \ve{a}^{(e)}
+\end{align}
+$\ma{D}^{(e)}(\xi)$ se conoce como la \emph{matriz constitutiva del elemento} $e$.
+
+$\ma{B}^{(e)}(\xi)$ se conoce como la \emph{matriz de deformaciones del elemento} $e$.
+
+$\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
+
+\newpage
+\section{Se reemplaza en el principio de los trabajos virtuales}
+
+A partir del PTV:
+\begin{align}
+\iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_n^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \sum_{i=1}^n \delta u_i^{(e)} R_i^{(e)}
+\end{align}
+y siguiendo unos pasos similares a los que se realizaron con el EF de barra de 2 nodos, obtenemos que:
+\begin{equation}
+\underbrace{\int_{x_1^{(e)}}^{x_n^{(e)}} \ma{B}_{(e)}^T(x) \ma{D}^{(e)}(x) \ma{B}^{(e)}(x) \dd x}_{\ma{K}^{(e)}} \ve{a}^{(e)} 
+- \underbrace{\int_{x_1^{(e)}}^{x_n^{(e)}}  \ma{N}_{(e)}^T(x) b^{(e)}(x) \dd x}_{\ma{f}^{(e)}} 
+= \ma{q}^{(e)}
+\end{equation}
+es decir,
+\begin{equation}
+\ma{K}^{(e)} \ve{a}^{(e)} - \ma{f}^{(e)} = \ma{q}^{(e)}.
+\end{equation}
+
+Aquí:
+\begin{itemize}
+    \item $\ma{K}^{(e)}$ es la \emph{matriz de rigidez} del elemento $e$.
+    \item $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales} del elemento $e$.
+    \item $\ma{f}^{(e)}$ es el \emph{vector de fuerzas nodales equivalentes} del elemento $e$.    
+    \item $\ve{q}^{(e)} = [R_1^{(e)}\ R_2^{(e)}\ \cdots \ R_n^{(e)}]^T$ es el \emph{vector de fuerzas nodales de equilibrio} del elemento $e$.
+\end{itemize}
+
+En las páginas anteriores se calculó $\ma{N}^{(e)}$, $\ma{B}^{(e)}$ y $\ma{D}^{(e)}$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
+\begin{align}
+\ma{K}^{(e)} &= \int_{-1}^{+1} \ma{B}_{(e)}^T(\xi) \ma{D}^{(e)}(\xi) \ma{B}^{(e)}(\xi) \frac{\dd x^{(e)}(\xi)}{\dd \xi} \dd \xi\\
+\ma{f}^{(e)} &= \int_{-1}^{+1}  \ma{N}_{(e)}^T(\xi) b^{(e)}(\xi) \frac{\dd x^{(e)}(\xi)}{\dd \xi} \dd \xi
+\end{align}
+
+Finalmente, se aproximan dichas integrales utilizando una cuadratura de $p$ puntos de Gauss-Legendre:
+\begin{align}
+\ma{K}^{(e)} &\approx \sum_{m=1}^p \ma{B}_{(e)}^T(\xi_m) \ma{D}^{(e)}(\xi_m) \ma{B}^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m\\
+\ma{f}^{(e)} &\approx \sum_{m=1}^p  \ma{N}_{(e)}^T(\xi_m) b^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m
+\end{align}
+
+Se deja como ejercicio al lector demostrar que:
+\begin{align}
+\ma{K}^{(e)}_{pq} &\approx \sum_{m=1}^p \frac{\dd N_p(\xi_m)}{\dd \xi} E^{(e)}(\xi_m) A^{(e)}(\xi_m) \frac{\dd N_q(\xi_m)}{\dd \xi} \frac{1}{J^{(e)}(\xi_m)} w_m\\
+\ma{f}^{(e)}_p &\approx \sum_{m=1}^p  N_p^{(e)}(\xi_m) b^{(e)}(\xi_m) J^{(e)}(\xi_m) w_m
+\end{align}
+
+\end{document}

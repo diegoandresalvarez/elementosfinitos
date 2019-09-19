@@ -90,7 +90,7 @@ syms xi
 N = cell(5,1);
 for i = 1:5
     coef = polyfit([-1 -1/2 0 1/2 1], [i==1 i==2 i==3 i==4 i==5], 4);
-    coef(abs(coef) < 1e-10) = 0; % se eliminan los errores de redondeo
+    coef(abs(coef) < 1e-10) = 0; % remueva los coeficientes demasiado pequeños
     N{i} = poly2sym(coef, xi);     
 end                                  
 

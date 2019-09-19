@@ -119,7 +119,7 @@ xi = sp.symbols('xi')
 N = 5*[None]
 for i in range(5):
     coef = np.polyfit([-1, -1/2, 0, 1/2, 1], [i==0, i==1, i==2, i==3, i==4], 4)
-    coef[abs(coef) < 1e-7] = 0 # se eliminan los errores de redondeo
+    coef[abs(coef) < 1e-7] = 0 # remueva los coeficientes demasiado pequeños
     N[i] = sp.Poly(coef, xi).as_expr()      
 
 # Imprimo las funciones de forma
