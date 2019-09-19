@@ -4,8 +4,8 @@
 A continuación se hace la deducción de la matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f` de un elemento isoparamétrico de barra lagrangiano cuadrático (de tres nodos), suponiendo que `E`, `A` y `b` son constantes en el elemento y que los nodos están igualmente espaciados.
 
 La salida de 
-* [calculo_K_y_f.m](calculo_K_y_f.m)
-* [calculo_K_y_f.py](calculo_K_y_f.m)
+* MATLAB: [calculo_K_y_f.m](calculo_K_y_f.m)
+* PYTHON: [calculo_K_y_f.py](calculo_K_y_f.m)
 
 es:
 ```
@@ -31,8 +31,8 @@ L⋅b ⎢ ⎥
 
 ## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
 
-* [funciones_forma_lagrangianos1D.m](funciones_forma_lagrangianos1D.m)
-* [funciones_forma_lagrangianos1D.py](funciones_forma_lagrangianos1D.py)
+* MATLAB: [funciones_forma_lagrangianos1D.m](funciones_forma_lagrangianos1D.m)
+* PYTHON: [funciones_forma_lagrangianos1D.py](funciones_forma_lagrangianos1D.py)
 
 Al ejecutar este código obtenemos no solo la función de forma sino su dibujo, por ejemplo en el caso de las funciones lagrangianas cúbicas, tenemos:
 ```
@@ -121,7 +121,7 @@ El resultado de la ejecución de este código es:
 
 ![cuadratura_poly.png](cuadratura_poly.png)
 
-**Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado 2n-1 o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden).
+**Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado `2n-1` o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden).
 
 ### Ejemplo 2
 
