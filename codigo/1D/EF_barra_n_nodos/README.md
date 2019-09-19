@@ -73,12 +73,6 @@ Recuerde que:
 <!---
 Compile en: https://tex.s2cms.com
 
-\xi = \frac{2}{b-a}(x - \frac{a+b}{2})
---->
-![](https://tex.s2cms.ru/svg/%5Cxi%20%3D%20%5Cfrac%7B2%7D%7Bb-a%7D(x%20-%20%5Cfrac%7Ba%2Bb%7D%7B2%7D))
-
-por lo tanto
-<!---
 x = \frac{a+b}{2} + \frac{b-a}{2}\xi
 --->
 ![](https://tex.s2cms.ru/svg/x%20%3D%20%5Cfrac%7Ba%2Bb%7D%7B2%7D%20%2B%20%5Cfrac%7Bb-a%7D%7B2%7D%5Cxi)
@@ -103,9 +97,9 @@ y utilizando las cuadraturas de Gauss-Legendre la integral anterior se puede exp
 
 Código para generar los pesos y puntos de Gauss para la cuadratura de Gauss-Legendre:
 * MATLAB: [gausslegendre_quad.m](../../gausslegendre_quad.m)
-* PYTHON: utilice la función `numpy.polynomial.legendre.leggauss`
+* PYTHON: utilice la función `numpy.polynomial.legendre.leggauss()`
 
-Ejemplos:
+### Ejemplo 1
 
 Dada la integral:
 <!---
@@ -118,7 +112,7 @@ La solución exacta se obtiene con el código de MATLAB:
 syms x
 int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5,x,0,0.8)
 ```
-Siendo la respuesta ```3076/1875```.
+Siendo la respuesta `3076/1875`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
@@ -127,9 +121,11 @@ El resultado de la ejecución de este código es:
 
 ![cuadratura_poly.png](cuadratura_poly.png)
 
-**Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado 2n-1 o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden)
+**Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado 2n-1 o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden).
 
-* Integración de:
+### Ejemplo 2
+
+Dada la integral:
 <!---
 Compile en: https://tex.s2cms.com
 
@@ -138,17 +134,12 @@ Compile en: https://tex.s2cms.com
 
 ![](https://tex.s2cms.ru/svg/%5Cint_0%5E%7B%5Cpi%2F2%7D%20%5Csin%20x%20%5C%20%5Cmathrm%7Bd%7Dx)
 
-Solución exacta:
+La solución exacta se obtiene con el código de MATLAB: 
 ```matlab
 syms x
 int(sin(x),x,0,pi/2)
 ```
-
-Siendo la respuesta 
-```
-ans =
-1
-```
+Siendo la respuesta `1`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
@@ -157,7 +148,7 @@ El resultado de la ejecución de este código es:
 
 ![cuadratura_sin.png](cuadratura_sin.png)
 
-**Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y  1-1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**)
+**Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y 1-1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**).
 
 
 
