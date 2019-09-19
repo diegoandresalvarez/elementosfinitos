@@ -26,7 +26,7 @@ L⋅b ⎢ ⎥
 
 
 ## Comparación de varios algoritmos de interpolación implementados en MATLAB
-* MATLAB: [c3_comparing_interpolation_algorithms.m](c3_comparing_interpolation_algorithms.m)
+* MATLAB: [comparing_interpolation_algorithms.m](comparing_interpolation_algorithms.m)
 
 
 ## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
@@ -120,23 +120,8 @@ int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5,x,0,0.8)
 ```
 Siendo la respuesta ```3076/1875```.
 
-Ahora, la integración con las cuadraturas de Gauss-Legendre es:
-```matlab
-err = zeros(10,1);        % Separo la memoria
-a = 0; b = 0.8;           % Limites de integracion
-f = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5; % la función
-solucion = 3076/1875;     % la solución exacta
-for m = 1:10;             % Vario el número de puntos de la cuadratura
-   [xi,w] = gausslegendre_quad(m);  % calculo w y c de la cuadratura
-   err(m) = abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - solucion);
-end;
-figure                    % creo un lienzo
-plot(err)                 % gráfico el error
-xlabel('Número de puntos en la cuadratura');
-ylabel('Error');
-title('Cuadratura de Gauss Legendre');
-grid                      % pongo la rejilla
-```
+La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
+* MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
 
 El resultado de la ejecución de este código es:
 
@@ -165,25 +150,10 @@ ans =
 1
 ```
 
-Integración con las cuadraturas de Gauss-Legendre:
-```matlab
-err = zeros(10,1);
-a = 0; b = pi/2;
-f = @(x) sin(x);
-solucion = 1;
-for m = 1:10;
-   [xi,w] = gausslegendre_quad(m);
-   err(m) = abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - solucion);
-end;
-figure
-semilogy(err); % dibujo en escala logarítmica del eje Y (para apreciar el error)
-xlabel('Numero de puntos en la cuadratura');
-ylabel('Error');
-title('Cuadratura de Gauss Legendre');
-grid
-```
+La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
+* MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
 
-Salida:
+El resultado de la ejecución de este código es:
 
 ![cuadratura_sin.png](cuadratura_sin.png)
 
