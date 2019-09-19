@@ -70,37 +70,50 @@ Una tabla bonita con los pesos se encuentra en:
 * https://de.wikipedia.org/wiki/Gau%C3%9F-Quadratur
 
 Recuerde que:
-[[math]]
+<!---
+Compile en: https://tex.s2cms.com
+
 \xi = \frac{2}{b-a}(x - \frac{a+b}{2})
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/%5Cxi%20%3D%20%5Cfrac%7B2%7D%7Bb-a%7D(x%20-%20%5Cfrac%7Ba%2Bb%7D%7B2%7D))
+
 por lo tanto
-[[math]]
+<!---
 x = \frac{a+b}{2} + \frac{b-a}{2}\xi
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/x%20%3D%20%5Cfrac%7Ba%2Bb%7D%7B2%7D%20%2B%20%5Cfrac%7Bb-a%7D%7B2%7D%5Cxi)
+
 y
-[[math]]
+<!---
 \frac{\mathrm{d}x}{\mathrm{d}\xi} = \frac{b-a}{2}
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/%5Cfrac%7B%5Cmathrm%7Bd%7Dx%7D%7B%5Cmathrm%7Bd%7D%5Cxi%7D%20%3D%20%5Cfrac%7Bb-a%7D%7B2%7D)
+
 por lo tanto
-[[math]]
+<!---
 \int_a^b f(x) \mathrm{d} x = \int_{-1}^{+1} \frac{b-a}{2} f\left(\frac{a+b}{2} + \frac{b-a}{2}\xi\right) \mathrm{d} \xi
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/%5Cint_a%5Eb%20f(x)%20%5Cmathrm%7Bd%7D%20x%20%3D%20%5Cint_%7B-1%7D%5E%7B%2B1%7D%20%5Cfrac%7Bb-a%7D%7B2%7D%20f%5Cleft(%5Cfrac%7Ba%2Bb%7D%7B2%7D%20%2B%20%5Cfrac%7Bb-a%7D%7B2%7D%5Cxi%5Cright)%20%5Cmathrm%7Bd%7D%20%5Cxi)
+
 y utilizando las cuadraturas de Gauss-Legendre la integral anterior se puede expresar como:
-[[math]]
+<!---
 \int_a^b f(x) \mathrm{d} x \approx \frac{b-a}{2}\sum_{i=1}^m w_i f\left(\frac{a+b}{2} + \frac{b-a}{2}\xi_i\right)
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/%5Cint_a%5Eb%20f(x)%20%5Cmathrm%7Bd%7D%20x%20%5Capprox%20%5Cfrac%7Bb-a%7D%7B2%7D%5Csum_%7Bi%3D1%7D%5Em%20w_i%20f%5Cleft(%5Cfrac%7Ba%2Bb%7D%7B2%7D%20%2B%20%5Cfrac%7Bb-a%7D%7B2%7D%5Cxi_i%5Cright))
 
 Código para generar los pesos y puntos de Gauss para la cuadratura de Gauss-Legendre:
-* MATLAB: [gausslegendre_quad.m](gausslegendre_quad.m)
+* MATLAB: [gausslegendre_quad.m](../../gausslegendre_quad.m)
+* PYTHON: utilice la función `numpy.polynomial.legendre.leggauss`
 
 Ejemplos:
 
 Dada la integral:
-[[math]]
+<!---
 \int_0^{0.8} 0.2 + 25 x - 200 x^2 + 675x^3 - 900x^4 + 400x^5 \ \mathrm{d}x 
-[[math]]
+--->
+![](https://tex.s2cms.ru/svg/%5Cint_0%5E%7B0.8%7D%200.2%20%2B%2025%20x%20-%20200%20x%5E2%20%2B%20675x%5E3%20-%20900x%5E4%20%2B%20400x%5E5%20%5C%20%5Cmathrm%7Bd%7Dx)
 
-Lla solución exacta se obtiene con el código de MATLAB: 
+La solución exacta se obtiene con el código de MATLAB: 
 ```matlab
 syms x
 int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5,x,0,0.8)
@@ -126,28 +139,31 @@ grid                      % pongo la rejilla
 ```
 
 El resultado de la ejecución de este código es:
-![cuadratura_GL_polinomio.png](cuadratura_GL_polinomio.png)
-[[image:03_cuadratura_poly.png]]
 
-
+![cuadratura_poly.png](cuadratura_poly.png)
 
 **Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado 2n-1 o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden)
 
 * Integración de:
-[[math]]
+<!---
+Compile en: https://tex.s2cms.com
+
 \int_0^{\pi/2} \sin x \ \mathrm{d}x
-[[math]]
+--->
+
+![](https://tex.s2cms.ru/svg/%5Cint_0%5E%7B%5Cpi%2F2%7D%20%5Csin%20x%20%5C%20%5Cmathrm%7Bd%7Dx)
 
 Solución exacta:
-[[code format="matlab"]]
+```matlab
 syms x
 int(sin(x),x,0,pi/2)
-[[code]]
-Siendo la respuesta
-[[code]]
+```
+
+Siendo la respuesta 
+```
 ans =
 1
-[[code]]
+```
 
 Integración con las cuadraturas de Gauss-Legendre:
 ```matlab
@@ -168,11 +184,10 @@ grid
 ```
 
 Salida:
-![cuadratura_GL_sin.png](cuadratura_GL_sin.png)
+
+![cuadratura_sin.png](cuadratura_sin.png)
 
 **Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y  1-1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**)
-
-
 
 
 
@@ -192,5 +207,3 @@ Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
 Las UNICAS diferencia entre los dos programas anteriores se muestran a continuación:
 
 ![c3_diferencia_entre_progs.png](c3_diferencia_entre_progs.png)
-
-* JULIA 0.5.1. (experimental): [[file:c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre_julia_0.51.zip]]
