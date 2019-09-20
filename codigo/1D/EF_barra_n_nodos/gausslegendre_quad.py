@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # Integration using a Gauss-Legendre quadrature:
 
 import numpy as np
@@ -32,5 +34,5 @@ f    = lambda x : np.sin(x)
 sol  = 1
 print('Error =', abs(((b-a)/2)*np.sum(w*f((b+a)/2 + (b-a)*xi/2)) - sol))
 
-# NOTA: se recomienda utilizar la función scipy.integrate.fixed_quad
+# NOTA: se recomienda utilizar la función scipy.integrate.fixed_quad()
 # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.integrate.fixed_quad.html#scipy.integrate.fixed_quad
