@@ -116,7 +116,7 @@ Siendo la respuesta `3076/1875`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
-* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función `scipy.integrate.fixed_quad()`.
+* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función `scipy.integrate.fixed_quad()`).
 
 El resultado de la ejecución de este código es:
 
@@ -144,7 +144,7 @@ Siendo la respuesta `1`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
-* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función `scipy.integrate.fixed_quad()`.
+* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función `scipy.integrate.fixed_quad()`).
 
 
 El resultado de la ejecución de este código es:
