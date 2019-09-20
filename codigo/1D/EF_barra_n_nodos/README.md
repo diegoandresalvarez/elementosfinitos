@@ -110,12 +110,13 @@ Dada la integral:
 La solución exacta se obtiene con el código de MATLAB: 
 ```matlab
 syms x
-int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5,x,0,0.8)
+int(0.2 + 25*x - 200*x^2 + 675*x^3 - 900*x^4 + 400*x^5, x, 0, 0.8)
 ```
 Siendo la respuesta `3076/1875`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
+* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función ``scipy.integrate.fixed_quad()`.
 
 El resultado de la ejecución de este código es:
 
@@ -137,12 +138,14 @@ Compile en: https://tex.s2cms.com
 La solución exacta se obtiene con el código de MATLAB: 
 ```matlab
 syms x
-int(sin(x),x,0,pi/2)
+int(sin(x), x, 0, pi/2)
 ```
 Siendo la respuesta `1`.
 
 La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 * MATLAB: [cuadratura_poly_sin_GL.m](cuadratura_poly_sin_GL.m)
+* PYTHON: [cuadratura_poly_sin_GL.py](cuadratura_poly_sin_GL.py) (utiliza la función ``scipy.integrate.fixed_quad()`.
+
 
 El resultado de la ejecución de este código es:
 
@@ -165,6 +168,6 @@ Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
 * MATLAB, utilizando la matriz de rigidez deducida anteriormente: [c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m](c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m)
 * MATLAB, utilizando las cuadraturas de Gauss-Legendre: [c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m](c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
 
-Las UNICAS diferencia entre los dos programas anteriores se muestran a continuación:
+Las UNICAS diferencias entre los dos programas anteriores se muestran a continuación:
 
 ![c3_diferencia_entre_progs.png](c3_diferencia_entre_progs.png)
