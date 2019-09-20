@@ -76,10 +76,10 @@ p.show()
 
 # Calculo las funciones de forma
 xi = sp.symbols('xi')
-N1 = interpolate([(-1,1), (-1/3,0), (1/3,0), (1,0)], xi)
-N2 = interpolate([(-1,0), (-1/3,1), (1/3,0), (1,0)], xi)
-N3 = interpolate([(-1,0), (-1/3,0), (1/3,1), (1,0)], xi)
-N4 = interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], xi)
+N1 = sp.nsimplify(interpolate([(-1,1), (-1/3,0), (1/3,0), (1,0)], xi))
+N2 = sp.nsimplify(interpolate([(-1,0), (-1/3,1), (1/3,0), (1,0)], xi))
+N3 = sp.nsimplify(interpolate([(-1,0), (-1/3,0), (1/3,1), (1,0)], xi))
+N4 = sp.nsimplify(interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], xi))
 
 # Imprimo las funciones de forma
 print('\n\nFunciones de Forma Lagrangianas de CUATRO nodos:')
@@ -120,7 +120,7 @@ N = 5*[None]
 for i in range(5):
     coef = np.polyfit([-1, -1/2, 0, 1/2, 1], [i==0, i==1, i==2, i==3, i==4], 4)
     coef[abs(coef) < 1e-7] = 0 # remueva los coeficientes demasiado pequeños
-    N[i] = sp.Poly(coef, xi).as_expr()      
+    N[i] = sp.nsimplify(sp.Poly(coef, xi).as_expr())
 
 # Imprimo las funciones de forma
 print('\n\nFunciones de Forma Lagrangianas de CINCO nodos:\n')
@@ -134,7 +134,7 @@ line_color = [ 'red', 'blue', 'cyan', 'magenta', 'black' ]
 for i in range(5):
     p[i].line_color = line_color[i]
     p[i].label = f'$N_{i+1}(\\xi)$'
-           
+
 p.xlabel = r'$\xi$'
 p.ylabel = ' '
 p.title  = 'Funciones de Forma Lagrangianas de CINCO nodos'

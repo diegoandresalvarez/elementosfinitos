@@ -9,8 +9,8 @@ N2 = poly2sym(polyfit([-1 1],[0 1],1),xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de DOS nodos:\n')
-fprintf('\n\nN1 = \n'), pretty(N1)
-fprintf('\n\nN2 = \n'), pretty(N2)
+fprintf('\n\nN1(xi) = \n'), pretty(N1)
+fprintf('\n\nN2(xi) = \n'), pretty(N2)
 
 % Grafico las funciones de forma
 figure                 % Creo un lienzo
@@ -35,9 +35,9 @@ N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi); % = xi*(xi+1)/2
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de TRES nodos:\n')
-fprintf('\n\nN1 = \n'), pretty(N1)
-fprintf('\n\nN2 = \n'), pretty(N2)
-fprintf('\n\nN3 = \n'), pretty(N3)
+fprintf('\n\nN1(xi) = \n'), pretty(N1)
+fprintf('\n\nN2(xi) = \n'), pretty(N2)
+fprintf('\n\nN3(xi) = \n'), pretty(N3)
 
 % Grafico las funciones de forma
 figure                 % Creo un lienzo
@@ -64,8 +64,8 @@ N4 = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 0 1],3),xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de CUATRO nodos:\n')
-fprintf('\n\nN1 = \n'), pretty(N1);  fprintf('\n\nN2 = \n'), pretty(N2)
-fprintf('\n\nN3 = \n'), pretty(N3);  fprintf('\n\nN4 = \n'), pretty(N4)
+fprintf('\n\nN1(xi) = \n'), pretty(N1);  fprintf('\n\nN2(xi) = \n'), pretty(N2)
+fprintf('\n\nN3(xi) = \n'), pretty(N3);  fprintf('\n\nN4(xi) = \n'), pretty(N4)
 
 % Grafico las funciones de forma
 figure                 % Creo un lienzo
@@ -97,7 +97,7 @@ end
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de CINCO nodos:\n')
 for i = 1:5
-    fprintf('\n\nN%d = \n', i); pretty(N{i});
+    fprintf('\n\nN%d(xi) = \n', i); pretty(N{i});
 end
 
 % Grafico las funciones de forma
