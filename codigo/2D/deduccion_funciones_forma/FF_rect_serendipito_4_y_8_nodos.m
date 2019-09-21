@@ -4,6 +4,8 @@ clear, clc, close all
 
 nno = 8; %  escoja entre {4, 8}.
 
+X = 1; Y = 2;
+
 % coordenadas de los nodos y numeracion local
 switch nno
    case 4
@@ -45,8 +47,8 @@ switch nno
 end      
 
 % se calculan las funciones de forma bidimensionales
-xxi  = nod(:,1); 
-eeta = nod(:,2);
+xxi  = nod(:, X); 
+eeta = nod(:, Y);
 switch nno
    case 4
       A = [ ones(4,1) xxi eeta  xxi.*eeta ];
@@ -89,8 +91,8 @@ end
 fprintf('\n')
  
 %% grafico las funciones de forma
-XXI  = -1:0.05:1;
-EETA = -1:0.05:1;
+XXI  = linspace(-1, 1, 100);
+EETA = linspace(-1, 1, 100);
 [XI,ETA] = meshgrid(XXI,EETA);
 
 % calculo las esferitas
@@ -103,19 +105,18 @@ for i = 1:nno
    figure                 % creo un lienzo
    grid on                % creo la rejilla
    hold on                % para que no se sobreescriban los graficos
-   
+   xlabel('\xi', 'FontSize',16)   % titulo eje X
+   ylabel('\eta', 'FontSize',16)  % titulo eje Y
+   title(sprintf('N_{%d}(\\xi,\\eta)',i), 'FontSize',20)
+
    % con este comando convierto la funcion de forma de tipo simbolico a
    % tipo funcion
-   NN = matlabFunction(N{i}, 'Vars', [xi, eta]);
-   
-   xlabel('\xi','FontSize',26)   % titulo eje X
-   ylabel('\eta','FontSize',26)  % titulo eje Y
-   title(sprintf('N_{%d}(\\xi,\\eta)',i),'FontSize',26)
+   NN = matlabFunction(N{i}, 'Vars', [xi, eta]);   
    surf(XI, ETA, NN(XI,ETA))     % superficie
    
    % se grafican las esferitas en cada nodo
    for j=1:nno
-      surf(xsp+nod(j,1), ysp+nod(j,2), zsp+(i==j))
+      surf(xsp+nod(j,X), ysp+nod(j,Y), zsp+(i==j), 'facecolor', 'k')
    end 
    
    axis tight             % ejes apretados
