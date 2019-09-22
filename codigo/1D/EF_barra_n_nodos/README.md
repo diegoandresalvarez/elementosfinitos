@@ -60,7 +60,7 @@ N4 =
 ```
 Y la imagen:
 
-![funciones_forma_lagrangianos1D.png](funciones_forma_lagrangianos1D.png)
+![figs/funciones_forma_lagrangianos1D.png](figs/funciones_forma_lagrangianos1D.png)
 
 ## Cuadraturas de Gauss-Legendre
 La teoría asociada con las cuadraturas de Gauss-Legendre se encuentra en:
@@ -120,7 +120,7 @@ La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 
 El resultado de la ejecución de este código es:
 
-![cuadratura_poly.png](cuadratura_poly.png)
+![figs/cuadratura_poly.png](figs/cuadratura_poly.png)
 
 **Análisis de resultados:** Recuerde que la cuadratura de Gauss-Legendre de orden n integra __EXACTAMENTE__ un polinomio de grado `2n-1` o menor. Por lo tanto con una cuadratura de grado 3 o mayor se integra exactamente este polinomio (que es de cuarto orden).
 
@@ -149,7 +149,7 @@ La integración con las cuadraturas de Gauss-Legendre se realiza con el código:
 
 El resultado de la ejecución de este código es:
 
-![cuadratura_sin.png](cuadratura_sin.png)
+![figs/cuadratura_sin.png](figs/cuadratura_sin.png)
 
 **Análisis de resultados:** Con la cuadratura de orden 8 o mayor se obtiene un error menor de 1e-18, y 1-1e-18 excede la precisión de representación de decimales del computador. Por lo tanto el error en la integración el computador lo aproxima a cero (**error de truncamiento**).
 
@@ -163,11 +163,11 @@ Considere la barra mostrada a continuación:
 
 Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
 
-![interpolacion_isoparametrica.svg](interpolacion_isoparametrica.svg)
+![figs/interpolacion_isoparametrica.svg](figs/interpolacion_isoparametrica.svg)
 
 * MATLAB, utilizando la matriz de rigidez deducida anteriormente: [c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m](c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m)
 * MATLAB, utilizando las cuadraturas de Gauss-Legendre: [c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m](c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
 
 Las UNICAS diferencias entre los dos programas anteriores se muestran a continuación:
 
-![c3_diferencia_entre_progs.png](c3_diferencia_entre_progs.png)
+![figs/diferencia_entre_progs.png](figs/diferencia_entre_progs.png)
