@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 # Deducción de las funciones de forma del elemento de barra de 2 nodos
 
 import sympy as sp
-from sympy.matrices import Matrix
 
-# Defino las variables simbolicas
+# Defino las variables simbólicas
 u1, u2, x, x1, x2, a1, a0 = sp.symbols('u1 u2 x x1 x2 a1 a0')
 
 r = sp.solve((sp.Eq(u1, a1*x1 + a0),
