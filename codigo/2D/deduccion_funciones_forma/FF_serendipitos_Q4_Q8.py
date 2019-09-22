@@ -2,7 +2,6 @@ from mpl_toolkits.mplot3d import Axes3D
 
 import matplotlib.pyplot as plt
 from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
 import numpy as np
 import sympy as sp
@@ -85,8 +84,8 @@ for i in range(nno):
 print()
 
 # %% grafico las funciones de forma
-XXI  = np.linspace(-1, 1, 100)
-EETA = np.linspace(-1, 1, 100)
+XXI  = np.linspace(-1, 1, 50)
+EETA = np.linspace(-1, 1, 50)
 XI, ETA = np.meshgrid(XXI, EETA)
 
 # calculo las esferitas

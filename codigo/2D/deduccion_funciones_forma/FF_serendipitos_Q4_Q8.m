@@ -91,8 +91,8 @@ end
 fprintf('\n')
  
 %% grafico las funciones de forma
-XXI  = linspace(-1, 1, 100);
-EETA = linspace(-1, 1, 100);
+XXI  = linspace(-1, 1, 50);
+EETA = linspace(-1, 1, 50);
 [XI,ETA] = meshgrid(XXI,EETA);
 
 % calculo las esferitas
