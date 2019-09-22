@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+# %% Funciones de forma del elemento rectangular lagrangiano de 16 nodos 
+
 from mpl_toolkits.mplot3d import Axes3D  
 
 import matplotlib.pyplot as plt
@@ -9,9 +13,7 @@ import sympy as sp
 
 X, Y = 0, 1
 
-# %% Funciones de forma del elemento rectangular lagrangiano de 16 nodos 
-
-# Calculo las funciones de forma unidimensionales
+# %% Calculo las funciones de forma unidimensionales
 xi, eta = sp.symbols('xi eta')
 L4_xi = 4 * [None] # contenedor para las funciones de forma (en dir XI)
 L4_xi[0] = sp.nsimplify(interpolate([(-1,1), (-1/3,0), (1/3,0), (1,0)], xi))
@@ -25,7 +27,7 @@ L4_eta[1] = sp.nsimplify(interpolate([(-1,0), (-1/3,1), (1/3,0), (1,0)], eta))
 L4_eta[2] = sp.nsimplify(interpolate([(-1,0), (-1/3,0), (1/3,1), (1,0)], eta))
 L4_eta[3] = sp.nsimplify(interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], eta))
 
-# Coordenadas de los nodos y numeración local
+# %% Coordenadas de los nodos y numeración local
 #
 #        ^ eta
 #        |
@@ -65,7 +67,7 @@ pos[nod==-1/3] = 1
 pos[nod== 1/3] = 2
 pos[nod== 1  ] = 3
 
-# Se calculan las funciones de forma bidimensionales
+# %% Se calculan las funciones de forma bidimensionales
 N = nno * [None]
 for i in range(nno):
    N[i] = sp.simplify(L4_xi[pos[i,X]]*L4_eta[pos[i,Y]])

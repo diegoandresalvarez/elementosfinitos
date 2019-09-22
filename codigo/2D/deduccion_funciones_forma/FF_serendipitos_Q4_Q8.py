@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+# %% Funciones de forma del elemento rectangular serendípito de 4 y 8 nodos 
+
 from mpl_toolkits.mplot3d import Axes3D  
 
 import matplotlib.pyplot as plt
@@ -8,11 +12,9 @@ import sympy as sp
 
 X, Y = 0, 1
 
-# %% Funciones de forma del elemento rectangular serendípito de 4 y 8 nodos 
-
 nno = 8 #  escoja entre {4, 8}.
 
-# coordenadas de los nodos y numeración local
+# %% coordenadas de los nodos y numeración local
 if nno == 4:
    #      ^ eta
    #      |
@@ -46,7 +48,7 @@ elif nno == 8:
                    [ -1,  1 ],    #  7
                    [ -1,  0 ]])   #  8
 
-# se calculan las funciones de forma bidimensionales
+# %% se calculan las funciones de forma bidimensionales
 xxi  = nod[:, X]
 eeta = nod[:, Y]
 if nno == 4:
