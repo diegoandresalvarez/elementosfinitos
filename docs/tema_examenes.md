@@ -11,6 +11,7 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
   * Combinación lineal
   * Conjunto de vectores linealmente independiente
   * Base
+
 * Repaso de mecánica de sólidos:
   * Diapositivas 0: [00_Repaso_Mecanica_de_Solidos.pdf](../diapositivas/00_Repaso_Mecanica_de_Solidos.pdf)
   * Del `main.pdf` se evaluarán los siguientes temas:
@@ -18,9 +19,11 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
     * Desplazamiento virtual
     * Principio del trabajo virtual
   * Diapositivas de como pasar el PTV de 3D a 1D: [02_PTV_3D_a_1D.pdf](../diapositivas/02_PTV_3D_a_1D.pdf)
+
 * Repaso de análisis matricial de estructuras: 
   * Capítulo 1 de Oñate (2009): INTRODUCTION TO THE FINITE ELEMENT METHOD FOR STRUCTURAL ANALYSIS
   * Diapositivas 1: [01_Repaso_Calculo_Matricial.pdf](../diapositivas/01_Repaso_Calculo_Matricial.pdf)
+
 * Elemento finito de barra de dos nodos
   * Capítulo 2 de Oñate (2009): 1D FINITE ELEMENTS FOR AXIALLY LOADED RODS
   * Diapositivas 2: [02_EF_barra.pdf](../diapositivas/02_EF_barra.pdf), [02_EF_1d_globales.pdf](../diapositivas/02_EF_1d_globales.pdf), [02_EF_1d_locales.pdf](../diapositivas/02_EF_1d_locales.pdf)
@@ -34,20 +37,31 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
      * ¿Por qué se utilizan con preferencia las funciones de forma locales en el análisis de elementos finitos?
 
 # Examen 2
-* Capítulo 3 Oñate (2009): ADVANCED ROD ELEMENTS AND REQUIREMENTS FOR THE NUMERICAL SOLUTION
-* Diapositivas 3
+* Elemento finito de barra de `n` nodos:
+  * Capítulo 3 Oñate (2009): ADVANCED ROD ELEMENTS AND REQUIREMENTS FOR THE NUMERICAL SOLUTION
+  * Diapositivas 3: [03_EF_barra_avanzados.pdf](../diapositivas/03_EF_barra_avanzados.pdf), [03_EF_1d_n_nodos_isoparametricos.pdf](../diapositivas/03_EF_1d_n_nodos_isoparametricos.pdf)
+
+* Elemento finito triangular de 3 nodos y cuadrático de 4 nodos:
+  * Capítulo 4 de Oñate (2009): 2D SOLIDS. LINEAR TRIANGULAR AND RECTANGULAR ELEMENTS
+  * Diapositivas 5a:
+
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
 
 # Examen 3
-* Capítulo 4 de Oñate (2009): 2D SOLIDS. LINEAR TRIANGULAR AND RECTANGULAR ELEMENTS
 * Capítulo 5 de Oñate (2009): HIGHER ORDER 2D SOLID ELEMENTS. SHAPE FUNCTIONS AND ANALYTICAL COMPUTATION
 OF INTEGRALS
+
 * Capítulo 6 de Oñate (2009): ISOPARAMETRIC 2D SOLID ELEMENTS. NUMERICAL INTEGRATION AND APPLICATIONS 
-* Diapositivas 5
+
+* Diapositivas 5b:
+
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
 
 # Examen 4
 * Capítulo 7 de Oñate (2009): AXISYMMETRIC SOLIDS
+  * Diapositivas 6:
+
 * Capítulo 8 de Oñate (2009): THREE DIMENSIONAL SOLIDS
-* Diapositivas 6 y 7
+  * Diapositivas 7:
+
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
