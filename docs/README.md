@@ -22,4 +22,5 @@ Tomado de:
 - [Recursos](recursos.md)
 
 ## Examenes y talleres
-- [Tema de los exámenes](examenes.md)
+- [Tema de los exámenes](tema_examenes.md)
+- [Taller 1](../talleres/taller_1_2019b.md)

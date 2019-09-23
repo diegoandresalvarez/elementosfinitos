@@ -13,10 +13,10 @@
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
 ## Evaluaciones y trabajos
-- 17% - Exámen 1: diciembre 25, 2019
-- 17% - Exámen 2: octubre 23, 2019
-- 17% - Exámen 3: noviembre 20, 2019
-- 17% - Exámen 4: diciembre 18, 2019
+- 17% - Exámen 1: septiembre 27, 2019
+- 17% - Exámen 2: octubre 16, 2019
+- 17% - Exámen 3: noviembre 13, 2019
+- 17% - Exámen 4: diciembre 13, 2019
 - 32% - Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
