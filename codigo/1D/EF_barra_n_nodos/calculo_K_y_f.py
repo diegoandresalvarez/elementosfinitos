@@ -40,7 +40,7 @@ B = sp.diff(N,xi)*dxi_dx
 D = E*A
 
 # %% Calculo la matriz de rigidez del elemento
-fc = (A*E)/(6*L) # factor común
+fc = (A*E)/(3*L) # factor común
 K = sp.simplify(sp.integrate(B.T*D*B*dx_dxi, (xi, -1, 1)))
 K = sp.MatMul(fc, K/fc, evaluate = False)
 print('K = '); sp.pprint(K, num_columns=150); print()
