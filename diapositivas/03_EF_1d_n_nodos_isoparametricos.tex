@@ -82,16 +82,28 @@ x^{(e)}(\xi)
     \item $\ve{x}^{(e)}$ es el \emph{vector de coordenadas nodales del elemento} $e$.
 \end{itemize}    
 
+
+
 Se calcula el jacobiano de la transformación
 \begin{align}
-J^{(e)}(\xi) = \frac{\dd x^{(e)}(\xi)}{\dd \xi} = 
+J^{(e)}(\xi) &= \frac{\dd x^{(e)}(\xi)}{\dd \xi} = 
+\frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) x_i^{(e)}\right) = \sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} x_i^{(e)} \\
+&= 
+\underbrace{\begin{bmatrix}
+    \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
+    \end{bmatrix}}_{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}}
+\underbrace{\begin{bmatrix}
+    x_1^{(e)} \\ x_2^{(e)} \\ \vdots \\ x_n^{(e)}
+    \end{bmatrix}}_{\ma{x}^{(e)}} \\
+&= \frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}  \ve{x}^{(e)}
 \end{align}
-y la derivada
+y utilizando el teorema de la función inversa (ver: \url{https://en.wikipedia.org/wiki/Inverse_function_theorem}), también la derivada:
 \begin{align}
-\frac{\dd \xi(x)}{\dd x} = 
+\frac{\dd \xi(x)}{\dd x} = \frac{1}{J^{(e)}(\xi(x))}.
 \end{align}
 
-Recuerde que la transformación isoparamétrica es válida siempre y cuando $J^{(e)}(\xi)>0$ en todos los puntos del EF.
+
+Recuerde que la transformación isoparamétrica es válida siempre y cuando $J^{(e)}(\xi)>0$ en todos los puntos del EF. Esto garantiza que $x(\xi)$ sea una función biyectiva en el intervalo $\xi\in[-1,1]$
 
 
 
@@ -139,24 +151,27 @@ Deformaciones al interior del elemento:
 \begin{align}
 \varepsilon^{(e)}(\xi) &= \frac{\dd u^{(e)}(\xi)}{\dd x} =
  \frac{\dd u^{(e)}(\xi)}{\dd \xi}\frac{\dd \xi(x)}{\dd x} = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
- &= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{\dd \xi(x)}{\dd x} = 
+ &= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
   \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
-   \end{bmatrix}\frac{\dd \xi(x)}{\dd x}}_{\ma{B}^{(e)}(\xi)}
+   \end{bmatrix}}_{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}} \frac{1}{J^{(e)}(\xi)}
 \underbrace{\begin{bmatrix}
    u_1^{(e)} \\ u_2^{(e)} \\ \vdots \\ u_n^{(e)}
    \end{bmatrix}}_{\ma{a}^{(e)}} \\
-&= \ma{B}^{(e)}(\xi)  \ve{a}^{(e)}
+&= 
+\underbrace{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}%
+    \frac{1}{J^{(e)}(\xi)}}_{\ma{B}^{(e)}(\xi)}
+\ma{a}^{(e)} = \ma{B}^{(e)}(\xi)  \ve{a}^{(e)}
 \end{align}
 
 Deformaciones virtuales al interior del elemento:
 \begin{align}
 \delta \varepsilon^{(e)}(\xi) &= \delta \left(\frac{\dd u^{(e)}(\xi)}{\dd x}\right) = \frac{\dd}{\dd x}\left(\delta u^{(e)}(\xi)\right)
 = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
-&= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} = 
+&= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
    \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
-   \end{bmatrix} \frac{\dd \xi(x)}{\dd x} }_{\ma{B}^{(e)}(\xi)}
+   \end{bmatrix} \frac{1}{J^{(e)}(\xi)} }_{\ma{B}^{(e)}(\xi)}
 \underbrace{\begin{bmatrix}
   \delta u_1^{(e)} \\ \delta u_2^{(e)} \\ \vdots \\ \delta u_n^{(e)} 
    \end{bmatrix}}_{\delta \ma{a}^{(e)}} \\
