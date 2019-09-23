@@ -33,25 +33,25 @@ LaG = [1 2 3                  % definicion de EFs con respecto a nodos
        5 6 7];
 
 %% Relacion de cargas puntuales
-f = zeros(nno,1); % vector de fuerzas nodales equivalentes global
-f(nno) = P;       % relaciono la carga puntual en el nodo "nno"
+f = zeros(ngdl,1); % vector de fuerzas nodales equivalentes global
+f(nno) = P;        % relaciono la carga puntual en el nodo "nno"
 
 %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
-K = zeros(nno);   % matriz de rigidez global
-De = E*A;         % matriz constitutiva del elemento 
-for e = 1:nef     % ciclo sobre todos los elementos finitos
+K = zeros(ngdl);   % matriz de rigidez global
+De = E*A;          % matriz constitutiva del elemento 
+for e = 1:nef      % ciclo sobre todos los elementos finitos
    idx = LaG(e,:);
    
-   Ke = (A*E/(6*le(e)))*[ 14    -16      2   % matriz de rigidez
-                         -16     32    -16   % del elemento e
-                           2    -16     14];
+   Ke = (A*E/(3*le(e)))*[ 7    -8    1   % matriz de rigidez
+                         -8    16   -8   % del elemento e
+                          1    -8    7];
 
    fe = (b*le(e)/6)*[1; 4; 1]; % vector de fuerzas nodales equivalentes
    
    K(idx,idx) = K(idx,idx) + Ke;
    f(idx,:)   = f(idx,:)   + fe;
-end;
+end
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
 c = 1;    d = 2:nno;
@@ -118,7 +118,7 @@ plot(x, uexacto(x), 'rx');         % grafico solucion analitica
 hold on;                           % no borre el lienzo 
 for e = 1:nef % ciclo sobre todos los elementos finitos
    plot(xx{e}, uu{e}, 'b-'); % grafico solucion por MEF
-end;
+end
 title('Comparacion de la solucion analitica con el MEF para el desplazamiento');
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Desplazamiento (m)')       % titulo del eje Y
@@ -132,7 +132,7 @@ plot(x, Nexacta(x), 'rx');         % grafico solucion analitica
 hold on;                           % no borre el lienzo
 for e = 1:nef % ciclo sobre todos los elementos finitos
     plot(xx{e}, axial{e}, 'b-'); % grafico solucion por MEF
-end;
+end
 title('Comparacion de la solucion analitica con el MEF para la carga axial');
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Carga axial (N)')          % titulo del eje Y
