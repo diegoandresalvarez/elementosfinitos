@@ -17,6 +17,7 @@ clear, clc, close all        % borro la memoria, la pantalla y las figuras
 %% defino las variables
 nef = 3;                      % numero de elementos finitos (EF)
 nno = 2*nef + 1;              % numero de nodos
+ngdl = nno;                   % el # de grados de libertad es el mismo # de nodos
 E   = 200e9;    % Pa          % modulo de elasticidad de la barra
 A   = (0.01)^2; % m^2         % area transversal de la barra
 L   = 2;        % m           % longitud de la barra
@@ -52,17 +53,17 @@ n_int_gl = 2;                 % orden de la cuadratura de Gauss-Legendre
 % w_gl = [   0.347854845137453;  0.652145154862547; 0.652145154862547; 0.347854845137453 ];
 
 %% Relacion de cargas puntuales
-f = zeros(nno,1); % vector de fuerzas nodales equivalentes global
-f(nno) = P;       % relaciono la carga puntual en el nodo "nno"
+f = zeros(ngdl,1); % vector de fuerzas nodales equivalentes global
+f(nno) = P;        % relaciono la carga puntual en el nodo "nno"
 
 %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
-K = zeros(nno);   % matriz de rigidez global
-De = E*A;         % matriz constitutiva del elemento 
-for e = 1:nef     % ciclo sobre todos los elementos finitos
+K = zeros(ngdl);   % matriz de rigidez global
+De = E*A;          % matriz constitutiva del elemento 
+for e = 1:nef      % ciclo sobre todos los elementos finitos
    idx = LaG(e,:);
 
-   Je = le(e)/2;  % Jacobiano del elemento ( = dx_dxi)
+   Je = le(e)/2;   % Jacobiano del elemento ( = dx_dxi)
    
    % Calculo las matrices de rigidez y el vector de fuerzas nodales 
    % equivalentes del elemento
@@ -81,7 +82,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
 
    K(idx,idx) = K(idx,idx) + Ke;
    f(idx,:)   = f(idx,:)   + fe;
-end;
+end
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
 c = 1;    d = 2:nno;
@@ -106,8 +107,8 @@ ac = 0;               % desplazamientos conocidos
 %% resuelvo el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);   % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
-a = zeros(nno,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
-q = zeros(nno,1);  q(c) = qd;             % fuerzas nodales equivalentes
+a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
+q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
 %% se realizan unos calculos intermedios que necesitaremos mas adelante
 nint = 10;           % numero de puntos donde se interpolará dentro del EF
@@ -148,7 +149,7 @@ plot(x, uexacto(x), 'rx');         % grafico solucion analitica
 hold on;                           % no borre el lienzo 
 for e = 1:nef % ciclo sobre todos los elementos finitos
    plot(xx{e}, uu{e}, 'b-'); % grafico solucion por MEF
-end;
+end
 title('Comparacion de la solucion analitica con el MEF para el desplazamiento');
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Desplazamiento (m)')       % titulo del eje Y
@@ -162,7 +163,7 @@ plot(x, Nexacta(x), 'rx');         % grafico solucion analitica
 hold on;                           % no borre el lienzo
 for e = 1:nef % ciclo sobre todos los elementos finitos
     plot(xx{e}, axial{e}, 'b-'); % grafico solucion por MEF
-end;
+end
 title('Comparacion de la solucion analitica con el MEF para la carga axial');
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Carga axial (N)')          % titulo del eje Y
