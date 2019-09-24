@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# %% Funciones de forma del elemento rectangular serendípito de 4 y 8 nodos 
+# %% Funciones de forma del elemento rectangular serendípito de 4 y 8 nodos
 
-from mpl_toolkits.mplot3d import Axes3D  
+from mpl_toolkits.mplot3d import Axes3D
 
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -24,7 +24,7 @@ if nno == 4:
    #  ----+---|----> xi
    #  |   |   |
    #  1-------2
-   #                 xi  eta     # nodo   
+   #                 xi  eta     # nodo
    nod = np.array([[ -1, -1 ],   #  1
                    [  1, -1 ],   #  2
                    [  1,  1 ],   #  3
@@ -38,7 +38,7 @@ elif nno == 8:
    #  8---+---4----> xi
    #  |   |   |
    #  1---2---3
-   #                 xi  eta      # nodo   
+   #                 xi  eta      # nodo
    nod = np.array([[ -1, -1 ],    #  1
                    [  0, -1 ],    #  2
                    [  1, -1 ],    #  3
@@ -81,17 +81,15 @@ for i in range(nno):
 
 print('\nDerivadas con respecto a eta:')
 for i in range(nno):
-   print(f'dN{i+1}(xi,eta)_deta = {sp.diff(N[i], eta)}')   
+   print(f'dN{i+1}(xi,eta)_deta = {sp.diff(N[i], eta)}')
 
 print()
 
 # %% grafico las funciones de forma
-XXI  = np.linspace(-1, 1, 50)
-EETA = np.linspace(-1, 1, 50)
-XI, ETA = np.meshgrid(XXI, EETA)
+XI, ETA = np.ogrid[-1:1:30j, -1:1:30j]
 
 # calculo las esferitas
-u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
+u, v = np.ogrid[0:2*np.pi:20j, 0:np.pi:10j]
 xsp = 0.025*np.cos(u)*np.sin(v)
 ysp = 0.025*np.sin(u)*np.sin(v)
 zsp = 0.025*np.cos(v)
@@ -102,13 +100,13 @@ for i in range(nno):
    ax.set_aspect("equal")
    plt.xlabel(r'$\xi$', fontsize=16)   # titulo eje X
    plt.ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
-   plt.title(f'$N_{i+1}(\\xi,\\eta)$', fontsize=20)   
+   plt.title(f'$N_{i+1}(\\xi,\\eta)$', fontsize=20)
 
    # con este comando convierto la funcion de forma de tipo simbólico a
    # tipo función
    NN = sp.lambdify((xi, eta), N[i], 'numpy')
    surf = ax.plot_surface(XI, ETA, NN(XI,ETA), cmap=cm.viridis)
-   
+
    # se grafican las esferitas en cada nodo
    for j in range(nno):
        ax.plot_surface(xsp+nod[j,X], ysp+nod[j,Y], zsp+(i==j), color='k')
