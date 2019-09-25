@@ -237,16 +237,16 @@ En las páginas anteriores se calculó $\ma{N}^{(e)}$, $\ma{B}^{(e)}$ y $\ma{D}^
 \ma{f}^{(e)} &= \int_{-1}^{+1}  \ma{N}_{(e)}^T(\xi) b^{(e)}(\xi) \frac{\dd x^{(e)}(\xi)}{\dd \xi} \dd \xi
 \end{align}
 
-Finalmente, se aproximan dichas integrales utilizando una cuadratura de $p$ puntos de Gauss-Legendre:
+Finalmente, se aproximan dichas integrales utilizando una cuadratura de $M$ puntos de Gauss-Legendre:
 \begin{align}
-\ma{K}^{(e)} &\approx \sum_{m=1}^p \ma{B}_{(e)}^T(\xi_m) \ma{D}^{(e)}(\xi_m) \ma{B}^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m\\
-\ma{f}^{(e)} &\approx \sum_{m=1}^p  \ma{N}_{(e)}^T(\xi_m) b^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m
+\ma{K}^{(e)} &\approx \sum_{m=1}^M \ma{B}_{(e)}^T(\xi_m) \ma{D}^{(e)}(\xi_m) \ma{B}^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m\\
+\ma{f}^{(e)} &\approx \sum_{m=1}^M  \ma{N}_{(e)}^T(\xi_m) b^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m
 \end{align}
 
 Se deja como ejercicio al lector demostrar que:
 \begin{align}
-\ma{K}^{(e)}_{pq} &\approx \sum_{m=1}^p \frac{\dd N_p(\xi_m)}{\dd \xi} E^{(e)}(\xi_m) A^{(e)}(\xi_m) \frac{\dd N_q(\xi_m)}{\dd \xi} \frac{1}{J^{(e)}(\xi_m)} w_m\\
-\ma{f}^{(e)}_p &\approx \sum_{m=1}^p  N_p^{(e)}(\xi_m) b^{(e)}(\xi_m) J^{(e)}(\xi_m) w_m
+\ma{K}^{(e)}_{pq} &\approx \sum_{m=1}^M \frac{\dd N_p(\xi_m)}{\dd \xi} E^{(e)}(\xi_m) A^{(e)}(\xi_m) \frac{\dd N_q(\xi_m)}{\dd \xi} \frac{1}{J^{(e)}(\xi_m)} w_m\\
+\ma{f}^{(e)}_p &\approx \sum_{m=1}^M  N_p^{(e)}(\xi_m) b^{(e)}(\xi_m) J^{(e)}(\xi_m) w_m
 \end{align}
-
+donde $p, q = 1,\ 2, \ \ldots,\ n$.
 \end{document}
