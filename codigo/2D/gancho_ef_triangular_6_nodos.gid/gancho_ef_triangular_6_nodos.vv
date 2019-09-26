@@ -1,0 +1,41 @@
+BeginZE C:\Users\alejo\Documents\SEMESTRE 9\ELEMENTOS FINITOS\FIGURAS EN GID\gancho_ef_triangular_6_nodos.gid\gancho_ef_triangular_6_nodos.vv
+   x -17.717494964599609 26.653411865234375
+   y 22.984855651855469 -1.492894172668457
+   z -36.716625213623047 36.716625213623047
+   e 12.238875389099121
+   v 0.017348935827612877 0.041794966906309128 -0.0045553450472652912
+   r 0.99896520376205444
+   m 0.99646484851837158 0.010551459155976772 0.083345375955104828 0 -0.0076510659419000149 0.99935650825500488 -0.035042747855186462 0 -0.083661496639251709 0.034281186759471893 0.99590438604354858 0 0 0 0 1
+   c 4.4679579734802246 10.745981216430664 0
+   pd 0
+   pno 0
+   pfo 0
+   pf 4
+   pv 0
+   NowUse 1
+   DrawingType 0
+   LightVector 90 90 150 0
+   OGLShadow(UseShadows) 0
+   OGLShadow(RenderMode) RenderNice
+   OGLShadow(ShadowBias) -0.002
+   OGLShadow(AmbientShadows) 1
+   OGLShadow(UseFBO) 0
+   OGLShadow(FBOSize) 2048
+   OGLShadow(DimmedLightFactor) 0.02
+   OGLStereo(UseStereo) 0
+   OGLStereo(RelativeEyeDistance) 1
+   OGLStereo(FlipEyes) 0
+   OGLStereo(StereoMode) AnaglyphColors
+   OGLStereo(EyeDistance) 0.075
+   OGLStereo(LeftEyeDistance) 1 0 0 1
+   OGLStereo(RightEyeDistance) 0 1 1 1
+EndZE C:\Users\alejo\Documents\SEMESTRE 9\ELEMENTOS FINITOS\FIGURAS EN GID\gancho_ef_triangular_6_nodos.gid\gancho_ef_triangular_6_nodos.vv
+
+BeginMirror
+   Mirror 0 Angle 0.0 AngleFake -15.0 SizeFactor 2.0 HeightOffset 0.25 Color #d9e5f24d Backlight Off EdgeStyle No Type Scene DrawMode Mirror
+EndMirror
+
+BeginInfo
+eJzNU8tu2zAQvOsr9hgDqiE7TmIIRQG7VgyhfgS28ujJoKW1Q4QiBZKK5Qb59y4pGz206KFogV6k1T5mOTNUloth96rb60H2QsFF+9EJgkztBfS6NzEw84IF7JQGBnuUqHkOGmWBGnUYjHz1jjcoqKVkFgo0ueaV5UrCBfRvOnEAANPTJC8rgSVKy1xD2E7etpP9m9C1TlS9FTiudzvUMRzR+Oza0kLVZn1iNR2PQvisykoZ7rehZDRYwMUDN5Z1QphodgCr4JHLQh1CWFYopzMwdVUpbUNwMPeGyz30B4QkiOOWWxPDkBgWIb32GlG6YCtqBCYLiICJ6pmFP2YjGOV5XdbCUzohRC1CdEaIfodw2YcJVvbZz/qeoeMrcy7GlHGNtKRuuOBMH2HrRWjTEdTOCsGOJHbUfNg1HQ+gXs/JJvrQ7DpQCSbRBFNlCfgfGwa5qo5/3ySS6Y9Nuh78yqXedYtB7xMIRf+HUYHXQXgvHpLFZLmK4W3Oc62M2lkSQpM8nsu7F5paklXimqaT9Ozeezu9WqfLBbHt9rqRNyxd381GXyFd3C5X81Hmq2+eE8kBw7BVwwVeDHp7JSAK6bY4/pf9EExL3FWN/zlBqq7f+PHxEySt1CTarVbSQns9XHWWztNsTQvdx5w1kGFja42w5t+QThn1B+dK0l49A6kseI7kWD8aDH+qPqC2p/LVtauOXhkX7p7BKy/oYCWWivwwfkEE8/HRojnB8LIu4aD0izurrMstalA7wBN4DFfk3ZfAE0uesmThxPTHn842lNhs95qd44oJpB+s2NiWk8s/pouNObBq88ylJZzp7Cn2tq6TFXkTB0t6kh10snNIzsA8Wdy71Hcf58D3
+
+EndInfo
