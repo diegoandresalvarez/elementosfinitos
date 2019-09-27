@@ -1,6 +1,6 @@
 # Taller 1: elementos finitos de barra
 
-* Fecha y hora de entrega: sábado octubre 5, 2019 a las 23:59.
+* Fecha y hora de entrega: sábado octubre 9, 2019 a las 23:59.
 * Presentación individual.
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
@@ -76,4 +76,4 @@ b(x) = 2 kN/m^3 * x^2 para x \in [0 m, 2 m]
 
 * Resuelva el punto anterior utilizando integración numérica con cuadraturas de Gauss-Legendre, en vez de la matriz `K` deducida. (+0.5 puntos).
 
-* Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función `bvp4c()` de MATLAB o `solve_bvp()` de PYTHON, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con las soluciones estimadas por el método de los EFs. ¿Cual es el error del método de los EFs? (+1 punto).
+* **PUNTO OBLIGATORIO (si no se hace, se tendrá -1 punto)** Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función `bvp4c()` de MATLAB o `solve_bvp()` de PYTHON, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con las soluciones estimadas por el método de los EFs. ¿Cual es el error del método de los EFs? (+1 punto).
