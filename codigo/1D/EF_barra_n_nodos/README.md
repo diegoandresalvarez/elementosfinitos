@@ -5,23 +5,23 @@ A continuación se hace la deducción de la matriz de rigidez `K` y el vector de
 
 La salida de 
 * MATLAB: [calculo_K_y_f.m](calculo_K_y_f.m)
-* PYTHON: [calculo_K_y_f.py](calculo_K_y_f.m)
+* PYTHON: [calculo_K_y_f.py](calculo_K_y_f.py)
 
 es:
 ```
 K = 
-    ⎡14   -16   2 ⎤
-A⋅E ⎢             ⎥
-───⋅⎢-16  32   -16⎥
-6⋅L ⎢             ⎥
-    ⎣ 2   -16  14 ⎦
+    [7   -8  1 ]
+A*E [          ]
+---*[-8  16  -8]
+3*L [          ]
+    [1   -8  7 ]
 
 f = 
-    ⎡1⎤
-L⋅b ⎢ ⎥
-───⋅⎢4⎥
- 6  ⎢ ⎥
-    ⎣1⎦
+    [1]
+L*b [ ]
+---*[4]
+ 6  [ ]
+    [1]
 ```
 
 
