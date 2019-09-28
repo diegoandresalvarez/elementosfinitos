@@ -16,7 +16,7 @@ Tomado de:
 ## Tabla de contenido: 
 - [Temario y observaciones generales del curso 1](01_temario_y_observaciones_generales_1.md)
 - [Temario y observaciones generales del curso 2](01_temario_y_observaciones_generales_2.md)
-- [Diapositivas](diapositivas.md)
+- [Diapositivas](../diapositivas)
 - [Códigos](../codigo/)
 - [Tema a evaluar en los exámenes](tema_examenes.md)
 - [Recursos](recursos.md)
