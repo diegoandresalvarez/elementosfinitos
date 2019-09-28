@@ -1,16 +1,6 @@
-**<span style="font-size: 300%">CODIGOS DE MATLAB</span>**
-<span style="color: #0000ff;
-font-size: 200%;">Nota: estos códigos están hechos para que funcionen con MATLAB 2013a. No los he actualizado a versiones más nuevas de MATLAB, ya que el 2013a es el MATLAB que se tiene instalado en los computadores de la Universidad Nacional de Colombia - Sede Manizales. Por lo tanto, los programas para álgebra simbólica podrían fallar si usted utiliza versiones modernas de MATLAB.</span>
+![http://imgs.xkcd.com/comics/ballmer_peak.png](http://imgs.xkcd.com/comics/ballmer_peak.png)
 
-[[image:http://imgs.xkcd.com/comics/ballmer_peak.png]]
-Fuente: [[http://xkcd.com/323/]]
-
-==Programa para calcular los esfuerzos, deformaciones y desplazamientos de un sólido bidimensional utilizando elementos finitos triangulares de tres nodos==
-Considere la viga mostrada, suponiendo que el peso del material es 7.8 kg/m3, E = 200GPa, el coeficiente de Poisson es 0.30 y el espesor de la viga es 10 cm. Calcule los campos de esfuerzos, desplazamientos y deformaciones de la viga
-[[image:c5_viga_ejemplo.png]]
-Código de MATLAB: [[file:c5_ejemplo_triang_3_nodos_k_dado.zip]] <span style="color: #ff0000;">(NOTA: el código está bastante particularizado al ejemplo. Debe tenerse cuidado si se quiere utilizar para otro tipo de estructura)</span>
-
-
+Fuente: [http://xkcd.com/323/](http://xkcd.com/323/)
 
 ==Efecto del Jacobiano en la transformación isoparamétrica==
 Código de MATLAB: [[file:c5_jacobiano_isoparametrico.m]] (NOTA: falta hacer los comentarios respectivos)
@@ -19,25 +9,6 @@ Código de MATLAB: [[file:c5_jacobiano_isoparametrico.m]] (NOTA: falta hacer los
 ==Cuadratura de Gauss-Legendre para un elemento triangular==
 NOTA: La siguiente información lo tomé de: [[http://math2.uncc.edu/~shaodeng/TEACHING/math5172/2010Spring/]]
 [[file:c5_cuadratura_triangle.zip]]
-
-
-==Programa para calcular los esfuerzos, deformaciones y desplazamientos de un sólido bidimensional utilizando elementos finitos isoparamétricos rectangulares de ocho nodos==
-Calcule los campos de esfuerzos, desplazamientos y deformaciones de la estructura mostrada:
-[[image:c5_isoparametric_cuad_8_nodos.jpg]]
-
-Código de MATLAB: [[file:c5_ejemplo_isoparametricos_rect_8_nodos.zip]] 
-Código de JULIA 0.5.1 (experimental): [[file:c5_ejemplo_isoparametricos_rect_8_nodos_julia_0.51.zip]]
-
-Los esfuerzos de sigma_1 y sigma_2 calculados por el programa son: 
-[[image:c5_ejemplo_isoparametricos_rect_8_nodos_s1_s2.png]]
-
-NOTA 1: la matriz para extrapolar los los esfuerzos desde los puntos de Gauss hacia los nodos utilizando el programa [[file:c5_extrapolacion_esfuerzos.m]]
-NOTA 2: falta calcular las deformaciones principales.
-NOTA 3: este programa exporta los resultados a [[@http://gid.cimne.upc.es/|GiD]] por ejemplo:
-[[image:c5_ejemplo_isoparametricos_rect_8_nodos_exportar_resultados_gid.png]]
-
-Con el mismo programa, escogiendo la malla 3 (creada por Alejandro Cardona Jimenez), calculamos:
-[[image:c5_gancho.png]]
 
 ==Modos de energía nula==
 Con estos programas se pueden encontrar los modos de energía nula de un elemento rectangular de 4 nodos y del serendípito de 8 nodos.
@@ -49,4 +20,3 @@ Con estos programas se pueden encontrar los modos de energía nula de un element
 
 [[image:c5_modos_energia_nula.png]]
 
-----
