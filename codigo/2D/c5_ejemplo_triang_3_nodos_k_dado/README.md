@@ -7,6 +7,6 @@ Calcule los campos de esfuerzos, desplazamientos y deformaciones de la viga most
 Asuma:
 * densidad del material = 7.8 kg/m³
 * módulo de elasticidad = 200GPa
-* coeficiente de Poisson 0 0.30
+* coeficiente de Poisson = 0.30
 * espesor de la viga = 10 cm
 
