@@ -5,6 +5,62 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from func_EF_T3 import t2ft_T3
 
+from matplotlib.patches import Polygon
+from matplotlib.collections import PatchCollection
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+
+def plot_esf_def(variable, titulo):
+    '''FALTA
+    '''
+    fig, ax = plt.subplots()
+    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
+                                                            for e in range(nef) ]
+    p = PatchCollection(patches) #, cmap=matplotlib.cm.jet, alpha=0.4)
+    p.set_array(variable)
+    ax.add_collection(p)
+    #plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
+    plt.title(titulo) #,'FontSize',26)
+    ax.autoscale(enable=True, tight=True)
+    plt.gca().set_aspect('equal', adjustable='box')
+    # create an axes on the right side of ax. The width of cax will be 5%
+    # of ax and the padding between cax and ax will be fixed at 0.05 inch.
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    plt.colorbar(p, cax=cax, format='%.3e')
+    plt.tight_layout()
+    plt.show()
+
+def plot_esf_def_ang(variable, titulo, ang):
+    '''FALTA
+    '''
+    fig, ax = plt.subplots()
+    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
+                                                            for e in range(nef) ]
+    p = PatchCollection(patches) #, cmap=matplotlib.cm.jet, alpha=0.4)
+    p.set_array(variable)
+    ax.add_collection(p)
+    #plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
+    plt.title(titulo) #,'FontSize',26)
+    ax.autoscale(enable=True, tight=True)
+    plt.gca().set_aspect('equal', adjustable='box')
+    # create an axes on the right side of ax. The width of cax will be 5%
+    # of ax and the padding between cax and ax will be fixed at 0.05 inch.
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    plt.colorbar(p, cax=cax, format='%.3e')
+    plt.tight_layout()
+
+    esc = 2 # escala para graficar las flechas
+    for angulo in ang:
+    # Grafique lineas que indiquen direcciones de los esfuerzos
+       ax.quiver(cg[:,X], cg[:,Y],      #  En el punto (cgx,cgy) grafique una flecha (linea)
+         variable*np.cos(angulo), variable*np.sin(angulo),headwidth=0
+         )
+       ax.quiver(cg[:,X], cg[:,Y],      #  En el punto (cgx,cgy) grafique una flecha (linea)
+         variable*np.cos(angulo+np.pi), variable*np.sin(angulo+np.pi),headwidth=0
+         )         
+    plt.show()        
+
 # %% CÁLCULO DE UNA VIGA CON ELEMENTOS FINITOS TRIANGULARES PARA TENSION PLANA
 # Definición del problema
 # Calcule los desplazamientos y las reacciones en los empotramiento, las
@@ -16,11 +72,11 @@ X, Y          = 0, 1
 NL1, NL2, NL3 = 0, 1, 2
 
 # %% defino las variables/constantes del sólido
-Ee   = 200e9        # módulo de elasticidad del sólido (Pa) = 200GPa
+Ee   = 200e9        # [Pa] módulo de elasticidad del sólido
 nue  = 0.30         # coeficiente de Poisson
-te   = 0.10         # espesor del sólido (m)
-rhoe = 7850         # densidad (kg/m^3)
-g    = 9.81         # aceleración de la gravedad (m/s^2)
+te   = 0.10         # [m] espesor del sólido
+rhoe = 7850         # [kg/m³] densidad
+g    = 9.81         # [m/s²] aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
@@ -36,7 +92,7 @@ nno  = xnod.shape[0]  # número de nodos (número de filas de xnod)
 
 # %% definición de los grados de libertad
 ngdl = 2*nno          # número de grados de libertad (dos por nodo)
-gdl  = np.reshape(np.arange(ngdl),(nno,2)) # nodos vs grados de libertad
+gdl  = np.reshape(np.arange(ngdl), (nno,2)) # nodos vs grados de libertad
 
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
@@ -52,26 +108,26 @@ for i in range(ncp):
 
 # %% Se dibuja la malla de elementos finitos
 plt.figure()
-cgx = np.zeros(nef); cgy = np.zeros(nef) # almacena el centro de gravedad
+cg = np.zeros((nef,2))     # almacena el centro de gravedad
 for e in range(nef):
    idx_NL = [NL1, NL2, NL3, NL1]
    plt.plot(xnod[LaG[e, idx_NL], X], xnod[LaG[e, idx_NL], Y], 'b')
 
    # Calculo la posición del centro de gravedad del triángulo
-   cgx[e] = np.mean(xnod[LaG[e,:], X])
-   cgy[e] = np.mean(xnod[LaG[e,:], Y])
-   plt.text(cgx[e], cgy[e], f'{e+1}', horizontalalignment='center',
-                                      verticalalignment='center',   color='b')
+   cg[e] = np.mean(xnod[LaG[e,:], :], axis=0)
+   plt.text(cg[e,X], cg[e,Y], f'{e+1}', horizontalalignment='center',
+                                        verticalalignment='center',   color='b')
 
 plt.plot(xnod[:,X], xnod[:,Y], 'r*')
 for i in range(nno):
    plt.text(xnod[i,X], xnod[i,Y], f'{i+1}', color='r')
-plt.axis('equal') # tight
+plt.gca().set_aspect('equal', adjustable='box')   
+plt.tight_layout()
 plt.title('Malla de elementos finitos')
 plt.show()
 
 # %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
-#  equivalentes global
+# equivalentes global
 K   = np.zeros((ngdl,ngdl)) # matriz de rigidez global como RALA (sparse)                                                         SPARSE
 B   = nef * [None]          # contenedor para las matrices de deformación
 idx = nef * [None]          # indices asociados a los gdl del EF e
@@ -83,9 +139,9 @@ De = np.array([[ Ee/(1-nue**2)    , Ee*nue/(1-nue**2),  0              ],
 
 for e in range(nef):        # ciclo sobre todos los elementos finitos
    # Calculo de la matriz de rigidez del elemento e
-   x1 = xnod[LaG[e,NL1],X];              y1 = xnod[LaG[e,NL1],Y]
-   x2 = xnod[LaG[e,NL2],X];              y2 = xnod[LaG[e,NL2],Y]
-   x3 = xnod[LaG[e,NL3],X];              y3 = xnod[LaG[e,NL3],Y]
+   x1, y1 = xnod[LaG[e,NL1], :]
+   x2, y2 = xnod[LaG[e,NL2], :]
+   x3, y3 = xnod[LaG[e,NL3], :]
 
    Ae = 0.5*np.linalg.det(np.array([[ 1, x1, y1 ],      #Area del EF e
                                     [ 1, x2, y2 ],
@@ -123,13 +179,13 @@ plt.title('Los puntos representan los elementos diferentes de cero')
 plt.show()
 
 # %% Relación de las cargas superficiales (vector ft)
-carga_distr = df['carga_distr']
-nlcd = carga_distr.shape[0] # número de lados con carga distribuída
-ft   = np.zeros(ngdl)       # fuerzas nodales equivalentes de cargas superficiales                                             SPARSE
+cd   = df['carga_distr']
+nlcd = cd.shape[0]    # número de lados con carga distribuída
+ft   = np.zeros(ngdl) # fuerzas nodales equivalentes de cargas superficiales                                             SPARSE
 for i in range(nlcd):
-   e     = carga_distr['elemento'][i] - 1
-   lado  = carga_distr['lado'][i]
-   carga = carga_distr[['tix','tiy','tjx','tjy']].loc[i].to_numpy()
+   e     = cd['elemento'][i] - 1
+   lado  = cd['lado'][i]
+   carga = cd[['tix','tiy','tjx','tjy']].loc[i].to_numpy()
    fte = t2ft_T3(xnod[LaG[e,:],:], lado, carga, te)
 
    ft[np.ix_(idx[e])] += fte
@@ -171,15 +227,14 @@ a = np.zeros(ngdl); q = np.zeros(ngdl) # separo la memoria
 a[c] = ac;          a[d] = ad          # desplazamientos
 q[c] = qd         # q[d] = qc = 0      # fuerzas nodales de equilibrio
 
-# %% imprimo los resultados
-tabla_afq = pd.DataFrame(data=np.c_[a, f, q],
-                     index=np.arange(ngdl)+1,
-                     columns=['a', 'f', 'q'])
+# %% imprimo los resultados de los desplazamientos (a), las fuerzas nodales
+# equivalentes (f) y nodales de equilibrio (q)
+tabla_afq = pd.DataFrame(
+    data=np.c_[a.reshape((nno,2)), f.reshape((nno,2)), q.reshape((nno,2))],
+    index=np.arange(nno)+1,
+    columns=['ux [m]', 'uy [m]', 'fx [N]', 'fy [N]', 'qx [N]', 'qy [N]'])
+tabla_afq.index.name = '# nodo'
 print(tabla_afq)
-
-# print('Nodo   Despl_x (m)   Despl_y (m) = ');     [1:nno; reshape(a,2,nno)]'
-# print('Nodo Fuerzas nodales equiv. X, Y (N) = '); [1:nno; reshape(f,2,nno)]'
-# print('Nodo Fuerzas nodales equil. X, Y (N) = '); [1:nno; reshape(q,2,nno)]'
 
 # %% Dibujo la malla de elementos finitos y las deformada de esta
 delta  = np.reshape(a, (nno,2))
@@ -189,10 +244,12 @@ xdef   = xnod + escala*delta    # posición de la deformada
 plt.figure()
 for e in range(nef):
    nod_ef = LaG[e, [NL1, NL2, NL3, NL1]]
-   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'r')#, lw=0.5)
-   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'b')#, lw=1.0)
+   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'r', 
+                        label='Posición original'  if e == 0 else "", lw=0.5)
+   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'b', 
+                        label='Posición deformada' if e == 0 else "")
 plt.gca().set_aspect('equal', adjustable='box')
-#legend('Posición original','Posición deformada','Location', 'SouthOutside')
+plt.legend()
 plt.xlabel('$x$ [m]')
 plt.ylabel('$y$ [m]')
 plt.title(f'Deformada escalada {escala} veces')
@@ -209,163 +266,63 @@ for e in range(nef):
 
 sx = esfuer[0,:];  sy = esfuer[1,:];  txy = esfuer[2,:]
 ex = deform[0,:];  ey = deform[1,:];  gxy = deform[2,:]
-ez  = -(nue/Ee)*(sx+sy)  # se calculan las deformaciones ez en tensión plana
+ez = -(nue/Ee)*(sx+sy)  # se calculan las deformaciones ez en tensión plana
 
 # %% imprimo y grafico las deformaciones
-tabla_exeyezgxy = pd.DataFrame(data=np.c_[ex, ey, ez, gxy],
-                     index=np.arange(nef)+1,
-                     columns=['ex', 'ey', 'ez', 'gxy'])
+tabla_exeyezgxy = pd.DataFrame(
+   data=np.c_[ex, ey, ez, gxy],
+   index=np.arange(nef)+1,
+   columns=['ex', 'ey', 'ez', 'gxy [rad]'])
+tabla_exeyezgxy.index.name = '# EF'
 print(tabla_exeyezgxy)
 
-fig, ax = plt.subplots()
-#subplot(4,1,1); hold on;
-for e in range(nef):
-   ax.fill(xnod[LaG[e,:],X], xnod[LaG[e,:],Y], ex[e], cmap=plt.cm.jet)
-plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
-fig.colorbar(ax=ax)
-plt.gca().set_aspect('equal', adjustable='box')
-plt.tight_layout()
-plt.show()
-
-'''
-fig, ax = plt.subplots()
-im = ax.scatter(x, y, c=c, s=s, cmap=plt.cm.jet)
-
-# Add a colorbar
-fig.colorbar(im, ax=ax)
-
-# set the color limits - not necessary here, but good to know how.
-im.set_clim(0.0, 1.0)
-'''
-
-
-
-#https://stackoverflow.com/questions/17660071/python-matplotlib-how-to-use-fill-between-with-a-colormap-to-fill-the-backgroun
-
-'''
-subplot(4,1,2); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ey(e))
-end;
-ylabel('\epsilon_y','FontSize',26); axis equal tight; colorbar;
-
-subplot(4,1,3); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ez(e))
-end;
-ylabel('\epsilon_z','FontSize',26); axis equal tight; colorbar;
-
-subplot(4,1,4); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),gxy(e))
-end;
-ylabel('\gamma_{xy}','FontSize',26); axis equal tight; colorbar;
-
-
+plot_esf_def(ex,  r'$\epsilon_x$')
+plot_esf_def(ey,  r'$\epsilon_y$')
+plot_esf_def(ez,  r'$\epsilon_z$')
+plot_esf_def(gxy, r'$\gamma_{xy}$')
 
 # %% imprimo y grafico los esfuerzos
-disp('Esfuerzos (Pa):  (EF,sx,sy,txy) = '); [1:nef; sx; sy; txy]'
-figure
-subplot(3,1,1); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sx(e))
-end;
-ylabel('\sigma_x (Pa)','FontSize',26); axis equal tight; colorbar;
+tabla_sxsytxy = pd.DataFrame(
+   data=np.c_[sx, sy, txy],
+   index=np.arange(nef)+1,
+   columns=['sx [Pa]', 'sy [Pa]', 'txy [Pa]'])
+tabla_sxsytxy.index.name = '# EF'
+print(tabla_sxsytxy)
 
-subplot(3,1,2); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sy(e))
-end;
-ylabel('\sigma_y (Pa)','FontSize',26); axis equal tight; colorbar;
-
-subplot(3,1,3); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),txy(e))
-end;
-ylabel('\tau_{xy} (Pa)','FontSize',26); axis equal tight; colorbar;
+plot_esf_def(sx,  r'$\sigma_x$')
+plot_esf_def(sy,  r'$\sigma_y$')
+plot_esf_def(txy, r'$\tau_{xy}$')
 
 
 # %% Se calculan y grafican para cada elemento los esfuerzos principales y
-# %% sus direcciones
-# NOTA: esto solo es valido para el caso de TENSION PLANA).
+# sus direcciones
+# NOTA: esto solo es valido para el caso de TENSION PLANA.
 # En caso de DEFORMACION PLANA se deben calcular los valores y vectores
-# propios de la matriz de tensiones de Cauchy
+# propios de la matriz de tensiones de Cauchy:
 #   [dirppales{e}, esfppales{e}] = eig([sx  txy 0    # matriz de esfuerzos
 #                                       txy sy  0    # de Cauchy
-#                                       0   0   0]);
+#                                       0   0   0])
 
-s1   = (sx+sy)/2 + sqrt(((sx-sy)/2).^2+txy.^2); # esfuerzo normal maximo
-s2   = (sx+sy)/2 - sqrt(((sx-sy)/2).^2+txy.^2); # esfuerzo normal minimo
-tmax = (s1-s2)/2;                               # esfuerzo cortante maximo
-ang  = 0.5*atan2(2*txy, sx-sy); # angulo de inclinacion de s1
+s1   = (sx+sy)/2 + np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal máximo
+s2   = (sx+sy)/2 - np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal mínimo
+tmax = (s1-s2)/2                                    # esfuerzo cortante máximo
+ang  = 0.5*np.arctan2(2*txy, sx-sy) # ángulo de inclinación de s1
 
 # %% Calculo de los esfuerzos de von Mises
-s3 = zeros(size(s1));
-sv = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2);
+s3 = np.zeros(nef)
+sv = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
 
-# %% imprimo los resultados
-disp('Elemento,s1(Pa),s2(Pa),tmax(Pa),angulo(rad) = '); [1:nef; s1; s2; tmax; ang]'
-disp('Elemento,Esfuerzos de von Mises (Pa) = '); [1:nef; sv]'
+# %% imprimo y grafico los esfuerzos s1, s2, tmax y sv
+tabla_s1s2sv = pd.DataFrame(
+   data=np.c_[s1, s2, tmax, sv, ang],
+   index=np.arange(nef)+1,
+   columns=['s1 [Pa]', 's2 [Pa]', 'tmax [Pa]', 'sv [Pa]', 'theta [rad]'])
+tabla_s1s2sv.index.name = '# EF'
+print(tabla_s1s2sv)
 
-esc = 2; # escala para graficar las flechas
-figure
-subplot(3,1,1); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s1(e))
-end;
-# Grafique lineas que indiquen direcciones principales de sigma_1
-quiver(cgx,cgy,...     #  En el punto (cgx,cgy) grafique una flecha (linea)
-   s1.*cos(ang),s1.*sin(ang),... # indicando la direccion principal de sigma_1
-   esc,...                       # con una escala esc
-   'k', ...                      # de color negro
-  'ShowArrowHead','off',...      # una flecha sin cabeza
-  'LineWidth',2,...              # con un ancho de linea 2
-  'Marker','.');                 # y en el punto (x,y) poner un punto '.'
-quiver(cgx,cgy,...               # La misma flecha ahora en la otra direccion,
-   s1.*cos(ang+pi),s1.*sin(ang+pi),...  # es decir girando 180 grados
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\sigma_1 (Pa)','FontSize',26); colorbar
+plot_esf_def_ang(s1,   r'$\sigma_1$',   [ ang ])
+plot_esf_def_ang(s2,   r'$\sigma_2$',   [ ang+np.pi/2 ] )
+plot_esf_def_ang(tmax, r'$\tau_{max}$', [ ang-np.pi/4, ang+np.pi/4 ])
+plot_esf_def(sv,       r'$\sigma_{VM}$')
 
-subplot(3,1,2); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s2(e))
-end;
-# Grafique lineas que indiquen direcciones principales de sigma_2
-quiver(cgx,cgy,...                         # flecha indicando la direccion
-   s2.*cos(ang+pi/2),s2.*sin(ang+pi/2),... # principal de sigma_2
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, s2.*cos(ang-pi/2),s2.*sin(ang-pi/2),...
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\sigma_2 (Pa)','FontSize',26); colorbar
-
-subplot(3,1,3); hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),tmax(e))
-end;
-# Grafique lineas que indiquen direcciones principales de tau_max,
-quiver(cgx,cgy, tmax.*cos(ang+pi/4),tmax.*sin(ang+pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang-pi/4),tmax.*sin(ang-pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang+3*pi/4),tmax.*sin(ang+3*pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang-3*pi/4),tmax.*sin(ang-3*pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\tau_{max} (Pa)','FontSize',26); colorbar
-
-figure; hold on;
-for e in range(nef):
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sv(e))
-end;
-ylabel('\sigma_v (Pa)','FontSize',26); axis equal tight; colorbar;
-title('Esfuerzos de von Mises (Pa)')
-
-# %%
-return; # bye, bye!
-'''
+# %%bye, bye!
