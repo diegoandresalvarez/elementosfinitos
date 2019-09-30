@@ -177,4 +177,6 @@ def  plot_esf_def(variable, titulo, angulo=None):
 PENDIENTE:
 * interpolar los esfuerzos
 * hacer que al mover el mouse, se muestren en el título los esfuerzos de triángulo
+* comentar mejor este archivo 
+* mejorar el README.md
 '''
