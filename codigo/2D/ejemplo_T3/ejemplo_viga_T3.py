@@ -3,63 +3,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from func_EF_T3 import t2ft_T3
-
-from matplotlib.patches import Polygon
-from matplotlib.collections import PatchCollection
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-
-def plot_esf_def(variable, titulo):
-    '''FALTA
-    '''
-    fig, ax = plt.subplots()
-    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
-                                                            for e in range(nef) ]
-    p = PatchCollection(patches) #, cmap=matplotlib.cm.jet, alpha=0.4)
-    p.set_array(variable)
-    ax.add_collection(p)
-    #plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
-    plt.title(titulo) #,'FontSize',26)
-    ax.autoscale(enable=True, tight=True)
-    plt.gca().set_aspect('equal', adjustable='box')
-    # create an axes on the right side of ax. The width of cax will be 5%
-    # of ax and the padding between cax and ax will be fixed at 0.05 inch.
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes("right", size="5%", pad=0.05)
-    plt.colorbar(p, cax=cax, format='%.3e')
-    plt.tight_layout()
-    plt.show()
-
-def plot_esf_def_ang(variable, titulo, ang):
-    '''FALTA
-    '''
-    fig, ax = plt.subplots()
-    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
-                                                            for e in range(nef) ]
-    p = PatchCollection(patches) #, cmap=matplotlib.cm.jet, alpha=0.4)
-    p.set_array(variable)
-    ax.add_collection(p)
-    #plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
-    plt.title(titulo) #,'FontSize',26)
-    ax.autoscale(enable=True, tight=True)
-    plt.gca().set_aspect('equal', adjustable='box')
-    # create an axes on the right side of ax. The width of cax will be 5%
-    # of ax and the padding between cax and ax will be fixed at 0.05 inch.
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes("right", size="5%", pad=0.05)
-    plt.colorbar(p, cax=cax, format='%.3e')
-    plt.tight_layout()
-
-    esc = 2 # escala para graficar las flechas
-    for angulo in ang:
-    # Grafique lineas que indiquen direcciones de los esfuerzos
-       ax.quiver(cg[:,X], cg[:,Y],      #  En el punto (cgx,cgy) grafique una flecha (linea)
-         variable*np.cos(angulo), variable*np.sin(angulo),headwidth=0
-         )
-       ax.quiver(cg[:,X], cg[:,Y],      #  En el punto (cgx,cgy) grafique una flecha (linea)
-         variable*np.cos(angulo+np.pi), variable*np.sin(angulo+np.pi),headwidth=0
-         )         
-    plt.show()        
+import func_EF_T3
+from func_EF_T3 import t2ft_T3, plot_esf_def
 
 # %% CÁLCULO DE UNA VIGA CON ELEMENTOS FINITOS TRIANGULARES PARA TENSION PLANA
 # Definición del problema
@@ -72,43 +17,43 @@ X, Y          = 0, 1
 NL1, NL2, NL3 = 0, 1, 2
 
 # %% defino las variables/constantes del sólido
-Ee   = 200e9        # [Pa] módulo de elasticidad del sólido
-nue  = 0.30         # coeficiente de Poisson
-te   = 0.10         # [m] espesor del sólido
-rhoe = 7850         # [kg/m³] densidad
-g    = 9.81         # [m/s²] aceleración de la gravedad
+Ee   = 200e9 # [Pa] módulo de elasticidad del sólido
+nue  = 0.30  # coeficiente de Poisson
+te   = 0.10  # [m] espesor del sólido
+rhoe = 7850. # [kg/m³] densidad
+g    = 9.81  # [m/s²] aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
 #df   = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
 
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
-df   = pd.read_excel('malla_refinada.xlsx', sheet_name=None)
+df = pd.read_excel('malla_refinada.xlsx', sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=1 o Y=2
 xnod = df['xnod'][['x','y']].to_numpy()
-nno  = xnod.shape[0]  # número de nodos (número de filas de xnod)
+nno  = xnod.shape[0]    # número de nodos (número de filas de xnod)
 
 # %% definición de los grados de libertad
-ngdl = 2*nno          # número de grados de libertad (dos por nodo)
+ngdl = 2*nno            # número de grados de libertad (dos por nodo)
 gdl  = np.reshape(np.arange(ngdl), (nno,2)) # nodos vs grados de libertad
 
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
 LaG = df['LaG'][['NL1','NL2','NL3']].to_numpy() - 1
-nef = LaG.shape[0]    # número de EFs (número de filas de LaG)
+nef = LaG.shape[0]      # número de EFs (número de filas de LaG)
 
 # %% Relación de cargas puntuales
-f   = np.zeros(ngdl)       # vector de fuerzas nodales equivalentes global
 cp  = df['carga_punt']
-ncp = cp.shape[0]          # número de cargas puntuales
+ncp = cp.shape[0]       # número de cargas puntuales
+f   = np.zeros(ngdl)    # vector de fuerzas nodales equivalentes global
 for i in range(ncp):
    f[gdl[cp['nodo'][i]-1, cp['dirección'][i]-1]] = cp['fuerza puntual'][i]
 
 # %% Se dibuja la malla de elementos finitos
 plt.figure()
-cg = np.zeros((nef,2))     # almacena el centro de gravedad
+cg = np.zeros((nef,2))  # almacena el centro de gravedad
 for e in range(nef):
    idx_NL = [NL1, NL2, NL3, NL1]
    plt.plot(xnod[LaG[e, idx_NL], X], xnod[LaG[e, idx_NL], Y], 'b')
@@ -143,7 +88,7 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
    x2, y2 = xnod[LaG[e,NL2], :]
    x3, y3 = xnod[LaG[e,NL3], :]
 
-   Ae = 0.5*np.linalg.det(np.array([[ 1, x1, y1 ],      #Area del EF e
+   Ae = 0.5*np.linalg.det(np.array([[ 1, x1, y1 ],      # área del EF e
                                     [ 1, x2, y2 ],
                                     [ 1, x3, y3 ]]))
    if Ae <= 0:
@@ -190,7 +135,7 @@ for i in range(nlcd):
 
    ft[np.ix_(idx[e])] += fte
 
-# Agrego al vector de fuerzas nodales equivalentes las fuerzas
+# %% agrego al vector de fuerzas nodales equivalentes las fuerzas
 # superficiales calculadas
 f += ft
 
@@ -219,8 +164,8 @@ Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
 Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
 
 # %% resuelvo el sistema de ecuaciones
-ad = np.linalg.solve(Kdd, fc - Kdc@ac) # calculo desplazamientos desconocidos
-qd = Kcc@ac + Kcd@ad - fd              # calculo fuerzas de equilibrio desconocidas
+ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+qd = Kcc@ac + Kcd@ad - fd              # fuerzas de equilibrio desconocidas
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
 a = np.zeros(ngdl); q = np.zeros(ngdl) # separo la memoria
@@ -234,7 +179,6 @@ tabla_afq = pd.DataFrame(
     index=np.arange(nno)+1,
     columns=['ux [m]', 'uy [m]', 'fx [N]', 'fy [N]', 'qx [N]', 'qy [N]'])
 tabla_afq.index.name = '# nodo'
-print(tabla_afq)
 
 # %% Dibujo la malla de elementos finitos y las deformada de esta
 delta  = np.reshape(a, (nno,2))
@@ -266,7 +210,7 @@ for e in range(nef):
 
 sx = esfuer[0,:];  sy = esfuer[1,:];  txy = esfuer[2,:]
 ex = deform[0,:];  ey = deform[1,:];  gxy = deform[2,:]
-ez = -(nue/Ee)*(sx+sy)  # se calculan las deformaciones ez en tensión plana
+ez = -(nue/Ee)*(sx+sy)          # deformaciones ez en tensión plana
 
 # %% imprimo y grafico las deformaciones
 tabla_exeyezgxy = pd.DataFrame(
@@ -274,8 +218,8 @@ tabla_exeyezgxy = pd.DataFrame(
    index=np.arange(nef)+1,
    columns=['ex', 'ey', 'ez', 'gxy [rad]'])
 tabla_exeyezgxy.index.name = '# EF'
-print(tabla_exeyezgxy)
 
+func_EF_T3.compartir_variables(xnod, LaG, cg)
 plot_esf_def(ex,  r'$\epsilon_x$')
 plot_esf_def(ey,  r'$\epsilon_y$')
 plot_esf_def(ez,  r'$\epsilon_z$')
@@ -287,42 +231,53 @@ tabla_sxsytxy = pd.DataFrame(
    index=np.arange(nef)+1,
    columns=['sx [Pa]', 'sy [Pa]', 'txy [Pa]'])
 tabla_sxsytxy.index.name = '# EF'
-print(tabla_sxsytxy)
 
 plot_esf_def(sx,  r'$\sigma_x$')
 plot_esf_def(sy,  r'$\sigma_y$')
 plot_esf_def(txy, r'$\tau_{xy}$')
 
-
 # %% Se calculan y grafican para cada elemento los esfuerzos principales y
 # sus direcciones
-# NOTA: esto solo es valido para el caso de TENSION PLANA.
-# En caso de DEFORMACION PLANA se deben calcular los valores y vectores
+# NOTA: esto solo es válido para el caso de TENSION PLANA.
+# En caso de DEFORMACIÓN PLANA se deben calcular los valores y vectores
 # propios de la matriz de tensiones de Cauchy:
-#   [dirppales{e}, esfppales{e}] = eig([sx  txy 0    # matriz de esfuerzos
-#                                       txy sy  0    # de Cauchy
-#                                       0   0   0])
+# [dirppales{e}, esfppales{e}] = eig([sx  txy 0    # matriz de esfuerzos
+#                                     txy sy  0    # de Cauchy
+#                                     0   0   0])
 
 s1   = (sx+sy)/2 + np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal máximo
 s2   = (sx+sy)/2 - np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal mínimo
 tmax = (s1-s2)/2                                    # esfuerzo cortante máximo
-ang  = 0.5*np.arctan2(2*txy, sx-sy) # ángulo de inclinación de s1
+ang  = 0.5*np.arctan2(2*txy, sx-sy)                 # ángulo asociado a s1
 
 # %% Calculo de los esfuerzos de von Mises
 s3 = np.zeros(nef)
 sv = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
 
 # %% imprimo y grafico los esfuerzos s1, s2, tmax y sv
-tabla_s1s2sv = pd.DataFrame(
+tabla_s1s2tmaxsv = pd.DataFrame(
    data=np.c_[s1, s2, tmax, sv, ang],
    index=np.arange(nef)+1,
    columns=['s1 [Pa]', 's2 [Pa]', 'tmax [Pa]', 'sv [Pa]', 'theta [rad]'])
-tabla_s1s2sv.index.name = '# EF'
-print(tabla_s1s2sv)
+tabla_s1s2tmaxsv.index.name = '# EF'
 
-plot_esf_def_ang(s1,   r'$\sigma_1$',   [ ang ])
-plot_esf_def_ang(s2,   r'$\sigma_2$',   [ ang+np.pi/2 ] )
-plot_esf_def_ang(tmax, r'$\tau_{max}$', [ ang-np.pi/4, ang+np.pi/4 ])
-plot_esf_def(sv,       r'$\sigma_{VM}$')
+plot_esf_def(s1,   r'$\sigma_1$',   [ ang ])
+plot_esf_def(s2,   r'$\sigma_2$',   [ ang+np.pi/2 ] )
+plot_esf_def(tmax, r'$\tau_{max}$', [ ang-np.pi/4, ang+np.pi/4 ])
+plot_esf_def(sv,   r'$\sigma_{VM}$')
+
+# %%Se escriben los resultados a una hoja de MS EXCEL
+nombre_archivo = 'resultados.xlsx'
+writer = pd.ExcelWriter(nombre_archivo, engine='xlsxwriter')
+
+# se escribe cada DataFrame a una hoja diferente
+tabla_afq.to_excel(       writer, sheet_name='afq')
+tabla_exeyezgxy.to_excel( writer, sheet_name='exeyezgxy')
+tabla_sxsytxy.to_excel(   writer, sheet_name='sxsytxy')
+tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
+
+# Se cierra y graba el archivo de MS EXCEL
+writer.save()
+print(f'Los resultados se escribieron en {nombre_archivo}')
 
 # %%bye, bye!
