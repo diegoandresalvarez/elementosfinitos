@@ -120,37 +120,61 @@ f31 = int(res31*dx_dxi, xi, -1 ,1)
 from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib import cm
+#from matplotlib import colors
 
-def plot_esf_def(variable, titulo, angulo=None):
-   '''FALTA
-   '''
-   nef = LaG.shape[0]
 
-   fig, ax = plt.subplots()
-   patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
+def  plot_esf_def(variable, titulo, angulo=None):
+    '''FALTA
+    '''
+    # se determina el número de elementos finitos
+    nef = LaG.shape[0]
+ 
+    fig, ax = plt.subplots()
+ 
+    # cada EF se especifica como un polígono
+    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
                                                            for e in range(nef) ]
-   p = PatchCollection(patches) #, cmap=matplotlib.cm.jet, alpha=0.4)
-   p.set_array(variable)
-   ax.add_collection(p)
-   #plt.ylabel(r'$\epsilon_x$') #,'FontSize',26)
-   plt.title(titulo) #,'FontSize',26)
-   ax.autoscale(enable=True, tight=True)
-   plt.gca().set_aspect('equal', adjustable='box')
-   # create an axes on the right side of ax. The width of cax will be 5%
-   # of ax and the padding between cax and ax will be fixed at 0.05 inch.
-   divider = make_axes_locatable(ax)
-   cax = divider.append_axes("right", size="5%", pad=0.05)
-   plt.colorbar(p, cax=cax, format='%.3e')
-   plt.tight_layout()
-   
-   if angulo is not None:
-      esc = 2 # escala para graficar las flechas
-      for ang in angulo:
-      # Grafique líneas que indiquen direcciones de los esfuerzos
-         ax.quiver(cg[:,X], cg[:,Y],
-            variable*np.cos(ang), variable*np.sin(ang),
-            headwidth=0)
-         ax.quiver(cg[:,X], cg[:,Y],
-            variable*np.cos(ang+np.pi), variable*np.sin(ang+np.pi),
-            headwidth=0)         
-   plt.show()        
+
+    #divnorm = colors.DivergingNorm(vmin=min(variable), vcenter=0., vmax=max(variable))                                                           
+    #p = PatchCollection(patches, cmap=cm.bwr, norm=divnorm) #, alpha=0.4)
+    p = PatchCollection(patches, cmap=cm.jet) #, alpha=0.4)
+ 
+    # y se les especifica el color asociado
+    p.set_array(variable)
+
+    ax.add_collection(p)
+    ax.autoscale(enable=True, tight=True)
+
+    # se especifican los ejes y el título, y se colocan los ejes iguales
+    plt.xlabel('x [m]')
+    plt.ylabel('y [m]')
+    plt.title(titulo)
+    plt.gca().set_aspect('equal', adjustable='box')
+
+    # se crea la barra de colores con la misma altura del gráfico, a la derecha 
+    # del mismo ( a la derecha de ax). El ancho será el 3% del ancho de ax y el 
+    # espacio entre cax y ax será de 0.3 pulgadas
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="3%", pad=0.3)
+    plt.colorbar(p, cax=cax, format='%.3g')
+
+    plt.tight_layout()
+
+    # se grafican las líneas que indiquen direcciones de los esfuerzos    
+    if angulo is not None:
+       esc = 1.1 # escala para graficar las flechas
+       for ang in angulo:
+            ax.quiver(cg[:,X], cg[:,Y],
+                variable*np.cos(ang), variable*np.sin(ang),
+                headwidth=0)
+            ax.quiver(cg[:,X], cg[:,Y],
+                variable*np.cos(ang+np.pi), variable*np.sin(ang+np.pi),
+                headwidth=0)         
+    plt.show()        
+ 
+'''
+PENDIENTE:
+* interpolar los esfuerzos
+* hacer que al mover el mouse, se muestren en el título los esfuerzos de triángulo
+'''

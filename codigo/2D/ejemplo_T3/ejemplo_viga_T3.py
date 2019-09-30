@@ -93,7 +93,7 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
                                     [ 1, x3, y3 ]]))
    if Ae <= 0:
       raise Exception(
-         f'La numeración local del EF {e+1} deben especificarse en sentido antihorario.\n')
+         f'La numeración local del EF {e+1} debe especificarse en sentido antihorario.\n')
 
    # Calculo de la matriz de deformaciones B.
    a1 = x2*y3 - x3*y2;        b1 = y2-y3;        c1 = x3-x2
@@ -278,6 +278,6 @@ tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
 
 # Se cierra y graba el archivo de MS EXCEL
 writer.save()
-print(f'Los resultados se escribieron en {nombre_archivo}')
+print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
 
 # %%bye, bye!
