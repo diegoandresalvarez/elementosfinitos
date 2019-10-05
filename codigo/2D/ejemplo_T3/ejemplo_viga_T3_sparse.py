@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import sparse 
+from scipy.sparse.linalg import spsolve
 import func_EF_T3
 from func_EF_T3 import t2ft_T3, plot_esf_def
 
@@ -73,7 +75,8 @@ plt.show()
 
 # %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 # equivalentes global
-K   = np.zeros((ngdl,ngdl)) # matriz de rigidez global
+# K  = np.zeros((ngdl,ngdl))          # matriz de rigidez global
+K   = sparse.coo_matrix((ngdl, ngdl)) # matriz de rigidez global como RALA (sparse)
 B   = nef * [None]          # contenedor para las matrices de deformación
 idx = nef * [None]          # indices asociados a los gdl del EF e
 
@@ -114,7 +117,9 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
 
    # Ensamblo las contribuciones a las matrices globales
    idx[e] = np.r_[ gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:], gdl[LaG[e,NL3],:] ]
-   K[np.ix_(idx[e],idx[e])] += Ke
+   # K[np.ix_(idx[e],idx[e])] += Ke
+   IDX = np.array([(i,j) for i in idx[e] for j in idx[e]])
+   K += sparse.coo_matrix((Ke.flat, (IDX[:,0],IDX[:,1])), shape=(ngdl,ngdl))
    f[np.ix_(idx[e])]        += fe
 
 # %% Muestro la configuración de la matriz K (K es rala)
@@ -164,7 +169,8 @@ Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
 Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
 
 # %% resuelvo el sistema de ecuaciones
-ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+# ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+ad = spsolve(Kdd, fc - Kdc@ac)
 qd = Kcc@ac + Kcd@ad - fd              # fuerzas de equilibrio desconocidas
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
