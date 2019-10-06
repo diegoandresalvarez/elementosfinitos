@@ -10,14 +10,25 @@ NL1, NL2, NL3 = 0, 1, 2
 xnod = None
 LaG = None
 cg = None
+interpolar_colores = None
+num_elem_ady = None
 
-def compartir_variables(xnod_, LaG_, cg_):
+def compartir_variables(xnod_, LaG_, cg_, interpolar=False):
     global xnod
     global LaG
     global cg
+    global interpolar_colores
+    global num_elem_ady
     xnod = xnod_
     LaG  = LaG_
     cg   = cg_
+    interpolar_colores = interpolar
+    if interpolar_colores:
+        nno = xnod.shape[0]
+        nef = LaG.shape[0]
+        num_elem_ady = np.zeros(nno)  # numero de elementos adyacentes
+        for e in range(nef):
+            num_elem_ady[LaG[e,:]] += 1
 
 def t2ft_T3(xnod_EF, lado, carga, espesor):
     '''Esta función convierte las fuerzas superficiales aplicadas a un elemento
@@ -124,26 +135,47 @@ from matplotlib import cm
 #from matplotlib import colors
 
 
-def  plot_esf_def(variable, titulo, angulo=None):
+def plot_esf_def(variable, titulo, angulo=None):
     '''FALTA
     '''
     # se determina el número de elementos finitos
-    nef = LaG.shape[0]
- 
-    fig, ax = plt.subplots()
- 
-    # cada EF se especifica como un polígono
-    patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
-                                                           for e in range(nef) ]
+    nno = xnod.shape[0]
+    nef = LaG.shape[0]    
+    
+    if interpolar_colores:
+        # se promedian los esfuerzos y las deformaciones en los nodos
+        variable_ = np.zeros(nno)
+        for e in range(nef):
+            variable_[LaG[e,:]] += variable[e]
+        variable_ /= num_elem_ady
+        fig, ax = plt.subplots()
+        ax.triplot(xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='white')
+        ax.tripcolor(xnod[:,X], xnod[:,Y], LaG, variable_, cmap=cm.jet, shading='gouraud')
+        ax.tricontour(xnod[:,X], xnod[:,Y], LaG, variable_, 20, 
+            colors=['0.25', '0.5', '0.5', '0.5', '0.5'],
+            linewidths=[1.0, 0.5, 0.5, 0.5, 0.5])                
+        #plt.colorbar() #ax=ax,format='%.3g')        
+    else:
+        fig, ax = plt.subplots()
+    
+        # cada EF se especifica como un polígono
+        patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
+                                                            for e in range(nef) ]
 
-    #divnorm = colors.DivergingNorm(vmin=min(variable), vcenter=0., vmax=max(variable))                                                           
-    #p = PatchCollection(patches, cmap=cm.bwr, norm=divnorm) #, alpha=0.4)
-    p = PatchCollection(patches, cmap=cm.jet) #, alpha=0.4)
- 
-    # y se les especifica el color asociado
-    p.set_array(variable)
+        #divnorm = colors.DivergingNorm(vmin=min(variable), vcenter=0., vmax=max(variable))                                                           
+        #p = PatchCollection(patches, cmap=cm.bwr, norm=divnorm) #, alpha=0.4)
+        p = PatchCollection(patches, cmap=cm.jet) #, alpha=0.4)
+    
+        # y se les especifica el color asociado
+        p.set_array(variable)
 
-    ax.add_collection(p)
+        ax.add_collection(p)
+        # se crea la barra de colores con la misma altura del gráfico, a la derecha 
+        # del mismo ( a la derecha de ax). El ancho será el 3% del ancho de ax y el 
+        # espacio entre cax y ax será de 0.3 pulgadas
+        divider = make_axes_locatable(ax)
+        cax = divider.append_axes("right", size="3%", pad=0.3)
+        plt.colorbar(p, cax=cax, format='%.3g')        
     ax.autoscale(enable=True, tight=True)
 
     # se especifican los ejes y el título, y se colocan los ejes iguales
@@ -151,13 +183,6 @@ def  plot_esf_def(variable, titulo, angulo=None):
     plt.ylabel('y [m]')
     plt.title(titulo)
     plt.gca().set_aspect('equal', adjustable='box')
-
-    # se crea la barra de colores con la misma altura del gráfico, a la derecha 
-    # del mismo ( a la derecha de ax). El ancho será el 3% del ancho de ax y el 
-    # espacio entre cax y ax será de 0.3 pulgadas
-    divider = make_axes_locatable(ax)
-    cax = divider.append_axes("right", size="3%", pad=0.3)
-    plt.colorbar(p, cax=cax, format='%.3g')
 
     plt.tight_layout()
 
@@ -175,7 +200,6 @@ def  plot_esf_def(variable, titulo, angulo=None):
  
 '''
 PENDIENTE:
-* interpolar los esfuerzos
 * hacer que al mover el mouse, se muestren en el título los esfuerzos de triángulo
 * comentar mejor este archivo 
 * mejorar el README.md

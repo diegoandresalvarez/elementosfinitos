@@ -219,7 +219,7 @@ tabla_exeyezgxy = pd.DataFrame(
    columns=['ex', 'ey', 'ez', 'gxy [rad]'])
 tabla_exeyezgxy.index.name = '# EF'
 
-func_EF_T3.compartir_variables(xnod, LaG, cg)
+func_EF_T3.compartir_variables(xnod, LaG, cg, interpolar=True)
 plot_esf_def(ex,  r'$\epsilon_x$')
 plot_esf_def(ey,  r'$\epsilon_y$')
 plot_esf_def(ez,  r'$\epsilon_z$')
