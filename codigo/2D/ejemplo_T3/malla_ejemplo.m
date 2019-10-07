@@ -45,8 +45,8 @@ restric = [   gdl(1,X)          0
            
 %% Se definen las cargas distribuidas 
 %             [ elemento lado tix  tiy  tjx  tjy  ]
-carga_distr = [     4     12    0 -7.5    0 -10.0
-                    8     12    0 -5.0    0  -7.5 ];
+carga_distr = [     4     12    0 -7500   0 -10.0
+                    8     12    0 -5000   0  -7.5 ];
                  
 nlcd = size(carga_distr,1); % numero de lados con carga distribuida
          
@@ -65,7 +65,7 @@ f(gdl(14,Y)) = 7000*sind(60);  % carga puntual en el nodo 14 dir Y
 ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
 
 syms x
-carga = poly2sym(polyfit([0 0.4],[-10 -5],1), x); 
+carga = poly2sym(polyfit([0 0.4],[-10000 -5000],1), x); 
 % esto es: carga = @(x) (25/2)kN/m^2 x - 10 kN/m (sobre borde 11-12-13)
 
 % Recuerde que la integral de linea se debe hacer sobre el contorno del
