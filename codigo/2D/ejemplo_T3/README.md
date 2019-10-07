@@ -2,7 +2,7 @@
 
 Calcule los campos de esfuerzos, desplazamientos y deformaciones de la viga mostrada:
 
-![c5_viga_ejemplo.svg](c5_viga_ejemplo.svg)
+![figs/ejemplo_viga_T3.svg](figs/ejemplo_viga_T3.svg)
 
 Asuma:
 * densidad del material = 7.8 kg/m³
