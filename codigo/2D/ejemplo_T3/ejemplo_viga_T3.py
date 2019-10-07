@@ -55,8 +55,8 @@ for i in range(ncp):
 plt.figure()
 cg = np.zeros((nef,2))  # almacena el centro de gravedad
 for e in range(nef):
-   idx_NL = [NL1, NL2, NL3, NL1]
-   plt.plot(xnod[LaG[e, idx_NL], X], xnod[LaG[e, idx_NL], Y], 'b')
+   nod_ef = LaG[e, [NL1, NL2, NL3, NL1]]
+   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'b')
 
    # Calculo la posición del centro de gravedad del triángulo
    cg[e] = np.mean(xnod[LaG[e,:], :], axis=0)
@@ -104,11 +104,11 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
                                [  0, c1,    0, c2,    0, c3 ],
                                [ c1, b1,   c2, b2,   c3, b3 ]])
 
-   Ke = B[e].T@De@B[e]*te*Ae
+   Ke = te*B[e].T@De@B[e]*Ae
 
    # Calculo del vector de fuerzas nodales equivalentes del elemento e
    # Fuerzas másicas (peso propio)
-   fbe = np.array([0, -rhoe*g, 0, -rhoe*g, 0, -rhoe*g]) * Ae*te/3
+   fbe = -rhoe*g*Ae*te*np.array([0., 1., 0., 1., 0., 1.])/3
 
    fe = fbe # vector de fuerzas nodales equivalentes
 

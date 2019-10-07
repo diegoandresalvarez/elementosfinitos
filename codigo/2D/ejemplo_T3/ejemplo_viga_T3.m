@@ -73,11 +73,11 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
                         0   c1       0   c2       0   c3
                        c1   b1      c2   b2      c3   b3 ];
    
-   Ke = B{e}'*De*B{e}*te*Ae;
+   Ke = te*B{e}'*De*B{e}*Ae;
    
    % Calculo del vector de fuerzas nodales equivalentes del elemento e
    % Fuerzas masicas (peso propio)
-   fbe = [0; -rhoe*g; 0; -rhoe*g; 0; -rhoe*g] * Ae*te/3;
+   fbe = -rhoe*g*Ae*te[0; 1; 0; 1; 0; 1]/3;
         
    fe = fbe; % vector de fuerzas nodales equivalentes
    
