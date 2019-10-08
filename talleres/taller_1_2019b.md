@@ -1,6 +1,6 @@
 # Taller 1: elementos finitos de barra
 
-* Fecha y hora de entrega: sábado octubre 9, 2019 a las 23:59.
+* Fecha y hora de entrega: sábado octubre 16, 2019 a las 23:59.
 * Presentación individual.
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
