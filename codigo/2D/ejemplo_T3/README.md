@@ -32,7 +32,7 @@ Los tiempo de ejecución de ambas versiones son:
 * TIEMPO VERSION FULL:   0.0057590007781982 segundos (mejor tiempo de 5 corridas)
 * TIEMPO VERSION SPARSE: 0.0761265754699707 segundos (mejor tiempo de 5 corridas)
 
-Es decir, la versión sparse() es 13 veces más lenta.
+Es decir, la versión SPARSE es 13 veces más lenta.
 
 De otro lado:
 * TAMAÑO MEMORIA "K" VERSION FULL:    749200 bytes
