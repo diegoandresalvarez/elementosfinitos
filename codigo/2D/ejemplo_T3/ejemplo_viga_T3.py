@@ -25,7 +25,7 @@ g    = 9.81  # [m/s²] aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
-#df   = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
+#df = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
 
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
 df = pd.read_excel('malla_refinada.xlsx', sheet_name=None)
