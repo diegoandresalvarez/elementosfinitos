@@ -175,7 +175,6 @@ def plot_esf_def(variable, titulo, angulo=None):
 
         # se grafica la malla de EFS, los colores en cada triángulo y las curvas 
         # de nivel
-
         ax.triplot   (xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='gray')
         im = ax.tripcolor (xnod[:,X], xnod[:,Y], LaG, var, cmap='bwr', 
                                 shading='gouraud', vmin=-val_max, vmax=val_max)
