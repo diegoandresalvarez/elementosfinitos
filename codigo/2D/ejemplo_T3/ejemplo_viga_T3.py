@@ -223,7 +223,7 @@ func_EF_T3.compartir_variables(xnod, LaG, cg, interpolar=True)
 plot_esf_def(ex,  r'$\epsilon_x$')
 plot_esf_def(ey,  r'$\epsilon_y$')
 plot_esf_def(ez,  r'$\epsilon_z$')
-plot_esf_def(gxy, r'$\gamma_{xy}$')
+plot_esf_def(gxy, r'$\gamma_{xy}$ [rad]')
 
 # %% imprimo y grafico los esfuerzos
 tabla_sxsytxy = pd.DataFrame(
@@ -232,9 +232,9 @@ tabla_sxsytxy = pd.DataFrame(
    columns=['sx [Pa]', 'sy [Pa]', 'txy [Pa]'])
 tabla_sxsytxy.index.name = '# EF'
 
-plot_esf_def(sx,  r'$\sigma_x$')
-plot_esf_def(sy,  r'$\sigma_y$')
-plot_esf_def(txy, r'$\tau_{xy}$')
+plot_esf_def(sx,  r'$\sigma_x$ [Pa]')
+plot_esf_def(sy,  r'$\sigma_y$ [Pa]')
+plot_esf_def(txy, r'$\tau_{xy}$ [Pa]')
 
 # %% Se calculan y grafican para cada elemento los esfuerzos principales y
 # sus direcciones
@@ -261,10 +261,10 @@ tabla_s1s2tmaxsv = pd.DataFrame(
    columns=['s1 [Pa]', 's2 [Pa]', 'tmax [Pa]', 'sv [Pa]', 'theta [rad]'])
 tabla_s1s2tmaxsv.index.name = '# EF'
 
-plot_esf_def(s1,   r'$\sigma_1$',   [ ang ])
-plot_esf_def(s2,   r'$\sigma_2$',   [ ang+np.pi/2 ] )
-plot_esf_def(tmax, r'$\tau_{max}$', [ ang-np.pi/4, ang+np.pi/4 ])
-plot_esf_def(sv,   r'$\sigma_{VM}$')
+plot_esf_def(s1,   r'$\sigma_1$ [Pa]',   [ ang ])
+plot_esf_def(s2,   r'$\sigma_2$ [Pa]',   [ ang+np.pi/2 ] )
+plot_esf_def(tmax, r'$\tau_{max}$ [Pa]', [ ang-np.pi/4, ang+np.pi/4 ])
+plot_esf_def(sv,   r'$\sigma_{VM}$ [Pa]')
 
 # %%Se escriben los resultados a una hoja de MS EXCEL
 nombre_archivo = 'resultados.xlsx'
