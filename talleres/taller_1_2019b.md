@@ -28,7 +28,7 @@
 
 # Ejercicio 1: cercha con apoyo inclinado (máximo +3 puntos)
 
-Dada la cercha:
+Dada la cercha siguiente, la cual es simétrica en configuración:
 
 ![cercha_apoyo_inclinado.gif](cercha_apoyo_inclinado.gif)
 
