@@ -30,6 +30,9 @@
 % FOR USE WITH THE TODONOTES PACKAGE:
 \usepackage{xcolor}
 \usepackage[spanish,textwidth=2cm]{todonotes} %todonotes goes after xcolor (messages, what to do!)
+
+\usepackage{graphicx}
+
 \newcommand\todoin[2][]{\todo[inline, caption={2do}, #1]{\begin{minipage}{\textwidth-4pt}#2\end{minipage}}}
 
 \newcommand{\pf}{P_\text{\textnormal{f}}}
@@ -255,6 +258,9 @@ es decir,
 \begin{equation}
 \ve{\sigma}^{(e)}(x,y) =  \ma{D}^{(e)}(x,y)^\e\ma{B}^{(e)}(x,y)\ve{a}^{(e)} - \ma{D}^{(e)}(x,y)\ve{\varepsilon}_0^{(e)}(x,y) + \ve{\sigma}_0^{(e)}(x,y). \label{eq:constitutiva}
 \end{equation}
+
+Tenga en cuenta que $\ve{\sigma}(x,y) = [\sigma_x(x,y),\ \sigma_y(x,y),\ \tau_{xy}(x,y)]^T$.
+
 Aquí:
 
 \begin{tabular}{ll}
@@ -275,7 +281,13 @@ Aquí:
 
 \section{Se reemplaza en el principio de los trabajos virtuales}
 
-Haciendo $\ve{x} = [x,\ y]^T$, escribimos el PTV en 2D:
+Haciendo $\ve{x} = [x,\ y]^T$, y teniendo en cuenta las fuerzas que se muestran en la Figura~\ref{eq:fuerzas_sobre_EF}, escribimos el PTV en 2D:
+\begin{figure}[p]
+   \centering   
+   \includegraphics[width=\textwidth]{../codigo/2D/ejemplo_T3/figs/fuerzas_EF_T3}
+   \caption{Fuerzas que actúan sobre un elemento finito}
+   \label{eq:fuerzas_sobre_EF}
+\end{figure}
 \begin{equation}
 \underbrace{t^\e \iint_{A^\e} \delta\ve{\varepsilon}_\e^T(\ve{x}) \ve{\sigma}^\e(\ve{x}) \dd A}_{\footnotesize\parbox{11em}{trabajo realizado por las deformaciones virtuales sobre los esfuerzos en el EF}}
  = \underbrace{t^\e \iint_{A^\e} \delta \ve{u}_\e^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A}_{\footnotesize\parbox{11em}{trabajo realizado por las fuerzas másicas sobre los desplazamientos virtuales en el EF}}
@@ -305,6 +317,13 @@ donde:
    $\delta\ve{\varepsilon}^{(e)}(x,y)$     & campo vectorial de deformaciones virtuales del elemento $e$.
 \end{tabular} 
 
+
+Observe que $\delta\ve{\varepsilon}\ve{\sigma} := \sigma_x\delta\varepsilon_x + 
+\sigma_y\delta\varepsilon_y +
+\tau_{xy}\delta\gamma_{xy} +
+\overbrace{\sigma_z\delta\varepsilon_z +
+\tau_{xz}\delta\gamma_{xz} +
+\tau_{yz}\delta\gamma_{yz}}^{=0}.$ El término señalado vale cero ya que en tensión plana $\sigma_z=\tau_{xz}=\tau_{yz}=0$ y en deformación plana $\varepsilon_z=\gamma_{xz}=\gamma_{yz}=0$.
 
 A partir de las ecuaciones \eqref{eq:delta_u} y \eqref{eq:delta_varepsilon}, y teniendo en cuenta que $(\ma{A}\ma{B})^T = \ma{B}^T\ma{A}^T$,  se obtiene:
 \begin{align}
@@ -412,6 +431,8 @@ donde,
 
 \vspace{\baselineskip}\vspace{\baselineskip}
 Hay que destacar que estas expresiones son totalmente generales y, por consiguiente, aplicables a cualquier elemento bidimensional.
+
+Finalmente, tenga en cuenta que las ecuaciones anteriores solo involucran hasta las derivadas primeras del desplazamiento; por lo tanto, es posible utilizar elementos finitos continuos de clase $C_0$. Este requisito aplicará también para el caso tridimensional, pero no para el caso de vigas, placas y cascarones.
 
 %En las páginas anteriores se calculó $\ma{N}^\e$, $\ma{B}^\e$ y $\ma{D}^\e$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
 %\begin{align}
