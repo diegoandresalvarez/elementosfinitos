@@ -19,23 +19,23 @@ for i = 1:3
    switch IJK(i,1)
       case 0, lI = 1;
       case 1, lI = polyfit([0 1], [0 1], 1);
-   end;
+   end
    switch IJK(i,2)
       case 0, lJ = 1;
       case 1, lJ = polyfit([0 1], [0 1], 1);
-   end;   
+   end
    switch IJK(i,3)
       case 0, lK = 1;
       case 1, lK = polyfit([0 1], [0 1], 1);
-   end;      
+   end
    
-   lI = factor(poly2sym(lI,L1));
-   lJ = factor(poly2sym(lJ,L2));
-   lK = factor(poly2sym(lK,L3));
+   lI = poly2sym(lI,L1);
+   lJ = poly2sym(lJ,L2);
+   lK = poly2sym(lK,L3);
    
    N{i} = lI*lJ*lK; % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(N{i});
-end;    
+end
 T3.N = N;
 
 %% -------------------------------------------------------------------------
@@ -62,25 +62,25 @@ for i = 1:6
       case 0, lI = 1;
       case 1, lI = polyfit([0  1/2   ], [0 1  ], 1);
       case 2, lI = polyfit([0  1/2  1], [0 0 1], 2);
-   end;
+   end
    switch IJK(i,2)
       case 0, lJ = 1;
       case 1, lJ = polyfit([0  1/2   ], [0 1  ], 1);
       case 2, lJ = polyfit([0  1/2  1], [0 0 1], 2);
-   end;   
+   end
    switch IJK(i,3)
       case 0, lK = 1;
       case 1, lK = polyfit([0  1/2   ], [0 1  ], 1);
       case 2, lK = polyfit([0  1/2  1], [0 0 1], 2);
-   end;      
+   end
 
-   lI = factor(poly2sym(lI,L1));
-   lJ = factor(poly2sym(lJ,L2));
-   lK = factor(poly2sym(lK,L3));   
+   lI = poly2sym(lI,L1);
+   lJ = poly2sym(lJ,L2);
+   lK = poly2sym(lK,L3);   
    
-   N{i} = simple(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(N{i});
-end;
+end
 T6.N = N;
 
 %% -------------------------------------------------------------------------
@@ -116,28 +116,28 @@ for i = 1:10
       case 1, lI = polyfit([0  1/3        ], [0 1    ], 1);
       case 2, lI = polyfit([0  1/3  2/3   ], [0 0 1  ], 2);
       case 3, lI = polyfit([0  1/3  2/3  1], [0 0 0 1], 3);
-   end;
+   end
    switch IJK(i,2)
       case 0, lJ = 1;
       case 1, lJ = polyfit([0  1/3        ], [0 1    ], 1);
       case 2, lJ = polyfit([0  1/3  2/3   ], [0 0 1  ], 2);
       case 3, lJ = polyfit([0  1/3  2/3  1], [0 0 0 1], 3);
-   end;   
+   end
    switch IJK(i,3)
       case 0, lK = 1;
       case 1, lK = polyfit([0  1/3        ], [0 1    ], 1);
       case 2, lK = polyfit([0  1/3  2/3   ], [0 0 1  ], 2);
       case 3, lK = polyfit([0  1/3  2/3  1], [0 0 0 1], 3);
-   end;      
+   end
 
    % El round es por errores de aproximacion de la funcion polyfit
-   lI = round(1000*lI)/1000;      lI = factor(poly2sym(lI,L1));
-   lJ = round(1000*lJ)/1000;      lJ = factor(poly2sym(lJ,L2));
-   lK = round(1000*lK)/1000;      lK = factor(poly2sym(lK,L3));
+   lI = round(1000*lI)/1000;      lI = poly2sym(lI,L1);
+   lJ = round(1000*lJ)/1000;      lJ = poly2sym(lJ,L2);
+   lK = round(1000*lK)/1000;      lK = poly2sym(lK,L3);
       
-   N{i} = simple(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(N{i});
-end;
+end
 T10.N = N;
 
 LL2 = 0:0.05:1;
@@ -168,7 +168,7 @@ for i = 1:numtriang
                     1 X(TRI(i,3)) Y(TRI(i,3))]);
    if Area < 1e-3             
       idx(i) = true;
-   end;
+   end
 end
 TRI(idx,:) = [];
 
