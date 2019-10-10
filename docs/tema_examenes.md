@@ -64,6 +64,7 @@ OF INTEGRALS
 * Capítulo 6 de Oñate (2009): ISOPARAMETRIC 2D SOLID ELEMENTS. NUMERICAL INTEGRATION AND APPLICATIONS 
 
 * Diapositivas:
+   * [05c_funciones_forma_EF_2D_Tn_Qn.pdf](../diapositivas/05c_funciones_forma_EF_2D_Tn_Qn.pdf)
 
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
 
