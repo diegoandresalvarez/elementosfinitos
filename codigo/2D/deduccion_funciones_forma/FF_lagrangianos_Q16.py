@@ -87,7 +87,9 @@ print('\nDerivadas con respecto a eta:')
 for i in range(nno):
    print(f'dN{i+1}(xi,eta)_deta = {sp.diff(N[i], eta)}')
 
-print()
+# %% Se verifica la condición de cuerpo rígido:
+print('\nSe verifica la condición de cuerpo rígido: sum(N) == 1:')
+print(sp.simplify(sum(N)) == 1)
 
 # %% grafico las funciones de forma
 XI, ETA = np.ogrid[-1:1:30j, -1:1:30j]
