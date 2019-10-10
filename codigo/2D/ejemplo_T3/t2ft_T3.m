@@ -89,20 +89,20 @@ res12 = res;
 res12 = subs(res12, N1, (1-xi)/2);
 res12 = subs(res12, N2, (1+xi)/2);
 res12 = subs(res12, N3, 0);
-dx_dxi = L12/2;
-f12 = int(res12*dx_dxi, xi, -1 ,1)
+ds_dxi = L12/2;
+f12 = int(res12*ds_dxi, xi, -1 ,1)
 
 res23 = res;
 res23 = subs(res23, N2, (1-xi)/2);
 res23 = subs(res23, N3, (1+xi)/2);
 res23 = subs(res23, N1, 0);
-dx_dxi = L23/2;
-f23 = int(res23*dx_dxi, xi, -1 ,1)
+ds_dxi = L23/2;
+f23 = int(res23*ds_dxi, xi, -1 ,1)
 
 res31 = res;
 res31 = subs(res31, N3, (1-xi)/2);
 res31 = subs(res31, N1, (1+xi)/2);
 res31 = subs(res31, N2, 0);
-dx_dxi = L31/2;
-f31 = int(res31*dx_dxi, xi, -1 ,1)
+ds_dxi = L31/2;
+f31 = int(res31*ds_dxi, xi, -1 ,1)
 %}
