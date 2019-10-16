@@ -41,6 +41,8 @@ Se obtendrá +1 unidad si el programa hace gráficos de:
 * Estructura deformada.
 * Fuerzas axiales para cada barra.
 
+Se tendrá -1 unidad si se hizo el cálculo incorrecto de las coordenadas de los nodos.
+
 
 Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad. Hacer el video respectivo del modelado  y subirlo a YouTube.
 
