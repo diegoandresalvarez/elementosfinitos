@@ -136,7 +136,7 @@ for i = 1:10
    lK = round(1000*lK)/1000;      lK = poly2sym(lK,L3);
       
    N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
-   fprintf('\n\nN{%d} =',i); pretty(N{i});
+   fprintf('\n\nN{%d} =\n',i); pretty(N{i});
 end
 T10.N = N;
 
@@ -203,4 +203,14 @@ for i=1:10
    daspect([1 1 1]);
    title(sprintf('N_{%d} = %s',i,char(T10.N{i})),'FontSize',20);
 %   print('-dpdf',sprintf('%d.pdf',i));
-end;
+end
+
+%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+suma = 0;
+for i = 1:10
+   suma = suma + T10.N{i};
+end
+syms a b
+suma = subs(suma, {'L1', 'L2', 'L3'}, {1-a-b, a, b});
+fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+disp(simplify(suma));
