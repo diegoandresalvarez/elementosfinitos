@@ -10,7 +10,7 @@ for i = 1:16
    [xnod(i),ynod(i)] = ginput(1);
    plot(xnod(i), ynod(i), 'ko','MarkerSize',12);  
    plot(xnod(i), ynod(i), 'kx','MarkerSize',12);
-end;
+end
 close(1)
 
 delta = 0.05;
@@ -28,13 +28,13 @@ for i = 1:n
    if i==1 || i==n
       set(h1, 'LineWidth', 4);
       set(h2, 'LineWidth', 4);
-   end;   
-end;
+   end
+end
 axis equal; axis([-1.1 1.1 -1.1 1.1])
 
-% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadrático)
+% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadratico)
 %
-% Numeración local:
+% Numeracion local:
 %        ^ eta
 %        |
 %        |
@@ -67,12 +67,12 @@ y = zeros(n);
 for i = 1:16
    x = x + N{i}*xnod(i);
    y = y + N{i}*ynod(i);
-end;
+end
 xinod  = [-1 -1/3 1/3 1   1   1   1 1/3 -1/3 -1 -1  -1   -1/3  1/3 1/3 -1/3];
 etanod = [-1 -1   -1  -1 -1/3 1/3 1 1    1    1 1/3 -1/3 -1/3 -1/3 1/3  1/3];
 for i = 1:16
    plot(xinod(i), etanod(i), 'r*','MarkerSize',12, 'LineWidth', 4);  
-end;
+end
 
 
 subplot(2,2,[2 4]);
@@ -83,15 +83,12 @@ for i = 1:n
    if i==1 || i==n
       set(h1, 'LineWidth', 4);
       set(h2, 'LineWidth', 4);
-   end;   
-end;
+   end
+end
 for i = 1:16
    plot(xnod(i), ynod(i), 'r*','MarkerSize',12, 'LineWidth', 4);  
-end;
+end
 axis equal tight
-
-% FALTA DIBUJAR EL JACOBIANO
-
 
 dN_dxi{1} = ((- 27.*xi.^2 + 18.*xi + 1).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
 dN_dxi{2} = -(9.*(- 9.*xi.^2 + 2.*xi + 3).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
@@ -126,7 +123,7 @@ dN_deta{14} = -(81.*(xi - 1).*(3.*xi + 1).*(xi + 1).*(9.*eta.^2 - 2.*eta - 3))/2
 dN_deta{15} = (81.*(3.*xi + 1).*(xi - 1).*(xi + 1).*(9.*eta.^2 + 2.*eta - 3))/256;
 dN_deta{16} = (81.*(9.*eta.^2 + 2.*eta - 3).*(- 3.*xi.^3 + xi.^2 + 3.*xi - 1))/256;
 
-
+% Estas derivadas se calcularon con el codigo siguiente:
 %{
 syms xi eta
 
@@ -168,16 +165,23 @@ for i = 1:16
    dy_dxi  = dy_dxi + dN_dxi{i}*ynod(i);   
    dx_deta = dx_deta + dN_deta{i}*xnod(i);
    dy_deta = dy_deta + dN_deta{i}*ynod(i);   
-end;
+end
 % Calculo el determinante del Jacobiano
 % J = [ dx_dxi   dy_dxi
 %       dx_deta  dy_deta ]
 detJ = [dx_dxi.*dy_deta - dx_deta.*dy_dxi];
 
+% Se calcula el Jacobian ratio
+JR = max(detJ(:))/min(detJ(:));
+fprintf('JR = %f\n', JR);
+if JR < 0 || JR > 40
+    warning('Esta forma no es adecuada para un EF')
+end
+
 subplot(2,2,3);
 pcolor(xi,eta,detJ)
 colorbar
-title('Determinante de J')
+title(sprintf('Determinante de J. JR = %f', JR));
 hold on
 contour(xi,eta,detJ,[0 0], 'LineWidth',4, 'Color',[0 0 0]);
 axis equal tight
