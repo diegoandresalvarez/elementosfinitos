@@ -1,6 +1,6 @@
 # Taller 1: elementos finitos de barra
 
-* Fecha y hora de entrega: sábado octubre 16, 2019 a las 23:59.
+* Fecha y hora de entrega: sábado octubre 19, 2019 a las 23:59.
 * Presentación individual.
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
@@ -40,6 +40,8 @@ Haga un programa que estime (+1 unidad):
 Se obtendrá +1 unidad si el programa hace gráficos de:
 * Estructura deformada.
 * Fuerzas axiales para cada barra.
+
+Se tendrá -1 unidad si se hizo el cálculo incorrecto de las coordenadas de los nodos.
 
 
 Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad. Hacer el video respectivo del modelado  y subirlo a YouTube.
