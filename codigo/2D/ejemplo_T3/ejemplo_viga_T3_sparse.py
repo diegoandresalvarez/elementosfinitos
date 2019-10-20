@@ -9,21 +9,21 @@ import func_EF_T3
 from func_EF_T3 import t2ft_T3, plot_esf_def
 
 # %% CÁLCULO DE UNA VIGA CON ELEMENTOS FINITOS TRIANGULARES PARA TENSION PLANA
-# Definición del problema
-# Calcule los desplazamientos y las reacciones en los empotramiento, las
-# deformaciones y los esfuerzos de la estructura en TENSION PLANA mostrada
-# en la figura adjunta
 
-# %% constantes que ayudaran en la lectura del código
+# DEFINICIÓN DEL PROBLEMA:
+# Calcule los desplazamientos y las reacciones en los empotramiento, las
+# deformaciones y los esfuerzos de la estructura mostrada en la figura adjunta
+
+# %% constantes que ayudarán en la lectura del código
 X, Y          = 0, 1
 NL1, NL2, NL3 = 0, 1, 2
 
 # %% defino las variables/constantes del sólido
-Ee   = 200e9 # [Pa] módulo de elasticidad del sólido
-nue  = 0.30  # coeficiente de Poisson
-te   = 0.10  # [m] espesor del sólido
+Ee   = 200e9 # [Pa]    módulo de elasticidad del sólido
+nue  = 0.30  # [-]     coeficiente de Poisson
 rhoe = 7850. # [kg/m³] densidad
-g    = 9.81  # [m/s²] aceleración de la gravedad
+te   = 0.10  # [m]     espesor del sólido
+g    = 9.81  # [m/s²]  aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
@@ -33,9 +33,9 @@ g    = 9.81  # [m/s²] aceleración de la gravedad
 df = pd.read_excel('malla_refinada.xlsx', sheet_name=None)
 
 # %% posición de los nodos:
-# xnod: fila=número del nodo, columna=coordenada X=1 o Y=2
+# xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
 xnod = df['xnod'][['x','y']].to_numpy()
-nno  = xnod.shape[0]    # número de nodos (número de filas de xnod)
+nno  = xnod.shape[0]    # número de nodos (número de filas de la matriz xnod)
 
 # %% definición de los grados de libertad
 ngdl = 2*nno            # número de grados de libertad (dos por nodo)
@@ -44,7 +44,7 @@ gdl  = np.reshape(np.arange(ngdl), (nno,2)) # nodos vs grados de libertad
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
 LaG = df['LaG'][['NL1','NL2','NL3']].to_numpy() - 1
-nef = LaG.shape[0]      # número de EFs (número de filas de LaG)
+nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
 
 # %% Relación de cargas puntuales
 cp  = df['carga_punt']
@@ -54,14 +54,16 @@ for i in range(ncp):
    f[gdl[cp['nodo'][i]-1, cp['dirección'][i]-1]] = cp['fuerza puntual'][i]
 
 # %% Se dibuja la malla de elementos finitos
+cg = np.zeros((nef,2))  # almacena el centro de gravedad de los EF
 plt.figure()
-cg = np.zeros((nef,2))  # almacena el centro de gravedad
 for e in range(nef):
    nod_ef = LaG[e, [NL1, NL2, NL3, NL1]]
    plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'b')
 
-   # Calculo la posición del centro de gravedad del triángulo
+   # se calcula la posición del centro de gravedad del triángulo
    cg[e] = np.mean(xnod[LaG[e,:], :], axis=0)
+
+   # y se reporta el número del elemento actual
    plt.text(cg[e,X], cg[e,Y], f'{e+1}', horizontalalignment='center',
                                         verticalalignment='center',   color='b')
 
