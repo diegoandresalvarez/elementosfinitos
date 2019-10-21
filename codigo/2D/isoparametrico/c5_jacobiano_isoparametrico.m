@@ -3,7 +3,7 @@ clear,clc,close all
 xnod = zeros(16,1);
 ynod = zeros(16,1);
 figure(1)
-title('De click con el mouse 16 veces')
+title('De clic con el mouse 16 veces')
 axis([-5 5 -5 5]);
 hold on;
 for i = 1:16
