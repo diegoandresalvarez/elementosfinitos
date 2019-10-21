@@ -10,12 +10,15 @@ de un programa que estima los desplazamientos, deformaciones, esfuerzos, esfuerz
 En el código se analizan tres modelos diferentes:
 
 * Malla 1:
+
 ![malla_1/c5_isoparametric_cuad_8_nodos.jpg](malla_1/c5_isoparametric_cuad_8_nodos.jpg)
 
 * Malla 2:
+
 ![malla_2/c5_ejemplo_isoparametricos_rect_8_nodos_s1_s2.png](malla_2/c5_ejemplo_isoparametricos_rect_8_nodos_s1_s2.png)
 
 * Malla 3: (malla creada por Alejandro Cardona Jiménez)
+
 ![malla_3/c5_gancho.png](malla_3/c5_gancho.png)
 
 
