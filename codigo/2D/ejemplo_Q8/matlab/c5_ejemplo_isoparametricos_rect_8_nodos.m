@@ -5,7 +5,7 @@ clear, clc, close all   % borro la memoria, la pantalla y las figuras
 %% rectangulares serendipitos de 8 nodos
 %% ------------------------------------------------------------------------
 
-%% definicion del problema
+%% DEFINICIÓN DEL PROBLEMA:
 % Calcule los desplazamientos y las reacciones en los empotramiento, las
 % deformaciones y los esfuerzos de la estructura en TENSION PLANA mostrada 
 % en la figura adjunta
@@ -20,7 +20,7 @@ rhoe = 7850;        % densidad (kg/m^3)
 g    = 9.81;        % aceleracion de la gravedad (m/s^2)
 be = [0; -rhoe*g];  % vector de fuerzas masicas del elemento
 
-MALLA = 3; % MALLA=1 grafico, MALLA=2 la generada con ANSYS
+MALLA = 1; % MALLA=1 grafico, MALLA=2 la generada con ANSYS
 
 %% cargar
 % xnod - posicion de los nodos
@@ -237,7 +237,7 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
    end;
 
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
-   f(idx{e},:)      = f(idx{e},:)   + fe;
+   f(idx{e},:)      = f(idx{e},:)      + fe;
 end;   
 
 %% Relacion de las cargas superficiales (vector ft)
