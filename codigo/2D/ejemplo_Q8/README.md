@@ -1,16 +1,16 @@
 # Programa para calcular los esfuerzos, deformaciones y desplazamientos de un sólido bidimensional utilizando elementos finitos isoparamétricos rectangulares de ocho nodos
 
-Calcule los campos de esfuerzos, desplazamientos y deformaciones de la estructura mostrada:
-![c5_isoparametric_cuad_8_nodos.jpg](c5_isoparametric_cuad_8_nodos.jpg)
-
-Existen versiones para:
+En este carpeta se encuentra varias versiones para:
 * [PYTHON](python/)
 * [MATLAB](matlab/)
 * [JULIA 0.5.1 (experimental)](julia_0.51/)
 
+de un programa que estima los desplazamientos, deformaciones, esfuerzos, esfuerzos principales y esfuerzos de von Mises de un sólido bidimensional utilizando elementos finitos isoparamétricos rectangulares de ocho nodos.
+
 En el código se analizan tres modelos diferentes:
 
 * Malla 1:
+![malla_1/c5_isoparametric_cuad_8_nodos.jpg](malla_1/c5_isoparametric_cuad_8_nodos.jpg)
 
 * Malla 2:
 ![malla_2/c5_ejemplo_isoparametricos_rect_8_nodos_s1_s2.png](malla_2/c5_ejemplo_isoparametricos_rect_8_nodos_s1_s2.png)
