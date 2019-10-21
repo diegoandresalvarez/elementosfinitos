@@ -175,7 +175,7 @@ def plot_esf_def(variable, titulo, angulo=None):
 
         # se grafica la malla de EFS, los colores en cada triángulo y las curvas 
         # de nivel
-        ax.triplot   (xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='gray')
+        ax.triplot        (xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='gray')
         im = ax.tripcolor (xnod[:,X], xnod[:,Y], LaG, var, cmap='bwr', 
                                 shading='gouraud', vmin=-val_max, vmax=val_max)
         ax.tricontour(xnod[:,X], xnod[:,Y], LaG, var, 20)
@@ -207,7 +207,7 @@ def plot_esf_def(variable, titulo, angulo=None):
        for ang in angulo:
             ax.quiver(cg[:,X], cg[:,Y],
                 variable*np.cos(ang), variable*np.sin(ang), 
-                headwidth=0, headlength=0, headaxislength= 0, 
+                headwidth=0, headlength=0, headaxislength=0, 
                 pivot='middle')
 
     # se especifican los ejes y el título, y se colocan los ejes iguales
