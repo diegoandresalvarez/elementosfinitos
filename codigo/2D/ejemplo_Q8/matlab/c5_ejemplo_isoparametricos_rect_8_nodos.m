@@ -28,7 +28,7 @@ MALLA = 1; % MALLA=1 grafico, MALLA=2 la generada con ANSYS
 switch MALLA
    case 1
       malla1
-   case 2,
+   case 2
       malla2
    case 3
       malla3
@@ -54,10 +54,10 @@ switch MALLA
    case 1
       f(gdl(13,Y)) = -5000;  % carga puntual en el nodo 13 dir Y
       f(gdl(21,Y)) = -5000;  % carga puntual en el nodo 21 dir Y
-   case 2,
+   case 2
       f(gdl(23,Y)) = -5000;  % carga puntual en el nodo 13 dir Y
       f(gdl(29,Y)) = -5000;  % carga puntual en el nodo 21 dir Y
-   case 3,      
+   case 3  
       % No tenemos cargas puntuales en esta estructura
    otherwise
       error('Malla no especificada')
@@ -67,9 +67,9 @@ end
 switch MALLA
    case 1
       carga_distr = [];
-   case 2,
+   case 2
       carga_distr = [];      
-   case 3,      
+   case 3
       %  elem lado  tix   tiy   tjx    tjy  tkx  tky 
       carga_distr = [ ...
          42   123   0         0 0     50000 0    100000  % 42 702 710 717 123
@@ -172,7 +172,7 @@ B = cell(nef,n_gl,n_gl); % contenedor para las matrices de deformacion
 De = [ Ee/(1-nue^2)     Ee*nue/(1-nue^2)  0
        Ee*nue/(1-nue^2) Ee/(1-nue^2)      0
        0                0                 Ee/(2*(1+nue)) ];
-idx = cell(nef,16);
+idx = cell(nef,1);
 for e = 1:nef          % ciclo sobre todos los elementos finitos
    idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:) ...
               gdl(LaG(e,3),:)  gdl(LaG(e,4),:) ...
@@ -222,23 +222,23 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
             B{e,p,q}(:,[2*i-1 2*i]) = [ dNi_dx 0          % aqui se ensambla
                                         0      dNi_dy     % y asigna la matriz
                                         dNi_dy dNi_dx ];  % B_i
-         end;
+         end
 
          % se arma la matriz de rigidez del elemento e
          Ke = Ke + B{e,p,q}'*De*B{e,p,q}*det_Je(p,q)*te*w_gl(p)*w_gl(q);
 
          % vector de fuerzas nodales equivalentes
          fe = fe + N{e,p,q}'*be*det_Je(p,q)*te*w_gl(p)*w_gl(q);
-      end;
-   end;
+      end
+   end
    
    if any(any(det_Je <= 0))
       error('Existen elementos con det_Je negativo en el elemento %d.\n', e);
-   end;
+   end
 
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
-end;   
+end
 
 %% Relacion de las cargas superficiales (vector ft)
 ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
@@ -321,7 +321,7 @@ for e = 1:nef
          esf{e,pp,qq} = De*def{e,pp,qq};  % calculo los esfuerzos
       end
    end
-end;
+end
 
 %% Se extrapolan los esfuerzos y las deformaciones a los nodos
 num_elem_ady = zeros(nno,1);  % numero de elementos adyacentes
@@ -395,25 +395,25 @@ figure
 subplot(2,2,1); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ex(LaG(e,:)))
-end;
+end
 ylabel('\epsilon_x','FontSize',26); axis equal tight; colorbar; 
 
 subplot(2,2,2); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ey(LaG(e,:)))
-end;
+end
 ylabel('\epsilon_y','FontSize',26); axis equal tight; colorbar;
 
 subplot(2,2,3); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ez(LaG(e,:)))
-end;
+end
 ylabel('\epsilon_z','FontSize',26); axis equal tight; colorbar;
 
 subplot(2,2,4); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),gxy(LaG(e,:)))
-end;
+end
 ylabel('\gamma_{xy}','FontSize',26); axis equal tight; colorbar;
 
 %% Se imprimen y grafican los esfuerzos en los nodos
@@ -423,19 +423,19 @@ figure
 subplot(2,2,1); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sx(LaG(e,:)))
-end;
+end
 ylabel('\sigma_x (Pa)','FontSize',26); axis equal tight; colorbar;
 
 subplot(2,2,2); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sy(LaG(e,:)))
-end;
+end
 ylabel('\sigma_y (Pa)','FontSize',26); axis equal tight; colorbar;
 
 subplot(2,2,3); hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),txy(LaG(e,:)))
-end;
+end
 ylabel('\tau_{xy} (Pa)','FontSize',26); axis equal tight; colorbar;
 
 %% Se calculan y grafican para cada elemento los esfuerzos principales y
@@ -469,7 +469,7 @@ figure
 hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s1(LaG(e,:)))
-end;
+end
 
 % Grafique lineas que indican las direcciones principales de sigma_1
 norma = 1; % = s1 si quiere proporcional
@@ -491,7 +491,7 @@ figure
 hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s2(LaG(e,:)))
-end;
+end
 % Grafique lineas que indiquen direcciones principales de sigma_2
 norma = 1; % = s2 si quiere proporcional
 quiver(xnod(:,X),xnod(:,Y),...             % flecha indicando la direccion
@@ -509,7 +509,7 @@ figure;
 hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),tmax(LaG(e,:)))
-end;
+end
 % Grafique lineas que indiquen direcciones principales de tau_max,
 norma = 1; % = tmax si quiere proporcional
 quiver(xnod(:,X),xnod(:,Y), ...
@@ -530,7 +530,7 @@ title('\tau_{max} (Pa)','FontSize',26); colorbar
 figure; hold on;
 for e = 1:nef
    fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sv(LaG(e,:)))
-end;
+end
 ylabel('\sigma_v (Pa)','FontSize',26); axis equal tight; colorbar;
 title('Esfuerzos de von Mises (Pa)','FontSize',26);
 
