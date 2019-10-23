@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+#import matplotlib.colors as mcolors
 
 # se definen algunas constantes
 X, Y = 0, 1
@@ -27,7 +28,7 @@ def compartir_variables(xnod_, LaG_, cg_, interpolar=False):
         nno = xnod.shape[0]
         nef = LaG.shape[0]
 
-        # El array "num_elem_ady" contabiliza el número de EFs adyacentes a un 
+        # El array "num_elem_ady" contabiliza el número de EFs adyacentes a un
         # nodo dado, con el objeto de hacer luego el alisado de los esfuerzos y
         # las deformaciones
         num_elem_ady = np.zeros(nno)
@@ -35,7 +36,7 @@ def compartir_variables(xnod_, LaG_, cg_, interpolar=False):
             num_elem_ady[LaG[e,:]] += 1
 
 def t2ft_T3(xnod_EF, lado, carga, espesor):
-    '''Convierte las fuerzas superficiales aplicadas a un EF triangular de 3 
+    '''Convierte las fuerzas superficiales aplicadas a un EF triangular de 3
     nodos a sus correspondientes cargas nodales equivalentes ft
 
     xnod_EF = np.array([[x1e, y1e],
@@ -139,8 +140,8 @@ import warnings
 def plot_esf_def(variable, titulo, angulo=None):
     '''Grafica los esfuerzos y las deformaciones para la malla de EFs dada.
 
-    Es muy importante tener en cuenta que previamente se debió haber ejecutado 
-    la función "compartir_variables()" con el objeto de incluir en el presente 
+    Es muy importante tener en cuenta que previamente se debió haber ejecutado
+    la función "compartir_variables()" con el objeto de incluir en el presente
     módulo algunas variables globales como xnod y LaG que serán utilizas en este
     programa.
 
@@ -154,30 +155,33 @@ def plot_esf_def(variable, titulo, angulo=None):
 
     # se determina el número de nodos y de EFs
     nno = xnod.shape[0]
-    nef = LaG.shape[0]    
-   
+    nef = LaG.shape[0]
+
     # se inicializa el lienzo
     fig, ax = plt.subplots()
 
     # y se hace el gráfico respectivo
-    
+
     if interpolar_colores:
-        # se promedian los esfuerzos y las deformaciones en los nodos de modo 
-        # que en la variable "var" se encuentren los valores alisados del 
+        # se promedian los esfuerzos y las deformaciones en los nodos de modo
+        # que en la variable "var" se encuentren los valores alisados del
         # esfuerzo o de la deformación a graficar
         var = np.zeros(nno)
         for e in range(nef):
-            var[LaG[e,:]] += variable[e]            
+            var[LaG[e,:]] += variable[e]
         var /= num_elem_ady
 
         # se encuentra el máximo en valor absoluto para ajustar el colorbar()
-        val_max = np.max(np.abs(var))    
+        val_max = np.max(np.abs(var))
+        #val_max = np.max(var)
+        #val_min = np.min([np.min(var), -np.finfo(float).eps])
 
-        # se grafica la malla de EFS, los colores en cada triángulo y las curvas 
+        # se grafica la malla de EFS, los colores en cada triángulo y las curvas
         # de nivel
         ax.triplot        (xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='gray')
-        im = ax.tripcolor (xnod[:,X], xnod[:,Y], LaG, var, cmap='bwr', 
-                                shading='gouraud', vmin=-val_max, vmax=val_max)
+        # norm = mcolors.DivergingNorm(vmin=val_min, vmax = val_max, vcenter=0)
+        im = ax.tripcolor (xnod[:,X], xnod[:,Y], LaG, var, cmap='bwr',
+                                shading='gouraud', vmin=-val_max, vmax=val_max) #norm=norm)
         ax.tricontour(xnod[:,X], xnod[:,Y], LaG, var, 20)
 
         # a veces sale un warning, simplemente porque no existe la curva 0
@@ -185,29 +189,29 @@ def plot_esf_def(variable, titulo, angulo=None):
         ax.tricontour(xnod[:,X], xnod[:,Y], LaG, var, levels=[0], linewidths=3)
         warnings.filterwarnings("default")
 
-        fig.colorbar(im, ax=ax, format='%6.3g')        
+        fig.colorbar(im, ax=ax, format='%6.3g')
     else:
         # cada EF se especifica como un polígono
-        patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True) 
+        patches = [ Polygon(np.c_[xnod[LaG[e,:],X], xnod[LaG[e,:],Y]], closed=True)
                                                             for e in range(nef) ]
 
         # se encuentra el máximo en valor absoluto para ajustar el colorbar()
-        val_max = np.max(np.abs(variable))    
+        val_max = np.max(np.abs(variable))
 
-        # se crean cada uno de los parches, con su valor asociado y colormap respectivo                                                            
+        # se crean cada uno de los parches, con su valor asociado y colormap respectivo
         p = PatchCollection(patches, array=variable, cmap='bwr')
-                                                    
+
         ax.add_collection(p)
 
         p.set_clim(vmin=-val_max, vmax=val_max)
         fig.colorbar(p, ax=ax, format='%6.3g')
 
-    # se grafican las líneas que indiquen direcciones de los esfuerzos    
+    # se grafican las líneas que indiquen direcciones de los esfuerzos
     if angulo is not None:
        for ang in angulo:
             ax.quiver(cg[:,X], cg[:,Y],
-                variable*np.cos(ang), variable*np.sin(ang), 
-                headwidth=0, headlength=0, headaxislength=0, 
+                variable*np.cos(ang), variable*np.sin(ang),
+                headwidth=0, headlength=0, headaxislength=0,
                 pivot='middle')
 
     # se especifican los ejes y el título, y se colocan los ejes iguales
@@ -217,10 +221,10 @@ def plot_esf_def(variable, titulo, angulo=None):
 
     # esto es como un "axis tight" de matlab
     ax.set_aspect('equal')
-    ax.autoscale(tight=True)    
+    ax.autoscale(tight=True)
 
-    plt.show()        
- 
+    plt.show()
+
 '''
 PENDIENTE:
 * hacer que al mover el mouse, se muestren en el título los esfuerzos de triángulo
