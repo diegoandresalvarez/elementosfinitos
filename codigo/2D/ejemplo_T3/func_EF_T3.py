@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 #import matplotlib.colors as mcolors
 
@@ -137,6 +138,23 @@ from matplotlib.patches import Polygon
 from matplotlib.collections import PatchCollection
 import warnings
 
+# Solución tomada de:
+# https://stackoverflow.com/questions/7404116/defining-the-midpoint-of-a-colormap-in-matplotlib
+# cambie la dependencia de sympy por numpy, tal y como se muestra en:
+# https://matplotlib.org/tutorials/colors/colormapnorms.html
+class MidpointNormalize(mpl.colors.Normalize):
+    def __init__(self, vmin, vmax, midpoint=0, clip=False):
+        self.midpoint = midpoint
+        mpl.colors.Normalize.__init__(self, vmin, vmax, clip)
+
+    def __call__(self, value, clip=None):
+        normalized_min = max(0, 1 / 2 * (1 - abs((self.midpoint - self.vmin) / (self.midpoint - self.vmax))))
+        normalized_max = min(1, 1 / 2 * (1 + abs((self.vmax - self.midpoint) / (self.midpoint - self.vmin))))
+        normalized_mid = 0.5
+        x, y = [self.vmin, self.midpoint, self.vmax], [normalized_min, normalized_mid, normalized_max]
+        return np.ma.masked_array(np.interp(value, x, y))
+
+
 def plot_esf_def(variable, titulo, angulo=None):
     '''Grafica los esfuerzos y las deformaciones para la malla de EFs dada.
 
@@ -172,16 +190,17 @@ def plot_esf_def(variable, titulo, angulo=None):
         var /= num_elem_ady
 
         # se encuentra el máximo en valor absoluto para ajustar el colorbar()
-        val_max = np.max(np.abs(var))
-        #val_max = np.max(var)
-        #val_min = np.min([np.min(var), -np.finfo(float).eps])
+        #val_max = np.max(np.abs(var))
+        val_max = np.max(var)
+        val_min = np.min([np.min(var), -np.finfo(float).eps])
 
         # se grafica la malla de EFS, los colores en cada triángulo y las curvas
         # de nivel
         ax.triplot        (xnod[:,X], xnod[:,Y], LaG, lw=0.5, color='gray')
         # norm = mcolors.DivergingNorm(vmin=val_min, vmax = val_max, vcenter=0)
+        norm = MidpointNormalize(vmin=val_min, vmax = val_max, midpoint=0)
         im = ax.tripcolor (xnod[:,X], xnod[:,Y], LaG, var, cmap='bwr',
-                                shading='gouraud', vmin=-val_max, vmax=val_max) #norm=norm)
+                                shading='gouraud', norm=norm) #vmin=-val_max, vmax=val_max)
         ax.tricontour(xnod[:,X], xnod[:,Y], LaG, var, 20)
 
         # a veces sale un warning, simplemente porque no existe la curva 0
