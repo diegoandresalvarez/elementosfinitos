@@ -213,10 +213,10 @@ Las ecuaciones anteriores se pueden expresar en forma matricial como:
   \vphantom{\frac{\partial N_1^\e}{\partial y}} \gamma^\e_{xy}
 \end{bmatrix}}_{\ve{\varepsilon}^\e(x,y)}=
 \underbrace{\begin{bmatrix}
-  \frac{\partial N_1^\e}{\partial x} & 0 & \frac{\partial N_2^\e}{\partial x} & 0 & \cdots & \frac{\partial N_n^\e}{\partial x} & 0 \\
-   0 & \frac{\partial N_1^\e}{\partial x} & 0 & \frac{\partial N_2^\e}{\partial x} & \cdots & 0 & \frac{\partial N_n^\e}{\partial x}  \\
+  \frac{\partial N_1^\e}{\partial x} & 0                                  & \frac{\partial N_2^\e}{\partial x} & 0 & \cdots & \frac{\partial N_n^\e}{\partial x} & 0 \\
+   0                                 & \frac{\partial N_1^\e}{\partial y} & 0                                  & \frac{\partial N_2^\e}{\partial y} & \cdots & 0 & \frac{\partial N_n^\e}{\partial y}  \\
   \frac{\partial N_1^\e}{\partial x} & \frac{\partial N_1^\e}{\partial y} & \frac{\partial N_2^\e}{\partial x} & \frac{\partial N_2^\e}{\partial y} & \cdots &
-\frac{\partial N_n^\e}{\partial x} & \frac{\partial N_n^\e}{\partial y}
+\frac{\partial N_n^\e}{\partial x}   & \frac{\partial N_n^\e}{\partial y}
    \end{bmatrix}}_{\ma{B}^\e(x,y)} 
 \underbrace{\begin{bmatrix}
    u_1^\e \\ v_1^\e \\ u_2^\e \\ v_2^\e \\ \vdots \\ u_n^\e \\ v_n^\e 
@@ -414,7 +414,7 @@ donde,
    \\[-1ex]
    $\ve{a}^{(e)}$ & vector de desplazamientos nodales del elemento $e$.\\
    \\[-1ex]
-   $\ma{f}^{(e)} = \ve{f}_{\ve{\varepsilon}_0}^{(e)} + \ve{f}_{\ve{\sigma}_0}^{(e)} + \ve{f^{(e)}}_\ve{b} + \ve{f}^{(e)}_\ve{t} + \ve{p}^{(e)}$     &  vector de fuerzas nodales equivalentes del elemento $e$.\\
+   $\ma{f}^{(e)} = \ve{f}_{\ve{\varepsilon}_0}^{(e)} + \ve{f}_{\ve{\sigma}_0}^{(e)} + \ve{f}^{(e)}_\ve{b} + \ve{f}^{(e)}_\ve{t} + \ve{p}^{(e)}$     &  vector de fuerzas nodales equivalentes del elemento $e$.\\
    \\[-1ex]
    $\ve{q}^{(e)}$ & vector de fuerzas nodales de equilibrio del EF $e$.\\   
    \\[-1ex]
