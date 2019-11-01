@@ -29,7 +29,7 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 * Elemento finito de barra de dos nodos
   * Capítulo 2 de Oñate (2009): 1D FINITE ELEMENTS FOR AXIALLY LOADED RODS
   * Diapositivas: 
-     * [02_EF_barra.pdf](../diapositivas/02_EF_barra.pdf)
+     * [02_EF_barra_2_nodos.pdf](../diapositivas/02_EF_barra_2_nodos.pdf)
      * [02_EF_1d_globales.pdf](../diapositivas/02_EF_1d_globales.pdf)
      * [02_EF_1d_locales.pdf](../diapositivas/02_EF_1d_locales.pdf)
 
@@ -46,7 +46,7 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 * Elemento finito de barra de `n` nodos:
   * Capítulo 3 Oñate (2009): ADVANCED ROD ELEMENTS AND REQUIREMENTS FOR THE NUMERICAL SOLUTION (páginas 77 a 97)
   * Diapositivas: 
-     * [03_EF_barra_avanzados.pdf](../diapositivas/03_EF_barra_avanzados.pdf)
+     * [03_EF_barra_n_nodos.pdf](../diapositivas/03_EF_barra_n_nodos.pdf)
      * [03_EF_1d_n_nodos_isoparametricos.pdf](../diapositivas/03_EF_1d_n_nodos_isoparametricos.pdf)
 
 * Elemento finito triangular de 3 nodos y cuadrático de 4 nodos:
@@ -58,13 +58,11 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
 
 # Examen 3
-* Capítulo 5 de Oñate (2009): HIGHER ORDER 2D SOLID ELEMENTS. SHAPE FUNCTIONS AND ANALYTICAL COMPUTATION
-OF INTEGRALS
+* Capítulo 5 de Oñate (2009): HIGHER ORDER 2D SOLID ELEMENTS. SHAPE FUNCTIONS AND ANALYTICAL COMPUTATION OF INTEGRALS
+  * Diapositivas: [05c_funciones_forma_EF_2D_Tn_Qn.pdf](../diapositivas/05c_funciones_forma_EF_2D_Tn_Qn.pdf)
 
 * Capítulo 6 de Oñate (2009): ISOPARAMETRIC 2D SOLID ELEMENTS. NUMERICAL INTEGRATION AND APPLICATIONS 
-
-* Diapositivas:
-   * [05c_funciones_forma_EF_2D_Tn_Qn.pdf](../diapositivas/05c_funciones_forma_EF_2D_Tn_Qn.pdf)
+  * Diapositivas: [05d_EF_2D_Tn_Qn_isoparametrico.pdf](../diapositivas/05d_EF_2D_Tn_Qn_isoparametrico.pdf)
 
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
 
