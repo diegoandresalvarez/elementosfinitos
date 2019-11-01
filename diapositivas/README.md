@@ -1,27 +1,37 @@
 # Diapositivas
 
 ## Análisis
-* [Repaso de mecánica de sólidos](00_Repaso_Mecanica_de_Solidos.pdf)
-
-* [Capítulo 1 Oñate: Repaso de análisis matricial de estructuras](01_Repaso_Calculo_Matricial.pdf)
-
-* [Capítulo 2 Oñate: Elementos finitos de barra de dos nodos](02_EF_barra_2_nodos.pdf)
+* Repaso de mecánica de sólidos:
+  * [00_Repaso_Mecanica_de_Solidos.pdf](00_Repaso_Mecanica_de_Solidos.pdf)
   * [Conversión del principio del trabajo virtual de 3D a 1D](02_PTV_3D_a_1D.pdf)
+
+* Repaso de análisis matricial de estructuras:
+  * [01_Repaso_Calculo_Matricial.pdf](01_Repaso_Calculo_Matricial.pdf)
+
+* Elementos finitos de barra de dos nodos:
+  * [02_EF_barra_2_nodos.pdf](02_EF_barra_2_nodos.pdf)
   * [Deducción de la ecuación `K*a - f = q` empleando funciones de forma globales](02_EF_1d_globales.pdf)
   * [Deducción de la ecuación `K*a - f = q` empleando funciones de forma locales](02_EF_1d_locales.pdf)  
 
-* [Capítulo 3 Oñate: Elementos finitos de barra de varios nodos](03_EF_barra_n_nodos.pdf)
+* Elementos finitos de barra de varios nodos:
+  * [03_EF_barra_n_nodos.pdf](03_EF_barra_n_nodos.pdf)
   * [Deducción de la ecuación `K*a - f = q` para el EF de barra isoparamétrico](03_EF_1d_n_nodos_isoparametricos.pdf)
 
-* [Capítulo 4 Oñate: Elementos finitos de flexión de vigas](04_EF_vigas.pdf)
+* Elementos finitos de flexión de vigas:
+   * [04_EF_vigas.pdf](04_EF_vigas.pdf)
 
-* [Capítulo 5 Oñate: Elementos finitos para tensión y deformación plana](05_EF_bidimensionales.pdf)
+* Elementos finitos para tensión y deformación plana:
   * [EFs bidimensionales: triangular de 3 nodos y cuadrático de 4 nodos](05a_EF_2D_T3_y_Q4.pdf)
+  * [Deducción de la ecuación `K*a - f = q` para un EF bidimensional de `n` nodos](05b_EF_2D_T3.pdf)
+  * [Funciones de forma de los EFs rectangulares y triangulares de `n` nodos](05c_funciones_forma_EF_2D_Tn_Qn.pdf)
+  * [EFs triangulares y cuadráticos isoparamétricos de n nodos](05d_EF_2D_Tn_Qn_isoparametrico.pdf)
   * [El Patch Test](05_anexo_El_Patch_Test.pdf)
 
-* [Capítulo 6 Oñate: Sólidos de revolución](06_solidos_de_revolucion.pdf)
+* Sólidos de revolución
+  * [06_solidos_de_revolucion.pdf](06_solidos_de_revolucion.pdf)
 
-* [Capítulo 7 Oñate: Sólidos tridimensionales](07_solidos_tridimensionales.pdf).
+* Sólidos tridimensionales
+  * [07_solidos_tridimensionales.pdf](07_solidos_tridimensionales.pdf)
   * El problema de la representación gráfica: https://www.youtube.com/watch?v=J3yH7Uz68bQ
 
 * [Capítulo 8 Oñate: Losas delgadas: teoría de Kirchhoff-Love](08_Losas_delgadas_Kirchhoff.pdf)
