@@ -2,7 +2,7 @@
 
 Para los esfuerzos calculados en los puntos I, II, III y IV y que se muestran a continuación:
 
-![extrapolacion_esfuerzos.svg](extrapolacion_esfuerzos.svg | width=500)
+<img src="extrapolacion_esfuerzos.svg" width="300">
 
 la estimación de los esfuerzos en los nodos está dada por la siguiente fórmula de interpolación para el EF serendípito rectangular de 8 nodos:
 
