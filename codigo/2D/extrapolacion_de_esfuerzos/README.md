@@ -2,7 +2,7 @@
 
 Para los esfuerzos calculados en los puntos I, II, III y IV y que se muestran a continuación:
 
-<img src="extrapolacion_esfuerzos.svg" width="300">
+<img src="extrapolacion_esfuerzos.svg" width="250">
 
 la estimación de los esfuerzos en los nodos está dada por la siguiente fórmula de interpolación para el EF serendípito rectangular de 8 nodos:
 
@@ -49,6 +49,6 @@ end
 
 Por esta razón, la ecuación aquí deducida es diferente a la mostrada en Oñate (2009), página 329 a 334 y a la mostrada [aquí](http://books.google.com/books?id=lcSwbhop_XYC&pg=PA485&lpg=PA485&dq=%22nodal+stresses%22+%22gauss+points%22&source=bl&ots=75zUqMQDY1&sig=FJ_I-NbkkDkeKeIum9JOvlXqje4&hl=de&ei=M6OoTe_JJ-aJ0QH_haj5CA&sa=X&oi=book_result&ct=result&resnum=54&ved=0CJ4EEOgBMDU#v=onepage&q=%22nodal%20stresses%22%20%22gauss%20points%22&f=false).
 
-Cödigo:
+Código:
 * MATLAB: [extrapolacion_esfuerzos_Q8_Q9.m](extrapolacion_esfuerzos_Q8_Q9.m)
 * PYTHON: [extrapolacion_esfuerzos_Q8_Q9.py](extrapolacion_esfuerzos_Q8_Q9.py)
