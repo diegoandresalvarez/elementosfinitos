@@ -160,7 +160,7 @@ for e in range(nef):
 
             # con ellas se ensambla la matriz Jacobiana del elemento y se
             # calcula su determinante
-            Je = np.array([[dx_dxi,  dy_dxi],
+            Je = np.array([[dx_dxi,  dy_dxi ],
                            [dx_deta, dy_deta]])
             det_Je[p, q] = np.linalg.det(Je)
 
