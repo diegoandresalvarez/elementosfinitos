@@ -14,8 +14,8 @@
 
 ## Evaluaciones y trabajos
 - 17% - Exámen 1: septiembre 27, 2019
-- 17% - Exámen 2: octubre 23, 2019
-- 17% - Exámen 3: noviembre 13, 2019
+- 17% - Exámen 2: noviembre 6, 2019
+- 17% - Exámen 3: noviembre 20, 2019
 - 17% - Exámen 4: diciembre 13, 2019
 - 32% - Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
 
