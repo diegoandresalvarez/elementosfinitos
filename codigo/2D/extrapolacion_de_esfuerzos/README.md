@@ -34,6 +34,7 @@ Compile en: https://tex.s2cms.com
 
 **Nota:** el orden I, II, III, IV corresponde al orden en que se evaluan los esfuerzos en el doble ciclo:
 ```matlab
+n_gl = 2; % número de puntos utilizados (por lado) en la integración de Gauss-Legendre
 i = 0;
 for p = 1:n_gl
     for q = 1:n_gl
