@@ -58,7 +58,7 @@ Asuma:
 
 Considere la barra doblemente empotrada, de módulo de elasticidad E constante, mostrada en la figura:
 
-![barra_exponencial.svg](barra_exponencial.svg)
+![barra_exponencial.svg](figs/barra_exponencial.svg)
 
 Suponga que esta barra tiene una sección transversal circular, con radio que varía según:
 
