@@ -69,12 +69,5 @@ b(x) = \frac{1}{5} \frac{kN}{m^3} x^2 \quad \text{ para } x\in[0 \text{ m}, 3\te
 * d) PUNTO EXTRA OPCIONAL +2 UNIDADES: Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función bvp5c de MATLAB, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con la solución por elementos finitos. Compare la solución con aquella dada por el método de los elementos finitos (cual es el error del método de los EFs?). 
 
 ----
-----
 
-=CAPITULO 5. ELEMENTOS FINITOS BIDIMENSIONALES (Trabajo en grupos de máximo dos personas. Fecha máxima de entrega: Diciembre 1, 2015 a las 23:59)=
-* Calcule los desplazamientos, deformaciones, esfuerzos, esfuerzos normales y cortantes máximos de la estructura mostrada utilizando elementos triangulares isoparamétricos de 10 nodos. Incluya la acción del peso propio de la estructura (densidad = 2300 kg/m^3)  +2.5 puntos. 
-* Incluya la acción de una carga superficial que varía en la parte superior de la estructura, que se describe por: + 1.5 puntos
-X(theta) = 1 + theta, Y(theta) = theta^2, teniendo en cuenta que theta varía entre 0 y pi/2
-* Compare la solución con otro programa de elementos finitos: + 2 puntos
-[[image:c5_isoparametric_triang_6_nodos.jpg]]
 

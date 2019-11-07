@@ -37,7 +37,8 @@ y utilizando elementos finitos triangulares de 10 nodos, haga un programa que es
 * Las fuerzas en los apoyos (reacciones).
 
 Los siguientes puntos son opcionales, siempre y cuando se hayan realizado los ejercicios anteriores:
- * Si se repite el ejercicio, pero esta vez creando la malla con el programa [gmsh](http://gmsh.info/), se tendrá +2 unidades. 
+ * Si se repite el ejercicio, pero esta vez creando la malla con el programa [gmsh](http://gmsh.info/), se tendrá +2 unidades. Si se muestran los resultados utilizando gmsh se tendrá +2 unidades adicionales. 
+ * Si se repite el ejercicio, pero esta vez creando la malla con el programa [GiD](https://www.gidhome.com/), se tendrá +1 unidad. Si se muestran los resultados utilizando GiD se tendrá +1 unidad adicional. Nota: se deben crear los programas para leer los archivos de la malla o para escribir los archivos con las respuestas. Le pueden preguntar a la gente que está viendo con el profesor Paredes que les indiquen como hacer el ejercicio.
  * Si se compara la respuesta con la obtenida por el programa [GetFEM++](http://getfem.org/index.html) y se muestran los resultados con [Paraview](https://www.paraview.org/), se tendrán +2 unidades.
  * Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad.
 
@@ -47,7 +48,10 @@ Asuma:
 * Módulo de elasticidad = 2 GPa.
 * Coeficiente de Poisson = 0.3
 * Espesor = 10 cm.
-* Densidad del material = 1000 kg/m³.
+* Densidad del material = 2300 kg/m³.
 * Una carga distribuída constante de magnitud 100 kN/m que está actuando sobre el borde exterior (nodos 7, 14, 21, 28, 35, ..., 63, 70) y que apunta en la dirección del origen de coordenadas.
+<!--- 
+X(theta) = 1 + theta, Y(theta) = theta^2, teniendo en cuenta que theta varía entre 0 y pi/2
+--->
 
 # Ejercicio 2: por definir
