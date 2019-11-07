@@ -25,6 +25,9 @@ La nota obtenida en este trabajo estará dada por:
 * INDIVIDUAL: presentación individual y videos: 85%
 * GRUPAL: presentación grupal e informe: 15%
 
+## Programa a utilizar
+Cada estudiante debe utilizar un programa diferente. Reportar el programa a utilizar en [http://solidos2019b.shoutwiki.com/wiki/Software_para_análisis_estructural_por_elementos_finitos](http://solidos2019b.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos).
+
 ## Trabajo individual
 Se solicita realizar:
 * Explicar detalladamente como se modelaron las condiciones de apoyo, las cargas y los criterios con los que se creó la malla de elementos finitos (+0.5 unidades).
@@ -33,7 +36,7 @@ Se solicita realizar:
 * Hacer un refinamiento de la malla utilizando el método p y el método h (+0.5 unidades).
 * Analizar la calidad de la malla utilizando las herramientas con las que cuenta el programa. (+1.5 unidad).
 * Hacer un estudio de convergencia de la solución (punto obligatorio: si no se hace -2 unidades).
-* Estudiar los manuales del usuario del programa, estableciendo las capacidades del software, así como las limitaciones y las suposiciones hechas en el cálculo. ¿Qué otras capacidades tiene el programa que podrían ser útiles para resolver el problema en consideración? (punto obligatorio: si no se hace -2 unidades)
+* Estudiar los manuales del usuario del programa, estableciendo las capacidades del software, así como las limitaciones y las suposiciones hechas en el cálculo. **¿Qué otras capacidades tiene el programa que podrían ser útiles para resolver el problema en consideración y que eventualmente podrían ser útiles en el análisis?** (punto obligatorio: si no se hace -2 unidades)
 * Análisis de resultados (punto obligatorio: si no se hace -2 unidades).
 
 * Hacer 3 videotutoriales que se deben subir a YouTube que ilustren:
@@ -44,7 +47,7 @@ Se solicita realizar:
 * Hacer presentación de máximo 25 minutos, intentando convencer a los compañeros porqué su programa es el mejor del mercado (imagínense que ustedes son los representantes para Colombia del producto).
 
 ## Trabajo grupal
-Serán tres grupos de trabajo: cada uno con 4 integrantes (reportar los grupos en la WIKI). Los miembros de un mismo grupo no pueden utilizar programas de la misma casa. (Por ejemplo en un mismo grupo no pueden estar quien maneja el ROBOT y el INVENTOR, ya que ambos programas son de la casa AUTODESK).
+Serán tres grupos de trabajo: cada uno con 4 integrantes (reportar los grupos en la [WIKI](http://solidos2019b.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos)). Los miembros de un mismo grupo no pueden utilizar programas de la misma casa. (Por ejemplo en un mismo grupo no pueden estar quien maneja el ROBOT y el INVENTOR, ya que ambos programas son de la casa AUTODESK).
 
 Se solicita realizar:
 * Presentar un informe escrito que presente la comparación de los resultados obtenidos por los miembros de cada grupo. Comparar en porcentajes.
@@ -66,4 +69,6 @@ Recuerden que la finalidad de los grupos de trabajo es que comparen los programa
 
 Espero que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe importante información sobre las hipótesis de modelado que hace cada software.
 
-Me encantaría si en la WIKI se especifican las suposiciones hechas y se hace “cooperación” o comunicación entre los grupos de trabajo de las suposiciones que tengan que hacer, de modo tal que todo el curso maneje los mismos parámetros en el modelado.
+Me encantaría si en la [WIKI](http://solidos2019b.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos) se especifican las suposiciones hechas y se hace “cooperación” o comunicación entre los grupos de trabajo de las suposiciones que tengan que hacer, de modo tal que todo el curso maneje los mismos parámetros en el modelado.
+
+Busquen ideas en YouTube con la palabra clave **"steel connection"**.
