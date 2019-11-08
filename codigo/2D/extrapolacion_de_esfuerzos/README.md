@@ -1,8 +1,18 @@
+# Un polinomio de orden `n` y otro de orden `n-1` ajustado por mínimos cuadrados se intersectan en la raíces del polinomio de Legendre de orden `n`
+
+Cuando la intersección de un polinomio de grado `n` con su ajuste por mínimos cuadrados un polinomio de grado `n-1` sucede, se pueden observar que dicha intersección ocurre en raíces del polinomio de Legendre de orden `n`:
+
+<img src="figs/interseccion_polinomios_en_raices_pol_Legendre.png">
+
+Código:
+* MATLAB: [interseccion_polinomios_en_raices_pol_Legendre.m](interseccion_polinomios_en_raices_pol_Legendre.m)
+
+
 # Programa para extrapolar los esfuerzos en los EFs rectangulares de 8 y 9 nodos a partir de las estimaciones en los puntos de Gauss-Legendre
 
 Para los esfuerzos calculados en los puntos I, II, III y IV y que se muestran a continuación:
 
-<img src="extrapolacion_esfuerzos.svg" width="250">
+<img src="figs/extrapolacion_esfuerzos.svg" width="250">
 
 la estimación de los esfuerzos en los nodos está dada por la siguiente fórmula de interpolación para el EF serendípito rectangular de 8 nodos:
 
