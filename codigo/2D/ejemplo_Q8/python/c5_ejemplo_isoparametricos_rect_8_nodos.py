@@ -305,8 +305,10 @@ A = np.array([
 # se hace la extrapolación de los esfuerzos y las deformaciones en cada elemento
 # a partir de las lecturas en los puntos de Gauss
 for e in range(nef):
-    #sx[LaG[e]]  += A @ np.array([esfuer[e,0,0,0], esfuer[e,0,1,0],
-    #                             esfuer[e,1,0,0], esfuer[e,1,1,0]])
+    #sx[LaG[e]]  += A @ np.array([esfuer[e,0,0,0],   # I   = (p=0, q=0)
+    #                             esfuer[e,0,1,0],   # II  = (p=0, q=1)
+    #                             esfuer[e,1,0,0],   # III = (p=1, q=0)
+    #                             esfuer[e,1,1,0]])  # IV  = (p=1, q=1)
     sx [LaG[e]] += A @ esfuer[e,:,:,0].ravel()
     sy [LaG[e]] += A @ esfuer[e,:,:,1].ravel()
     txy[LaG[e]] += A @ esfuer[e,:,:,2].ravel()
