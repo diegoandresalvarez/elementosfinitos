@@ -410,6 +410,27 @@ writer.save()
 
 print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
 
+# %% Se genera un archivo .VTK para visualizar en Paraview
+# Instale meshio (https://github.com/nschloe/meshio) con:
+# pip install meshio[all] --user
+
+import meshio
+meshio.write_points_cells(
+    "resultados.vtk",
+    points=xnod,
+    cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
+    point_data = {
+        'ex':ex, 'ey':ey, 'ez':ez,     'gxy':gxy,
+        'sx':sx, 'sy':sy, 'txy':txy,
+        's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
+        'uv'  :a.reshape((nno,2)),
+        's1n1':np.c_[s1*np.cos(ang),           s1*np.sin(ang)          ],
+        's2n2':np.c_[s2*np.cos(ang + np.pi/2), s2*np.sin(ang + np.pi/2)]
+        }
+    # cell_data=cell_data,
+    # field_data=field_data
+)
+
 # %% Pasando los resultados a GiD
 # Pasando los esfuerzos ya promediados:
 # export_to_GiD('c5_ejemplo_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
