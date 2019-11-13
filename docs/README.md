@@ -20,6 +20,7 @@ Tomado de:
 - [Códigos](../codigo/)
 - [Tema a evaluar en los exámenes](tema_examenes.md)
 - [Recursos](recursos.md)
+- [Video tutoriales de GiD](GiD.md)
 
 ## Examenes y talleres
 - [Tema de los exámenes](tema_examenes.md)
