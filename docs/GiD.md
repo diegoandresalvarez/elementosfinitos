@@ -5,12 +5,12 @@ GiD es un software para el pre y post procesamiento de simulaciones numéricas e
 A continuación se encuentran unos videos tutoriales del software GiD. Estos corresponden a los que figuran en la página: https://www.gidhome.com/support/tutorials/
 
 
-* Video 1: https://vimeo.com/29349085?hd=1
-* Video 2: https://vimeo.com/32531319?hd=1 
-* Video 3: https://vimeo.com/32531319?hd=1
-* Video 4: https://vimeo.com/69913470?hd=1
-* Video 5: https://vimeo.com/68275765?hd=1
-* Video 6: https://vimeo.com/68275765?hd=1
+* Video 1: https://vimeo.com/29349085
+* Video 2: https://vimeo.com/32531319
+* Video 3: https://vimeo.com/34229787
+* Video 4: https://vimeo.com/69913470
+* Video 5: https://vimeo.com/68275765
+* Video 6: https://vimeo.com/68295212
 
 Tenga en cuenta que la malla se exporta utilizando **FILES > EXPORT > GiD MESH**
 
