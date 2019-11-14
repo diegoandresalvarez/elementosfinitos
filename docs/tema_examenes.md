@@ -68,9 +68,11 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 
 # Examen 4
 * Capítulo 7 de Oñate (2009): AXISYMMETRIC SOLIDS
-  * Diapositivas 6:
+  * Diapositivas 6: [06_solidos_de_revolucion.pdf](../diapositivas/06_solidos_de_revolucion.pdf)
 
 * Capítulo 8 de Oñate (2009): THREE DIMENSIONAL SOLIDS
-  * Diapositivas 7:
+  * Diapositivas 7: [07_solidos_tridimensionales.pdf](../diapositivas/07_solidos_tridimensionales.pdf)
+  
+* Diapositivas: [Reglas para la creación de una buena malla de EFs](../diapositivas/05e_generando_una_buena_malla.pdf)
 
 * MATLAB o PYTHON (todos los comandos vistos en clase hasta la fecha y todos aquellos que aparecen en los programas)
