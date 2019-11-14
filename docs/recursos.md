@@ -14,16 +14,18 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
 
 ## Video tutoriales
 
-* 1.a. [Dr. R. Krishnakumar. Introduction to Finite Element Method. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106135)
-* 1.b. [Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106130)
+* Dr. R. Krishnakumar. 
+  * [Dr. R. Krishnakumar. Introduction to Finite Element Method. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106135)
+  * [Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106130)
 
-* 2. [Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112104115)
+* [Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112104115)
 
-* 3. [Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/index.htm)
+* Prof. J. Bathe
+  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/index.htm)
 
-* 3a. [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (LINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/linear/)
+  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (LINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/linear/)
 
-* 3b. [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/nonlinear/)
+  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/nonlinear/)
 
 
 ## Software libre para el análisis de estructuras
@@ -35,6 +37,7 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
 * [El hundimiento de la plataforma petrolera Sleipner](http://www.ima.umn.edu/~arnold/disasters/sleipner.html): una plataforma que falló debido a un mal análisis de elementos finitos.
 
 ---
+
 Curso elementos finitos II: http://www.ibk.ethz.ch/ch/education/education/index_EN
 
 
