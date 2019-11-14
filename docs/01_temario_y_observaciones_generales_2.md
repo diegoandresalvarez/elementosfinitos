@@ -68,14 +68,14 @@ El curso se desarrollará teniendo en cuenta diferentes aspectos pedagógicos co
 
 
 ## Bibliografía
-Oñate, Eugenio. Cálculo de estructuras por el método de elementos finitos: análisis estático lineal. Barcelona:Centro Internacional de Métodos Numéricos en Ingeniería, CIMNE 1995. 2 edición. (en la biblioteca hay 15 ejemplares: código biblioteca >> 624.171/O59c2).
+Eugenio Oñate. Cálculo de estructuras por el método de elementos finitos: análisis estático lineal. Barcelona:Centro Internacional de Métodos Numéricos en Ingeniería, CIMNE 1995. 2 edición. (en la biblioteca hay 15 ejemplares: `624.171/O59c2`).
 
 La versión en inglés (más moderna) se puede descargar así:
 
-https://bibliotecas.unal.edu.co/ -> Recursos electrónicos -> Springer Books -> buscar "Oñate"
+https://bibliotecas.unal.edu.co/ `->` Recursos electrónicos `->` Springer Books `->` buscar "Oñate"
 
-- [Tomo 1: Structural Analysis with the Finite Element Method - Linear Statics (año 2009)](https://link.springer.com/book/10.1007/978-1-4020-8733-2)
-- [Tomo 2: Structural Analysis with the Finite Element Method - Beams, Plates and Shells (año 2013)](https://link.springer.com/book/10.1007%2F978-1-4020-8743-1)
+- [Eugenio Oñate (2009). Structural Analysis with the Finite Element Method - Linear Statics, Volume 1](https://link.springer.com/book/10.1007/978-1-4020-8733-2)
+- [Eugenio Oñate (2013). Structural Analysis with the Finite Element Method - Beams, Plates and Shells, Volume 2](https://link.springer.com/book/10.1007%2F978-1-4020-8743-1)
 
 
 ## Observaciones que se quieren dejar por escrito:
