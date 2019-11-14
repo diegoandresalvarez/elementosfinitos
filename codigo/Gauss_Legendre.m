@@ -18,7 +18,7 @@ w = 2./((1-z.^2).*polyval(s,z).^2);		%Los pesos de Gauss - Legendre
 
 return;
 
-%% ----------------------------------------------------------------------
+%% -----------------------------------------------------------------------------
 
 function [PN,DN] = legendre(N)
 %% Calcula los coeficientes del polinomio de Legendre de orden N y su derivada
