@@ -1,6 +1,6 @@
 # Video tutoriales de COMSOL Multiphysics v. 3.5
 
-[COMSOL Multiphysics](ttp://www.comsol.com/) es un paquete de software de análisis y resolución por elementos finitos para varias aplicaciones físicas y de ingeniería, especialmente fenómenos acoplados, o multifísicos (modela cualquier proceso físico que se pueda describir mediante ecuaciones en derivadas parciales). COMSOL Multiphysics también ofrece una amplia y bien gestionada interfaz a MATLAB y sus toolboxes que proporcionan una amplia variedad de posibilidades de programación, preprocesado y postprocesado. COMSOL Multiphysics también permite entrar sistemas acoplados de ecuaciones en derivadas parciales (EDP). Las EDP se pueden entrar directamente o utilizando la llamada forma débil. Está provisto de la última tecnología y algoritmos de resolvedores que pueden manejar problemas complejos de forma rápida y precisa, mientras que su intuitiva estructura está diseñada para proporcionar una gran facilidad de uso y flexibilidad.
+[COMSOL Multiphysics](https://www.comsol.com/) es un paquete de software de análisis y resolución por elementos finitos para varias aplicaciones físicas y de ingeniería, especialmente fenómenos acoplados, o multifísicos (modela cualquier proceso físico que se pueda describir mediante ecuaciones en derivadas parciales). COMSOL Multiphysics también ofrece una amplia y bien gestionada interfaz a MATLAB y sus toolboxes que proporcionan una amplia variedad de posibilidades de programación, preprocesado y postprocesado. COMSOL Multiphysics también permite entrar sistemas acoplados de ecuaciones en derivadas parciales (EDP). Las EDP se pueden entrar directamente o utilizando la llamada forma débil. Está provisto de la última tecnología y algoritmos de resolvedores que pueden manejar problemas complejos de forma rápida y precisa, mientras que su intuitiva estructura está diseñada para proporcionar una gran facilidad de uso y flexibilidad.
 
 A continuación se encuentran unos videos tutoriales de COMSOL. Estos corresponden a los que figuran en los manuales de usuario de dicho software para la versión 3.5. Dichos manuales se encuentran en:
 
@@ -26,5 +26,3 @@ A continuación se encuentran unos videos tutoriales de COMSOL. Estos correspond
 * [Video 11: Solución de vigas en 2D - Otros tipos de carga](https://vimeo.com/15584333)
 * [Video 12: Análisis de un pavimento flexible](https://vimeo.com/18708349)
 * [Video 13: Solución de un pórtico en 2D](https://vimeo.com/18965162)
-
-https://vimeo.com/15584333
