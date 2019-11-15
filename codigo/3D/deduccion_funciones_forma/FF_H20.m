@@ -1,6 +1,6 @@
 clear, clc, close all
 
-%% -------------------------------------------------------------------------
+%% ------------------------------------------------------------------------
 %% Funciones de forma del elemento hexahedrico serendipito de 20 nodos
 
 % Calculo las funciones de forma unidimensionales
@@ -38,9 +38,6 @@ syms xi eta zeta
 %  |   |   |
 % 13--14--15
 
-
-
-
 nod = [ ...
 %  xi   eta  zeta   nodo
    -1   -1   -1   %  1
@@ -65,54 +62,61 @@ nod = [ ...
    -1    0    1 ];% 20
 
 % Se calculan las funciones de forma bidimensionales
-N = cell(20,1);
-for i = 1:20   % se arma el sistema de ecuaciones
-   A = zeros(20,20);
-   b = zeros(20,1);
-   for j = 1:20
-      xxi   = nod(j,1);
-      eeta  = nod(j,2);
-      zzeta = nod(j,3);
-      A(j,:) = [ 1 ...
-                 xxi eeta zzeta ...
-                 xxi^2 xxi*eeta eeta^2 eeta*zzeta zzeta^2 xxi*zzeta ...
-                 xxi^2*eeta xxi*eeta^2  eeta^2*zzeta eeta*zzeta^2  xxi*zzeta^2 xxi^2*zzeta  xxi*eeta*zzeta ...
-                 xxi^2*eeta*zzeta xxi*eeta^2*zzeta xxi*eeta*zzeta^2 ];
-      b(j)   = double(i == j);
-   end;
+N = cell(20, 1);
+xxi   = nod(:,1);
+eeta  = nod(:,2);
+zzeta = nod(:,3);
+A = [ ones(20,1) ...
+      xxi eeta zzeta ...
+      xxi.^2 xxi.*eeta eeta.^2 eeta.*zzeta zzeta.^2 xxi.*zzeta ...
+      xxi.^2.*eeta xxi.*eeta.^2  eeta.^2.*zzeta eeta.*zzeta.^2  xxi.*zzeta.^2 xxi.^2.*zzeta xxi.*eeta.*zzeta ...
+      xxi.^2.*eeta.*zzeta xxi.*eeta.^2.*zzeta xxi.*eeta.*zzeta.^2 ];
+for i = 1:20 % se arma el sistema de ecuaciones  
+   b = zeros(20, 1); b(i) = 1;
    coef_alpha = A\b;
-   N{i} = simple([ 1 ...
+   N{i} = simplify([ 1 ...
                    xi eta zeta ...
                    xi^2 xi*eta eta^2 eta*zeta zeta^2 xi*zeta ...
-                   xi^2*eta xi*eta^2  eta^2*zeta eta*zeta^2  xi*zeta^2 xxi^2*zeta  xi*eta*zeta ...
+                   xi^2*eta xi*eta^2  eta^2*zeta eta*zeta^2  xi*zeta^2 xi^2*zeta  xi*eta*zeta ...
                    xi^2*eta*zeta xi*eta^2*zeta xi*eta*zeta^2 ]*coef_alpha);
 end
 
-% Imprimo las funciones de forma
-fprintf('Funciones de forma serendipitas del elemento hexahedrico de 20 nodos:\n')
+%% Se verifica el valor de las funciones de forma en los nodos
+ev = zeros(20,1);
 for i = 1:20
-   fprintf('\nN%d = %s',i, char(N{i}));
+   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
+   for j = 1:20
+      ev(j) = NN(nod(j,1), nod(j,2), nod(j,3));
+   end
+   fprintf('%d = \n', i)
+   disp(ev)
 end
 
-% Se calculan las derivadas de las funciones de forma con respecto a xi, eta y 
+%% Imprimo las funciones de forma
+fprintf('Funciones de forma serendipitas del elemento hexahedrico de 20 nodos:\n')
+for i = 1:20
+   fprintf('\nN%d = %s',i, N{i});
+end
+
+%% Se calculan las derivadas de las funciones de forma con respecto a xi, eta y 
 % zeta y se imprimen (para referencias posteriores):
 fprintf('\n\nDerivadas con respecto a xi:\n')
 for i = 1:20
-   fprintf('\ndN%d_dxi = %s',i, char(simple(diff(N{i},xi))))
+   fprintf('\ndN%d_dxi = %s',i, simplify(diff(N{i},xi)))
 end
 
 fprintf('\n\nDerivadas con respecto a eta:\n')
 for i = 1:20
-   fprintf('\ndN%d_deta = %s',i, char(simple(diff(N{i},eta))))
+   fprintf('\ndN%d_deta = %s',i, simplify(diff(N{i},eta)))
 end
 
 fprintf('\n\nDerivadas con respecto a zeta:\n')
 for i = 1:20
-   fprintf('\ndN%d_dzeta = %s',i, char(simple(diff(N{i},zeta))))
+   fprintf('\ndN%d_dzeta = %s',i, simplify(diff(N{i},zeta)))
 end
 fprintf('\n');
 
-% Grafico las funciones de forma
+%% Grafico las funciones de forma
 XXI   = -1:0.05:1;
 EETA  = -1:0.05:1;
 ZZETA = -1:0.05:1;
@@ -129,20 +133,13 @@ for i = 1:20
    grid on                % creo la rejilla
    hold on;               % Para que no se sobreescriban los graficos
    
-   % con este comando convierto la funcion de forma de tipo simbÃ³lico a
-   % tipo funcion
-%   funcion_texto = char(N{i});  % convierto la cadena a texto  
-%   funcion_texto = strrep(funcion_texto,'*','.*'); % reemplazo * por .*
-%   funcion_texto = strrep(funcion_texto,'^','.^'); % reemplazo ^ por .^   
-
-   funcion_texto = vectorize(char(N{i}));  % convierto la formula a cadena
-   NN = inline(funcion_texto,'xi','eta','zeta'); % cadena a funcion inline
+   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
    % se recomienda aqui mirar la ayuda de la funcion inline y vectorize
    
-   xlabel('\xi',  'FontSize',26); % titulo eje X
-   ylabel('\eta', 'FontSize',26); % titulo eje Y
-   zlabel('\zeta','FontSize',26); % titulo eje Z
-   title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',26); % titulo general
+   xlabel('\xi',  'FontSize',20); % titulo eje X
+   ylabel('\eta', 'FontSize',20); % titulo eje Y
+   zlabel('\zeta','FontSize',20); % titulo eje Z
+   title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',20); % titulo general
    
    xslice = [-1 0 1]; yslice = [-1 0 1]; zslice = [-1 0 1];
    slice(XI,ETA,ZETA,NN(XI,ETA,ZETA),xslice,yslice,zslice)
@@ -164,6 +161,8 @@ for i = 1:20
    axis tight             % ejes apretados
    daspect([1 1 1]);      % similar a axis equal pero en 3D
    view(3);               % vista tridimensional
-end;
+   colorbar
+end
 
+%%
 return %bye, bye!

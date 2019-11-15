@@ -8,19 +8,22 @@ syms x1 x2 x3 x4
 syms y1 y2 y3 y4 
 syms z1 z2 z3 z4 
 syms u1 u2 u3 u4 
+syms alpha_1 alpha_2 alpha_3 alpha_4
 
 %% Resuelve el sistema de ecuaciones por alpha_1, alpha_2, alpha_3 y alpha_4
-r = solve('u1 = alpha_1 + alpha_2*x1 + alpha_3*y1 + alpha_4*z1',...
-          'u2 = alpha_1 + alpha_2*x2 + alpha_3*y2 + alpha_4*z2',...
-          'u3 = alpha_1 + alpha_2*x3 + alpha_3*y3 + alpha_4*z3',...
-          'u4 = alpha_1 + alpha_2*x4 + alpha_3*y4 + alpha_4*z4',...
-          'alpha_1','alpha_2','alpha_3','alpha_4');
+r = solve(u1 == alpha_1 + alpha_2*x1 + alpha_3*y1 + alpha_4*z1, ...
+          u2 == alpha_1 + alpha_2*x2 + alpha_3*y2 + alpha_4*z2, ...
+          u3 == alpha_1 + alpha_2*x3 + alpha_3*y3 + alpha_4*z3, ...
+          u4 == alpha_1 + alpha_2*x4 + alpha_3*y4 + alpha_4*z4, ...
+          alpha_1, alpha_2, alpha_3, alpha_4);
 
 %% Establece de nuevo u
 u = r.alpha_1 + r.alpha_2*x + r.alpha_3*y + r.alpha_4*z;
 
 %% Se separa u en su numerador y su denominador
 [num,den] = numden(u);
+num = -num;
+den = -den;
 
 %% Nosotros sabemos que el denominador es seis veces el volumen del tetraedro
 % A continuacion se verificara:
@@ -28,19 +31,17 @@ V = det([ 1 x1 y1 z1          % Volumen del tetraedro con vertices
           1 x2 y2 z2          % (x1,y1,z1), ..., (x4,y4,z4) 
           1 x3 y3 z3          % suponiendo que (x1,y1,z1), ..., (x3,y3,z3)          
           1 x4 y4 z4 ])/6;    % se numeraron en sentido antihorario cuando se mira desde (x4,y4,z4)
-
+VV = matlabFunction(V, 'Vars', [x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4]);
+      
 disp('El 0 en el residuo significa que den == 6*V');
-disp(simple(den - 6*V))
+disp(simplify(den - 6*V))
 
 %% Se vuelve a escribir u, pero con el denominador expresado como 6*Vol
 % ya que en el paso anterior establecimos que den es igual a 6*V
 u = num/(6*Vol);
 
 %% Se factoriza u1, u2, u3 y u4
-u = collect(u,u1);
-u = collect(u,u2);
-u = collect(u,u3);
-u = collect(u,u4);
+u = collect(u,[u1, u2, u3, u4]);
 
 %% Se verifican finalmente las formulas
 a1 =   det([x2 y2 z2; x3 y3 z3; x4 y4 z4]);
@@ -87,16 +88,17 @@ d4 = -det([x1 y1  1; x2 y2  1; x3 y3  1]);
 %}
 
 %% Se arman las funciones de forma
-N1 = (a1 + b1*x + c1*y + d1*z)/(6*Vol);
-N2 = (a2 + b2*x + c2*y + d2*z)/(6*Vol);
-N3 = (a3 + b3*x + c3*y + d3*z)/(6*Vol);
-N4 = (a4 + b4*x + c4*y + d4*z)/(6*Vol);
+N  = cell(4,1);
+N{1} = (a1 + b1*x + c1*y + d1*z)/(6*Vol);
+N{2} = (a2 + b2*x + c2*y + d2*z)/(6*Vol);
+N{3} = (a3 + b3*x + c3*y + d3*z)/(6*Vol);
+N{4} = (a4 + b4*x + c4*y + d4*z)/(6*Vol);
 
 %% Se arma la funcion de desplazamiento
-uu = N1*u1 + N2*u2 + N3*u3 + N4*u4;
+uu = N{1}*u1 + N{2}*u2 + N{3}*u3 + N{4}*u4;
 
 disp('El 0 en el residuo significa que ambas formulaciones coinciden');
-disp(simple(u-uu));
+disp(simplify(u-uu));
 
 %% Evaluacion de las funciones de forma en los vertices
 xnod = [ ...
@@ -122,18 +124,15 @@ i = 6; x4 = xnod(i,1); y4 = xnod(i,2); z4 = xnod(i,3);
 %     1     5     7     6
 
 %% Se calcula el volumen del tetrahedro
-VV = inline(char(V),'x1','y1','z1','x2','y2','z2','x3','y3','z3','x4','y4','z4');
 fprintf('Vol = %d\n\n',VV(x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4));
 
 %% Se evaluan todas las funciones de forma en cada uno de sus vertices
-
-for N = [N1 N2 N3 N4]
-   N = subs(N,Vol,V);
-   NN = inline(char(N),'x','y','z','x1','y1','z1','x2','y2','z2','x3','y3','z3','x4','y4','z4');     
-   
-   [ ...
-   NN(x1,y1,z1, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
-   NN(x2,y2,z2, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
-   NN(x3,y3,z3, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
-   NN(x4,y4,z4, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4) ]
-end;
+for i = 1:4
+   N{i} = subs(N{i},Vol,V);
+   NN = matlabFunction(N{i}, 'Vars', {'x','y','z', 'x1','y1','z1', 'x2','y2','z2', 'x3','y3','z3', 'x4','y4','z4'});
+    
+   [ NN(x1,y1,z1, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
+     NN(x2,y2,z2, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
+     NN(x3,y3,z3, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
+     NN(x4,y4,z4, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4) ]
+end
