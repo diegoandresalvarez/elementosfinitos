@@ -1,32 +1,38 @@
 clear, clc
 
-%% Coordenadas de los nodos:
-% Numeracion local del EF serendipito hexaedrico de 20 nodos:
+%% Numeracion local del EF serendipito hexaedrico de 20 nodos:
 %
-%                           ^ zeta
-%                           |
-%                           |            
-%                     13---14----15   zeta = +1
-%                    /|    /     /|
-%                   20----+----16 | 
-%                  /  |  /     /  | 
-%                 19---18----17   |      
-%                 |   |       |   |
-%                 |   09----+-|--10   zeta =  0
-%                 |  /|    /  |  /|
-%                 | +-----+---|-+ | 
-%                 |/  |  /    |/  |
-%                 12----+----11   |      
-%                 |   |       |   | 
-%                 |   01---02-|--03   zeta = -1
-%                 |  /     /  |  /
-%                 | 08----+---|04-------> xi
-%                 |/     /    |/
-%                 07---06----05         
-%                      /
-%                     /
-%                    / eta
+%      ^ eta        para zeta = +1
+%      |
+%      |
+% 19--18--17                                             ^ zeta
+%  |   |   |                                             |
+% 20---+--16----> xi                                     |            
+%  |   |   |                                       13---14----15   zeta = +1
+% 13--14--15                                      /|    /     /|
+%                                                20----+----16 | 
+%                                               /  |  /     /  | 
+%      ^ eta        para zeta = 0              19---18----17   |      
+%      |                                       |   |       |   |
+%      |                                       |   09----+-|--10   zeta =  0
+% 12---+--11                                   |  /|    /  |  /|
+%  |   |   |                                   | +-----+---|-+ | 
+%  +---+---+----> xi                           |/  |  /    |/  |
+%  |   |   |                                   12----+----11   |      
+%  9---+--10                                   |   |       |   | 
+%                                              |   01---02-|--03   zeta = -1
+%                                              |  /     /  |  /
+% Numeracion local:                            | 08----+---|04-------> xi
+%      ^ eta        para zeta = -1             |/     /    |/
+%      |                                       07---06----05         
+%      |                                            /
+%  7---6---5                                       /
+%  |   |   |                                      / eta
+%  8---+---4----> xi
+%  |   |   |
+%  1---2---3
 
+%% Coordenadas de los nodos:
 nod = [ ...
 %  xi   eta  zeta   nodo
    -1   -1   -1   %  1
@@ -55,18 +61,20 @@ nod = [ ...
 x_gl = sym(x_gl);
 n_gl = length(w_gl);
 
+%% Se crea la matriz A1
 xi   = x_gl(:,1); 
 eta  = x_gl(:,2);
 zeta = x_gl(:,3);
 A1 = [ ones( 8,1) xi eta zeta xi.*eta xi.*zeta eta.*zeta xi.*eta.*zeta ];
 
+%% Se crea la matriz A2
 xi   = nod(:,1);
 eta  = nod(:,2);
 zeta = nod(:,3);
 A2 = [ ones(20,1) xi eta zeta xi.*eta xi.*zeta eta.*zeta xi.*eta.*zeta ];
 
-%% Se reporta la matriz
-fprintf('La matriz de interpolación del EF H20 es:\n')
+%% Se reporta la matriz de extrapolacion
+fprintf('La matriz de extrapolacion del EF H20 es:\n')
 A = simplify(A2/A1); %= A2*inv(A1)
 disp(A) 
 disp('o en forma numerica:')

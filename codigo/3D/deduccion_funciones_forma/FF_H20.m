@@ -2,38 +2,39 @@ clear, clc, close all
 
 %% Funciones de forma del elemento hexahedrico serendipito de 20 nodos
 
-% Coordenadas de los nodos y numeracion local
+%% Numeracion local del EF serendipito hexaedrico de 20 nodos:
 %
-% Numeracion local:
-%      ^ eta             para zeta = -1
+%      ^ eta        para zeta = +1
 %      |
 %      |
-%  7---6---5
-%  |   |   |
+% 19--18--17                                             ^ zeta
+%  |   |   |                                             |
+% 20---+--16----> xi                                     |            
+%  |   |   |                                       13---14----15   zeta = +1
+% 13--14--15                                      /|    /     /|
+%                                                20----+----16 | 
+%                                               /  |  /     /  | 
+%      ^ eta        para zeta = 0              19---18----17   |      
+%      |                                       |   |       |   |
+%      |                                       |   09----+-|--10   zeta =  0
+% 12---+--11                                   |  /|    /  |  /|
+%  |   |   |                                   | +-----+---|-+ | 
+%  +---+---+----> xi                           |/  |  /    |/  |
+%  |   |   |                                   12----+----11   |      
+%  9---+--10                                   |   |       |   | 
+%                                              |   01---02-|--03   zeta = -1
+%                                              |  /     /  |  /
+% Numeracion local:                            | 08----+---|04-------> xi
+%      ^ eta        para zeta = -1             |/     /    |/
+%      |                                       07---06----05         
+%      |                                            /
+%  7---6---5                                       /
+%  |   |   |                                      / eta
 %  8---+---4----> xi
 %  |   |   |
 %  1---2---3
-%
-% Numeracion local:
-%      ^ eta             para zeta = 0
-%      |
-%      |
-% 12---+--11
-%  |   |   |
-%  +---+---+----> xi
-%  |   |   |
-%  9---+--10
-%
-% Numeracion local:
-%      ^ eta             para zeta = +1
-%      |
-%      |
-% 19--18--17
-%  |   |   |
-% 20---+--16----> xi
-%  |   |   |
-% 13--14--15
 
+%% Coordenadas de los nodos:
 nod = [ ...
 %  xi   eta  zeta   nodo
    -1   -1   -1   %  1
