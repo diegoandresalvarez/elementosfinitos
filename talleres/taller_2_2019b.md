@@ -1,11 +1,11 @@
 # Taller 2: elementos finitos bidimensionales
 
-* Fecha y hora de entrega: domingo noviembre 24, 2019 a las 23:59.
+* Fecha y hora de entrega: domingo diciembre 1, 2019 a las 23:59.
 * Presentación individual.
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
 **Notas:** 
-* Por cada día de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final.
+* Por cada día de retraso en la entrega del trabajo se les descontará 0.5 unidades de la nota final.
 * El trabajo es sustentable. Si no se aprueba la sustentación se obtendrá un cero en la nota de dicho trabajo.
 
 ## Criterios de calificación
