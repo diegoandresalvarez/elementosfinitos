@@ -3,9 +3,6 @@ clear, clc, close all
 %% -------------------------------------------------------------------------
 %% Funciones de forma del elemento hexahedrico lagrangiano de 8 nodos
 
-% Calculo las funciones de forma unidimensionales
-syms xi eta zeta 
-
 % Coordenadas de los nodos
 %
 % Numeracion local:
@@ -98,6 +95,14 @@ for i = 1:8
    fprintf('\ndN%d_dzeta = %s',i, simplify(diff(N{i},zeta)));
 end
 
+%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+suma = 0;
+for i = 1:8
+   suma = suma + N{i};
+end
+fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+disp(simplify(suma));
+
 %% Grafico las funciones de forma
 XXI   = -1:0.1:1;
 EETA  = -1:0.1:1;
@@ -113,15 +118,13 @@ zsp = 0.025*zsp;
 for i = 1:8
    figure                 % Creo un lienzo
    grid on                % creo la rejilla
-   hold on;               % Para que no se sobreescriban los graficos
-   
-   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
-   
+   hold on;               % Para que no se sobreescriban los graficos 
    xlabel('\xi',  'FontSize',20); % titulo eje X
    ylabel('\eta', 'FontSize',20); % titulo eje Y
    zlabel('\zeta','FontSize',20); % titulo eje Z
    title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',20); % titulo general
-   
+
+   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});   
    xslice = [-1 0 1]; yslice = [-1 0 1]; zslice = [-1 0 1];
    slice(XI,ETA,ZETA, NN(XI,ETA,ZETA), xslice,yslice,zslice);
 
@@ -130,7 +133,7 @@ for i = 1:8
    
    % se grafican las esferitas cada una centrada en (xi_j,eta_j,zeta_j)
    for j=1:8
-      surf(xsp+nod(j,1), ysp+nod(j,2), zsp+nod(j,3));
+      surf(xsp+nod(j,1), ysp+nod(j,2), zsp+nod(j,3), 'facecolor', 'k')
       h = text(nod(j,1), nod(j,2), nod(j,3), num2str(j));
       set(h,'Color', [1 0 0], 'FontSize',16);
    end 

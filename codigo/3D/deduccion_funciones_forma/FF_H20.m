@@ -1,12 +1,8 @@
 clear, clc, close all
 
-%% ------------------------------------------------------------------------
 %% Funciones de forma del elemento hexahedrico serendipito de 20 nodos
 
-% Calculo las funciones de forma unidimensionales
-syms xi eta zeta 
-
-% Coordenadas de los nodos
+% Coordenadas de los nodos y numeracion local
 %
 % Numeracion local:
 %      ^ eta             para zeta = -1
@@ -62,7 +58,6 @@ nod = [ ...
    -1    0    1 ];% 20
 
 % Se calculan las funciones de forma bidimensionales
-N = cell(20, 1);
 xxi   = nod(:,1);
 eeta  = nod(:,2);
 zzeta = nod(:,3);
@@ -71,6 +66,9 @@ A = [ ones(20,1) ...
       xxi.^2 xxi.*eeta eeta.^2 eeta.*zzeta zzeta.^2 xxi.*zzeta ...
       xxi.^2.*eeta xxi.*eeta.^2  eeta.^2.*zzeta eeta.*zzeta.^2  xxi.*zzeta.^2 xxi.^2.*zzeta xxi.*eeta.*zzeta ...
       xxi.^2.*eeta.*zzeta xxi.*eeta.^2.*zzeta xxi.*eeta.*zzeta.^2 ];
+
+N = cell(20, 1);
+syms xi eta zeta       
 for i = 1:20 % se arma el sistema de ecuaciones  
    b = zeros(20, 1); b(i) = 1;
    coef_alpha = A\b;
@@ -116,6 +114,14 @@ for i = 1:20
 end
 fprintf('\n');
 
+%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+suma = 0;
+for i = 1:20
+   suma = suma + N{i};
+end
+fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+disp(simplify(suma));
+
 %% Grafico las funciones de forma
 XXI   = -1:0.05:1;
 EETA  = -1:0.05:1;
@@ -127,19 +133,18 @@ ZZETA = -1:0.05:1;
 xsp = 0.025*xsp;
 ysp = 0.025*ysp;
 zsp = 0.025*zsp;
-
+ 
 for i = 1:20
    figure                 % Creo un lienzo
    grid on                % creo la rejilla
    hold on;               % Para que no se sobreescriban los graficos
    
-   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
-   % se recomienda aqui mirar la ayuda de la funcion inline y vectorize
-   
    xlabel('\xi',  'FontSize',20); % titulo eje X
    ylabel('\eta', 'FontSize',20); % titulo eje Y
    zlabel('\zeta','FontSize',20); % titulo eje Z
    title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',20); % titulo general
+
+   NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
    
    xslice = [-1 0 1]; yslice = [-1 0 1]; zslice = [-1 0 1];
    slice(XI,ETA,ZETA,NN(XI,ETA,ZETA),xslice,yslice,zslice)
@@ -153,13 +158,13 @@ for i = 1:20
    
    % se grafican las esferitas cada una centrada en (xi_j,eta_j,zeta_j)
    for j=1:20
-      surf(xsp+nod(j,1), ysp+nod(j,2), zsp+nod(j,3));
+      surf(xsp+nod(j,1), ysp+nod(j,2), zsp+nod(j,3), 'facecolor', 'k');
       h = text(nod(j,1), nod(j,2), nod(j,3), num2str(j));
       set(h,'Color', [1 0 0], 'FontSize',16);
    end 
    
    axis tight             % ejes apretados
-   daspect([1 1 1]);      % similar a axis equal pero en 3D
+   daspect([1 1 1])       % similar a axis equal pero en 3D
    view(3);               % vista tridimensional
    colorbar
 end

@@ -80,3 +80,11 @@ for i = 1:10
    fprintf('%d = \n', i)
    disp(ev)
 end
+
+%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+suma = 0;
+for i = 1:10
+   suma = suma + subs(N{i}, L1, 1 - L2 - L3 - L4);
+end
+fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+disp(simplify(suma));

@@ -127,8 +127,13 @@ i = 6; x4 = xnod(i,1); y4 = xnod(i,2); z4 = xnod(i,3);
 fprintf('Vol = %d\n\n',VV(x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4));
 
 %% Se evaluan todas las funciones de forma en cada uno de sus vertices
+N  = cell(4,1);
+N{1} = (a1 + b1*x + c1*y + d1*z)/(6*V);
+N{2} = (a2 + b2*x + c2*y + d2*z)/(6*V);
+N{3} = (a3 + b3*x + c3*y + d3*z)/(6*V);
+N{4} = (a4 + b4*x + c4*y + d4*z)/(6*V);
+
 for i = 1:4
-   N{i} = subs(N{i},Vol,V);
    NN = matlabFunction(N{i}, 'Vars', {'x','y','z', 'x1','y1','z1', 'x2','y2','z2', 'x3','y3','z3', 'x4','y4','z4'});
     
    [ NN(x1,y1,z1, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
@@ -136,3 +141,11 @@ for i = 1:4
      NN(x3,y3,z3, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
      NN(x4,y4,z4, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4) ]
 end
+
+%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+suma = 0;
+for i = 1:4
+   suma = suma + N{i};
+end
+fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+disp(simplify(suma));
