@@ -17,7 +17,7 @@ be   = [0; -rhoe*g; 0];  % vector de fuerzas masicas del elemento (el eje Y es e
 %% cargar
 % xnod - posicion de los nodos
 % LaG  - definicion de elementos finitos con respecto a nodos
-[xnod, LaG] = import_from_GiD('malla_H20');
+[xnod, LaG] = import_from_GiD('mallas/malla_H20');
 
 nno  = size(xnod,1);     % numero de nodos (numero de filas de xnod)
 nef  = size(LaG,1);      % numero de EFs (numero de filas de LaG)
@@ -345,10 +345,10 @@ disp('Nodo,s1(Pa),s2(Pa), s3(Pa), tmax(Pa), Esfuerzos de von Mises (Pa) = ');
 disp([(1:nno)'  s1  s2  s3 tmax sv])
 
 % Pasando los esfuerzos ya promediados:
-export_to_GiD('c7_ejemplo_H20_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
+export_to_GiD('resultados/c7_ejemplo_H20_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
 
 %% Pasando los puntos de Gauss [RECOMENDADO] !!!
-export_to_GiD('c7_ejemplo_H20_b',xnod,LaG,a,q,esf);
+export_to_GiD('resultados/c7_ejemplo_H20_b',xnod,LaG,a,q,esf);
 
 %%
 return; % bye, bye!
