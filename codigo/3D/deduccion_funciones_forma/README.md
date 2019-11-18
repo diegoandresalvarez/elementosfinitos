@@ -110,8 +110,6 @@ dN{10}/dL4 = 4*L4 - 1
 
 # Funciones de forma del EF hexaédrico lagrangiano de 8 nodos
 
-![H8](https://dianafea.com/manuals/d100/Theory/img594.png)
-
 Con la ayuda de:
 
 * MATLAB: [FF_H8.m](FF_H8.m)
@@ -200,10 +198,6 @@ El gráfico de la función de forma N8 es:
 
 
 # Funciones de forma del EF hexaédrico serendípito de 20 nodos
-
-![H20](https://dianafea.com/manuals/d100/Theory/img635.png)
-
-<img src="https://dianafea.com/manuals/d100/Theory/img635.png" width="600"/>
 
 Con la ayuda de:
 
