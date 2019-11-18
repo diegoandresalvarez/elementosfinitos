@@ -109,9 +109,12 @@ dN{10}/dL4 = 4*L4 - 1
 
 
 # Funciones de forma del EF hexaédrico lagrangiano de 8 nodos
+
+![H8](https://dianafea.com/manuals/d100/Theory/img594.png)
+
 Con la ayuda de:
 
-* MATLAB: [FF_lagrangianos_Q16.m](FF_lagrangianos_Q16.m)
+* MATLAB: [FF_H8.m](FF_H8.m)
 
 se encuentran las funciones de forma del EF hexaédrico lagrangiano de 8 nodos:
 ```
@@ -125,6 +128,7 @@ N{7} =  (eta/2 + 1/2)*(xi/2 + 1/2)*(zeta/2 + 1/2)
 N{8} = -(eta/2 + 1/2)*(xi/2 - 1/2)*(zeta/2 + 1/2)
 ```
 
+sus derivadas con respecto a `xi`:
 ```
 dN1_dxi = -((eta/2 - 1/2)*(zeta/2 - 1/2))/2
 dN2_dxi =  ((eta/2 - 1/2)*(zeta/2 - 1/2))/2
@@ -190,8 +194,115 @@ M = rho*V/27*
 ```
 siendo `V` el volumen del hexaedro.
 
-
 El gráfico de la función de forma N8 es:
 
-![figs/H8_N8.png](figs/FF_H8_N8.png)
+![figs/H8_N8.png](figs/H8_N8.png)
 
+
+# Funciones de forma del EF hexaédrico serendípito de 20 nodos
+
+![H20](https://dianafea.com/manuals/d100/Theory/img635.png)
+
+Con la ayuda de:
+
+* MATLAB: [FF_H20.m](FF_H20.m)
+
+se encuentran las funciones de forma del EF hexaédrico lagrangiano de 8 nodos:
+```
+N1  =  ((eta - 1)*(xi - 1)*(zeta - 1)*(eta + xi + zeta + 2))/8
+N2  = -((xi^2 - 1)*(eta - 1)*(zeta - 1))/4
+N3  = -((eta - 1)*(xi + 1)*(zeta - 1)*(eta - xi + zeta + 2))/8
+N4  =  ((eta^2 - 1)*(xi + 1)*(zeta - 1))/4
+N5  = -((eta + 1)*(xi + 1)*(zeta - 1)*(eta + xi - zeta - 2))/8
+N6  =  ((xi^2 - 1)*(eta + 1)*(zeta - 1))/4
+N7  = -((eta + 1)*(xi - 1)*(zeta - 1)*(xi - eta + zeta + 2))/8
+N8  = -((eta^2 - 1)*(xi - 1)*(zeta - 1))/4
+N9  = -((zeta^2 - 1)*(eta - 1)*(xi - 1))/4
+N10 =  ((zeta^2 - 1)*(eta - 1)*(xi + 1))/4
+N11 = -((zeta^2 - 1)*(eta + 1)*(xi + 1))/4
+N12 =  ((zeta^2 - 1)*(eta + 1)*(xi - 1))/4
+N13 = -((eta - 1)*(xi - 1)*(zeta + 1)*(eta + xi - zeta + 2))/8
+N14 =  ((xi^2 - 1)*(eta - 1)*(zeta + 1))/4
+N15 =  ((eta - 1)*(xi + 1)*(zeta + 1)*(eta - xi - zeta + 2))/8
+N16 = -((eta^2 - 1)*(xi + 1)*(zeta + 1))/4
+N17 =  ((eta + 1)*(xi + 1)*(zeta + 1)*(eta + xi + zeta - 2))/8
+N18 = -((xi^2 - 1)*(eta + 1)*(zeta + 1))/4
+N19 = -((eta + 1)*(xi - 1)*(zeta + 1)*(eta - xi + zeta - 2))/8
+N20 =  ((eta^2 - 1)*(xi - 1)*(zeta + 1))/4
+```
+
+sus derivadas con respecto a `xi`:
+```
+dN1_dxi  =  ((eta - 1)*(zeta - 1)*(eta + 2*xi + zeta + 1))/8
+dN2_dxi  = -(xi*(eta - 1)*(zeta - 1))/2
+dN3_dxi  = -((eta - 1)*(zeta - 1)*(eta - 2*xi + zeta + 1))/8
+dN4_dxi  =  ((eta^2 - 1)*(zeta - 1))/4
+dN5_dxi  = -((eta + 1)*(zeta - 1)*(eta + 2*xi - zeta - 1))/8
+dN6_dxi  =  (xi*(eta + 1)*(zeta - 1))/2
+dN7_dxi  = -((eta + 1)*(zeta - 1)*(2*xi - eta + zeta + 1))/8
+dN8_dxi  = -((eta^2 - 1)*(zeta - 1))/4
+dN9_dxi  = -((zeta^2 - 1)*(eta - 1))/4
+dN10_dxi =  ((zeta^2 - 1)*(eta - 1))/4
+dN11_dxi = -((zeta^2 - 1)*(eta + 1))/4
+dN12_dxi =  ((zeta^2 - 1)*(eta + 1))/4
+dN13_dxi = -((eta - 1)*(zeta + 1)*(eta + 2*xi - zeta + 1))/8
+dN14_dxi =  (xi*(eta - 1)*(zeta + 1))/2
+dN15_dxi =  ((eta - 1)*(zeta + 1)*(eta - 2*xi - zeta + 1))/8
+dN16_dxi = -((eta^2 - 1)*(zeta + 1))/4
+dN17_dxi =  ((eta + 1)*(zeta + 1)*(eta + 2*xi + zeta - 1))/8
+dN18_dxi = -(xi*(eta + 1)*(zeta + 1))/2
+dN19_dxi = -((eta + 1)*(zeta + 1)*(eta - 2*xi + zeta - 1))/8
+dN20_dxi =  ((eta^2 - 1)*(zeta + 1))/4
+```
+
+sus derivadas con respecto a `eta`:
+```
+dN1_deta  =  ((xi - 1)*(zeta - 1)*(2*eta + xi + zeta + 1))/8
+dN2_deta  = -((xi^2 - 1)*(zeta - 1))/4
+dN3_deta  = -((xi + 1)*(zeta - 1)*(2*eta - xi + zeta + 1))/8
+dN4_deta  =  (eta*(xi + 1)*(zeta - 1))/2
+dN5_deta  = -((xi + 1)*(zeta - 1)*(2*eta + xi - zeta - 1))/8
+dN6_deta  =  ((xi^2 - 1)*(zeta - 1))/4
+dN7_deta  = -((xi - 1)*(zeta - 1)*(xi - 2*eta + zeta + 1))/8
+dN8_deta  = -(eta*(xi - 1)*(zeta - 1))/2
+dN9_deta  = -((zeta^2 - 1)*(xi - 1))/4
+dN10_deta =  ((zeta^2 - 1)*(xi + 1))/4
+dN11_deta = -((zeta^2 - 1)*(xi + 1))/4
+dN12_deta =  ((zeta^2 - 1)*(xi - 1))/4
+dN13_deta = -((xi - 1)*(zeta + 1)*(2*eta + xi - zeta + 1))/8
+dN14_deta =  ((xi^2 - 1)*(zeta + 1))/4
+dN15_deta =  ((xi + 1)*(zeta + 1)*(2*eta - xi - zeta + 1))/8
+dN16_deta = -(eta*(xi + 1)*(zeta + 1))/2
+dN17_deta =  ((xi + 1)*(zeta + 1)*(2*eta + xi + zeta - 1))/8
+dN18_deta = -((xi^2 - 1)*(zeta + 1))/4
+dN19_deta = -((xi - 1)*(zeta + 1)*(2*eta - xi + zeta - 1))/8
+dN20_deta =  (eta*(xi - 1)*(zeta + 1))/2
+```
+
+y sus derivadas con respecto a `zeta`:
+```
+dN1_dzeta  =  ((eta - 1)*(xi - 1)*(eta + xi + 2*zeta + 1))/8
+dN2_dzeta  = -((xi^2 - 1)*(eta - 1))/4
+dN3_dzeta  = -((eta - 1)*(xi + 1)*(eta - xi + 2*zeta + 1))/8
+dN4_dzeta  =  ((eta^2 - 1)*(xi + 1))/4
+dN5_dzeta  = -((eta + 1)*(xi + 1)*(eta + xi - 2*zeta - 1))/8
+dN6_dzeta  =  ((xi^2 - 1)*(eta + 1))/4
+dN7_dzeta  = -((eta + 1)*(xi - 1)*(xi - eta + 2*zeta + 1))/8
+dN8_dzeta  = -((eta^2 - 1)*(xi - 1))/4
+dN9_dzeta  = -(zeta*(eta - 1)*(xi - 1))/2
+dN10_dzeta =  (zeta*(eta - 1)*(xi + 1))/2
+dN11_dzeta = -(zeta*(eta + 1)*(xi + 1))/2
+dN12_dzeta =  (zeta*(eta + 1)*(xi - 1))/2
+dN13_dzeta = -((eta - 1)*(xi - 1)*(eta + xi - 2*zeta + 1))/8
+dN14_dzeta =  ((xi^2 - 1)*(eta - 1))/4
+dN15_dzeta =  ((eta - 1)*(xi + 1)*(eta - xi - 2*zeta + 1))/8
+dN16_dzeta = -((eta^2 - 1)*(xi + 1))/4
+dN17_dzeta =  ((eta + 1)*(xi + 1)*(eta + xi + 2*zeta - 1))/8
+dN18_dzeta = -((xi^2 - 1)*(eta + 1))/4
+dN19_dzeta = -((eta + 1)*(xi - 1)*(eta - xi + 2*zeta - 1))/8
+dN20_dzeta =  ((eta^2 - 1)*(xi - 1))/4
+```
+
+El gráfico de la función de forma N10 es:
+
+![figs/H20_N10.png](figs/H20_N10.png)
