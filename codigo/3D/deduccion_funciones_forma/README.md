@@ -203,6 +203,8 @@ El gráfico de la función de forma N8 es:
 
 ![H20](https://dianafea.com/manuals/d100/Theory/img635.png)
 
+<img src="https://dianafea.com/manuals/d100/Theory/img635.png" width="600"/>
+
 Con la ayuda de:
 
 * MATLAB: [FF_H20.m](FF_H20.m)
