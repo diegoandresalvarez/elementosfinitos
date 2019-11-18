@@ -14,7 +14,7 @@ N{4} = (a4 + b4*x + c4*y + d4*z)/(6*V);
 ```
 
 donde:
-V representa el volumen del tetraédro:
+`V` representa el volumen del tetraédro:
 ```matlab
 V = det([ 1 x1 y1 z1          % Volumen del tetraedro con vértices
           1 x2 y2 z2          % (x1,y1,z1), ..., (x4,y4,z4) 
