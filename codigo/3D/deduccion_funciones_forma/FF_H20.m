@@ -88,6 +88,7 @@ for i = 1:20
       ev(i,j) = NN(nod(j,1), nod(j,2), nod(j,3));
    end
 end
+fprintf('Comprobación de las funciones de forma:\n')
 disp(ev)
 
 %% Imprimo las funciones de forma

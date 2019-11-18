@@ -71,15 +71,16 @@ fprintf('\n');
 
 %%
 nod = IJKL/2;
-ev = zeros(10,1);
+ev = zeros(10,10);
 for i = 1:10
    NN = matlabFunction(N{i}, 'Vars', {'L1','L2','L3','L4'});
    for j = 1:10
-      ev(j) = NN(nod(j,1), nod(j,2), nod(j,3), nod(j,4));
+      ev(i,j) = NN(nod(j,1), nod(j,2), nod(j,3), nod(j,4));
    end
-   fprintf('%d = \n', i)
-   disp(ev)
 end
+
+fprintf('\n\nComprobación de las funciones de forma:\n')
+disp(ev)
 
 %% Se verifica la condición de cuerpo rígido: sum(N) == 1
 suma = 0;

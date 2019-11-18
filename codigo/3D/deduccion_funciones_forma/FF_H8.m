@@ -62,15 +62,15 @@ for i = 1:8
    N{i} = simplify(L2_xi{pos(i,1)} * L2_eta{pos(i,2)} * L2_zeta{pos(i,3)});
 end
 
-ev = zeros(8,1);
+ev = zeros(8,8);
 for i = 1:8
    NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
    for j = 1:8
-      ev(j) = NN(nod(j,1), nod(j,2), nod(j,3));
+      ev(i,j) = NN(nod(j,1), nod(j,2), nod(j,3));
    end
-   fprintf('%d = \n', i)
-   disp(ev)
 end
+fprintf('Comprobación de las funciones de forma:\n')
+disp(ev)
 
 %% Imprimo las funciones de forma
 fprintf('\n\nFunciones de forma lagrangianas del elemento hexahedrico de 8 nodos:\n')
