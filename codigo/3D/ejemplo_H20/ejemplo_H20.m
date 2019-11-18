@@ -5,7 +5,7 @@ clear, clc, close all   % borro la memoria, la pantalla y las figuras
 %% ---------------------------------------------------------------------------------
 
 %% defino las variables/constantes
-X    = 1;                % un par de constantes que ayudaran en la lectura del codigo
+X    = 1;                % constantes que ayudaran en la lectura del codigo
 Y    = 2;
 Z    = 3;
 Ee   = 200e9;            % modulo de elasticidad del solido (Pa) = 200 GPa
@@ -21,9 +21,13 @@ be   = [0; -rhoe*g; 0];  % vector de fuerzas masicas del elemento (el eje Y es e
 
 nno  = size(xnod,1);     % numero de nodos (numero de filas de xnod)
 nef  = size(LaG,1);      % numero de EFs (numero de filas de LaG)
-nnpe = size(LaG,2);      % numero de nodos por elemento finito
+nnpe = size(LaG,2);      % numero de nodos por elemento finito (= 20)
 ngdl = 3*nno;            % numero de grados de libertad (tres por nodo)
 gdl  = [(1:3:ngdl)' (2:3:ngdl)' (3:3:ngdl)']; % nodos vs grados de libertad
+
+if nnpe ~= 20
+   error('Este codigo SOLO es sirve para elementos hexahedricos de 20 nodos (H20)')
+end
 
 %% Relacion de cargas puntuales
 f = zeros(ngdl,1);     % vector de fuerzas nodales equivalentes global
@@ -37,9 +41,7 @@ figure;
 hold on;
 for e = 1:nef
    % Se está graficando del mismo modo que GiD lo hace Y es el vertical
-   line([xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Z); NaN; xnod(LaG(e,[3 10 15]),Z); NaN; xnod(LaG(e,[5 11 17]),Z); NaN; xnod(LaG(e,[7 12 19]),Z)], ...
-        [xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),X); NaN; xnod(LaG(e,[3 10 15]),X); NaN; xnod(LaG(e,[5 11 17]),X); NaN; xnod(LaG(e,[7 12 19]),X)], ...
-        [xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Y); NaN; xnod(LaG(e,[3 10 15]),Y); NaN; xnod(LaG(e,[5 11 17]),Y); NaN; xnod(LaG(e,[7 12 19]),Y)]);
+   plot_EF_H20(e, xnod, LaG);
 end
 daspect([1 1 1]);
 view(3)
@@ -56,7 +58,7 @@ dN_dxi   = @dN_dxi_H20;
 dN_deta  = @dN_deta_H20;
 dN_dzeta = @dN_dzeta_H20;
 
-%% Parametros de la cuadratura de Gauss-Legendre para tetraedros
+%% Parametros de la cuadratura de Gauss-Legendre para hexaedros
 [x_gl, w_gl] = gausslegendre_quad_hexa(2); % 2 puntos de integracion por eje
 n_gl = length(w_gl);
 
@@ -78,10 +80,6 @@ De = Ee/(1+nue)*[ ...
    0  0  0  0   0   1/2 ];
 
 for e = 1:nef          % ciclo sobre todos los elementos finitos
-   if mod(e,10) == 0
-      fprintf('Ensamblando K, elemento %d de %d\n', e, nef);
-   end
-   
    % Calculo la matriz de rigidez y el vector de fuerzas nodales
    % equivalentes del elemento
    Ke = zeros(3*nnpe);
@@ -136,20 +134,20 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
             dNi_dy dNi_dx 0
             dNi_dz 0      dNi_dx
             0      dNi_dz dNi_dy ];
-      end;
+      end
       
       % se arma la matriz de rigidez del elemento e
       Ke = Ke + B{e,p}'*De*B{e,p}*det_Je(p)*w_gl(p);
       
       % vector de fuerzas nodales equivalentes
       fe = fe + N{e,p}'*be*det_Je(p)*w_gl(p);
-   end;
+   end
    
    if any(any(det_Je <= 0))
       error('Existen elementos con det_Je negativo en el elemento %d.\n', e);
-   end;
+   end
    
-   % Se sacan los grados de libertad del tetrahedro
+   % Se sacan los grados de libertad del hexaedro
    idx = zeros(1,3*nnpe);
    for i = 1:nnpe
       idx(3*i-[2 1 0]) = gdl(LaG(e,i),:);
@@ -158,8 +156,8 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
    K(idx,idx) = K(idx,idx) + Ke;
    f(idx,:)   = f(idx,:)   + fe;
    % NOTA: para quitar el Warning de MATLAB que el indexing is slow mire:
-   % http://blogs.mathworks.com/loren/2007/03/01/creating-sparse-finite-element-matrices-in-matlab/
-end;
+   % https://blogs.mathworks.com/loren/2007/03/01/creating-sparse-finite-element-matrices-in-matlab/
+end
 
 %% Muestro la configuracion de la matriz K (K es rala)
 figure;
@@ -198,10 +196,10 @@ a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos
 q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
 %% imprimo los resultados
-format short g
-disp('Nodo   Despl_x (m)   Despl_y (m)   Despl_z (m)= ');  [1:nno; reshape(a,3,nno)]'
-disp('Nodo Fuerzas nodales equiv. X, Y, Z (N) = ');        [1:nno; reshape(f,3,nno)]'
-disp('Nodo Fuerzas nodales equil. X, Y, Z (N) = ');        [1:nno; reshape(q,3,nno)]'
+%format short g
+%disp('Nodo   Despl_x (m)   Despl_y (m)   Despl_z (m)= ');  [1:nno; reshape(a,3,nno)]'
+%disp('Nodo Fuerzas nodales equiv. X, Y, Z (N) = ');        [1:nno; reshape(f,3,nno)]'
+%disp('Nodo Fuerzas nodales equil. X, Y, Z (N) = ');        [1:nno; reshape(q,3,nno)]'
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 delta = reshape(a,3,nno)';
@@ -213,15 +211,11 @@ for e = 1:nef
    % Se está graficando del mismo modo que GiD lo hace Y es el vertical
    
    % original
-   h1 = line([xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Z); NaN; xnod(LaG(e,[3 10 15]),Z); NaN; xnod(LaG(e,[5 11 17]),Z); NaN; xnod(LaG(e,[7 12 19]),Z)], ...
-             [xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),X); NaN; xnod(LaG(e,[3 10 15]),X); NaN; xnod(LaG(e,[5 11 17]),X); NaN; xnod(LaG(e,[7 12 19]),X)], ...
-             [xnod(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Y); NaN; xnod(LaG(e,[3 10 15]),Y); NaN; xnod(LaG(e,[5 11 17]),Y); NaN; xnod(LaG(e,[7 12 19]),Y)]);
+   h1 = plot_EF_H20(e, xnod, LaG);
    set(h1, 'Color', [0 0 1]); % color expresado en notacion RBG entre 0 y 1
    
    % deformada
-   h2 = line([xdef(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Z); NaN; xdef(LaG(e,[3 10 15]),Z); NaN; xdef(LaG(e,[5 11 17]),Z); NaN; xdef(LaG(e,[7 12 19]),Z)], ...
-             [xdef(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),X); NaN; xdef(LaG(e,[3 10 15]),X); NaN; xdef(LaG(e,[5 11 17]),X); NaN; xdef(LaG(e,[7 12 19]),X)], ...
-             [xdef(LaG(e,[1 2 3 4 5 6 7 8 1 9 13 14 15 16 17 18 19 20 13]),Y); NaN; xdef(LaG(e,[3 10 15]),Y); NaN; xdef(LaG(e,[5 11 17]),Y); NaN; xdef(LaG(e,[7 12 19]),Y)]);
+   h2 = plot_EF_H20(e, xdef, LaG);
    set(h2, 'Color', [1 0 0]);
 end
 daspect([1 1 1]);
@@ -232,7 +226,7 @@ ylabel('Eje X');
 zlabel('Eje Y');
 grid on;
 box on;
-legend('Posicion original','Posicion deformada','Location', 'SouthOutside');
+legend('Posicion original','Posicion deformada','Location', 'SouthOutside')
 title(sprintf('Deformada escalada %d veces',escala), 'FontSize', 26);
 
 %% Se calcula para cada elemento las deformaciones y los esfuerzos
@@ -244,13 +238,13 @@ for e = 1:nef
       idx(3*i-[2 1 0]) = gdl(LaG(e,i),:);
    end
    
-   ae = a(idx);            % desplazamientos de los gdl del elemento e
+   ae = a(idx);                % desplazamientos de los gdl del elemento e
    
    for p = 1:n_gl
       def{e,p} = B{e,p}*ae;    % calculo las deformaciones
       esf{e,p} = De*def{e,p};  % calculo los esfuerzos
    end
-end;
+end
 
 %% Se extrapolan los esfuerzos y las deformaciones a los nodos
 num_elem_ady = zeros(nno,1);  % numero de elementos adyacentes
@@ -261,27 +255,7 @@ txy = zeros(nno,1);       gxy = zeros(nno,1);
 txz = zeros(nno,1);       gxz = zeros(nno,1);
 tyz = zeros(nno,1);       gyz = zeros(nno,1);
 
-A = [ ...
-(3*3^(1/2))/4 + 5/4,   - 3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4
-    3^(1/2)/4 + 1/2,                -1/4,                -1/4,     1/2 - 3^(1/2)/4,     3^(1/2)/4 + 1/2,                -1/4,                -1/4,     1/2 - 3^(1/2)/4
-  - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4, (3*3^(1/2))/4 + 5/4,   - 3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4
-               -1/4,     1/2 - 3^(1/2)/4,                -1/4,     1/2 - 3^(1/2)/4,     3^(1/2)/4 + 1/2,                -1/4,     3^(1/2)/4 + 1/2,                -1/4
-    3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4,   - 3^(1/2)/4 - 1/4
-               -1/4,     1/2 - 3^(1/2)/4,     3^(1/2)/4 + 1/2,                -1/4,                -1/4,     1/2 - 3^(1/2)/4,     3^(1/2)/4 + 1/2,                -1/4
-  - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4
-    3^(1/2)/4 + 1/2,                -1/4,     3^(1/2)/4 + 1/2,                -1/4,                -1/4,     1/2 - 3^(1/2)/4,                -1/4,     1/2 - 3^(1/2)/4
-    3^(1/2)/4 + 1/2,     3^(1/2)/4 + 1/2,                -1/4,                -1/4,                -1/4,                -1/4,     1/2 - 3^(1/2)/4,     1/2 - 3^(1/2)/4
-               -1/4,                -1/4,     1/2 - 3^(1/2)/4,     1/2 - 3^(1/2)/4,     3^(1/2)/4 + 1/2,     3^(1/2)/4 + 1/2,                -1/4,                -1/4
-    1/2 - 3^(1/2)/4,     1/2 - 3^(1/2)/4,                -1/4,                -1/4,                -1/4,                -1/4,     3^(1/2)/4 + 1/2,     3^(1/2)/4 + 1/2
-               -1/4,                -1/4,     3^(1/2)/4 + 1/2,     3^(1/2)/4 + 1/2,     1/2 - 3^(1/2)/4,     1/2 - 3^(1/2)/4,                -1/4,                -1/4
-  - 3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4,     3^(1/2)/4 - 1/4
-               -1/4,     3^(1/2)/4 + 1/2,     1/2 - 3^(1/2)/4,                -1/4,                -1/4,     3^(1/2)/4 + 1/2,     1/2 - 3^(1/2)/4,                -1/4
-    3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4, 5/4 - (3*3^(1/2))/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4
-    1/2 - 3^(1/2)/4,                -1/4,     1/2 - 3^(1/2)/4,                -1/4,                -1/4,     3^(1/2)/4 + 1/2,                -1/4,     3^(1/2)/4 + 1/2
-5/4 - (3*3^(1/2))/4,     3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4
-    1/2 - 3^(1/2)/4,                -1/4,                -1/4,     3^(1/2)/4 + 1/2,     1/2 - 3^(1/2)/4,                -1/4,                -1/4,     3^(1/2)/4 + 1/2
-    3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4, (3*3^(1/2))/4 + 5/4, 5/4 - (3*3^(1/2))/4,     3^(1/2)/4 - 1/4,     3^(1/2)/4 - 1/4,   - 3^(1/2)/4 - 1/4
-               -1/4,     3^(1/2)/4 + 1/2,                -1/4,     3^(1/2)/4 + 1/2,     1/2 - 3^(1/2)/4,                -1/4,     1/2 - 3^(1/2)/4,                -1/4 ];
+A = matriz_extrapolacion_esfuerzos_H20();
 
 v_esf = zeros(n_gl,1);
 v_def = zeros(n_gl,1);
@@ -312,12 +286,12 @@ txz = txz./num_elem_ady;        gxz = gxz./num_elem_ady;
 tyz = tyz./num_elem_ady;        gyz = gyz./num_elem_ady;
 
 %% Se imprimen las deformaciones en los nodos
-disp('Deformaciones: (Nodo,ex,ey,ez,gxy,gxz,gyz) = ');
-disp([(1:nno)'  ex  ey  ez  gxy  gxz  gyz])
+%disp('Deformaciones: (Nodo,ex,ey,ez,gxy,gxz,gyz) = ');
+%disp([(1:nno)'  ex  ey  ez  gxy  gxz  gyz])
 
 %% Se imprimen los esfuerzos en los nodos
-disp('Esfuerzos (Pa):  (Nodo,sx,sy,sz,txy,txz,tyz) = ');
-disp([(1:nno)'  sx  sy  sz  txy  txz  tyz])
+%disp('Esfuerzos (Pa):  (Nodo,sx,sy,sz,txy,txz,tyz) = ');
+%disp([(1:nno)'  sx  sy  sz  txy  txz  tyz])
 
 %% Se calculan para cada nodo los esfuerzos principales y sus direcciones
 s1 = zeros(nno,1);  dir_s1 = zeros(3,nno);
@@ -332,7 +306,7 @@ for i = 1:nno
    s1(i) = esfppales(1);   dir_s1(:,i) = dirppales(idx(1),:);
    s2(i) = esfppales(2);   dir_s2(:,i) = dirppales(idx(2),:);
    s3(i) = esfppales(3);   dir_s3(:,i) = dirppales(idx(3),:);
-end;
+end
 
 % Esfuerzo cortante maximo
 tmax = (s1-s3)/2;                               % esfuerzo cortante maximo
@@ -341,14 +315,15 @@ tmax = (s1-s3)/2;                               % esfuerzo cortante maximo
 sv = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2);
 
 %% imprimo los resultados
-disp('Nodo,s1(Pa),s2(Pa), s3(Pa), tmax(Pa), Esfuerzos de von Mises (Pa) = ');
-disp([(1:nno)'  s1  s2  s3 tmax sv])
+%disp('Nodo,s1(Pa),s2(Pa), s3(Pa), tmax(Pa), Esfuerzos de von Mises (Pa) = ');
+%disp([(1:nno)'  s1  s2  s3  tmax  sv])
 
 % Pasando los esfuerzos ya promediados:
-export_to_GiD('resultados/c7_ejemplo_H20_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
+export_to_GiD('resultados/ejemplo_H20_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
 
 %% Pasando los puntos de Gauss [RECOMENDADO] !!!
-export_to_GiD('resultados/c7_ejemplo_H20_b',xnod,LaG,a,q,esf);
+export_to_GiD('resultados/ejemplo_H20_esf_GP',xnod,LaG,a,q,esf);
 
 %%
+disp('Fin del calculo')
 return; % bye, bye!
