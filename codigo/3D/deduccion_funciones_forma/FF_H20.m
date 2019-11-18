@@ -7,29 +7,29 @@ clear, clc, close all
 %      ^ eta        para zeta = +1
 %      |
 %      |
-% 19--18--17                                             ^ zeta
-%  |   |   |                                             |
-% 20---+--16----> xi                                     |            
-%  |   |   |                                       13---14----15   zeta = +1
-% 13--14--15                                      /|    /     /|
-%                                                20----+----16 | 
-%                                               /  |  /     /  | 
-%      ^ eta        para zeta = 0              19---18----17   |      
-%      |                                       |   |       |   |
-%      |                                       |   09----+-|--10   zeta =  0
-% 12---+--11                                   |  /|    /  |  /|
-%  |   |   |                                   | +-----+---|-+ | 
-%  +---+---+----> xi                           |/  |  /    |/  |
-%  |   |   |                                   12----+----11   |      
-%  9---+--10                                   |   |       |   | 
-%                                              |   01---02-|--03   zeta = -1
-%                                              |  /     /  |  /
-% Numeracion local:                            | 08----+---|04-------> xi
-%      ^ eta        para zeta = -1             |/     /    |/
-%      |                                       07---06----05         
-%      |                                            /
-%  7---6---5                                       /
-%  |   |   |                                      / eta
+% 19--18--17                                            ^ zeta
+%  |   |   |                                            |
+% 20---+--16----> xi                                    |            
+%  |   |   |                                      13---20----19   zeta = +1
+% 13--14--15                                     /|    /     /|
+%                                               14----+----18 | 
+%                                              /  |  /     /  | 
+%      ^ eta        para zeta = 0             15---16----17   |      
+%      |                                      |   |       |   |
+%      |                                      |   09----+-|--12   zeta =  0
+% 12---+--11                                  |  /|    /  |  /|
+%  |   |   |                                  | +-----+---|-+ | 
+%  +---+---+----> xi                          |/  |  /    |/  |
+%  |   |   |                                  10----+----11   |      
+%  9---+--10                                  |   |       |   | 
+%                                             |   01---08-|--07   zeta = -1
+%                                             |  /     /  |  /
+% Numeracion local:                           | 02----+---|06-------> eta
+%      ^ eta        para zeta = -1            |/     /    |/
+%      |                                      03---04----05         
+%      |                                           /
+%  7---6---5                                      /
+%  |   |   |                                     / xi
 %  8---+---4----> xi
 %  |   |   |
 %  1---2---3
@@ -81,18 +81,17 @@ for i = 1:20 % se arma el sistema de ecuaciones
 end
 
 %% Se verifica el valor de las funciones de forma en los nodos
-ev = zeros(20,1);
+ev = zeros(20,20);
 for i = 1:20
    NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});
    for j = 1:20
-      ev(j) = NN(nod(j,1), nod(j,2), nod(j,3));
+      ev(i,j) = NN(nod(j,1), nod(j,2), nod(j,3));
    end
-   fprintf('%d = \n', i)
-   disp(ev)
 end
+disp(ev)
 
 %% Imprimo las funciones de forma
-fprintf('Funciones de forma serendipitas del elemento hexahedrico de 20 nodos:\n')
+fprintf('Funciones de forma serendipitas del elemento H20:\n')
 for i = 1:20
    fprintf('\nN%d = %s',i, N{i});
 end

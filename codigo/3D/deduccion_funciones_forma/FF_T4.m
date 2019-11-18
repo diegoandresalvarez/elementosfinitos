@@ -30,8 +30,8 @@ den = -den;
 V = det([ 1 x1 y1 z1          % Volumen del tetraedro con vertices
           1 x2 y2 z2          % (x1,y1,z1), ..., (x4,y4,z4) 
           1 x3 y3 z3          % suponiendo que (x1,y1,z1), ..., (x3,y3,z3)          
-          1 x4 y4 z4 ])/6;    % se numeraron en sentido antihorario cuando se mira desde (x4,y4,z4)
-VV = matlabFunction(V, 'Vars', [x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4]);
+          1 x4 y4 z4 ])/6;    % se numeraron en sentido antihorario cuando 
+                              % se mira desde (x4,y4,z4)
       
 disp('El 0 en el residuo significa que den == 6*V');
 disp(simplify(den - 6*V))
@@ -88,7 +88,7 @@ d4 = -det([x1 y1  1; x2 y2  1; x3 y3  1]);
 %}
 
 %% Se arman las funciones de forma
-N  = cell(4,1);
+N    = cell(4,1);
 N{1} = (a1 + b1*x + c1*y + d1*z)/(6*Vol);
 N{2} = (a2 + b2*x + c2*y + d2*z)/(6*Vol);
 N{3} = (a3 + b3*x + c3*y + d3*z)/(6*Vol);
@@ -123,9 +123,6 @@ i = 6; x4 = xnod(i,1); y4 = xnod(i,2); z4 = xnod(i,3);
 %     1     6     3     2
 %     1     5     7     6
 
-%% Se calcula el volumen del tetrahedro
-fprintf('Vol = %d\n\n',VV(x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4));
-
 %% Se evaluan todas las funciones de forma en cada uno de sus vertices
 N  = cell(4,1);
 N{1} = (a1 + b1*x + c1*y + d1*z)/(6*V);
@@ -134,7 +131,8 @@ N{3} = (a3 + b3*x + c3*y + d3*z)/(6*V);
 N{4} = (a4 + b4*x + c4*y + d4*z)/(6*V);
 
 for i = 1:4
-   NN = matlabFunction(N{i}, 'Vars', {'x','y','z', 'x1','y1','z1', 'x2','y2','z2', 'x3','y3','z3', 'x4','y4','z4'});
+   NN = matlabFunction(N{i}, 'Vars', {'x','y','z', 'x1','y1','z1', ...
+                          'x2','y2','z2', 'x3','y3','z3', 'x4','y4','z4'});
     
    [ NN(x1,y1,z1, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)
      NN(x2,y2,z2, x1,y1,z1, x2,y2,z2, x3,y3,z3, x4,y4,z4)

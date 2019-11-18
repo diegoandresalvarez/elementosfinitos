@@ -1,6 +1,6 @@
 clear, clc, close all
 
-%% -------------------------------------------------------------------------
+%% ------------------------------------------------------------------------
 %% Funciones de forma del elemento hexahedrico lagrangiano de 8 nodos
 
 % Coordenadas de los nodos
@@ -122,7 +122,7 @@ for i = 1:8
    xlabel('\xi',  'FontSize',20); % titulo eje X
    ylabel('\eta', 'FontSize',20); % titulo eje Y
    zlabel('\zeta','FontSize',20); % titulo eje Z
-   title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',20); % titulo general
+   title(sprintf('N_{%d}(\\xi,\\eta,\\zeta)',i),'FontSize',20);
 
    NN = matlabFunction(N{i}, 'Vars', {'xi','eta','zeta'});   
    xslice = [-1 0 1]; yslice = [-1 0 1]; zslice = [-1 0 1];
