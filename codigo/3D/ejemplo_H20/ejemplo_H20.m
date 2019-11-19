@@ -17,7 +17,7 @@ be   = [0; -rhoe*g; 0];  % vector de fuerzas masicas del elemento (el eje Y es e
 %% cargar
 % xnod - posicion de los nodos
 % LaG  - definicion de elementos finitos con respecto a nodos
-[xnod, LaG] = import_from_GiD('mallas/malla_H20');
+[xnod, LaG] = import_from_GiD('mallas/malla_H20_conexion');
 
 nno  = size(xnod,1);     % numero de nodos (numero de filas de xnod)
 nef  = size(LaG,1);      % numero de EFs (numero de filas de LaG)
@@ -165,7 +165,8 @@ spy(K);
 title('Los puntos representan los elementos diferentes de cero', 'FontSize', 26);
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
-idx_nodo_apoyo = xnod(:,Z) < 1e-5;
+idx_nodo_apoyo = xnod(:,Y) <= 0.118;
+%idx_nodo_apoyo = xnod(:,Z) < 1e-5;
 c = [ gdl(idx_nodo_apoyo,X)
       gdl(idx_nodo_apoyo,Y)
       gdl(idx_nodo_apoyo,Z) ];
@@ -319,10 +320,10 @@ sv = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2);
 %disp([(1:nno)'  s1  s2  s3  tmax  sv])
 
 % Pasando los esfuerzos ya promediados:
-export_to_GiD('resultados/ejemplo_H20_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
+export_to_GiD('resultados/conexion_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
 
 %% Pasando los puntos de Gauss [RECOMENDADO] !!!
-export_to_GiD('resultados/ejemplo_H20_esf_GP',xnod,LaG,a,q,esf);
+export_to_GiD('resultados/conexion_H20_esf_GP',xnod,LaG,a,q,esf);
 
 %%
 disp('Fin del calculo')
