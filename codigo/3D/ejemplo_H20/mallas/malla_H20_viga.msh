@@ -1,5 +1,8 @@
+# Ejemplo de una viga en voladizo
+
 MESH dimension 3 ElemType Hexahedra Nnode 20
 Coordinates
+# numero_elem  coord_x         coord_y         coord_ z
     1               0              10              25
     2            1.25              10              25
     3               0              10           23.75
@@ -968,6 +971,7 @@ Coordinates
 end coordinates
 
 Elements
+# elemento  nodo_1   nodo_2  nodo_3   ...                                                                                                                           nodo_20
        1     833     828     919     924     867     859     943     949     832     874     920     878     852     847     933     938     863     908     945     914
        2     848     833     924     935     882     867     949     954     845     878     930     895     866     852     938     948     871     914     952     928
        3     870     848     935     951     905     882     954     961     857     895     939     917     890     866     948     957     893     928     958     942
