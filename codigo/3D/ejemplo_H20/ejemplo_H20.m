@@ -17,7 +17,10 @@ be   = [0; -rhoe*g; 0];  % vector de fuerzas masicas del elemento (el eje Y es e
 %% cargar
 % xnod - posicion de los nodos
 % LaG  - definicion de elementos finitos con respecto a nodos
-[xnod, LaG] = import_from_GiD('mallas/malla_H20_conexion');
+%filename = 'mallas/malla_H20_viga';
+filename = 'mallas/malla_H20_conexion';
+[xnod, LaG]            = import_from_GiD(filename);
+[cargas,restricciones] = import_cargas_restric(filename);
 
 nno  = size(xnod,1);     % numero de nodos (numero de filas de xnod)
 nef  = size(LaG,1);      % numero de EFs (numero de filas de LaG)
@@ -29,12 +32,21 @@ if nnpe ~= 20
    error('Este codigo SOLO es sirve para elementos hexahedricos de 20 nodos (H20)')
 end
 
+%% Se definen las restricciones 
+ngdl_res = size(restricciones,1); % numero de grados de libertad restringidos
+restric = zeros(ngdl_res,2);
+for i = 1:ngdl_res
+%                       nodo                direccion           desplazamiento    
+   restric(i,:) = [ gdl(restricciones(i,1), restricciones(i,2)) restricciones(i,3) ];
+end
+
 %% Relacion de cargas puntuales
 f = zeros(ngdl,1);     % vector de fuerzas nodales equivalentes global
-%idx_nodo_carga = (xnod(:,Z) > 22) & (xnod(:,X) < 1e-3);
-%f(idx_nodo_carga) = 1e7;
-%idx_nodo_carga = (xnod(:,Z) > 22) & (xnod(:,X) > 9.999);
-%f(idx_nodo_carga) = -1e7;
+ncargas = size(cargas,1);
+for i = 1:ncargas
+%        nodo         direccion       desplazamiento    
+   f(gdl(cargas(i,1), cargas(i,2))) = cargas(i,3);
+end
 
 %% Se dibuja la malla de elementos finitos
 figure;
@@ -165,12 +177,7 @@ spy(K);
 title('Los puntos representan los elementos diferentes de cero', 'FontSize', 26);
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
-idx_nodo_apoyo = xnod(:,Y) <= 0.118;
-%idx_nodo_apoyo = xnod(:,Z) < 1e-5;
-c = [ gdl(idx_nodo_apoyo,X)
-      gdl(idx_nodo_apoyo,Y)
-      gdl(idx_nodo_apoyo,Z) ];
-
+c = restric(:,1);
 d = setdiff(1:ngdl,c)';
 
 % f = vector de fuerzas nodales equivalentes
@@ -188,7 +195,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
-ac = zeros(size(c)); % desplazamientos conocidos
+ac = restric(:,2); % desplazamientos conocidos
 
 %% resuelvo el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
@@ -324,6 +331,26 @@ export_to_GiD('resultados/conexion_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz
 
 %% Pasando los puntos de Gauss [RECOMENDADO] !!!
 export_to_GiD('resultados/conexion_H20_esf_GP',xnod,LaG,a,q,esf);
+
+
+%% Se genera un archivo .VTK para visualizar en Paraview
+%{
+meshio.write_points_cells(
+    "resultados.vtk",
+    points=xnod,
+    cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
+    point_data = {
+        'ex':ex, 'ey':ey, 'ez':ez,     'gxy':gxy,
+        'sx':sx, 'sy':sy, 'txy':txy,
+        's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
+        'uv'  :a.reshape((nno,2)),
+        's1n1':np.c_[s1*np.cos(ang),           s1*np.sin(ang)          ],
+        's2n2':np.c_[s2*np.cos(ang + np.pi/2), s2*np.sin(ang + np.pi/2)]
+        }
+    # cell_data=cell_data,
+    # field_data=field_data
+)
+%}
 
 %%
 disp('Fin del calculo')

@@ -114,7 +114,7 @@ while true
    linea = leer_linea(fid); %  965  10  0  0
    if strcmpi(linea,'END COORDINATES')
       break
-   end;
+   end
    i = i+1;
    xnod(i,:) = sscanf(linea, '%g', [1 ndim+1]);
 end
@@ -151,7 +151,7 @@ while true
    linea = leer_linea(fid); 
    if strcmpi(linea, 'END ELEMENTS')
       break
-   end;
+   end
    i = i+1;
    LaG(i,:) = sscanf(linea, '%d', [1 nno_por_elem+2]);
 end
