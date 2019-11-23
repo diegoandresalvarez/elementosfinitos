@@ -20,14 +20,7 @@ from funciones import t2ft_R89, compartir_variables, plot_esf_def
 # %% constantes que ayudarán en la lectura del código
 X, Y = 0, 1
 NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
-
-# %% variables/constantes del sólido
-Ee   = 200e9                   # [Pa]     módulo de elasticidad del sólido
-nue  = 0.30                    # [-]      coeficiente de Poisson
-rhoe = 7850.                   # [kg/m³]  densidad
-te   = 0.01                    # [m]      espesor del sólido
-g    = 9.81                    # [m/s²]   aceleración de la gravedad
-be   = np.array([0, -rhoe*g])  # [kgf/m³] vector de fuerzas másicas
+g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
 #df = pd.read_excel('malla1.xlsx', sheet_name=None)  # EJEMPLO CLASE
@@ -45,8 +38,17 @@ gdl  = np.reshape(np.arange(ngdl), (nno, 2)) # nodos vs grados de libertad
 
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
-LaG = df['LaG'][['NL1', 'NL2', 'NL3', 'NL4', 'NL5', 'NL6', 'NL7', 'NL8']].to_numpy() - 1
+LaG = df['LaG_mat'][['NL1', 'NL2', 'NL3', 'NL4', 'NL5', 'NL6', 'NL7', 'NL8']].to_numpy() - 1
+# se carga el número del material
+mat = df['LaG_mat']['material'].to_numpy() - 1
 nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
+
+# %% material
+Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad del sólido
+nue  = df['prop_mat']['nu'].to_numpy()      # [-]      coeficiente de Poisson
+rhoe = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
+te   = df['prop_mat']['espesor'].to_numpy() # [kg/m³]  densidad
+nmat = Ee.shape[0]                          # número de materiales
 
 # %% relación de cargas puntuales
 cp  = df['carga_punt']
@@ -129,9 +131,13 @@ B = np.empty((nef,n_gl,n_gl,3,2*8)) # matriz de deformaciones en cada punto de G
 idx = nef * [None]                  # indices asociados a los gdl del EF e
 
 # matriz constitutiva del elemento para TENSION PLANA
-De = np.array([[Ee/(1 - nue**2),     Ee*nue/(1 - nue**2), 0               ],
-               [Ee*nue/(1 - nue**2), Ee/(1 - nue**2),     0               ],
-               [0,                   0,                   Ee/(2*(1 + nue))]])
+De = nmat * [ None ]
+be = nmat * [ None ]
+for i in range(nmat):
+    De[i] = np.array([[Ee[i]/(1 - nue[i]**2),        Ee[i]*nue[i]/(1 - nue[i]**2), 0                     ],
+                      [Ee[i]*nue[i]/(1 - nue[i]**2), Ee[i]/(1 - nue[i]**2),        0                     ],
+                      [0,                            0,                            Ee[i]/(2*(1 + nue[i]))]])
+    be[i] = np.array([0, -rhoe[i]*g])  # [kgf/m³] vector de fuerzas másicas
 
 # para cada elemento finito en la malla:
 for e in range(nef):
@@ -182,8 +188,8 @@ for e in range(nef):
 
             # se ensamblan la matriz de rigidez del elemento y el vector de
             # fuerzas nodales equivalentes del elemento
-            Ke += Bpq.T @ De @ Bpq * det_Je[p,q]*te*w_gl[p]*w_gl[q]
-            fe += Npq.T @ be       * det_Je[p,q]*te*w_gl[p]*w_gl[q]
+            Ke += Bpq.T @ De[mat[e]] @ Bpq * det_Je[p,q]*te*w_gl[p]*w_gl[q]
+            fe += Npq.T @ be[mat[e]]       * det_Je[p,q]*te*w_gl[p]*w_gl[q]
 
     # se determina si hay puntos con jacobiano negativo, en caso tal se termina
     # el programa y se reporta
@@ -282,8 +288,8 @@ for e in range(nef):
     ae = a[idx[e]]    # desplazamientos nodales del elemento e
     for pp in range(n_gl):
         for qq in range(n_gl):
-            deform[e,pp,qq] = B[e,pp,qq] @ ae      # calculo las deformaciones
-            esfuer[e,pp,qq] = De @ deform[e,pp,qq] # calculo los esfuerzos
+            deform[e,pp,qq] = B[e,pp,qq] @ ae              # calculo las deformaciones
+            esfuer[e,pp,qq] = De[mat[e]] @ deform[e,pp,qq] # calculo los esfuerzos
 
 #%% Esfuerzos y deformaciones en los nodos:
 num_elem_ady = np.zeros(nno)
