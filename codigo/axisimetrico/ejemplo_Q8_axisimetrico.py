@@ -3,7 +3,7 @@
 #%%
 '''
 -------------------------------------------------------------------------------
-NOTA: este código SOLO es apropiado para el caso AXISIMETRICO usando elementos
+NOTA: este código SOLO es apropiado para el caso AXISIMÉTRICO usando elementos
       rectangulares serendípitos de 8 nodos
 -------------------------------------------------------------------------------
 
@@ -20,13 +20,7 @@ from funciones import t2ft_R89_axisimetrico, compartir_variables, plot_esf_def
 # %% constantes que ayudarán en la lectura del código
 X, Y = 0, 1
 NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
-
-# %% variables/constantes del sólido
-Ee   = 1e6                     # [Pa]     módulo de elasticidad del sólido
-nue  = 0.30                    # [-]      coeficiente de Poisson
-rhoe = 0.                      # [kg/m³]  densidad
-g    = 9.81                    # [m/s²]   aceleración de la gravedad
-be   = np.array([0, -rhoe*g])  # [kgf/m³] vector de fuerzas másicas
+g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
 df = pd.read_excel('boussinesq.xlsx', sheet_name=None)
@@ -42,8 +36,16 @@ gdl  = np.reshape(np.arange(ngdl), (nno, 2)) # nodos vs grados de libertad
 
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
-LaG = df['LaG'][['NL1', 'NL2', 'NL3', 'NL4', 'NL5', 'NL6', 'NL7', 'NL8']].to_numpy() - 1
+LaG = df['LaG_mat'][['NL1', 'NL2', 'NL3', 'NL4', 'NL5', 'NL6', 'NL7', 'NL8']].to_numpy() - 1
+# se carga el número del material
+mat = df['LaG_mat']['material'].to_numpy() - 1
 nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
+
+# %% material
+Ee   = df['prop_mat']['E'].to_numpy()   # [Pa]     módulo de elasticidad del sólido
+nue  = df['prop_mat']['nu'].to_numpy()  # [-]      coeficiente de Poisson
+rhoe = df['prop_mat']['rho'].to_numpy() # [kg/m³]  densidad
+nmat = Ee.shape[0]                      # número de materiales
 
 # %% relación de cargas puntuales
 cp  = df['carga_punt']
@@ -126,10 +128,15 @@ B = np.empty((nef,n_gl,n_gl,4,2*8)) # matriz de deformaciones en cada punto de G
 idx = nef * [None]                  # indices asociados a los gdl del EF e
 
 # matriz constitutiva del elemento para el caso AXISIMETRICO
-De = (Ee/((1+nue)*(1-2*nue)))*np.array([[1 - nue,  nue,    nue,    0          ],
-                                        [nue,      1-nue,  nue,    0          ],
-                                        [nue,      nue,    1-nue,  0          ],
-                                        [0,        0,      0,      (1-2*nue)/2]])
+De = nmat * [ None ]
+be = nmat * [ None ]
+for i in range(nmat):
+    De[i] = (Ee[i]/((1+nue[i])*(1-2*nue[i])))*\
+        np.array([[1 - nue[i],  nue[i],    nue[i],    0             ],
+                  [nue[i],      1-nue[i],  nue[i],    0             ],
+                  [nue[i],      nue[i],    1-nue[i],  0             ],
+                  [0,           0,         0,         (1-2*nue[i])/2]])
+    be[i] = np.array([0, -rhoe[i]*g])  # [kgf/m³] vector de fuerzas másicas
 
 # para cada elemento finito en la malla:
 for e in range(nef):
@@ -185,8 +192,8 @@ for e in range(nef):
 
             # se ensamblan la matriz de rigidez del elemento y el vector de
             # fuerzas nodales equivalentes del elemento
-            Ke += Bpq.T @ De @ Bpq * det_Je[p,q]*r*w_gl[p]*w_gl[q]
-            fe += Npq.T @ be       * det_Je[p,q]*r*w_gl[p]*w_gl[q]
+            Ke += Bpq.T @ De[mat[e]] @ Bpq * det_Je[p,q]*r*w_gl[p]*w_gl[q]
+            fe += Npq.T @ be[mat[e]]       * det_Je[p,q]*r*w_gl[p]*w_gl[q]
     Ke *= 2*np.pi
     fe *= 2*np.pi
 
@@ -287,8 +294,8 @@ for e in range(nef):
     ae = a[idx[e]]    # desplazamientos nodales del elemento e
     for pp in range(n_gl):
         for qq in range(n_gl):
-            deform[e,pp,qq] = B[e,pp,qq] @ ae      # calculo las deformaciones
-            esfuer[e,pp,qq] = De @ deform[e,pp,qq] # calculo los esfuerzos
+            deform[e,pp,qq] = B[e,pp,qq] @ ae              # calculo las deformaciones
+            esfuer[e,pp,qq] = De[mat[e]] @ deform[e,pp,qq] # calculo los esfuerzos
 
 #%% Esfuerzos y deformaciones en los nodos:
 num_elem_ady = np.zeros(nno)
@@ -382,7 +389,7 @@ plot_esf_def(trz,  r'$\tau_{rz}$ [Pa]')
 tabla_afq = pd.DataFrame(
     data=np.c_[a.reshape((nno,2)), f.reshape((nno,2)), q.reshape((nno,2))],
     index=np.arange(nno)+1,
-    columns=['ux [m]', 'uy [m]', 'fx [N]', 'fy [N]', 'qx [N]', 'qy [N]'])
+    columns=['ur [m]', 'w [m]', 'fr [N]', 'fw [N]', 'qr [N]', 'qw [N]'])
 tabla_afq.index.name = '# nodo'
 
 # deformaciones
@@ -392,9 +399,9 @@ tabla_def = pd.DataFrame(data    = np.c_[er, ez, et, grz],
 tabla_def.index.name = '# nodo'
 
 # esfuerzos
-tabla_esf = pd.DataFrame(data    = np.c_[sr, sz, trz],
+tabla_esf = pd.DataFrame(data    = np.c_[sr, sz, st, trz],
                          index   = np.arange(nno) + 1,
-                         columns = ['sr [Pa]', 'sz [Pa]', 'trz [Pa]'])
+                         columns = ['sr [Pa]', 'sz [Pa]', 'st [Pa]', 'trz [Pa]'])
 tabla_esf.index.name = '# nodo'
 
 # esfuerzos principales y de von Misses:
@@ -427,8 +434,8 @@ meshio.write_points_cells(
     points=xnod,
     cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
     point_data = {
-        'er':er, 'ez':ez, 'et':et,     'grz':grz,
-        'sr':sr, 'sz':sz, 'st':st,     'trz':trz,
+        'er':er, 'ez':ez, 'et':et, 'grz':grz,
+        'sr':sr, 'sz':sz, 'st':st, 'trz':trz,
     #   's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
         'uv'  :a.reshape((nno,2)),
     #    's1n1':np.c_[s1*np.cos(ang),           s1*np.sin(ang)          ],
