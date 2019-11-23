@@ -182,7 +182,6 @@ for e in range(nef):
 
                 dNi_dx = (+dy_deta*ddN_dxi[i] - dy_dxi*ddN_deta[i])/det_Je[p,q]
                 dNi_dy = (-dx_deta*ddN_dxi[i] + dx_dxi*ddN_deta[i])/det_Je[p,q]
-
                 Bpq[:,[2*i, 2*i+1]] = np.array([[dNi_dx,       0     ],
                                                 [0,            dNi_dy],
                                                 [NNforma[i]/r, 0     ],
@@ -447,7 +446,7 @@ meshio.write_points_cells(
 
 # %% Pasando los resultados a GiD
 # Pasando los esfuerzos ya promediados:
-# export_to_GiD('c5_ejemplo_a',xnod,LaG,a,q,[sr sz st txy txz tyz]);
+# export_to_GiD('c5_ejemplo_a',xnod,LaG,a,q,[sr sz st trz]);
 
 # Pasando los puntos de Gauss [RECOMENDADO] !!!
 # export_to_GiD('c5_ejemplo_b',xnod,LaG,a,q,esf);
