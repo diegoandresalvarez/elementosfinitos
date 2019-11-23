@@ -388,7 +388,7 @@ plot_esf_def(trz,  r'$\tau_{rz}$ [Pa]')
 tabla_afq = pd.DataFrame(
     data=np.c_[a.reshape((nno,2)), f.reshape((nno,2)), q.reshape((nno,2))],
     index=np.arange(nno)+1,
-    columns=['ur [m]', 'w [m]', 'fr [N]', 'fw [N]', 'qr [N]', 'qw [N]'])
+    columns=['ur [m]', 'w [m]', 'fr [N]', 'fz [N]', 'qr [N]', 'qz [N]'])
 tabla_afq.index.name = '# nodo'
 
 # deformaciones
