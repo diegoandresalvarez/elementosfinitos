@@ -47,7 +47,7 @@ nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
 Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad del sólido
 nue  = df['prop_mat']['nu'].to_numpy()      # [-]      coeficiente de Poisson
 rhoe = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
-te   = df['prop_mat']['espesor'].to_numpy() # [kg/m³]  densidad
+te   = df['prop_mat']['espesor'].to_numpy() # [m]      espesor
 nmat = Ee.shape[0]                          # número de materiales
 
 # %% relación de cargas puntuales
