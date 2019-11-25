@@ -2,8 +2,8 @@ function [x_gl, w_gl] = gausslegendre_quad_hexa(n_gl)
 
 [x, w] = gausslegendre_quad(n_gl);
 
-x_gl = zeros(n_gl^2,3);
-w_gl = zeros(n_gl^2,1);
+x_gl = zeros(n_gl^3,3);
+w_gl = zeros(n_gl^3,1);
 
 r = 0;
 for i = 1:n_gl

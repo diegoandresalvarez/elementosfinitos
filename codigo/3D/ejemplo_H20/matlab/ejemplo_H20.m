@@ -1,8 +1,8 @@
 % clear, clc, close all   % borro la memoria, la pantalla y las figuras
 
-%% ---------------------------------------------------------------------------------
-%% NOTA: este codigo SOLO es apropiado para elementos hexahedricos de 20 nodos (H20)
-%% ---------------------------------------------------------------------------------
+%% -----------------------------------------------------------------------------
+%% NOTA: este codigo SOLO es apropiado para EFs hexaedricos de 20 nodos (H20)
+%% -----------------------------------------------------------------------------
 
 %% defino las variables/constantes
 X    = 1;                % constantes que ayudaran en la lectura del codigo
@@ -29,7 +29,7 @@ ngdl = 3*nno;            % numero de grados de libertad (tres por nodo)
 gdl  = [(1:3:ngdl)' (2:3:ngdl)' (3:3:ngdl)']; % nodos vs grados de libertad
 
 if nnpe ~= 20
-   error('Este codigo SOLO es sirve para elementos hexahedricos de 20 nodos (H20)')
+   error('Este codigo SOLO es sirve para EFs hexaedricos de 20 nodos (H20)')
 end
 
 %% Se definen las restricciones 
