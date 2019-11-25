@@ -70,7 +70,7 @@ x_gl, w_gl = np.polynomial.legendre.leggauss(n_gl)
 nterm = 4 # 1   xi_gl   eta_gl   xi_gl*eta_gl
 
 # %%  Se define la matriz A1
-A1 = np.empty((n_gl**2, nterm))
+A1 = np.empty((nterm, nterm))
 
 i = 0
 for p in range(n_gl):
