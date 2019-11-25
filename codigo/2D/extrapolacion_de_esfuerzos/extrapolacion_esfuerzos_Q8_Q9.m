@@ -70,7 +70,7 @@ x_gl = sym(x_gl);
 nterm = 4; % 1   xi_gl   eta_gl   xi_gl*eta_gl
 
 %%  Se define la matriz A1
-A1 = sym(zeros(n_gl^2, nterm));
+A1 = sym(zeros(nterm));
 
 i = 0;
 for p = 1:n_gl
