@@ -423,7 +423,7 @@ tabla_epv = pd.DataFrame(
 tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-writer = pd.ExcelWriter(f"resultados/{nombre_archivo}.xlsx", engine = 'xlsxwriter')
+writer = pd.ExcelWriter(f"resultados_{nombre_archivo}.xlsx", engine = 'xlsxwriter')
 
 # cada tabla hecha previamente es guardada en una hoja del archivo de Excel
 tabla_afq.to_excel(writer, sheet_name = 'afq')
@@ -432,15 +432,15 @@ tabla_esf.to_excel(writer, sheet_name = 'esfuerzos')
 tabla_epv.to_excel(writer, sheet_name = 'esf_ppales')
 writer.save()
 
-print(f'Cálculo finalizado. En "resultados/{nombre_archivo}.xlsx" se guardaron los resultados.')
+print(f'Cálculo finalizado. En "resultados_{nombre_archivo}.xlsx" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
-# pip install meshio[all] --user
+# ! pip install meshio[all] --user
 
 import meshio
 meshio.write_points_cells(
-    f"resultados/{nombre_archivo}.vtk",
+    f"resultados_{nombre_archivo}.vtk",
     points = xnod,
     cells = {"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
     point_data = {

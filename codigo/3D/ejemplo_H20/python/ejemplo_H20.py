@@ -357,7 +357,7 @@ tabla_epv = pd.DataFrame(
 tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-archivo_resultados = f"resultados/{nombre_archivo}.xlsx"
+archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
 writer = pd.ExcelWriter(archivo_resultados, engine = 'xlsxwriter')
 
 # cada tabla hecha previamente es guardada en una hoja del archivo de Excel
@@ -379,7 +379,7 @@ print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultad
 
 import meshio
 meshio.write_points_cells(
-    f"resultados/{nombre_archivo}.vtk",
+    f"resultados_{nombre_archivo}.vtk",
     points=xnod,
     cells={"hexahedron20": LaG[:,np.array([3, 5, 7, 1, 15, 17, 19, 13, 4, 6, 8, 2, 16, 18, 20, 14, 10, 11, 12, 9])-1] },
     point_data = {
@@ -397,9 +397,9 @@ meshio.write_points_cells(
 
 # %% Pasando los resultados a GiD
 # Pasando los esfuerzos ya promediados:
-# export_to_GiD('resultados/conexion_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz])
+# export_to_GiD('resultados_conexion_esf_nodos',xnod,LaG,a,q,[sx sy sz txy txz tyz])
 
 # Pasando los puntos de Gauss [RECOMENDADO] !!!
-# export_to_GiD('resultados/conexion_H20_esf_GP',xnod,LaG,a,q,esf);
+# export_to_GiD('resultados_conexion_H20_esf_GP',xnod,LaG,a,q,esf);
 
 # %%bye, bye!
