@@ -14,7 +14,7 @@ rhoe = 7850;             % densidad (kg/m^3)
 g    = 9.81;             % aceleracion de la gravedad (m/s^2)
 be   = [0; -rhoe*g; 0];  % vector de fuerzas masicas del elemento (el eje Y es el vertical)
 
-%% cargar
+%% cargar variables en memoria
 % xnod - posicion de los nodos
 % LaG  - definicion de elementos finitos con respecto a nodos
 %filename = 'mallas/malla_H20_viga';
