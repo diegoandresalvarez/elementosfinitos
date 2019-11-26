@@ -1,3 +1,2 @@
-*.vtk
-resultados.xlsx
+resultados/
 __pycache__/
