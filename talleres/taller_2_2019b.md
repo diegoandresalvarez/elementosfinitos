@@ -1,4 +1,4 @@
-# Taller 2: elementos finitos bidimensionales
+# Taller 2: elementos finitos bidimensionales y axisimétricos
 
 * Fecha y hora de entrega: domingo diciembre 1, 2019 a las 23:59.
 * Presentación individual.
@@ -54,4 +54,20 @@ Asuma:
 X(theta) = 1 + theta, Y(theta) = theta^2, teniendo en cuenta que theta varía entre 0 y pi/2
 --->
 
-# Ejercicio 2: por definir
+# Ejercicio 2: análisis axisimétrico: esfuerzos en un pavimento flexible
+
+Considere un pavimento flexible. Este está formado por 4 capas de diferentes rigideces y espesores, como se muestra en la figura:
+
+![figs/pavimento_axisimetrico.png](figs/pavimento_axisimetrico.png)
+
+Ilustración tomada de: Sam Helwany (2007). Applied soil mechanics with ABAQUS applications. John Wiley & Sons.
+
+Asumiendo que se le aplica una carga uniformemente distribuída de 10 kPa, distribuída en un área circular de 0.5 m de radio, calcule los desplazamientos, las deformaciones y los esfuerzos en la masa del pavimento y del suelo. Elabore una gráfica que muestre como varían dichas cantidades en el eje axial (r=0). Para tal fin utilice elementos finitos rectangulares isoparamétricos de 8 nodos.
+
+* Si se realiza el ejercicio utilizando los programas vistos en clase y creando la malla con el programa [gmsh](http://gmsh.info/), se tendrá +2 unidades. Se deben visualizar los resultados utilizando [Paraview](https://www.paraview.org/).
+
+ * Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad.
+
+Analice principalmente, el papel que juega la capa de asfalto y la base en la disipación de esfuerzos en el suelo (para tal fin, asuma que dichas capas no existen y observen como cambia la distribución de los esfuerzos en el suelo).
+
+La idea de este ejercicio es que observe que la capa de asfalto y la base, al ser más rígidas, protegen las capas subyacentes (la cuales son más suaves) de los incrementos excesivos de presión que puede producir el tráfico. Dichos excesos de carga son una de las causas que pueden producir fisuras en el pavimento.
