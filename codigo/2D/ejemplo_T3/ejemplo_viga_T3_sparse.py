@@ -77,7 +77,7 @@ plt.show()
 
 # %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 # equivalentes global
-# K  = np.zeros((ngdl,ngdl))          # matriz de rigidez global
+# K   = np.zeros((ngdl,ngdl))          # matriz de rigidez global
 K   = sparse.coo_matrix((ngdl, ngdl)) # matriz de rigidez global como RALA (sparse)
 B   = nef * [None]          # contenedor para las matrices de deformación
 idx = nef * [None]          # indices asociados a los gdl del EF e
@@ -167,8 +167,8 @@ d = np.setdiff1d(range(ngdl), c)
 #| qd |   | Kcc Kcd || ac |   | fd |  # recuerde que qc=0 (siempre)
 #|    | = |         ||    | - |    |
 #| qc |   | Kdc Kdd || ad |   | fc |
-Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
-Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
+Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
+Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
 
 # %% resuelvo el sistema de ecuaciones
 # ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
