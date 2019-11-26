@@ -390,8 +390,8 @@ meshio.write_points_cells(
         'n1'  : n1, 
         'n2'  : n2, 
         'n3'  : n3
-        }
-    # cell_data=cell_data,
+        },
+    cell_data = {"hexahedron20" : {"material" : mat}},
     # field_data=field_data
 )
 
