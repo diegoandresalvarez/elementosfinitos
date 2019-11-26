@@ -14,6 +14,8 @@ deformaciones y los esfuerzos de la estructura mostrada en la figura adjunta
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from scipy import sparse 
+from scipy.sparse.linalg import spsolve
 from funciones import gausslegendre_quad_hexa, matriz_extrapolacion_esfuerzos_H20
 from funciones import t2ft_H20, N_H20, dN_dxi_H20, dN_deta_H20, dN_dzeta_H20
 
@@ -23,6 +25,7 @@ g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
 nombre_archivo = 'malla_H20_viga'
+# nombre_archivo = 'malla_H20_conexion'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
@@ -37,7 +40,8 @@ gdl  = np.reshape(np.arange(ngdl), (nno, 3)) # nodos vs grados de libertad
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
 LaG  = df['LaG_mat'].loc[:, 'NL1':'NL20'].to_numpy() - 1
-# se reorganizan las columnas con mi numeración local de los nodos
+# se reorganizan las columnas con mi numeración local de los nodos. Esto es para 
+# poder importar la malla, la cual fue generada en GiD
 idx_LaG = np.array([1, 9, 2, 10, 3, 11, 4, 12, 13, 14, 15, 16, 5, 17, 6, 18, 7, 19, 8, 20]) - 1
 LaG = LaG[:, idx_LaG]
 
@@ -62,31 +66,6 @@ f   = np.zeros(ngdl)    # vector de fuerzas nodales equivalentes global
 for i in range(ncp):
    f[gdl[cp['nodo'][i]-1, cp['dirección'][i]-1]] = cp['fuerza puntual'][i]
 
-'''
-# %% Se dibuja la malla de elementos finitos
-cg = np.zeros((nef,2))  # almacena el centro de gravedad de los EF
-plt.figure()
-for e in range(nef):
-    # se dibujan las aristas
-    nod_ef = LaG[e, [NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8, NL1]]
-    plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'b')
-    # se calcula la posición del centro de gravedad
-    cg[e] = np.mean(xnod[LaG[e]], axis = 0)
-    # y se reporta el número del elemento actual
-    plt.text(cg[e,X], cg[e,Y], f'{e+1}', horizontalalignment='center',
-                                         verticalalignment='center',  color='b')
-
-# en todos los nodos se dibuja un marcador y se reporta su numeración
-plt.plot(xnod[:, X], xnod[:, Y], 'r*')
-for i in range(nno):
-    plt.text(xnod[i, X], xnod[i, Y], f'{i+1}', color = 'r')
-
-plt.gca().set_aspect('equal', adjustable = 'box')
-plt.tight_layout()
-plt.title('Malla de elementos finitos')
-plt.show()
-'''
-
 #%% Funciones de forma (serendípitas) y sus derivadas del elemento rectangular
 #   de 8 nodos:
 Nforma   = N_H20
@@ -105,7 +84,9 @@ n_gl = len(w_gl)
 
 # se inicializan la matriz de rigidez global y los espacios en memoria que
 #  almacenarán las matrices de forma y de deformación
-K = np.zeros((ngdl, ngdl))        # matriz de rigidez global
+#K= np.zeros((ngdl, ngdl))        # matriz de rigidez global
+K = sparse.coo_matrix((ngdl, ngdl)) # matriz de rigidez global como RALA (sparse)
+
 N = np.empty((nef,n_gl,3,3*nnpe)) # matriz de forma en cada punto de GL
 B = np.empty((nef,n_gl,6,3*nnpe)) # matriz de deformaciones en cada punto de GL
 idx = nef * [None]                # indices asociados a los gdl del EF e
@@ -197,14 +178,19 @@ for e in range(nef):
     # y se añaden la matriz de rigidez del elemento y el vector de fuerzas
     # nodales del elemento a sus respectivos arreglos de la estructura
     idx[e] = gdl[LaG[e]].flatten() # se obtienen los grados de libertad
-    K[np.ix_(idx[e], idx[e])] += Ke
+    # K[np.ix_(idx[e], idx[e])] += Ke
+    IDX = np.array([(i,j) for i in idx[e] for j in idx[e]])
+    K += sparse.coo_matrix((Ke.flat, (IDX[:,0],IDX[:,1])), shape=(ngdl,ngdl))
+
     f[np.ix_(idx[e])]         += fe
 
+'''
 # %% Muestro la configuración de la matriz K (K es rala)
 plt.figure()
 plt.spy(K)
 plt.title('Los puntos representan los elementos diferentes de cero')
 plt.show()
+'''
 
 #%% Cálculo de las cargas nodales equivalentes de las cargas distribuidas:
 cd   = df['carga_distr']
@@ -252,35 +238,15 @@ Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
 Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
 
 # %% resuelvo el sistema de ecuaciones
-ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+#ad= np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+ad = spsolve(Kdd, fc - Kdc@ac)
+
 qd = Kcc@ac + Kcd@ad - fd              # fuerzas de equilibrio desconocidas
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
 a = np.zeros(ngdl); q = np.zeros(ngdl) # separo la memoria
 a[c] = ac;          a[d] = ad          # desplazamientos
 q[c] = qd         # q[d] = qc = 0      # fuerzas nodales de equilibrio
-
-'''
-# %% Dibujo la malla de elementos finitos y las deformada de esta
-delta  = np.reshape(a, (nno,2))
-escala = 50000                  # factor de escalamiento de la deformada
-xdef   = xnod + escala*delta    # posición de la deformada
-
-plt.figure()
-for e in range(nef):
-   nod_ef = LaG[e, [NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8, NL1]]
-   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'r',
-                        label='Posición original'  if e == 0 else "", lw=0.5)
-   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'b',
-                        label='Posición deformada' if e == 0 else "")
-plt.gca().set_aspect('equal', adjustable='box')
-plt.legend()
-plt.xlabel('$x$ [m]')
-plt.ylabel('$y$ [m]')
-plt.title(f'Deformada escalada {escala} veces')
-plt.tight_layout()
-plt.show()
-'''
 
 #%% Deformaciones y los esfuerzos en los puntos de Gauss
 deform = np.zeros((nef,n_gl,6)) # deformaciones en cada punto de GL
@@ -342,7 +308,7 @@ for i in range(nno):
                               [txy[i],  sy[i],   tyz[i]],  # de Cauchy
                               [txz[i],  tyz[i],  sz[i] ]])
 
-   idx_esf = esfppales.argsort()
+   idx_esf = esfppales.argsort()[::-1] # ordene de mayor a menor
    s1[i], s2[i], s3[i] = esfppales[idx_esf]
    n1[i] = dirppales[:,idx_esf[0]]
    n2[i] = dirppales[:,idx_esf[1]]
@@ -391,7 +357,7 @@ tabla_epv = pd.DataFrame(
 tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
+archivo_resultados = f"resultados/{nombre_archivo}.xlsx"
 writer = pd.ExcelWriter(archivo_resultados, engine = 'xlsxwriter')
 
 # cada tabla hecha previamente es guardada en una hoja del archivo de Excel
@@ -407,8 +373,11 @@ print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultad
 # Instale meshio (https://github.com/nschloe/meshio) con:
 # pip install meshio[all] --user
 
+# tenga en cuanta que VTK tiene una numeración diferente de los nodos que la 
+# especificada en el libro de Oñate y que la usada en GiD
+# https://vtk.org/wp-content/uploads/2015/04/file-formats.pdf
+
 import meshio
-#cells={"hexahedron20": LaG[:,[3, 11, 0, 8, 1, 9, 2, 10, 19, 16, 17, 18,  7, 15, 4, 12, 5, 13, 6, 14]] },
 meshio.write_points_cells(
     f"resultados/{nombre_archivo}.vtk",
     points=xnod,
@@ -417,8 +386,10 @@ meshio.write_points_cells(
         'ex':ex, 'ey':ey, 'ez':ez, 'gxy':gxy,   'gxz':gxz, 'gyz':gyz,
         'sx':sx, 'sy':sy, 'sz':sz, 'txy':txy,   'txz':txz, 'tyz':tyz,
         's1':s1, 's2':s2, 's3':s3, 'tmax':tmax, 'sv':sv,
-        'uvw'  :a.reshape((nno,3)),
-        's1n1': s1[:,np.newaxis]*n1, 's2n2': s2[:,np.newaxis]*n2, 's3n3': s3[:,np.newaxis]*n3
+        'uvw' : a.reshape((nno,3)),
+        'n1'  : n1, 
+        'n2'  : n2, 
+        'n3'  : n3
         }
     # cell_data=cell_data,
     # field_data=field_data

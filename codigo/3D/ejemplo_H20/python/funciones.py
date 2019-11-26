@@ -231,3 +231,51 @@ def gausslegendre_quad_hexa(n_gl):
                 w_gl[r]   = w[i]*w[j]*w[k]
 
     return x_gl, w_gl
+
+
+'''
+# %% Se dibuja la malla de elementos finitos
+cg = np.zeros((nef,2))  # almacena el centro de gravedad de los EF
+plt.figure()
+for e in range(nef):
+    # se dibujan las aristas
+    nod_ef = LaG[e, [NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8, NL1]]
+    plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'b')
+    # se calcula la posición del centro de gravedad
+    cg[e] = np.mean(xnod[LaG[e]], axis = 0)
+    # y se reporta el número del elemento actual
+    plt.text(cg[e,X], cg[e,Y], f'{e+1}', horizontalalignment='center',
+                                         verticalalignment='center',  color='b')
+
+# en todos los nodos se dibuja un marcador y se reporta su numeración
+plt.plot(xnod[:, X], xnod[:, Y], 'r*')
+for i in range(nno):
+    plt.text(xnod[i, X], xnod[i, Y], f'{i+1}', color = 'r')
+
+plt.gca().set_aspect('equal', adjustable = 'box')
+plt.tight_layout()
+plt.title('Malla de elementos finitos')
+plt.show()
+'''
+
+'''
+# %% Dibujo la malla de elementos finitos y las deformada de esta
+delta  = np.reshape(a, (nno,2))
+escala = 50000                  # factor de escalamiento de la deformada
+xdef   = xnod + escala*delta    # posición de la deformada
+
+plt.figure()
+for e in range(nef):
+   nod_ef = LaG[e, [NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8, NL1]]
+   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'r',
+                        label='Posición original'  if e == 0 else "", lw=0.5)
+   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'b',
+                        label='Posición deformada' if e == 0 else "")
+plt.gca().set_aspect('equal', adjustable='box')
+plt.legend()
+plt.xlabel('$x$ [m]')
+plt.ylabel('$y$ [m]')
+plt.title(f'Deformada escalada {escala} veces')
+plt.tight_layout()
+plt.show()
+'''
