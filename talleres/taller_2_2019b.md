@@ -24,7 +24,6 @@
 * Los trabajos se deben entregar preferiblemente de forma electrónica y en formato PDF (si lo entregan impreso que sea por ambos lados de la hoja o en hojas de reciclaje para ahorrar papel). 
 * Adjuntar los códigos por correo electrónico SUPERCOMENTADOS. 
 * El reporte debe incluir el análisis de resultados y cualquier otra información que usted considere necesaria.
-* Extensión máxima 20 hojas.
 
 # Ejercicio 1: estructura en tensión plana, elementos T10
 Dada la estructura siguiente:
@@ -42,7 +41,7 @@ Los siguientes puntos son opcionales, siempre y cuando se hayan realizado los ej
  * Si se compara la respuesta con la obtenida por el programa [GetFEM++](http://getfem.org/index.html) y se muestran los resultados con [Paraview](https://www.paraview.org/), se tendrán +2 unidades.
  * Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad.
 
-En cada uno de los tres casos anteriores, hacer el video respectivo que explica el proceso de creación de la malla/modelación de la estructura y subirlo a YouTube. Incluir en el informe los archivos generados. Tener en cuenta las reglas vistas en clase para la creación de una buena malla.
+En cada uno de los cuatro casos anteriores, hacer el video respectivo que explica el proceso de creación de la malla/modelación de la estructura y subirlo a YouTube. Incluir en el informe los archivos generados. Tener en cuenta las reglas vistas en clase para la creación de una buena malla.
 
 Asuma:
 * Módulo de elasticidad = 2 GPa.
@@ -71,3 +70,5 @@ Asumiendo que se le aplica una carga uniformemente distribuída de 10 kPa, distr
 Analice principalmente, el papel que juega la capa de asfalto y la base en la disipación de esfuerzos en el suelo (para tal fin, asuma que dichas capas no existen y observen como cambia la distribución de los esfuerzos en el suelo).
 
 La idea de este ejercicio es que observe que la capa de asfalto y la base, al ser más rígidas, protegen las capas subyacentes (la cuales son más suaves) de los incrementos excesivos de presión que puede producir el tráfico. Dichos excesos de carga son una de las causas que pueden producir fisuras en el pavimento.
+
+En cada uno de los casos anteriores, hacer el video respectivo que explica el proceso de creación de la malla/modelación de la estructura y subirlo a YouTube. Incluir en el informe los archivos generados. Tener en cuenta las reglas vistas en clase para la creación de una buena malla.
