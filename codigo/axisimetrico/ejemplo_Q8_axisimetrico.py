@@ -23,7 +23,8 @@ NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
 g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-df = pd.read_excel('boussinesq.xlsx', sheet_name=None)
+nombre_archivo = 'boussinesq'
+df = pd.read_excel(f'{nombre_archivo}.xlsx', sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -339,23 +340,31 @@ sr  /= num_elem_ady;   er  /= num_elem_ady
 sz  /= num_elem_ady;   ez  /= num_elem_ady
 st  /= num_elem_ady;   et  /= num_elem_ady
 trz /= num_elem_ady;   grz /= num_elem_ady
+trt = 0
+ttz = 0
 
-# %% Se calculan y grafican para cada elemento los esfuerzos principales y
-#    sus direcciones
-# NOTA: esto solo es valido para el caso de TENSION PLANA).
-# En caso de DEFORMACIÓN PLANA se deben calcular los valores y vectores
-# propios de la matriz de tensiones de Cauchy
-#   [dirppales{e}, esfppales{e}] = eig([sr  txy 0    % matriz de esfuerzos
-#                                       txy sz  0    % de Cauchy
-#                                       0   0   0]);
-# s1   = (sr+sz)/2 + np.sqrt(((sr-sz)/2)**2 + txy**2) # esfuerzo normal máximo
-# s2   = (sr+sz)/2 - np.sqrt(((sr-sz)/2)**2 + txy**2) # esfuerzo normal mínimo
-# tmax = (s1 - s2)/2                                  # esfuerzo cortante máximo
-# ang  = 0.5*np.arctan2(2*txy, sr-sz)                 # ángulo de inclinación de s1
 
+# %% Se calculan para cada nodo los esfuerzos principales y sus direcciones
+s1 = np.zeros(nno);  n1 = np.zeros((nno, 3))
+s2 = np.zeros(nno);  n2 = np.zeros((nno, 3))
+s3 = np.zeros(nno);  n3 = np.zeros((nno, 3))
+for i in range(nno):
+    esfppales, dirppales = np.linalg.eigh(
+                             [[sr[i],   trt,    trz[i]],  # matriz de esfuerzos
+                              [trt,     st[i],  ttz   ],  # de Cauchy para 
+                              [trz[i],  ttz,    sz[i] ]]) # theta = grados
+
+    idx_esf = esfppales.argsort()[::-1] # ordene de mayor a menor
+    s1[i], s2[i], s3[i] = esfppales[idx_esf]
+    n1[i] = dirppales[:,idx_esf[0]]
+    n2[i] = dirppales[:,idx_esf[1]]
+    n3[i] = dirppales[:,idx_esf[2]]
+
+# Esfuerzo cortante máximo
+tmax = (s1-s3)/2                               # esfuerzo cortante máximo
+   
 # %% Calculo de los esfuerzos de von Mises
-# s3   = np.zeros(nno)
-# sv   = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
+sv   = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
 
 # %% Gráfica del post-proceso:
 # las matrices xnod y LaG se vuelven variables globales por facilidad
@@ -404,24 +413,26 @@ tabla_esf = pd.DataFrame(data    = np.c_[sr, sz, st, trz],
 tabla_esf.index.name = '# nodo'
 
 # esfuerzos principales y de von Misses:
-# tabla_epv = pd.DataFrame(
-#       data    = np.c_[s1, s2, tmax, sv, ang],
-#       index   = np.arange(nno) + 1,
-#       columns = ['s1 [Pa]', 's2 [Pa]', 'tmax [Pa]', 'sv [Pa]', 'theta [rad]'])
-# tabla_epv.index.name = '# nodo'
+tabla_epv = pd.DataFrame(
+       data    = np.c_[s1, s2, s3, tmax, sv, n1, n2, n3],
+       index   = np.arange(nno) + 1,
+       columns = ['s1 [Pa]', 's2 [Pa]', 's3 [Pa]', 'tmax [Pa]', 'sv [Pa]',
+                  'n1x', 'n1y', 'n1z',
+                  'n2x', 'n2y', 'n2z', 
+                  'n3x', 'n3y', 'n3z'])
+tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-nombre_archivo = 'resultados.xlsx'
-writer = pd.ExcelWriter(nombre_archivo, engine = 'xlsxwriter')
+writer = pd.ExcelWriter(f"resultados/{nombre_archivo}.xlsx", engine = 'xlsxwriter')
 
 # cada tabla hecha previamente es guardada en una hoja del archivo de Excel
 tabla_afq.to_excel(writer, sheet_name = 'afq')
-tabla_def.to_excel(writer, sheet_name = 'erezetgrz')
-tabla_esf.to_excel(writer, sheet_name = 'srszsttrz')
-#tabla_epv.to_excel(writer, sheet_name = 's1s2tmaxsv')
+tabla_def.to_excel(writer, sheet_name = 'deformaciones')
+tabla_esf.to_excel(writer, sheet_name = 'esfuerzos')
+tabla_epv.to_excel(writer, sheet_name = 'esf_ppales')
 writer.save()
 
-print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
+print(f'Cálculo finalizado. En "resultados/{nombre_archivo}.xlsx" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
@@ -429,18 +440,19 @@ print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.'
 
 import meshio
 meshio.write_points_cells(
-    "resultados.vtk",
-    points=xnod,
-    cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
+    f"resultados/{nombre_archivo}.vtk",
+    points = xnod,
+    cells = {"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
     point_data = {
         'er':er, 'ez':ez, 'et':et, 'grz':grz,
         'sr':sr, 'sz':sz, 'st':st, 'trz':trz,
-    #   's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
-        'uv'  :a.reshape((nno,2)),
-    #    's1n1':np.c_[s1*np.cos(ang),           s1*np.sin(ang)          ],
-    #    's2n2':np.c_[s2*np.cos(ang + np.pi/2), s2*np.sin(ang + np.pi/2)]
-        }
-    # cell_data=cell_data,
+        's1':s1, 's2':s2, 's3':s3, 'tmax':tmax, 'sv':sv,
+        'uv'  : a.reshape((nno,2)),
+        'n1'  : n1, 
+        'n2'  : n2, 
+        'n3'  : n3
+        },
+    cell_data = {"quad8" : {"material" : mat}}
     # field_data=field_data
 )
 
