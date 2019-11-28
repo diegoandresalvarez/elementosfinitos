@@ -69,6 +69,14 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 # Examen 4
 * Capítulo 7 de Oñate (2009): AXISYMMETRIC SOLIDS
   * Diapositivas 6: [06_solidos_de_revolucion.pdf](../diapositivas/06_solidos_de_revolucion.pdf)
+  * Del `main.pdf` las secciones:
+    * 6.1 El sistema de coordenadas polares
+    * 6.2 El sistema de coordenadas cilíndricas
+    * 6.4 Componentes del esfuerzo en coordenadas cilíndricas
+    * 6.6 (excepto 6.6.1) Componentes de la deformación en coordenadas polares
+    * 6.7 Componentes de la deformación en coordenadas cilíndricas
+    * 6.8 Desplazamiento y deformación en el caso de simetría axial
+    * 6.9 Ley de Hooke
 
 * Capítulo 8 de Oñate (2009): THREE DIMENSIONAL SOLIDS
   * Diapositivas 7: [07_solidos_tridimensionales.pdf](../diapositivas/07_solidos_tridimensionales.pdf)
