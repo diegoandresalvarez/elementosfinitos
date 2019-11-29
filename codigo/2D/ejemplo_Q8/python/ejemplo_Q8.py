@@ -430,8 +430,8 @@ meshio.write_points_cells(
         'sx':sx, 'sy':sy, 'txy':txy,
         's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
         'uv'  :a.reshape((nno,2)),
-        's1n1':np.c_[s1*np.cos(ang),           s1*np.sin(ang)          ],
-        's2n2':np.c_[s2*np.cos(ang + np.pi/2), s2*np.sin(ang + np.pi/2)]
+        'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
+        'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)]
         }
     # cell_data=cell_data,
     # field_data=field_data
