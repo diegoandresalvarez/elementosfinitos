@@ -295,7 +295,8 @@ meshio.write_points_cells(
     points=xnod,
     cells={"triangle": LaG },
     point_data = {
-        'uv'  :a.reshape((nno,2)),
+        'uv'         : a.reshape((nno,2)),
+        'reacciones' : q.reshape((nno,2))
         },
     cell_data = {
         "triangle" : 
