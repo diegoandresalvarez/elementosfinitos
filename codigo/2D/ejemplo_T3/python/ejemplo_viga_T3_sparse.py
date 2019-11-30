@@ -26,13 +26,13 @@ g             = 9.81  # [m/s²]  aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
-# df = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
-
+# nombre_archivo = 'malla1'            
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
-# df = pd.read_excel('malla_refinada_v1.xlsx', sheet_name=None)
-
+nombre_archivo = 'malla_refinada_v1' 
 # 3) Malla extremadamente refinada cerca a las cargas puntuales y los apoyos
-df = pd.read_excel('malla_refinada_v2.xlsx', sheet_name=None)
+# nombre_archivo = 'malla_refinada_v2' 
+
+df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -287,8 +287,8 @@ plot_esf_def(tmax, r'$\tau_{max}$ [Pa]', [ ang-np.pi/4, ang+np.pi/4 ])
 plot_esf_def(sv,   r'$\sigma_{VM}$ [Pa]')
 
 # %%Se escriben los resultados a una hoja de MS EXCEL
-nombre_archivo = 'resultados.xlsx'
-writer = pd.ExcelWriter(nombre_archivo, engine='xlsxwriter')
+archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
+writer = pd.ExcelWriter(archivo_resultados, engine='xlsxwriter')
 
 # se escribe cada DataFrame a una hoja diferente
 tabla_afq.to_excel(       writer, sheet_name='afq')
@@ -298,7 +298,7 @@ tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
 
 # Se cierra y graba el archivo de MS EXCEL
 writer.save()
-print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
+print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
@@ -306,7 +306,7 @@ print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.'
 
 import meshio
 meshio.write_points_cells(
-    "resultados.vtk",
+    f"resultados_{nombre_archivo}.vtk",
     points=xnod,
     cells={"triangle": LaG },
     point_data = {
@@ -327,4 +327,4 @@ meshio.write_points_cells(
     # field_data=field_data
 )
 
-# %%bye, bye!
+# %% bye, bye!
