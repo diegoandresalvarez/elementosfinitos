@@ -30,7 +30,10 @@ g    = 9.81  # [m/s²]  aceleración de la gravedad
 #df = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
 
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
-df = pd.read_excel('malla_refinada.xlsx', sheet_name=None)
+df = pd.read_excel('malla_refinada_v1.xlsx', sheet_name=None)
+
+# 3) Malla extremadamente refinada cerca a las cargas puntuales y los apoyos
+# df = pd.read_excel('malla_refinada_v2.xlsx', sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -287,5 +290,30 @@ tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
 # Se cierra y graba el archivo de MS EXCEL
 writer.save()
 print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
+
+# %% Se genera un archivo .VTK para visualizar en Paraview
+# Instale meshio (https://github.com/nschloe/meshio) con:
+# pip install meshio[all] --user
+
+import meshio
+meshio.write_points_cells(
+    "resultados.vtk",
+    points=xnod,
+    cells={"triangle": LaG },
+    point_data = {
+        'uv'  :a.reshape((nno,2)),
+        },
+    cell_data = {
+        "triangle" : 
+        {
+            'ex':ex, 'ey':ey, 'ez':ez,     'gxy':gxy,
+            'sx':sx, 'sy':sy, 'txy':txy,
+            's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
+            'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
+            'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)] 
+        }   
+    },
+    # field_data=field_data
+)
 
 # %%bye, bye!
