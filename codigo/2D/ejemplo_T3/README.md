@@ -25,8 +25,8 @@ Asuma:
 * espesor de la viga = 10 cm
 
 Implementaciones:
-* MATLAB: [matlab/ejemplo_viga_T3.m](matlab/ejemplo_viga_T3.m)
-* PYTHON: se hicieron dos implementaciones: una con matrices completas [ejemplo_viga_T3.py](python/ejemplo_viga_T3.py) y otra con matrices ralas [ejemplo_viga_T3_sparse.py](ejemplo_viga_T3_sparse.py) 
+* MATLAB: [ejemplo_viga_T3.m](matlab/ejemplo_viga_T3.m)
+* PYTHON: se hicieron dos implementaciones: una con matrices completas [ejemplo_viga_T3.py](python/ejemplo_viga_T3.py) y otra con matrices ralas [ejemplo_viga_T3_sparse.py](python/ejemplo_viga_T3_sparse.py) 
 
 Los tiempo de ejecución de ambas versiones son:
 * TIEMPO VERSION FULL:   0.0057590007781982 segundos (mejor tiempo de 5 corridas)
