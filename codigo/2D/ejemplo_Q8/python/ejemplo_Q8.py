@@ -39,11 +39,10 @@ gdl  = np.reshape(np.arange(ngdl), (nno, 2)) # nodos vs grados de libertad
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
 LaG = df['LaG_mat'][['NL1', 'NL2', 'NL3', 'NL4', 'NL5', 'NL6', 'NL7', 'NL8']].to_numpy() - 1
-# se carga el número del material
-mat = df['LaG_mat']['material'].to_numpy() - 1
 nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
 
-# %% material
+# %% definición de los materiales
+mat = df['LaG_mat']['material'].to_numpy() - 1
 Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad del sólido
 nue  = df['prop_mat']['nu'].to_numpy()      # [-]      coeficiente de Poisson
 rhoe = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
@@ -188,8 +187,8 @@ for e in range(nef):
 
             # se ensamblan la matriz de rigidez del elemento y el vector de
             # fuerzas nodales equivalentes del elemento
-            Ke += Bpq.T @ De[mat[e]] @ Bpq * det_Je[p,q]*te*w_gl[p]*w_gl[q]
-            fe += Npq.T @ be[mat[e]]       * det_Je[p,q]*te*w_gl[p]*w_gl[q]
+            Ke += Bpq.T @ De[mat[e]] @ Bpq * det_Je[p,q]*te[mat[e]]*w_gl[p]*w_gl[q]
+            fe += Npq.T @ be[mat[e]]       * det_Je[p,q]*te[mat[e]]*w_gl[p]*w_gl[q]
 
     # se determina si hay puntos con jacobiano negativo, en caso tal se termina
     # el programa y se reporta
@@ -219,7 +218,7 @@ for i in range(nlcd):
    e     = cd['elemento'][i] - 1
    lado  = cd['lado'][i]
    carga = cd[['tix', 'tiy', 'tjx', 'tjy', 'tkx', 'tky']].loc[i].to_numpy()
-   fte   = t2ft_R89(xnod[LaG[e,:],:], lado, carga, te)
+   fte   = t2ft_R89(xnod[LaG[e,:],:], lado, carga, te[mat[e]])
 
    ft[np.ix_(idx[e])] += fte
 
@@ -430,10 +429,13 @@ meshio.write_points_cells(
         'sx':sx, 'sy':sy, 'txy':txy,
         's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
         'uv'  :a.reshape((nno,2)),
+        'reacciones' : q.reshape((nno,2)),
         'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
         'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)]
-        }
-    # cell_data=cell_data,
+        },
+    cell_data = {
+        "quad8" : {"material" : mat}
+    },
     # field_data=field_data
 )
 
