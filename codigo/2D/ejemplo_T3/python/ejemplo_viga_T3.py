@@ -1,37 +1,36 @@
 # -*- coding: utf-8 -*-
 
+# %%
+'''
+-------------------------------------------------------------------------------
+NOTA: este código SOLO es apropiado para TENSION PLANA usando elementos
+      triangulares de 3 nodos
+-------------------------------------------------------------------------------
+
+DEFINICIÓN DEL PROBLEMA:
+Calcule los desplazamientos y las reacciones en los empotramiento, las
+deformaciones y los esfuerzos de la estructura mostrada en la figura adjunta
+'''
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import func_EF_T3
-from func_EF_T3 import t2ft_T3, plot_esf_def
-
-# %% CÁLCULO DE UNA VIGA CON ELEMENTOS FINITOS TRIANGULARES PARA TENSION PLANA
-
-# DEFINICIÓN DEL PROBLEMA:
-# Calcule los desplazamientos y las reacciones en los empotramiento, las
-# deformaciones y los esfuerzos de la estructura mostrada en la figura adjunta
+from func_EF_T3 import t2ft_T3, plot_esf_def, compartir_variables
 
 # %% constantes que ayudarán en la lectura del código
 X, Y          = 0, 1
 NL1, NL2, NL3 = 0, 1, 2
-
-# %% defino las variables/constantes del sólido
-Ee   = 200e9 # [Pa]    módulo de elasticidad del sólido
-nue  = 0.30  # [-]     coeficiente de Poisson
-rhoe = 7850. # [kg/m³] densidad
-te   = 0.10  # [m]     espesor del sólido
-g    = 9.81  # [m/s²]  aceleración de la gravedad
+g             = 9.81  # [m/s²]  aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
-#df = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
+# df = pd.read_excel('malla_ejemplo.xlsx', sheet_name=None)
 
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
-df = pd.read_excel('malla_refinada_v1.xlsx', sheet_name=None)
+# df = pd.read_excel('malla_refinada_v1.xlsx', sheet_name=None)
 
 # 3) Malla extremadamente refinada cerca a las cargas puntuales y los apoyos
-# df = pd.read_excel('malla_refinada_v2.xlsx', sheet_name=None)
+df = pd.read_excel('malla_refinada_v2.xlsx', sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -44,8 +43,16 @@ gdl  = np.reshape(np.arange(ngdl), (nno,2)) # nodos vs grados de libertad
 
 # %% definición de elementos finitos con respecto a nodos
 # LaG: fila=número del elemento, columna=número del nodo local
-LaG = df['LaG'][['NL1','NL2','NL3']].to_numpy() - 1
+LaG = df['LaG_mat'][['NL1','NL2','NL3']].to_numpy() - 1
 nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
+
+# %% definición de los materiales
+mat = df['LaG_mat']['material'].to_numpy() - 1
+Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad del sólido
+nue  = df['prop_mat']['nu'].to_numpy()      # [-]      coeficiente de Poisson
+rhoe = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
+te   = df['prop_mat']['espesor'].to_numpy() # [m]      espesor
+nmat = Ee.shape[0]                          # número de materiales
 
 # %% Relación de cargas puntuales
 cp  = df['carga_punt']
@@ -83,15 +90,17 @@ B   = nef * [None]          # contenedor para las matrices de deformación
 idx = nef * [None]          # indices asociados a los gdl del EF e
 
 # matriz constitutiva del elemento para TENSION PLANA
-De = np.array([[ Ee/(1-nue**2)    , Ee*nue/(1-nue**2),  0              ],
-               [ Ee*nue/(1-nue**2), Ee/(1-nue**2)    ,  0              ],
-               [ 0                , 0                ,  Ee/(2*(1+nue)) ]])
+De = nmat * [ None ]
+for i in range(nmat):
+    De[i] = np.array([[Ee[i]/(1 - nue[i]**2),        Ee[i]*nue[i]/(1 - nue[i]**2), 0                     ],
+                      [Ee[i]*nue[i]/(1 - nue[i]**2), Ee[i]/(1 - nue[i]**2),        0                     ],
+                      [0,                            0,                            Ee[i]/(2*(1 + nue[i]))]])
 
 for e in range(nef):        # ciclo sobre todos los elementos finitos
    # Calculo de la matriz de rigidez del elemento e
-   x1, y1 = xnod[LaG[e,NL1], :]
-   x2, y2 = xnod[LaG[e,NL2], :]
-   x3, y3 = xnod[LaG[e,NL3], :]
+   x1, y1 = xnod[LaG[e,NL1]]
+   x2, y2 = xnod[LaG[e,NL2]]
+   x3, y3 = xnod[LaG[e,NL3]]
 
    Ae = 0.5*np.linalg.det(np.array([[ 1, x1, y1 ],      # área del EF e
                                     [ 1, x2, y2 ],
@@ -109,11 +118,11 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
                                [  0, c1,    0, c2,    0, c3 ],
                                [ c1, b1,   c2, b2,   c3, b3 ]])
 
-   Ke = te*B[e].T@De@B[e]*Ae
+   Ke = te[mat[e]]*B[e].T@De[mat[e]]@B[e]*Ae
 
    # Calculo del vector de fuerzas nodales equivalentes del elemento e
    # Fuerzas másicas (peso propio)
-   fbe = -rhoe*g*Ae*te*np.array([0., 1., 0., 1., 0., 1.])/3
+   fbe = -rhoe[mat[e]]*g*Ae*te[mat[e]]*np.array([0., 1., 0., 1., 0., 1.])/3
 
    fe = fbe # vector de fuerzas nodales equivalentes
 
@@ -136,7 +145,7 @@ for i in range(nlcd):
    e     = cd['elemento'][i] - 1
    lado  = cd['lado'][i]
    carga = cd[['tix','tiy','tjx','tjy']].loc[i].to_numpy()
-   fte = t2ft_T3(xnod[LaG[e,:],:], lado, carga, te)
+   fte = t2ft_T3(xnod[LaG[e,:],:], lado, carga, te[mat[e]])
 
    ft[np.ix_(idx[e])] += fte
 
@@ -209,9 +218,9 @@ plt.tight_layout()
 deform = np.zeros((3,nef))
 esfuer = np.zeros((3,nef))
 for e in range(nef):
-   ae = a[idx[e]]               # desplazamientos de los gdl del elemento e
-   deform[:,e] = B[e]@ae        # calculo las deformaciones
-   esfuer[:,e] = De@deform[:,e] # calculo los esfuerzos
+   ae = a[idx[e]]                       # desplazamientos de los gdl del elemento e
+   deform[:,e] = B[e]@ae                # calculo las deformaciones
+   esfuer[:,e] = De[mat[e]]@deform[:,e] # calculo los esfuerzos
 
 sx = esfuer[0,:];  sy = esfuer[1,:];  txy = esfuer[2,:]
 ex = deform[0,:];  ey = deform[1,:];  gxy = deform[2,:]
@@ -224,7 +233,7 @@ tabla_exeyezgxy = pd.DataFrame(
    columns=['ex', 'ey', 'ez', 'gxy [rad]'])
 tabla_exeyezgxy.index.name = '# EF'
 
-func_EF_T3.compartir_variables(xnod, LaG, cg, interpolar=True)
+compartir_variables(xnod, LaG, cg, interpolar=True)
 plot_esf_def(ex,  r'$\epsilon_x$')
 plot_esf_def(ey,  r'$\epsilon_y$')
 plot_esf_def(ez,  r'$\epsilon_z$')
@@ -305,9 +314,10 @@ meshio.write_points_cells(
             'sx':sx, 'sy':sy, 'txy':txy,
             's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
             'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
-            'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)] 
-        }   
-    },
+            'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)],
+            "material" : mat
+        }
+    }
     # field_data=field_data
 )
 
