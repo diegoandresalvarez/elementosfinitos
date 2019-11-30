@@ -23,9 +23,10 @@ NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
 g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-#df = pd.read_excel('malla1.xlsx', sheet_name=None)  # EJEMPLO CLASE
-#df = pd.read_excel('malla2.xlsx', sheet_name=None)  # EJEMPLO CLASE MALLA FINA
-df = pd.read_excel('malla3.xlsx', sheet_name=None)   # GANCHO
+nombre_archivo = 'malla1'    # EJEMPLO CLASE
+# nombre_archivo = 'malla2'  # EJEMPLO CLASE MALLA FINA
+# nombre_archivo = 'malla3'  # GANCHO
+df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -403,8 +404,8 @@ tabla_epv = pd.DataFrame(
 tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-nombre_archivo = 'resultados.xlsx'
-writer = pd.ExcelWriter(nombre_archivo, engine = 'xlsxwriter')
+archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
+writer = pd.ExcelWriter(archivo_resultados, engine = 'xlsxwriter')
 
 # cada tabla hecha previamente es guardada en una hoja del archivo de Excel
 tabla_afq.to_excel(writer, sheet_name = 'afq')
@@ -413,7 +414,7 @@ tabla_esf.to_excel(writer, sheet_name = 'sxsytxy')
 tabla_epv.to_excel(writer, sheet_name = 's1s2tmaxsv')
 writer.save()
 
-print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.')
+print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
@@ -421,7 +422,7 @@ print(f'Cálculo finalizado. En "{nombre_archivo}" se guardaron los resultados.'
 
 import meshio
 meshio.write_points_cells(
-    "resultados.vtk",
+    f"resultados_{nombre_archivo}.vtk",
     points=xnod,
     cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
     point_data = {
