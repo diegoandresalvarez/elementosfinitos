@@ -22,7 +22,7 @@ g    = 9.81;        % aceleracion de la gravedad (m/s^2)
 %malla_ejemplo
 
 % Malla_refinada (malla elaborada por David Felipe Cano Perdomo)
-malla_refinada
+malla_refinada_v1
 
 
 %% Se dibuja la malla de elementos finitos

@@ -8,8 +8,8 @@ En esta carpeta se encuentra código para analizar el EF finito triangular de tr
 
 Las siguiente función convierte las fuerzas superficiales aplicadas a un elemento finito triangular de 3 nodos a sus correspondientes cargas nodales equivalentes ft:
 
-* MATLAB: [t2ft_T3.m](t2ft_T3.m)
-* PYTHON: función `t2ft_T3` dentro de [func_EF_T3.py](func_EF_T3.py)
+* MATLAB: [t2ft_T3.m](matlab/t2ft_T3.m)
+* PYTHON: función `t2ft_T3` dentro de [func_EF_T3.py](python/func_EF_T3.py)
 
 
 ## Programa para calcular los esfuerzos, deformaciones y desplazamientos de un sólido bidimensional utilizando elementos finitos triangulares de tres nodos
@@ -25,8 +25,8 @@ Asuma:
 * espesor de la viga = 10 cm
 
 Implementaciones:
-* MATLAB: [ejemplo_viga_T3.m](ejemplo_viga_T3.m)
-* PYTHON: se hicieron dos implementaciones: una con matrices completas [ejemplo_viga_T3.py](ejemplo_viga_T3.py) y otra con matrices ralas [ejemplo_viga_T3_sparse.py](ejemplo_viga_T3_sparse.py) 
+* MATLAB: [matlab/ejemplo_viga_T3.m](matlab/ejemplo_viga_T3.m)
+* PYTHON: se hicieron dos implementaciones: una con matrices completas [ejemplo_viga_T3.py](python/ejemplo_viga_T3.py) y otra con matrices ralas [ejemplo_viga_T3_sparse.py](ejemplo_viga_T3_sparse.py) 
 
 Los tiempo de ejecución de ambas versiones son:
 * TIEMPO VERSION FULL:   0.0057590007781982 segundos (mejor tiempo de 5 corridas)
