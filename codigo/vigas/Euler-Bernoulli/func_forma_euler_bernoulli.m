@@ -1,7 +1,5 @@
 % Calculo de las funciones de forma del elemento de viga de Euler-Bernoulli
-
-clear all, clc, close all
-
+clear; clc; close all
 sympref('AbbreviateOutput',false);  % para el pretty
 
 syms x xi alpha0 alpha1 alpha2 alpha3 w1 w2 dw_dx1 dw_dx2 L x1 x2
@@ -20,7 +18,7 @@ r = solve(w1     == (alpha0 + alpha1*x1 + alpha2*x1^2 + alpha3*x1^3  ),...
           dw_dx2 == (         alpha1    + 2*alpha2*x2 + 3*alpha3*x2^2),...
           alpha0, alpha1, alpha2, alpha3);
 
-w = simplify(r.alpha0 + r.alpha1*x + r.alpha2*x^2 + r.alpha3*x^3);
+w = r.alpha0 + r.alpha1*x + r.alpha2*x^2 + r.alpha3*x^3;
 
 % reescribo las funciones de forma en terminos de xi
 w = simplify(subs(w, x, xi*L/2 + xm));
@@ -38,14 +36,10 @@ w = collect(w,dw_dx2);
 %     ((L*xi^3)/8 + (L*xi^2)/8 - (L*xi)/8 - L/8)*dw_dx2
 
 % es decir:
-N1  = simplify(xi^3/4 - (3*xi)/4 + 1/2);
-N1b = simplify((L*xi^3)/8 - (L*xi^2)/8 - (L*xi)/8 + L/8);
-N2  = simplify(- xi^3/4 + (3*xi)/4 + 1/2);
-N2b = simplify((L*xi^3)/8 + (L*xi^2)/8 - (L*xi)/8 - L/8);
-
-N1b = simplify(N1b/(L/2));
-N2b = simplify(N2b/(L/2));
-
+N1  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {1, 0, 0, 0}));
+N1b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 1, 0, 0}));
+N2  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {0, 0, 1, 0}));
+N2b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 0, 0, 1}));
 
 %% Se muestra finalmente w
 % Recuerde que 
@@ -57,21 +51,21 @@ disp('w(xi) = '); pretty(w)
 disp('es decir:');
 
 disp('w(xi) = ')
-pretty(expand(N1))
+pretty(N1)
 disp('*w1 + ')
-pretty(expand(N1b))
+pretty(N1b)
 disp('(L/2)*dw_dx1 + ')
-pretty(expand(N2))
+pretty(N2)
 disp('*w2 + ')
-pretty(expand(N2b))
+pretty(N2b)
 disp('(L/2)*dw_dx2')
 
 disp(' ')
 disp('Siendo las funciones de forma:');
-disp('N1  = '); pretty(expand(N1))
-disp('N1b = '); pretty(expand(N1b))
-disp('N2  = '); pretty(expand(N2))
-disp('N2b = '); pretty(expand(N2b))
+disp('N1  = '); pretty(N1)
+disp('N1b = '); pretty(N1b)
+disp('N2  = '); pretty(N2)
+disp('N2b = '); pretty(N2b)
 
 %%     %%%%%%%%%%%%%%%%%%%%%%%%%% METODO 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf('\n\n*** Metodo 2 para encontrar las funciones de forma *** \n\n')
@@ -113,17 +107,13 @@ for i = 1:4
       
       % con este comando convierto la funcion de forma de tipo simbolico a
       % tipo funcion
-      % NN = inline(vectorize(char(N{i})),'xi');
-      NN = str2func(['@(xi) ', vectorize(char(N{i}))]);
-      % funcion simbolica a cadena y cadena a funcion simbolica
-      % se recomienda aqui mirar la ayuda de las funciones 
-      % char, vectorize y str2func
+      NN = matlabFunction(N{i}, 'Vars', {'xi'});
       
-      xlabel('\xi', 'FontSize',26); % titulo eje X
-      title(strrep(nombre{i},'xi','\xi'), 'FontSize', 26);
+      xlabel('\xi'); % titulo eje X
+      title(strrep(nombre{i},'xi','\xi'));
       plot(XI, NN(XI),'LineWidth',2); % malla de alambre
       axis equal tight
-end;
+end
 
 
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
@@ -141,11 +131,11 @@ Bf = simplify(dNN2_dxi2*(4/L^2));
 disp('Bf = '); pretty(Bf);
 
 %% Calculo de la matriz K
-K = simplify(int(Bf.'*E*I*Bf*L/2,xi,-1,1));
+K = simplify(int(Bf.'*E*I*Bf*L/2, xi, -1, 1));
 disp('K = (E*I/L^3)*'); pretty(K/(E*I/L^3));
 
 %% Calculo del vector de fuerzas nodales equivalentes por fuerzas masicas
-f = simplify(int(NN.'*q*L/2,xi,-1,1));
+f = simplify(int(NN.'*q*L/2, xi, -1, 1));
 disp('f = q*L*'); pretty(f/(q*L));
 
 %% Calculo de la matriz de masa consistente

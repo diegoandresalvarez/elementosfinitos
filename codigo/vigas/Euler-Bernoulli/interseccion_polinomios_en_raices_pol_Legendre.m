@@ -1,1 +1,1 @@
-/bodega/github/elementosfinitos/codigo/2D/extrapolacion_de_esfuerzos/interseccion_polinomios_en_raices_pol_Legendre.m
+../../2D/extrapolacion_de_esfuerzos/interseccion_polinomios_en_raices_pol_Legendre.m
