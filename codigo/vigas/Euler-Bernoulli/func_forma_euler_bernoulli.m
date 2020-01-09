@@ -135,7 +135,8 @@ K = simplify(int(Bf.'*E*I*Bf*L/2, xi, -1, 1));
 disp('K = (E*I/L^3)*'); pretty(K/(E*I/L^3));
 
 %% Calculo del vector de fuerzas nodales equivalentes por fuerzas masicas
-f = simplify(int(NN.'*q*L/2, xi, -1, 1));
+m = 0;
+f = simplify(int(NN.'*q*L/2 + dNN_dxi.'*m, xi, -1, 1));
 disp('f = q*L*'); pretty(f/(q*L));
 
 %% Calculo de la matriz de masa consistente
