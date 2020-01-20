@@ -63,9 +63,9 @@ Ilustración tomada de: Sam Helwany (2007). Applied soil mechanics with ABAQUS a
 
 Asumiendo que se le aplica una carga uniformemente distribuída de 10 kPa, distribuída en un área circular de 0.5 m de radio, calcule los desplazamientos, las deformaciones y los esfuerzos en la masa del pavimento y del suelo. Elabore una gráfica que muestre como varían dichas cantidades en el eje axial (r=0). Para tal fin utilice elementos finitos rectangulares isoparamétricos de 8 nodos.
 
-* Si se realiza el ejercicio utilizando los programas vistos en clase y creando la malla con el programa [gmsh](http://gmsh.info/), se tendrá +2 unidades. Se deben visualizar los resultados utilizando [Paraview](https://www.paraview.org/).
+* Si se realiza el ejercicio utilizando los programas vistos en clase y creando la malla con el programa [gmsh](http://gmsh.info/), se tendrá +4 unidades. Se deben visualizar los resultados utilizando [Paraview](https://www.paraview.org/).
 
- * Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +1 unidad.
+ * Si se compara la respuesta con la obtenida por el programa de EFs que usted registró en la WIKI se obtendrá +2 unidad.
 
 Analice principalmente, el papel que juega la capa de asfalto y la base en la disipación de esfuerzos en el suelo (para tal fin, asuma que dichas capas no existen y observen como cambia la distribución de los esfuerzos en el suelo).
 
