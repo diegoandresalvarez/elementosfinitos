@@ -1,6 +1,6 @@
 # Taller 2: elementos finitos bidimensionales y axisimétricos
 
-* Fecha y hora de entrega: domingo diciembre 1, 2019 a las 23:59.
+* Fecha y hora de entrega: jueves enero 16, 2020 a las 23:59.
 * Presentación individual.
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
