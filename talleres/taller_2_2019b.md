@@ -5,7 +5,7 @@
 * Lenguajes de programación a utilizar: MATLAB (Ossa) o PYTHON (el resto del grupo).
 
 **Notas:** 
-* Por cada día de retraso en la entrega del trabajo se les descontará 0.5 unidades de la nota final.
+* Por cada día de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final.
 * El trabajo es sustentable. Si no se aprueba la sustentación se obtendrá un cero en la nota de dicho trabajo.
 
 ## Criterios de calificación
