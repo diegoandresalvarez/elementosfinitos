@@ -1,6 +1,7 @@
 # Taller 3: modelado de una unión metálica utilizando un software profesional (opcional)
 
-* Fecha y hora de entrega de los videos y del informe: domingo febrero 5, 2020 a las 23:59. Por cada día de retraso en la entrega del trabajo se les descontará 0.4 unidades de la nota final.
+* Fecha y hora de entrega de los videos y del informe: jueves febrero 13, 2020 a las 14:00. Por cada hora de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final.
+
 * Presentación individual y grupal: viernes febrero 14, 2020 a las 7:00 a.m.
 
 La idea de este trabajo es modelar mediante un programa profesional la unión metálica mostrada:

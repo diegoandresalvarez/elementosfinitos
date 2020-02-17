@@ -17,7 +17,11 @@
 - 17% - Exámen 2: noviembre 6, 2019
 - 17% - Exámen 3: enero 24, 2020
 - 17% - Exámen 4: enero 31, 2020
-- 32% - Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+- 32% - Trabajos 1 y 2: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+- 10% - Taller final opcional.
+```
+NOTA FINAL = 0.17*Examen1 + 0.17*Examen2 + 0.17*Examen3 + 0.17*Examen4 + 0.16*Trabajo1 + 0.16*Trabajo2 + 0.10*TallerFinal
+```
 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 
