@@ -8,7 +8,7 @@ La idea de este trabajo es modelar mediante un programa profesional la unión me
 
 ![union_metalica_C410_AVM](figs/union_metalica_C410_AVM.png)
 
-la cual está contenida en el archivo [union_metalica_C410.stl](figs/union_metalica_C410.stl) utilizando elementos finitos tridimensionales. Esta unión metálica es la que está en la esquina inferior y de la parte posterior del salón C410. El archivo fue amablemente creado por Juan Esteban Ossa Ossa (jueossaos@unal.edu.co).
+la cual está contenida en el archivo [union_metalica_C410.iges](figs/union_metalica_C410.iges) utilizando elementos finitos tridimensionales. Esta unión metálica es la que está en la esquina inferior y de la parte posterior del salón C410. El archivo fue amablemente creado por Juan Esteban Ossa Ossa (jueossaos@unal.edu.co).
 
 Las fuerzas/momentos que debe soportar la unión son:
 * A = 100 kN
