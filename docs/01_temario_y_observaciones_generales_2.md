@@ -3,8 +3,8 @@
 ## Detalles del curso
 - Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
 - Intensidad horaria semanal presencial: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
-  - ~~Lunes     14:00-16:00 C410~~
-  - ~~Miércoles 14:00-16:00 C410~~
+  - Miércoles 16:00-18:00 C201
+  - Viernes 8:00-10:00 C201
 - Tiempo de actividad autónoma por semana: 8 horas
 - Semanas: 16
 - Créditos: 3
@@ -13,11 +13,14 @@
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
 ## Evaluaciones y trabajos
-- 17% - Exámen 1: ~~diciembre 25, 2019~~
-- 17% - Exámen 2: ~~octubre 23, 2019~~
-- 17% - Exámen 3: ~~noviembre 20, 2019~~
-- 17% - Exámen 4: ~~diciembre 18, 2019~~
-- 32% - Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+* Exámenes:
+  - 20% - Examen 1: viernes 17 de abril de 2020
+  - 20% - Examen 2: viernes 22 de mayo de 2020
+  - 20% - Examen 3: viernes 26 de junio de 2020
+* Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+  - 13% - Trabajo 1: fecha por definir
+  - 13% - Trabajo 2: fecha por definir
+  - 14% - Trabajo 3: fecha por definir
 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 

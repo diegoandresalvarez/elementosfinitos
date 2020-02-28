@@ -18,13 +18,18 @@ Tomado de:
 - [Temario y observaciones generales del curso 2](docs/01_temario_y_observaciones_generales_2.md)
 - [Diapositivas](./diapositivas/)
 - [Códigos](./codigo/)
-- [Tema a evaluar en los exámenes](docs/tema_examenes.md)
 - [Recursos](docs/recursos.md)
 - [Video tutoriales de GiD](docs/GiD.md)
 - [Video tutoriales de COMSOL Multiphysics v. 3.5](docs/COMSOL.md)
 
-## Examenes y talleres
-- [Tema de los exámenes](docs/tema_examenes.md)
-- [Taller 1](talleres/taller_1_2019b.md)
-- [Taller 2](talleres/taller_2_2019b.md)
-- [Taller Final](talleres/taller_3_2019b.md)
+## Examenes y talleres de EFs 1
+- [Tema de los exámenes](docs/tema_examenes_EF1.md)
+- [Taller 1](talleres/EF1/taller_1_2019b.md): barras 
+- [Taller 2](talleres/EF1/taller_2_2019b.md): estructuras en tensión y deformaciónplana
+- [Taller 3](talleres/EF1/taller_3_2019b.md): estructuras 3D y con simetría axial20
+
+## Examenes y talleres de EFs 2
+- [Tema de los exámenes](docs/tema_examenes_EF2.md)
+- [Taller 1](talleres/EF2/taller_1_2020a.md): vigas
+- [Taller 2](talleres/EF2/taller_2_2020a.md): losas
+- [Taller 3](talleres/EF2/taller_3_2020a.md): cascarones
