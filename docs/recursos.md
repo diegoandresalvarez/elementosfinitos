@@ -13,12 +13,11 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
 * [Prof. K.J. Bathe. 2.094 Finite Element Analysis of Solids and Fluids. MIT. USA.](http://ocw.mit.edu/courses/mechanical-engineering/2-094-finite-element-analysis-of-solids-and-fluids-spring-2008/index.htm)
 
 ## Video tutoriales
-
-* Dr. R. Krishnakumar. 
-  * [Dr. R. Krishnakumar. Introduction to Finite Element Method. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106135)
-  * [Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112106130)
-
-* [Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA](http://nptel.iitm.ac.in/video.php?subjectId=112104115)
+* NPTEL: buscar en https://nptel.ac.in/course.html (no pongo en enlace, porque esos links están variando constantemente)
+  * Dr. R. Krishnakumar. 
+    * Dr. R. Krishnakumar. Introduction to Finite Element Method. Department of Engineering Design. IIT Madras. INDIA
+    * Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA
+  * Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA
 
 * Prof. J. Bathe
   * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/index.htm)
@@ -28,19 +27,10 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
   * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/nonlinear/)
 
 
-## Software libre para el análisis de estructuras
-* http://www.structural-engineering.fsnet.co.uk/free.htm
-
 ## Otros
-* http://homepage.usask.ca/~ijm451/finite/fe_resources/fe_resources.html
-* [Finite Element Method in Geotechnical Engineering](http://download.fine.cz/manuals/T08_Geo_FEM_EN.pdf)
 * [El hundimiento de la plataforma petrolera Sleipner](http://www.ima.umn.edu/~arnold/disasters/sleipner.html): una plataforma que falló debido a un mal análisis de elementos finitos.
-
----
-
-Curso elementos finitos II: http://www.ibk.ethz.ch/ch/education/education/index_EN
-
+* [Chatzi - Curso de EFs no lineales](https://chatzi.ibk.ethz.ch/education/method-of-finite-elements-ii.html)
 
 # Libros en la biblioteca
-* Kindmann, Rolf and Kraus, Matthias. Steel structures :design using FEM. Berlin : Wilhelm Ernst & Sohn, c2011. 540 páginas 
-* [Dominique Chapelle, Klaus-Jürgen Bathe The Finite Element Analysis of Shells - Fundamentals. Springer, 2011](http://link.springer.com/book/10.1007/978-3-642-16408-8/page/1). Se puede descargar desde el repositorio electrónico del SINAB.
+* Kindmann, Rolf and Kraus, Matthias (2011). Steel structures: design using FEM. Berlin : Wilhelm Ernst & Sohn. 540 páginas 
+* [Dominique Chapelle, Klaus-Jürgen Bathe The Finite Element Analysis of Shells - Fundamentals. Springer, 2011](https://www.springer.com/gp/book/9783642164071). Se puede descargar desde el repositorio electrónico del SINAB.

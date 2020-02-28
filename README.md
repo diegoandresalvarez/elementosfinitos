@@ -26,10 +26,10 @@ Tomado de:
 - [Tema de los exámenes](docs/tema_examenes_EF1.md)
 - [Taller 1](talleres/EF1/taller_1_2019b.md): barras 
 - [Taller 2](talleres/EF1/taller_2_2019b.md): estructuras en tensión y deformaciónplana
-- [Taller 3](talleres/EF1/taller_3_2019b.md): estructuras 3D y con simetría axial20
+- [Taller 3](talleres/EF1/taller_3_2019b.md): estructuras 3D y con simetría axial
 
 ## Examenes y talleres de EFs 2
 - [Tema de los exámenes](docs/tema_examenes_EF2.md)
 - [Taller 1](talleres/EF2/taller_1_2020a.md): vigas
 - [Taller 2](talleres/EF2/taller_2_2020a.md): losas
-- [Taller 3](talleres/EF2/taller_3_2020a.md): cascarones
+- [Taller 3](talleres/EF2/taller_3_2020a.md): cascarones + dinámica
