@@ -6,7 +6,7 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
 * [Celigüeta-Lizarza (2011). Método de los elementos finitos para el análisis estructural. 4 ed.](http://hdl.handle.net/10171/19069)
 * [Ádám Kovács, István Moharos, István Oldal, András Szekrényes (2012). Finite element Methode](http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/VEM-EN.pdf). Disponible en: http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/adatok.html.
 
-* http://www.colorado.edu/engineering/cas/courses.d/IFEM.d/
+* Carlos Felippa. Introduction To Finite Element Methods (IFEM), University of Colorado at Boulder, [disponible en línea](https://vulcanhammernet.files.wordpress.com/2017/01/ifem.pdf).
 
 * [Prof. K.J. Bathe. 2.092 / 2.093 Finite Element Analysis of Solids and Fluids I. MIT. USA.](http://ocw.mit.edu/courses/mechanical-engineering/2-092-finite-element-analysis-of-solids-and-fluids-i-fall-2009/)
 
