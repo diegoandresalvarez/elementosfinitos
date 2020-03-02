@@ -15,7 +15,7 @@ Cuando la intersección de un polinomio de grado `n` con su ajuste por mínimos 
 Código:
 * MATLAB: [interseccion_polinomios_en_raices_pol_Legendre.m](../../2D/extrapolacion_de_esfuerzos/interseccion_polinomios_en_raices_pol_Legendre.m)
 
-##  Cálculo de la matriz K para el EF de 2 nodos resolviendo la ecuación diferencial
+##  Cálculo de la matriz K para el EF de 2 nodos de Euler-Bernoulli resolviendo la ecuación diferencial
 Ver [aquí](../../repaso_matricial/portico_2d/deduccion_K_y_fe_elemento_portico_2D/).
 
 
