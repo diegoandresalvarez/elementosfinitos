@@ -24,10 +24,7 @@ w = r.alpha0 + r.alpha1*x + r.alpha2*x^2 + r.alpha3*x^3;
 w = simplify(subs(w, x, xi*L/2 + xm));
 
 % Se factorizan w1, dw_dx1, w2, dw_dx2
-w = collect(w,w1);
-w = collect(w,dw_dx1);
-w = collect(w,w2);
-w = collect(w,dw_dx2);
+w = collect(w, {'w1', 'dw_dx1', 'w2', 'dw_dx2'});
 
 % El programa retorno:
 % w = (xi^3/4 - (3*xi)/4 + 1/2)*w1 + ...
@@ -44,7 +41,8 @@ N2b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 0, 0, 1}));
 %% Se muestra finalmente w
 % Recuerde que 
 % w(x) = N1(x)w1 + N1b(x)dw_dx1 + N2(x)w2 + N2b(x)dw_dx2
-% en la siguiente expresion se pueden ver claramente los terminos de N1, N1b, N2 y N2b
+% en la siguiente expresion se pueden ver claramente los terminos 
+% de N1, N1b, N2 y N2b
 
 disp('w(xi) = '); pretty(w)
 
@@ -66,6 +64,19 @@ disp('N1  = '); pretty(N1)
 disp('N1b = '); pretty(N1b)
 disp('N2  = '); pretty(N2)
 disp('N2b = '); pretty(N2b)
+
+%% Se grafican las funciones de forma Hermitianas
+figure
+hold on
+fplot(N1,  [-1,1], 'LineWidth', 2);
+fplot(N1b, [-1,1], 'LineWidth', 2);
+fplot(N2,  [-1,1], 'LineWidth', 2);
+fplot(N2b, [-1,1], 'LineWidth', 2);
+xlabel('\xi', 'FontSize', 20)
+legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
+                           'Interpreter', 'Latex', 'FontSize', 20)
+title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
+axis equal
 
 %%     %%%%%%%%%%%%%%%%%%%%%%%%%% METODO 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf('\n\n*** Metodo 2 para encontrar las funciones de forma *** \n\n')
@@ -96,26 +107,6 @@ for i = 1:4
    fprintf('%s = \n', nombre{i}); pretty(N{i});
 end
    
-%% Grafico las funciones de forma
-XI  = -1:0.05:1;
-
-figure % creo un lienzo
-for i = 1:4   
-      subplot(2,2,i);        % Divido el lienzo en 2x2 dibujos
-      grid on                % creo la rejilla
-      hold on;               % Para que no se sobreescriban los graficos   
-      
-      % con este comando convierto la funcion de forma de tipo simbolico a
-      % tipo funcion
-      NN = matlabFunction(N{i}, 'Vars', {'xi'});
-      
-      xlabel('\xi'); % titulo eje X
-      title(strrep(nombre{i},'xi','\xi'));
-      plot(XI, NN(XI),'LineWidth',2); % malla de alambre
-      axis equal tight
-end
-
-
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
 NN        = [N{1}   N{2}*L/2   N{3}   N{4}*L/2];
 dNN_dxi   = diff(NN,xi);
@@ -144,5 +135,4 @@ syms rho A
 M = simplify(int(rho*A*NN.'*NN*L/2,xi,-1,1));
 disp('M = rho*A*L/420*'); pretty(M/(rho*A*L/420));
 
-return %bye, bye!
-
+return % bye, bye!

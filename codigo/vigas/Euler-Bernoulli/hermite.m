@@ -33,12 +33,14 @@ disp('Nb_2(xi) = '); pretty(N2b);
 %% Se dibujan las funciones de forma Hermitianas
 figure
 hold on
-fplot(N1,  [-1,1]);
-fplot(N1b, [-1,1]);
-fplot(N2,  [-1,1]);
-fplot(N2b, [-1,1]);
+fplot(N1,  [-1,1], 'LineWidth', 2);
+fplot(N1b, [-1,1], 'LineWidth', 2);
+fplot(N2,  [-1,1], 'LineWidth', 2);
+fplot(N2b, [-1,1], 'LineWidth', 2);
 xlabel('\xi', 'FontSize', 20)
 legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
                            'Interpreter', 'Latex', 'FontSize', 20)
+title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
+axis equal
 
 %% bye bye
