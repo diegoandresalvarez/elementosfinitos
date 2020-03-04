@@ -30,4 +30,15 @@ disp('Nb_1(xi) = '); pretty(N1b);
 disp('N_2(xi)  = '); pretty(N2);    
 disp('Nb_2(xi) = '); pretty(N2b);
 
+%% Se dibujan las funciones de forma Hermitianas
+figure
+hold on
+fplot(N1,  [-1,1]);
+fplot(N1b, [-1,1]);
+fplot(N2,  [-1,1]);
+fplot(N2b, [-1,1]);
+xlabel('\xi', 'FontSize', 20)
+legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
+                           'Interpreter', 'Latex', 'FontSize', 20)
+
 %% bye bye
