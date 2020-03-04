@@ -1,10 +1,47 @@
 # Elementos finitos para modelar la flexión de vigas de Euler-Bernoulli
 
-## Cálculo de las funciones de forma y la matriz `K` del elemento de viga de Euler-Bernoulli
-* MATLAB: [func_forma_euler_bernoulli.m](func_forma_euler_bernoulli.m)
+## Programas para el cálculo de las funciones de forma del elemento de viga de Euler-Bernoulli
 
-## Programa para el cálculo de las funciones de forma del elemento de viga de Euler-Bernoulli usando polinomios interpoladores de Hermite
+### Usando polinomios interpoladores de Hermite
 * MATLAB: [hermite.m](hermite.m)
+
+### Resolviendo un sistema de ecuaciones
+* MATLAB: [func_forma_euler_bernoulli.m](func_forma_euler_bernoulli.m). Nota: este programa adicionalmente calcula la matriz de rigidez `K` y la matriz de masa consistente `M`.
+
+Estos programas verifican que las funciones de forma buscadas son:
+```
+         3
+       xi    3 xi   1
+N1 =   --- - ---- + -
+        4      4    2
+
+         3     2
+       xi    xi    xi   1
+N1b =  --- - --- - -- + -
+        4     4     4   4
+
+           3
+         xi    3 xi   1
+N2 =   - --- + ---- + -
+          4      4    2
+
+         3     2
+       xi    xi    xi   1
+N2b =  --- + --- - -- - -
+        4     4     4   4
+```
+y que la matriz de rigidez del EF de viga de dos nodos es:
+```
+        /  12,  6 L,  -12,  6 L \
+        |                       |
+        |         2           2 |
+    E I | 6 L, 4 L , -6 L, 2 L  |
+K = ---*|                       |
+      3 | -12, -6 L,  12,  -6 L |
+     L  |                       |
+        |         2           2 |
+        \ 6 L, 2 L , -6 L, 4 L  /
+```
 
 ## Un polinomio de orden `n` y otro de orden `n-1` ajustado por mínimos cuadrados se intersectan en la raíces del polinomio de Legendre de orden `n`
 
@@ -17,6 +54,3 @@ Código:
 
 ##  Cálculo de la matriz K para el EF de 2 nodos de Euler-Bernoulli resolviendo la ecuación diferencial
 Ver [aquí](../../repaso_matricial/portico_2d/deduccion_K_y_fe_elemento_portico_2D/).
-
-
-
