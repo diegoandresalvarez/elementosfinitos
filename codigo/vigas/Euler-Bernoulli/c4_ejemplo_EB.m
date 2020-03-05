@@ -8,7 +8,7 @@ clear, clc, close all         % borrar memoria y pantalla
 Y = 1; TH = 2;
 
 L   = 0.1;      % m           % longitud de cada EF
-E   = 200e9;    % Pa          % modulo de elasticidad de la barra
+E   = 200e6;    % kPa         % modulo de elasticidad de la barra
 b   = 0.3;      % m           % base de la viga
 h   = 1.5;      % m           % altura de la viga
 A   = b*h;      % m^2         % area transversal de la viga
@@ -23,15 +23,15 @@ LaG = [ (1:(nno-1))' (2:nno)'   ]; % definicion de EFs con respecto a nodos
 
 %% Relacion de cargas distribuidas
 p = zeros(nef,1);
-p(101:160) = -1200; % N/m     % carga distribuida en [1.0, 1.6] m
+p(101:160) = -12; % kN/m     % carga distribuida en [1.0, 1.6] m
 
 %% Relacion de cargas puntuales
 f = zeros(ngdl,1);   % vector de fuerzas nodales equivalentes global
-f(gdl( 51,Y)) = -3000; % N   % carga puntual en x = 5 m
-f(gdl(191,Y)) = -1500; % N   % carga puntual en x = 18 m
+f(gdl( 51,Y)) = -30; % kN   % carga puntual en x = 5 m
+f(gdl(191,Y)) = -15; % kN   % carga puntual en x = 19 m
 
 %% VIGA DE EULER-BERNOULLI:
-% Con el programa c4_func_forma_euler_bernoulli.m se calcularon:
+% Con el programa "func_forma_euler_bernoulli.m" se calcularon:
 % * Ke     = la matriz de rigidez de flexion del elemento e
 % * fe     = el vector de fuerzas nodales equivalentes
 % * Bf     = la matriz de deformaciones de flexion
@@ -57,7 +57,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
    
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
-end;
+end
 
 %% se resuelve el sistema de ecuaciones
 % f = vector de fuerzas nodales equivalentes
@@ -85,7 +85,7 @@ ac = apoyos(:,2);            % desplazamientos conocidos
 Kcc = K(c,c); Kcd = K(c,d); fd = f(c);
 Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 
-ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
+ad = Kdd\(fc - Kdc*ac);      % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
 q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
@@ -114,7 +114,7 @@ for e = 1:nef
    
    mom(:,e) = E*I*Bfe*ae;              % momento flector   
    cor(e) = E*I*dN3_dxi3*(8/(L^3))*ae; % fuerza cortante   
-end;
+end
 
 %% se calculan los desplazamientos al interior de cada EF
 nint = 10;           % numero de puntos donde se interpolara dentro del EF
@@ -158,7 +158,7 @@ vect_mov = reshape(a,2,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: w = %12.4g m, theta = %12.4g rad \n', ...
       i, vect_mov(i,Y), vect_mov(i,TH));
-end;
+end
 
 disp(' ');
 disp('Fuerzas nodales de equilibrio (solo se imprimen los diferentes de cero)');
@@ -166,9 +166,9 @@ disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 q = reshape(q,2,nno)';
 for i = 1:nno   
    if ~isequal(q(i,:),[0 0])
-      fprintf('Nodo %3d W = %12.4g N, Mx = %12.4g N-m\n', i, q(i,Y), q(i,TH));
-   end;
-end;
+      fprintf('Nodo %3d W = %12.4g kN, Mx = %12.4g kN-m\n', i, q(i,Y), q(i,TH));
+   end
+end
 
 %% Grafico la solucion analitica y la solucion por el MEF
 %% 1) grafico los desplazamientos de la barra
@@ -178,7 +178,7 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h1eb = plot(xx{e}, ww{e}, 'b-');       % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para el desplazamiento', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Desplazamiento (m)')       % titulo del eje Y
@@ -189,7 +189,7 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h2eb = plot(xx{e}, tt{e}, 'b-');       % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para el giro', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Giro (rad)')               % titulo del eje Y
@@ -204,7 +204,7 @@ title({'Solucion con el MEF para el momento flector',...
    '(el momento positivo es aquel que produce traccion en la fibra inferior)'},...
    'FontSize',15);
 xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Momento flector (N-m)')    % titulo del eje Y
+ylabel('Momento flector (kN-m)')   % titulo del eje Y
 
 %% 4) grafico la fuerza cortante
 subplot(2,1,2);
@@ -212,10 +212,10 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h4eb = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [cor(e) cor(e)], 'b-'); % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para la fuerza cortante', 'FontSize', 15);
 xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Fuerza cortante (N)')      % titulo del eje Y
+ylabel('Fuerza cortante (kN)')     % titulo del eje Y
 
 %%
 return; % bye, bye!
