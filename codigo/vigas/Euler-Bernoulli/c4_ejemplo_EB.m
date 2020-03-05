@@ -166,7 +166,7 @@ disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 q = reshape(q,2,nno)';
 for i = 1:nno   
    if ~isequal(q(i,:),[0 0])
-      fprintf('Nodo %3d W = %12.4g kN, Mx = %12.4g kN-m\n', i, q(i,Y), q(i,TH));
+      fprintf('Nodo %3d Ry = %12.4g kN, Mz = %12.4g kN-m\n', i, q(i,Y), q(i,TH));
    end
 end
 
@@ -182,6 +182,7 @@ end
 title('Solucion con el MEF para el desplazamiento', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Desplazamiento (m)')       % titulo del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
 %% 2) grafico los angulos de giro
 subplot(2,1,2);
@@ -193,6 +194,7 @@ end
 title('Solucion con el MEF para el giro', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Giro (rad)')               % titulo del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
 %% 3) grafico los momentos
 figure(2)                          % cree un nuevo lienzo
@@ -205,6 +207,7 @@ title({'Solucion con el MEF para el momento flector',...
    'FontSize',15);
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Momento flector (kN-m)')   % titulo del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
 %% 4) grafico la fuerza cortante
 subplot(2,1,2);
@@ -216,6 +219,7 @@ end
 title('Solucion con el MEF para la fuerza cortante', 'FontSize', 15);
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Fuerza cortante (kN)')     % titulo del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
 %%
 return; % bye, bye!
