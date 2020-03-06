@@ -117,17 +117,18 @@ disp('dNN_dxi = ');   pretty(dNN_dxi);
 disp('dNN2_dxi2 = '); pretty(dNN2_dxi2);
 disp('dNN3_dxi3 = '); pretty(dNN3_dxi3);
 
-%% Calculo de la matriz Bf
-Bf = simplify(dNN2_dxi2*(4/L^2));
-disp('Bf = '); pretty(Bf);
+%% Calculo de la matriz Bb
+Bb = simplify(dNN2_dxi2*(4/L^2));
+disp('Bb = '); pretty(Bb);
 
 %% Calculo de la matriz K
-K = simplify(int(Bf.'*E*I*Bf*L/2, xi, -1, 1));
+K = simplify(int(Bb.'*E*I*Bb*L/2, xi, -1, 1));
 disp('K = (E*I/L^3)*'); pretty(K/(E*I/L^3));
 
 %% Calculo del vector de fuerzas nodales equivalentes por fuerzas masicas
+fz = q;
 m = 0;
-f = simplify(int(NN.'*q*L/2 + dNN_dxi.'*m, xi, -1, 1));
+f = simplify(int(NN.'*fz*L/2 + dNN_dxi.'*m, xi, -1, 1));
 disp('f = q*L*'); pretty(f/(q*L));
 
 %% Calculo de la matriz de masa consistente

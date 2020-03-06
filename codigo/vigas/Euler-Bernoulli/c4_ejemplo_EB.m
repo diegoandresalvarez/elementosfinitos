@@ -102,7 +102,7 @@ cor  = zeros(1,nef); % fuerza cortante
 xi = [ -sqrt(1/3); sqrt(1/3) ]; % raices del polinom de Legendre de grado 2
 
 % matriz de deformaciones de flexion
-Bfe = [ (6*xi)/L^2, (3*xi - 1)/L, -(6*xi)/L^2, (3*xi + 1)/L ];
+Bbe = [ (6*xi)/L^2, (3*xi - 1)/L, -(6*xi)/L^2, (3*xi + 1)/L ];
 
 dN3_dxi3 = [ 3/2, (3*L)/4, -3/2, (3*L)/4];
 for e = 1:nef
@@ -112,7 +112,7 @@ for e = 1:nef
    % vector de desplazamientos nodales del elemento a^{(e)}
    ae = a(idx{e});
    
-   mom(:,e) = E*I*Bfe*ae;              % momento flector   
+   mom(:,e) = E*I*Bbe*ae;              % momento flector   
    cor(e) = E*I*dN3_dxi3*(8/(L^3))*ae; % fuerza cortante   
 end
 
