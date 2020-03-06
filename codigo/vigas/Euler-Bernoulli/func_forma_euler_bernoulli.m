@@ -108,10 +108,10 @@ for i = 1:4
 end
    
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
-NN        = [N{1}   N{2}*L/2   N{3}   N{4}*L/2];
-dNN_dxi   = diff(NN,xi);
-dNN2_dxi2 = diff(NN,xi,2);
-dNN3_dxi3 = diff(NN,xi,3);
+NN        = expand([N{1}   N{2}*L/2   N{3}   N{4}*L/2]);
+dNN_dxi   = expand(diff(NN,xi));
+dNN2_dxi2 = expand(diff(NN,xi,2));
+dNN3_dxi3 = expand(diff(NN,xi,3));
 disp('N = ');         pretty(NN);
 disp('dNN_dxi = ');   pretty(dNN_dxi);
 disp('dNN2_dxi2 = '); pretty(dNN2_dxi2);
