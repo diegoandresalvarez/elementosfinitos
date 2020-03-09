@@ -119,6 +119,7 @@ rwT2 = simplify(subs(rwT2, {I, Aast, G}, {b*h^3/12, 5*b*h/6, E/(2*(1+nu))}))
 limit(rwT2, lambda, inf)
 
 return
+
 %% A partir de los resultados se hizo el siguiente programa:
 clear, clc, close all
 
