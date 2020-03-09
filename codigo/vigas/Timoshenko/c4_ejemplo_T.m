@@ -23,12 +23,12 @@ LaG = [ (1:(nno-1))' (2:nno)'     ]; % definicion de EFs con respecto a nodos
 
 %% Relacion de cargas distribuidas
 p = zeros(nef,1);
-p(101:160) = -1200; % N/m     % carga distribuida en [1.0, 1.6] m
+p(101:160) = -12; % kN/m     % carga distribuida en [1.0, 1.6] m
 
 %% Relacion de cargas puntuales
 f = zeros(ngdl,1);   % vector de fuerzas nodales equivalentes global
-f(gdl( 51,Y)) = -3000; % N   % carga puntual en x = 5 m
-f(gdl(191,Y)) = -1500; % N   % carga puntual en x = 18 m
+f(gdl( 51,Y)) = -30; % kN   % carga puntual en x = 5 m
+f(gdl(191,Y)) = -15; % kN   % carga puntual en x = 18 m
 
 %% VIGA DE TIMOSHENKO:
 % Con el programa c4_func_forma_timoshenko_lineal.m se calcularon:
