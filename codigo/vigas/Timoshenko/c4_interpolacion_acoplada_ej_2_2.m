@@ -30,7 +30,6 @@ C = tmp(3);
 %}
 
 %% Los terminos que acompanan a xi^2 y xi deben hacerse igual a cero (B = C = 0)
-% ya que la teoria de Timoshenko asume que gxz es constante
 sol = solve(B==0, C==0, w3,t3);
 disp('w3 = '); disp(sol.w3)
 disp('t3 = '); disp(sol.t3)
