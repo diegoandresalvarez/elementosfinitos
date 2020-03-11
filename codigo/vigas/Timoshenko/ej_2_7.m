@@ -1,3 +1,6 @@
+% Ejemplo 4.11 Oñate (1995)
+% Ejemplo 2.7 Oñate (2013)
+
 % A partir del elemento de viga de Timoshenko con 
 % w = pol grado 2
 % t = pol grado 1
@@ -34,15 +37,12 @@ A = feval(symengine, 'coeff', gxz, xi, 0); % Aqui se esta llamando a la
 B = feval(symengine, 'coeff', gxz, xi, 1); % funcion "coeff" del MUPAD
 
 %% Se hace B igual a cero y se despeja w2
-sol.w2 = solve(B, w2);
+sol.w2 = solve(B==0, w2);
 disp('w2 = '); disp(sol.w2)
 
 %% En funcion de w2 se reescribe w
 w = N1_2*w1 + N2_2*sol.w2 + N3_2*w3;
-w = collect(w,w1);
-w = collect(w,t1);
-w = collect(w,w3);
-w = collect(w,t3)
+w = collect(w,{'w1','t1','w3','t3'});
 
 %% Se define el vector a
 ae = {w1,t1,w3,t3};
@@ -57,32 +57,32 @@ subs(w,ae,{0,0,0,1}) ])
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
 fprintf('sum(N) = %s\n', char(expand(sum(N))));
 
-%% Se recalcula dt/dx y se calcula la matriz Bf
+%% Se recalcula dt/dx y se calcula la matriz Bb
 dt_dx = simplify(diff(t,xi)*dxi_dx);
-Bf = simplify([ ...
+Bb = simplify([ ...
 subs(dt_dx,ae,{1,0,0,0}), ...
 subs(dt_dx,ae,{0,1,0,0}), ...
 subs(dt_dx,ae,{0,0,1,0}), ...
 subs(dt_dx,ae,{0,0,0,1}) ])
 disp('Observe la variacion lineal de Bf (y por lo tanto del momento flector)')
 
-%% Se recalcula gxz y se calcula la matriz Bc
+%% Se recalcula gxz y se calcula la matriz Bs
 gxz = simplify(diff(w,xi)*dxi_dx - t);
-Bc = simplify([ ...
+Bs = simplify([ ...
 subs(gxz,ae,{1,0,0,0}), ...
 subs(gxz,ae,{0,1,0,0}), ...
 subs(gxz,ae,{0,0,1,0}), ...
 subs(gxz,ae,{0,0,0,1}) ])
 
-%% Se calculan la matriz de rigidez Kf
-%Kf = int(Bf.'*E*I*Bf*L/2,   xi,-1,1)
+%% Se calculan la matriz de rigidez Kb
+%Kb = int(Bb.'*E*I*Bb*L/2,   xi,-1,1)
 syms Db
-Kf = int(Bf.'*Db*Bf*L/2,   xi,-1,1)
+Kb = int(Bb.'*Db*Bb*L/2,   xi,-1,1)
 
-%% Se calculan la matriz de rigidez Kc
+%% Se calculan la matriz de rigidez Ks
 % 1) La exacta
-%Kc_exacta = int(Bc.'*G*Aast*Bc*L/2,xi,-1,1) % La exacta
+%Ks_exacta = int(Bs.'*G*Aast*Bs*L/2,xi,-1,1) % La exacta
 syms Ds
-Kc_exacta = int(Bc.'*Ds*Bc*L/2,xi,-1,1) % La exacta
+Ks_exacta = int(Bs.'*Ds*Bs*L/2,xi,-1,1) % La exacta
 
-Kf+ Kc_exacta
+Kb+ Ks_exacta

@@ -1,8 +1,12 @@
+% Ejemplo 4.13 Oñate (1995)
+% Ejemplo 2.9 Oñate (2013)
+
 % A partir de la interpolacion
 % w = pol grado 2
 % t = pol grado 2
 % e imponiendo que gxz varie linealmente entre los valores
-% gxz_1 = gxz(xi=-1/sqrt(3)) y gxz_2 = gxz(xi=+1/sqrt(3))
+% gxz_1 = gxz(xi=-1/sqrt(3)) y 
+% gxz_2 = gxz(xi=+1/sqrt(3))
 % obtenga un elemento de viga de Timoshenko tres nodos
 
 clear, clc
@@ -29,7 +33,7 @@ t = N1_2*t1 + N2_2*t2 + N3_2*t3;
 gxz = expand(diff(w,xi)*dxi_dx - t);
 
 ae = {w1,t1,w2,t2,w3,t3};
-Bc = simplify([ ...
+Bs = simplify([ ...
 subs(gxz,ae,{1,0,0,0,0,0}), ...
 subs(gxz,ae,{0,1,0,0,0,0}), ...
 subs(gxz,ae,{0,0,1,0,0,0}), ...
@@ -39,8 +43,8 @@ subs(gxz,ae,{0,0,0,0,0,1}) ]);
 
 %a = sym(1/sqrt(3))
 syms a
-%gxz_1 = subs(Bc,xi,-a)*[w1;t1;w2;t2;w3;t3]
-%gxz_2 = subs(Bc,xi,+a)*[w1;t1;w2;t2;w3;t3]
+%gxz_1 = subs(Bs,xi,-a)*[w1;t1;w2;t2;w3;t3]
+%gxz_2 = subs(Bs,xi,+a)*[w1;t1;w2;t2;w3;t3]
 
 % Los puntos de evaluacion seran xi1 = -1/sqrt(3) y xi2 = -1/sqrt(3)
 gxz_1 = subs(gxz,xi,-a)
@@ -52,7 +56,7 @@ Ng2 = poly2sym(polyfit([-1/sqrt(3) 1/sqrt(3)],[0 1],1),xi); Ng2 = subs(Ng2,3^(1/
 % produce buenos resultados
 
 gxz_lin = Ng1*gxz_1 + Ng2*gxz_2;
-Bc_sustitutiva = simplify([ ...
+Bs_sustitutiva = simplify([ ...
 subs(gxz_lin,ae,{1,0,0,0,0,0}), ...
 subs(gxz_lin,ae,{0,1,0,0,0,0}), ...
 subs(gxz_lin,ae,{0,0,1,0,0,0}), ...
@@ -61,10 +65,10 @@ subs(gxz_lin,ae,{0,0,0,0,1,0}), ...
 subs(gxz_lin,ae,{0,0,0,0,0,1}) ])
 
 % ahora si reemplazo a por lo que en verdad vale 1/sqrt(3)
-Bc_sustitutiva = subs(Bc_sustitutiva, a , sym(1/sqrt(3)))
+Bs_sustitutiva = subs(Bs_sustitutiva, a , sym(1/sqrt(3)))
 
 dt_dx = diff(t,xi)*dxi_dx;
-Bf = simplify([ ...
+Bb = simplify([ ...
 subs(dt_dx,ae,{1,0,0,0,0,0}), ...
 subs(dt_dx,ae,{0,1,0,0,0,0}), ...
 subs(dt_dx,ae,{0,0,1,0,0,0}), ...
@@ -76,15 +80,15 @@ subs(dt_dx,ae,{0,0,0,0,0,1}) ])
 disp('Integral con una cuadratura de Gauss-Legendre de orden 2 = ');
 xi1 = -sym(sqrt(1/3));   w1 = 1;
 xi2 = +sym(sqrt(1/3));   w2 = 1;
-Kf = simplify(subs(Bf.'*E*I*Bf*L/2,   xi,xi1)*w1 + ...
-              subs(Bf.'*E*I*Bf*L/2,   xi,xi2)*w2) ;
+Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2) ;
 
-disp('Kf = (E*I)/(3*L) *'); disp(simplify(Kf/((E*I)/(3*L))))       
+disp('Kb = (E*I)/(3*L) *'); disp(simplify(Kb/((E*I)/(3*L))))       
          
          
-Kc = simplify(subs(Bc_sustitutiva.'*G*Aast*Bc_sustitutiva*L/2,xi,xi1)*w1 + ...
-              subs(Bc_sustitutiva.'*G*Aast*Bc_sustitutiva*L/2,xi,xi2)*w2);
+Ks = simplify(subs(Bs_sustitutiva.'*G*Aast*Bs_sustitutiva*L/2,xi,xi1)*w1 + ...
+              subs(Bs_sustitutiva.'*G*Aast*Bs_sustitutiva*L/2,xi,xi2)*w2);
 
-disp('Kc = (G*Aast)/(9*L) *'); disp(simplify(Kc/((G*Aast)/(9*L))))         
+disp('Ks = (G*Aast)/(9*L) *'); disp(simplify(Ks/((G*Aast)/(9*L))))         
          
-K = Kf + Kc
+K = Kb + Ks

@@ -1,3 +1,6 @@
+% Ejemplo 4.8 Oñate (1995)
+% Ejemplo 2.4 Oñate (2013)
+
 % Obtener a partir del elemento de viga de Timoshenko con 
 % w = pol grado 2
 % t = pol grado 2
@@ -31,9 +34,9 @@ A = feval(symengine, 'coeff', gxz, xi, 0); % Aqui se esta llamando a la
 B = feval(symengine, 'coeff', gxz, xi, 1); % funcion "coeff" del MUPAD
 C = feval(symengine, 'coeff', gxz, xi, 2);
 
-%% Se hacen B y C iguales a cero y se despejan w2 y t3
+%% Se hacen B y C iguales a cero y se despejan w2 y t2
 % Esto con el animo de usar un campo de deformaciones constante
-sol = solve(B,C, w2,t2);
+sol = solve(B==0,C==0, w2,t2);
 disp('w2 = '); disp(sol.w2)
 disp('t2 = '); disp(sol.t2)
 
@@ -48,7 +51,7 @@ clear sol tt
 %% Se hacen B igual a cero y se despeja w2
 % Esto con el animo de usar un campo de deformaciones cuadratico, pero sin
 % terminos lineales
-sol.w2 = solve(B, w2);
+sol.w2 = solve(B==0, w2);     % de modo que gxz = A + C*xi^2
 disp('w2 = '); disp(sol.w2)
 
 %% En funcion de w2 se reescribe w
@@ -68,29 +71,29 @@ subs(w,a,{0,0,0,0,1}) ])
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
 fprintf('sum(N) = %s\n', char(expand(sum(N))));
 
-%% Se recalcula dt/dx y se calcula la matriz Bf
+%% Se recalcula dt/dx y se calcula la matriz Bb
 dt_dx = simplify(diff(t,xi)*dxi_dx);
-Bf = simplify([ ...
+Bb = simplify([ ...
 subs(dt_dx,a,{1,0,0,0,0}), ...
 subs(dt_dx,a,{0,1,0,0,0}), ...
 subs(dt_dx,a,{0,0,1,0,0}), ...
 subs(dt_dx,a,{0,0,0,1,0}), ...
 subs(dt_dx,a,{0,0,0,0,1}) ])
-disp('Observe la variacion lineal de Bf (y por lo tanto del momento flector)')
+disp('Observe la variacion lineal de Bb (y por lo tanto del momento flector)')
 
-%% Se recalcula gxz y se calcula la matriz Bc
+%% Se recalcula gxz y se calcula la matriz Bs
 gxz = simplify(diff(w,xi)*dxi_dx - t);
-Bc = simplify([ ...
+Bs = simplify([ ...
 subs(gxz,a,{1,0,0,0,0}), ...
 subs(gxz,a,{0,1,0,0,0}), ...
 subs(gxz,a,{0,0,1,0,0}), ...
 subs(gxz,a,{0,0,0,1,0}), ...
 subs(gxz,a,{0,0,0,0,1}) ])
 
-disp('Observe que Bc es cuadratica, pero esta solo se evalua en los puntos de Gauss')
+disp('Observe que Bs es cuadratica, pero esta solo se evalua en los puntos de Gauss')
 
 %% Se calcula gxz en los puntos de Gauss
 subs(gxz, xi, +1/sqrt(3))
 subs(gxz, xi, -1/sqrt(3))
 
-disp('En los puntos de Gauss Bc es constante y en ambos puntos gxz vale lo mismo')
+disp('En los puntos de Gauss Bs es constante y en ambos puntos gxz vale lo mismo')

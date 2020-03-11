@@ -1,3 +1,6 @@
+% Ejemplo 4.12 Oñate (1995)
+% Ejemplo 2.8 Oñate (2013)
+
 % A partir de la interpolacion
 % w = pol grado 1
 % t = pol grado 1
@@ -42,18 +45,18 @@ subs(w,a,{0,0,0,1}) ])
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
 fprintf('sum(N) = %s\n', char(expand(sum(N))));
 
-%% Se recalcula dt/dx y se calcula la matriz Bf
+%% Se recalcula dt/dx y se calcula la matriz Bb
 dt_dx = simplify(diff(t,xi)*dxi_dx);
-Bf = simplify([ ...
+Bb = simplify([ ...
 subs(dt_dx,a,{1,0,0,0}), ...
 subs(dt_dx,a,{0,1,0,0}), ...
 subs(dt_dx,a,{0,0,1,0}), ...
 subs(dt_dx,a,{0,0,0,1}) ])
-disp('Observe la variacion lineal de Bf (y por lo tanto del momento flector)')
+disp('Observe la variacion lineal de Bb (y por lo tanto del momento flector)')
 
-%% Se recalcula gxz y se calcula la matriz Bc
+%% Se recalcula gxz y se calcula la matriz Bs
 gxz = simplify(diff(w,xi)*dxi_dx - t);
-Bc = simplify([ ...
+Bs = simplify([ ...
 subs(gxz,a,{1,0,0,0}), ...
 subs(gxz,a,{0,1,0,0}), ...
 subs(gxz,a,{0,0,1,0}), ...
@@ -61,4 +64,4 @@ subs(gxz,a,{0,0,0,1}) ]);
 
 % En vez de hacer B=0, se hace xi=0
 Ng = 1;
-Bc_sustitutiva = Ng * subs(Bc, xi, 0)
+Bs_sustitutiva = Ng * subs(Bs, xi, 0)
