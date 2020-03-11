@@ -65,3 +65,8 @@ subs(gxz,a,{0,0,0,1}) ]);
 % En vez de hacer B=0, se hace xi=0
 Ng = 1;
 Bs_sustitutiva = Ng * subs(Bs, xi, 0)
+
+% Se calcula e imprime la matriz de rigidez Ks asociada
+Ks = simplify(int(Bs_sustitutiva.'*G*Aast*Bs_sustitutiva*L/2,xi,-1,1));
+
+disp('Ks = (G*Aast/L) *'); disp(simplify(Ks/(G*Aast/L)))
