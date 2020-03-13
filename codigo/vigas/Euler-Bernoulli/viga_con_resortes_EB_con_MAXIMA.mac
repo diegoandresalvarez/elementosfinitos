@@ -1,0 +1,116 @@
+/* Solución teórica de las ecuaciones diferenciales de la teoria de EB */
+/* Elaborada por: Alejandro Hincapié                                   */
+
+load("pw")$        /* se carga la libreria pw                   */
+ratprint  : false$ /* no muestra el mensaje "rat: replace"      */
+keepfloat : true$  /* no racionalizar numeros en coma flotante  */
+
+/* Se definen las cargas distribuidas de acuerdo con la Tabla   */
+/* Caso 2: carga puntual */
+qpunt(p,a)   :=  p*pwdelta(x-a)$
+
+/* Caso 5: carga distribuida variable */
+qdist(f,a,b) :=  pw([a,f,b], x, 'open)$
+
+/* Funcion rectangular: si x>a y x<b retorne 1 sino retorne 0   */
+rect(a,b)    :=  pw([a,1,b], x, 'open)$
+
+/* Se especifica el vector de cargas q(x)                       */
+q : qdist(10*x-70,1,4)$
+
+kres : 1000$       /* constante del resorte, kN/m               */
+krot : 500$        /* constante del resorte, kNm/rad            */
+b : 0.1$           /* Ancho de la viga, m                       */
+h : 0.3$           /* Altura de la viga, m                      */
+E : 210e6$         /* Modulo de elasticidad de la viga, kPa     */
+I : (b*h^3)/12$    /* Momento de inercia, m^4                   */
+A : b*h$           /* Area de la viga, m^2                      */
+
+/* Se resuelve la ecuacion diferencial tramo por tramo          */
+/* Tramo 1 de x=0 a x=2*/
+q1 : pwsimp(q*rect(0,2), x)$   /* restriccion de q al tramo 1   */
+V1 : pwint(q1,x)       + C1_1$
+M1 : pwint(V1,x)       + C1_2$
+t1 : pwint(M1/(E*I),x) + C1_3$
+v1 : pwint(t1,x)       + C1_4$
+
+/* Tramo 2 de x=2 a x=4*/
+q2 : pwsimp(q*rect(2,4), x)$   /* restriccion de q al tramo 2   */
+V2 : pwint(q2,x)       + C2_1$
+M2 : pwint(V2,x)       + C2_2$
+t2 : pwint(M2/(E*I),x) + C2_3$
+v2 : pwint(t2,x)       + C2_4$
+
+/* Tramo 3 de x=4 a x=6*/
+q3 : pwsimp(q*rect(4,6), x)$   /* restriccion de q al tramo 3   */
+V3 : pwint(q3,x)       + C3_1$
+M3 : pwint(V3,x)       + C3_2$
+t3 : pwint(M3/(E*I),x) + C3_3$
+v3 : pwint(t3,x)       + C3_4$
+
+/* Se encuentran las constantes de integracion que satisfacen las 
+   condiciones de frontera */
+sol : solve([ 
+ev(v1,x=0)  = 0,           /* despl vert en apoyo en x=0 es 0  */
+ev(t1,x=0)  = 0,           /* theta en apoyo en x=0 es 0       */
+
+ev(v1,x=2) = 0,            /* despl vert en apoyo en x=2 es 0  */
+ev(v2,x=2) = 0,            /* despl vert en apoyo en x=2 es 0  */
+ev(t1,x=2) = ev(t2,x=2),   /* continuidad en theta en x=2      */
+ev(M1,x=2) = ev(M2,x=2),   /* continuidad en M     en x=2      */
+
+ev(v2,x=4) = -0.05,        /* despl vert en apoyo en x=4 es igual al asentamiento de 5cm */
+ev(v3,x=4) = -0.05,        /* despl vert en apoyo en x=4 es igual al asentamiento de 5cm */
+ev(t2,x=4) = ev(t3,x=4),   /* continuidad en theta en x=4                                */
+ev(M2,x=4) = ev(M3,x=4),   /* continuidad en M     en x=4                                */
+
+ev(M3,x=6) = -krot*ev(t3,x=6),  /* Resorte circular afecta el momento      */
+ev(V3,x=6) = kres*ev(v3,x=6) ], /* Resorte recto afecta la fuerza cortante */
+[ C1_1, C1_2, C1_3, C1_4, 
+  C2_1, C2_2, C2_3, C2_4, 
+  C3_1, C3_2, C3_3, C3_4 ])$
+
+/* Se "fusionan" las respuestas en una sola y se reemplaza aqui 
+   el valor de las constantes                                  */
+V : V1*rect(0,2) + V2*rect(2,4) + V3*rect(4,6), sol$
+M : M1*rect(0,2) + M2*rect(2,4) + M3*rect(4,6), sol$
+t : t1*rect(0,2) + t2*rect(2,4) + t3*rect(4,6), sol$
+v : v1*rect(0,2) + v2*rect(2,4) + v3*rect(4,6), sol$
+
+/* Se imprimen los resultados */
+print("V(x) = ")$     pwsimp(expand(V),    x, 'array)$
+print("M(x) = ")$     pwsimp(expand(M),    x, 'array)$
+print("t(x) = ")$     pwsimp(expand(t),    x, 'array)$
+print("v(x) = ")$     pwsimp(expand(v),    x, 'array)$
+
+/* Se grafican los resultados */
+wxplot2d(V,    [x, 0, 6], [xlabel, "x"], [ylabel,"V(x)"])$
+wxplot2d(M,    [x, 0, 6], [xlabel, "x"], [ylabel,"M(x)"])$
+
+/* Se calculan las reacciones en la viga */
+print("M(x= 0)  = ")	$ 	   -M1, sol, x=0, numer; /* mom en x=0                   */
+print("Fy(x= 0) = ")	$ 	    V1, sol, x=0, numer; /* Ry en x= 0                   */
+print("Fy(x= 2) = ")	$ 	 V2-V1, sol, x=2, numer; /* Ry en x=2                    */
+print("Fy(x= 4) = ")	$ 	 V3-V2, sol, x=4, numer; /* Ry en x=4                    */
+print("Rm_res(x= 6) = ")$  krot*t3, sol, x=6, numer; /* Reacción en resorte circular */
+print("Ry_res(x= 6) = ")$ -kres*v3, sol, x=6, numer; /* Reacción en resorte recto	 */
+print("Calculo finalizado")$
+
+delta : 0.1$ 
+xx	    : makelist(delta*k, k, 0.0, 6/delta)$
+xx[1] : 0.000000001$
+xx[61]: 5.999999999$ 
+Mx	   : M, x=xx$ Mx : float(Mx)$
+Vx     : V, x=xx$ Vx : float(Vx)$
+tx     : t, x=xx$ tx : float(tx)$
+vxx    : v, x=xx$ vxx: float(vxx)$
+wxplot2d([discrete, xx, tx],  [xlabel, "x"], [ylabel,"t(x)"])$
+wxplot2d([discrete, xx, vxx], [xlabel, "x"], [ylabel,"v(x)"])$
+
+subdir : "results_viga_con_resortes_EB/"$
+stringout(concat(subdir, "xx_EB.txt"),  xx);
+stringout(concat(subdir, "Mx_EB.txt"),  Mx);
+stringout(concat(subdir, "Vx_EB.txt"),  Vx);
+stringout(concat(subdir, "tx_EB.txt"),  tx);
+stringout(concat(subdir, "vxx_EB.txt"), vxx);
+print("Archivos exportados")$
