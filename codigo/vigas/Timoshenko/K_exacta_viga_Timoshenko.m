@@ -1,7 +1,7 @@
 % Programa para deducir la matriz de rigidez de un elemento de viga 2D de
-% Timoshenko a partir de la solucion de la ecuacion diferenfial
+% Timoshenko a partir de la solucion de la ecuacion diferencial
 clear, clc
-syms q w x L V(x) M(x) t(x) v(x) EI EA GAast
+syms q x L V(x) M(x) t(x) v(x) EI EA GAast
 
 %% Se calcula la matrix de rigidez
 K_T = sym(zeros(4));
@@ -16,27 +16,30 @@ for i = 1:4
            v(L) == (i==3),    ...           
            t(L) == (i==4));
 
-    K_T(i,:) = [ +subs(sol.V, x, 0), ...  % Yi  se evaluan las 
-               -subs(sol.M, x, 0), ...  % Mi  reacciones verticales
-               -subs(sol.V, x, L), ...  % Yj  y los momentos en los
-               +subs(sol.M, x, L) ];    % Mj  apoyos
+    K_T(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las 
+                 -subs(sol.M, x, 0)    % M1  reacciones verticales
+                 -subs(sol.V, x, L)    % Y2  y los momentos en los
+                 +subs(sol.M, x, L) ]; % M2  apoyos
 end
+
+%% Se imprime la solucion
 beta = (12 * EI)/(L^2 * GAast);
-coef1 = EI/((1 + beta)*L^3);
+tmp = EI/((1 + beta)*L^3);
 disp('K_T = (EI/((1 + beta)*L^3)) * ');
-pretty(simplify(K_T/coef1))
+pretty(simplify(K_T/tmp))
 % Nota: se puede demostrar que:
 % K22 = K44 = simplify((4+beta)*L^2)
 % K24 = K42 = simplify((2-beta)*L^2)
 
+%% Se calcula la matriz de rigidez de Euler-Bernoulli
 % Observe que cuando GAast -> Inf, la matriz de rigidez K se vuelve la 
 % misma matriz de rigidez K de la teoría de Euler-Bernoulli:
 K_EB = limit(K_T, GAast, inf);
-coef2 = EI/(L^3);
-disp('K_EB = (EI/(L^3)) * ');
-pretty(simplify(K_EB/coef2))
+disp('K_EB = (EI/L^3) * ');
+pretty(simplify(K_EB/(EI/L^3)))
 
 %% Se calculan las fuerzas nodales equivalentes:
+syms w
 % q = w;
 q = -w*x/L;
 sol = dsolve(...       
