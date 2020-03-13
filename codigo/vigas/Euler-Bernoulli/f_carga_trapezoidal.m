@@ -1,4 +1,6 @@
-% Programa para encontrar las cargas nodales equivalentes de:
+% Programa para encontrar las cargas nodales equivalentes asociados a una carga
+% trapezoidal:
+%
 %   /|                                      ^  q(x)
 %   /|                             ^  |  |  |                   
 %   /|                    ^  |  |  |  |  |  |  |\
