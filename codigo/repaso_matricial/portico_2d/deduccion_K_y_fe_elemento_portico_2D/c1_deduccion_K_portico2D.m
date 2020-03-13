@@ -14,9 +14,9 @@ for i = 1:4
            v(L) == (i==3),    ...           
            t(L) == (i==4));
 
-    Kflexion(i,:) = [ +subs(sol.V, x, 0), ...  % Yi  se evaluan las 
-                      -subs(sol.M, x, 0), ...  % Mi  reacciones verticales
-                      -subs(sol.V, x, L), ...  % Yj  y los momentos en los
+    Kflexion(:,i) = [ +subs(sol.V, x, 0)       % Yi  se evaluan las 
+                      -subs(sol.M, x, 0)       % Mi  reacciones verticales
+                      -subs(sol.V, x, L)       % Yj  y los momentos en los
                       +subs(sol.M, x, L) ];    % Mj  apoyos
 end
 Kaxial = EA/L * [1 -1; -1 1];
