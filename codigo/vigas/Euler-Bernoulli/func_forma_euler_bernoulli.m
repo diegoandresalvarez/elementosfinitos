@@ -106,9 +106,13 @@ for i = 1:4
    N{i} = alpha(1,i) + alpha(2,i)*xi + alpha(3,i)*xi^2 + alpha(4,i)*xi^3;
    fprintf('%s = \n', nombre{i}); pretty(N{i});
 end
-   
+N1  = N{1};
+N1b = N{2};
+N2  = N{3};
+N2b = N{4};
+
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
-NN        = expand([N{1}   N{2}*L/2   N{3}   N{4}*L/2]);
+NN        = expand([N1   N1b*L/2   N2   N2b*L/2]);
 dNN_dxi   = expand(diff(NN,xi));
 dNN2_dxi2 = expand(diff(NN,xi,2));
 dNN3_dxi3 = expand(diff(NN,xi,3));
