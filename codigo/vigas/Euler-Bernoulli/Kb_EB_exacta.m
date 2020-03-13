@@ -15,10 +15,10 @@ for i = 1:4
            v(L) == (i==3),    ...           
            t(L) == (i==4));
 
-    Kb(:,i) = [ +subs(sol.V, x, 0)       % Yi  se evaluan las 
-                -subs(sol.M, x, 0)       % Mi  reacciones verticales
-                -subs(sol.V, x, L)       % Yj  y los momentos en los
-                +subs(sol.M, x, L) ];    % Mj  apoyos
+    Kb(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las 
+                -subs(sol.M, x, 0)    % M1  reacciones verticales
+                -subs(sol.V, x, L)    % Y2  y los momentos en los
+                +subs(sol.M, x, L) ]; % M2  apoyos
 end
 disp('Kb = (EI/L^3)*'); pretty(Kb/(EI/L^3));
 
