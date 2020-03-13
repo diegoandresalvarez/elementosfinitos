@@ -1,60 +1,89 @@
 %% Programa para el calculo de vigas de Euler-Bernoulli.
-% Viga analizada en el Ejemplo 5-5 de Uribe Escamilla
-% Este programa esta particularizado para el EF de longitud 0.1 m
 
-clear, clc, close all         % borrar memoria y pantalla
+clear, clc, close all               % borrar memoria y pantalla
 
 %% defino las constantes y variables
 Y = 1; TH = 2;
+filename = 'viga_Uribe_Escamilla_ej_5_5';
 
-L   = 0.1;      % m           % longitud de cada EF
-E   = 200e6;    % kPa         % modulo de elasticidad de la barra
-b   = 0.3;      % m           % base de la viga
-h   = 1.5;      % m           % altura de la viga
-A   = b*h;      % m^2         % area transversal de la viga
-I   = b*h^3/12; % m^4         % momento de inercia con respecto al eje y
+%% se lee la posicion de los nodos
+T       = readtable([filename '.xlsx'], 'Sheet', 'xnod');
+idxNODO = T{:,'nodo'};
+xnod    = T{idxNODO,'x'};           % posicion de los nodos
+L       = diff(xnod);               % longitud de cada EF
 
-xnod = 0:L:19;                % posicion de los nodos
-nno = length(xnod);           % numero de nodos
-nef = nno - 1;                % numero de elementos finitos (EF)
-ngdl = 2*nno;                 % numero de grados de libertad
-gdl = [ (1:2:ngdl)' (2:2:ngdl)' ]; % grados de libertad
-LaG = [ (1:(nno-1))' (2:nno)'   ]; % definicion de EFs con respecto a nodos
+nno  = length(xnod);                % numero de nodos
+nef  = nno - 1;                     % numero de elementos finitos (EF)
+ngdl = 2*nno;                       % numero de grados de libertad
+gdl  = [ (1:2:ngdl)' (2:2:ngdl)' ]; % grados de libertad
 
-%% Relacion de cargas distribuidas
-p = zeros(nef,1);
-p(101:160) = -12; % kN/m     % carga distribuida en [1.0, 1.6] m
+%% se leen la matriz de conectividad (LaG), el modulo de elasticidad, las 
+%  propiedades del material y las cargas
+T     = readtable([filename '.xlsx'], 'Sheet', 'LaG_EI_q');
+idxEF = T{:,'EF'};
+LaG   = T{idxEF,{'NL1','NL2'}};  % definicion de EFs con respecto a nodos
+E     = T{idxEF,'E'};            % modulo de elasticidad E del EF
+I     = T{idxEF,'I'};            % momento de inercia Iz del EF
+q     = T{idxEF,{'q1e','q2e'}};  % relación de las cargas distribuidas
+q(isnan(q)) = 0;                 % reemplace los NaNs con ceros
 
-%% Relacion de cargas puntuales
+%% relacion de los apoyos
+T    = readtable([filename '.xlsx'], 'Sheet', 'restric');
+idxNODO = T{:,'nodo'};
+dirdesp = T{:,'direccion'};
+ac      = T{:,'desplazamiento'}; % desplazamientos conocidos
+
+%% grados de libertad del desplazamiento conocidos y desconocidos
+n_apoyos = length(idxNODO);
+c = zeros(n_apoyos, 1);          % GDL conocidos
+for i = 1:n_apoyos
+   c(i,:) = gdl(idxNODO(i), dirdesp(i));
+end
+d =  setdiff((1:ngdl)',c);       % GDL desconocidos
+
+%% relación de cargas puntuales
+T = readtable([filename '.xlsx'], 'Sheet', 'carga_punt');
+idxNODO = T{:,'nodo'};
+dirfp   = T{:,'direccion'};
+fp      = T{:,'fuerza_puntual'};
+
+%% se colocan las fuerzas/momentos nodales en el vector de fuerzas nodales 
+%  equivalentes global "f"
 f = zeros(ngdl,1);   % vector de fuerzas nodales equivalentes global
-f(gdl( 51,Y)) = -30; % kN   % carga puntual en x = 5 m
-f(gdl(191,Y)) = -15; % kN   % carga puntual en x = 19 m
+for i = 1:length(idxNODO)
+   f(gdl(idxNODO(i), dirfp(i))) = fp(i);
+end
 
 %% VIGA DE EULER-BERNOULLI:
 % Con el programa "func_forma_euler_bernoulli.m" se calcularon:
-% * Ke     = la matriz de rigidez de flexion del elemento e
-% * fe     = el vector de fuerzas nodales equivalentes
-% * Bf     = la matriz de deformaciones de flexion
-% * N      = matriz de funciones de forma
-% * dN_dxi = derivada de la matriz de funciones de forma con respecto a xi
+%   Ke     = la matriz de rigidez de flexion del elemento e
+%   fe     = el vector de fuerzas nodales equivalentes
+%   Bb     = la matriz de deformaciones de flexion
+%   N      = matriz de funciones de forma
+%   dN_dxi = derivada de la matriz de funciones de forma con respecto a xi
 
-%% ensamblo la matriz de rigidez global y el vector de fuerzas nodales 
+%% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %% equivalentes global para la viga de Euler-Bernoulli
 K = zeros(ngdl);  % matriz de rigidez global
 idx = cell(nef);  % grados de libertad del elemento e
-EI_L3 = E*I/L^3;    
 for e = 1:nef     % ciclo sobre todos los elementos finitos
    idx{e} = [ gdl(LaG(e,1),Y) gdl(LaG(e,1),TH) gdl(LaG(e,2),Y) gdl(LaG(e,2),TH) ];
+   Le = L(e);
    
    % Matriz de rigidez de flexion del elemento e
-   Ke = EI_L3 * [  12,   6*L,  -12,   6*L
-                  6*L, 4*L^2, -6*L, 2*L^2
-                  -12,  -6*L,   12,  -6*L
-                  6*L, 2*L^2, -6*L, 4*L^2 ];
+   Ke = (E(e)*I(e)/Le^3) * [  12,   6*Le,   -12,   6*Le
+                            6*Le, 4*Le^2, -6*Le, 2*Le^2
+                             -12,  -6*Le,    12,  -6*Le
+                            6*Le, 2*Le^2, -6*Le, 4*Le^2 ];
 
-   % vector de fuerzas nodales equivalentes        
-   fe = +p(e)*L * [ 1/2; L/12; 1/2; -L/12 ];
+   % vector de fuerzas nodales equivalentes de una carga trapezoidal 
+   fe = [ (Le*(7*q(e,1) + 3*q(e,2)))/20      % = Y1
+          (Le^2*(3*q(e,1) + 2*q(e,2)))/60    % = M1
+          (Le*(3*q(e,1) + 7*q(e,2)))/20      % = Y2
+         -(Le^2*(2*q(e,1) + 3*q(e,2)))/60 ]; % = M2
    
+   % se ensambla la matriz de rigidez K y el vector de fuerzas nodales
+   % equivalentes f
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
 end
@@ -67,19 +96,6 @@ end
 %|   qd   |   | Kcc Kcd || ac |   | fd | 
 %|        | = |         ||    | - |    |
 %| qc = 0 |   | Kdc Kdd || ad |   | fc |
-
-%% Relaciono apoyos
-%  gdl           desplazamiento
-apoyos = [ ...
-   gdl(  1,Y)    0    % m
-   gdl(  1,TH)   0    % rad
-   gdl(101,Y)    0    % m
-   gdl(161,Y)    0 ]; % m  
-
-%% grados de libertad del desplazamiento conocidos y desconocidos
-c  = apoyos(:,1);            % GDL conocidos
-d =  setdiff((1:ngdl)',c);   % GDL desconocidos
-ac = apoyos(:,2);            % desplazamientos conocidos
 
 %% extraigo las submatrices y especifico las cantidades conocidas
 Kcc = K(c,c); Kcd = K(c,d); fd = f(c);
@@ -101,54 +117,63 @@ cor  = zeros(1,nef); % fuerza cortante
 %xi = linspace(-1,1,10)'; 
 xi = [ -sqrt(1/3); sqrt(1/3) ]; % raices del polinom de Legendre de grado 2
 
-% matriz de deformaciones de flexion
-Bbe = [ (6*xi)/L^2, (3*xi - 1)/L, -(6*xi)/L^2, (3*xi + 1)/L ];
-
-dN3_dxi3 = [ 3/2, (3*L)/4, -3/2, (3*L)/4];
 for e = 1:nef
+   % longitud del elemento finito e
+   Le = L(e);
+   
+   % matriz de deformaciones de flexion
+   Bbe = [ (6*xi)/Le^2, (3*xi - 1)/Le, -(6*xi)/Le^2, (3*xi + 1)/Le ];
+   
    % lugar donde se calcula el momento (centro del EF)
-   xmom(:,e) = L*xi'/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
+   xmom(:,e) = Le*xi'/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
      
    % vector de desplazamientos nodales del elemento a^{(e)}
    ae = a(idx{e});
    
-   mom(:,e) = E*I*Bbe*ae;              % momento flector   
-   cor(e) = E*I*dN3_dxi3*(8/(L^3))*ae; % fuerza cortante   
+   mom(:,e) = E(e)*I(e)*Bbe*ae;                 % momento flector   
+   dN3_dxi3 = [ 3/2, (3*Le)/4, -3/2, (3*Le)/4];
+   cor(e)   = E(e)*I(e)*dN3_dxi3*(8/(Le^3))*ae; % fuerza cortante   
 end
 
 %% se calculan los desplazamientos al interior de cada EF
 nint = 10;           % numero de puntos donde se interpolara dentro del EF
 xi = linspace(-1,1,nint)'; % coordenadas naturales
 
-% Matriz de funciones de forma y su derivada
-N = [ ...
-      xi.^3/4 - (3*xi)/4 + 1/2,                  ...
-      -(L*(- xi.^3/4 + xi.^2/4 + xi/4 - 1/4))/2, ...
-      - xi.^3/4 + (3*xi)/4 + 1/2,                ...
-      -(L*(- xi.^3/4 - xi.^2/4 + xi/4 + 1/4))/2 ];   
-
-dN_dxi = [ ...
-      (3*xi.^2)/4 - 3/4,                          ...
-      -(L*(- (3*xi.^2)/4 + xi/2 + 1/4))/2,        ...
-      3/4 - (3*xi.^2)/4,                          ...   
-      (L*((3*xi.^2)/4 + xi/2 - 1/4))/2 ];
-
 xx    = cell(nef,1); % interpol de posiciones (geometria) en el elemento
 ww    = cell(nef,1); % interpol desplazamientos en el elemento
 tt    = cell(nef,1); % interpol angulo en el elemento
 for e = 1:nef        % ciclo sobre todas los elementos finitos
+   % longitud del elemento finito e
+   Le = L(e);
+   
+   % Matriz de funciones de forma y su derivada
+   N = [ ...
+         xi.^3/4 - (3*xi)/4 + 1/2,                   ...
+         -(Le*(- xi.^3/4 + xi.^2/4 + xi/4 - 1/4))/2, ...
+         - xi.^3/4 + (3*xi)/4 + 1/2,                 ...
+         -(Le*(- xi.^3/4 - xi.^2/4 + xi/4 + 1/4))/2 ];   
+
+   dN_dxi = [ ...
+         (3*xi.^2)/4 - 3/4,                          ...
+         -(Le*(- (3*xi.^2)/4 + xi/2 + 1/4))/2,       ...
+         3/4 - (3*xi.^2)/4,                          ...   
+         (Le*((3*xi.^2)/4 + xi/2 - 1/4))/2 ];
+   
+   
    % vector de desplazamientos nodales del elemento a^{(e)}
    ae = a(idx{e});
 
    % interpola sobre la geometria (coord naturales a geometricas)
-   xx{e} = L*xi/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
+   xx{e} = Le*xi/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
    
    % se calcula el desplazamiento al interior del elemento finito
    ww{e} = N*ae;
    
    % se calcula el angulo al interior del elemento finito
-   tt{e} = (dN_dxi*2/L)*ae;
+   tt{e} = (dN_dxi*2/Le)*ae;
 end
+
+
 
 %% imprimo los resultados
 format short g
