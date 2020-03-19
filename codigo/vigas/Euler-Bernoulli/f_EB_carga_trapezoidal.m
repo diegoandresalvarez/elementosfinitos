@@ -18,8 +18,10 @@
 
 clear, clc
 
-q = (w2-w1)*x/L + w1;       % carga trapezoidal
 syms syms w x L w1 w2 V(x) M(x) t(x) v(x) EI
+
+q = (w2-w1)*x/L + w1;       % carga trapezoidal
+
 sol = dsolve(...       
        diff(V) == q,    ... % se definen las ecuaciones diferenciales
        diff(M) == V,    ...
