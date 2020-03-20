@@ -1,5 +1,7 @@
 % Programa para deducir la matriz de rigidez de un elemento de viga de
 % Euler-Bernoulli a partir de la solucion de la ecuacion diferencial
+% que tiene una rótula a la derecha
+
 clear, clc
 syms x L V(x) M(x) t(x) v(x) EI EA
 
@@ -22,7 +24,7 @@ for i = 1:3
 end
 K
 
-%% Se calcula la matrix de rigidez para la rotula en el lado izquierdo
+%% Se calcula la matriz de rigidez para la rotula en el lado izquierdo
 K = sym(zeros(3));
 for i = 1:3
     sol = dsolve(...       
