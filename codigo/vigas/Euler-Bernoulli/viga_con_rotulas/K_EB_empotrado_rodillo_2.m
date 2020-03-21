@@ -9,18 +9,18 @@ syms x L V(x) M(x) t(x) v(x) EI EA
 K = sym(zeros(3));
 for i = 1:3
     sol = dsolve(...       
-           diff(V,x) == 0,    ... % se definen las ecuaciones diferenciales
-           diff(M,x) == V,    ...
+           diff(V,x) == 0,    ... % se definen las ecuaciones
+           diff(M,x) == V,    ... % diferenciales
            diff(t,x) == M/EI, ... 
            diff(v,x) == t,    ...
-           v(0) == (i==1),    ... % con sus respectivas condiciones de 
-           t(0) == (i==2),    ... % frontera  
+           v(0) == (i==1),    ... % con sus respectivas 
+           t(0) == (i==2),    ... % condiciones de frontera
            v(L) == (i==3),    ...           
            M(L) == 0);
 
-    K(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las 
-               -subs(sol.M, x, 0)    % M1  reacciones verticales
-               -subs(sol.V, x, L) ]; % Y2  y los momentos en los apoyos
+    K(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las reacciones
+               -subs(sol.M, x, 0)    % M1  verticales y los momentos
+               -subs(sol.V, x, L) ]; % Y2  en los apoyos
 end
 K
 
@@ -28,17 +28,17 @@ K
 K = sym(zeros(3));
 for i = 1:3
     sol = dsolve(...       
-           diff(V,x) == 0,    ... % se definen las ecuaciones diferenciales
-           diff(M,x) == V,    ...
+           diff(V,x) == 0,    ... % se definen las ecuaciones 
+           diff(M,x) == V,    ... % diferenciales
            diff(t,x) == M/EI, ... 
            diff(v,x) == t,    ...
-           v(0) == (i==1),    ... % con sus respectivas condiciones de 
-           M(0) == 0,         ... % frontera  
+           v(0) == (i==1),    ... % con sus respectivas 
+           M(0) == 0,         ... % condiciones de frontera  
            v(L) == (i==2),    ...           
            t(L) == (i==3));
 
-    K(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las 
-               -subs(sol.V, x, L)    % Y2  reacciones verticales
-               +subs(sol.M, x, L) ]; % M2  y los momentos en los apoyos
+    K(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las reacciones
+               -subs(sol.V, x, L)    % Y2  verticales y los momentos
+               +subs(sol.M, x, L) ]; % M2  en los apoyos
 end
 K
