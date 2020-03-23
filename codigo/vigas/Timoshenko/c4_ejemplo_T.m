@@ -193,7 +193,7 @@ grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h3t = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [mom(e) mom(e)], 'r-'); % grafico solucion por MEF
 end
-%h3t = plot(xmom(:), mom(:), 'r--');% grafico solucion por MEF
+plot(xmom(:), mom(:), 'rx');% grafico solucion por MEF
 title({'Solucion con el MEF para el momento flector',...
    '(el momento positivo es aquel que produce traccion en la fibra inferior)'});
 xlabel('Eje X (m)')                % titulo del eje X
