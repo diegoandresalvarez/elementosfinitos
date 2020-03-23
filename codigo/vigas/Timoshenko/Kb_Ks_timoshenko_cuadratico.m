@@ -24,47 +24,47 @@ syms xx % creo una variable "dummy" para despejar xi de x = N1*x1 + N2*x2 + N3*x
 dxi_dx = diff(solve(xx - x,xi),xx);
 
 %% Defino las matrices de deformacion
-Bf = [ 0, diff(N1,xi)*dxi_dx  , 0, diff(N2,xi)*dxi_dx  , 0, diff(N3,xi)*dxi_dx   ];
-Bc = [ diff(N1,xi)*dxi_dx, -N1, diff(N2,xi)*dxi_dx, -N2, diff(N3,xi)*dxi_dx, -N3 ];
+Bb = [ 0, diff(N1,xi)*dxi_dx  , 0, diff(N2,xi)*dxi_dx  , 0, diff(N3,xi)*dxi_dx   ];
+Bs = [ diff(N1,xi)*dxi_dx, -N1, diff(N2,xi)*dxi_dx, -N2, diff(N3,xi)*dxi_dx, -N3 ];
 
-disp('Bf = (2/L) * '),    pretty(simplify(Bf/(2/L)))
-disp('Bc = (2/L) * '),    pretty(simplify(Bc/(2/L)))
+disp('Bb = (2/L) * '),    pretty(simplify(Bb/(2/L)))
+disp('Bs = (2/L) * '),    pretty(simplify(Bs/(2/L)))
 
 %% Integro exactamente las matrices de rigidez
 disp('Integral exacta de las matrices de rigidez = ');
-Kf = int(Bf.'*E*I*Bf*L/2,   xi,-1,1);
-Kc = int(Bc.'*G*Aast*Bc*L/2,xi,-1,1);
+Kb = int(Bb.'*E*I*Bb*L/2,   xi,-1,1);
+Ks = int(Bs.'*G*Aast*Bs*L/2,xi,-1,1);
 
-disp('Kf = ((E*I)/(3*L)) * '),    pretty(Kf/(E*I/(3*L)))
-disp('Kc = ((G*Aast)/(9*L)) * '), pretty(Kc/(G*Aast/(9*L)))
+disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
+disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
 %% Integro las matrices con una cuadratura de Gauss-Legendre de orden 2
 disp('Integral con una cuadratura de Gauss-Legendre de orden 2 = ');
 xi1 = -sym(sqrt(1/3));   w1 = 1;
 xi2 = +sym(sqrt(1/3));   w2 = 1;
-Kf = simplify(subs(Bf.'*E*I*Bf*L/2,   xi,xi1)*w1 + ...
-              subs(Bf.'*E*I*Bf*L/2,   xi,xi2)*w2) ;
+Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2) ;
          
-Kc = simplify(subs(Bc.'*G*Aast*Bc*L/2,xi,xi1)*w1 + ...
-              subs(Bc.'*G*Aast*Bc*L/2,xi,xi2)*w2);
+Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
+              subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2);
 
-disp('Kf = ((E*I)/(3*L)) * '),    pretty(Kf/(E*I/(3*L)))
-disp('Kc = ((G*Aast)/(9*L)) * '), pretty(Kc/(G*Aast/(9*L)))
+disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
+disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
 %% Integro las matrices con una cuadratura de Gauss-Legendre de orden 3
 disp('Integral con una cuadratura de Gauss-Legendre de orden 3 = w1');
 xi1 = -sym(sqrt(3/5));   w1 = sym(5/9);
 xi2 =  sym(0);           w2 = sym(8/9);
 xi3 = +sym(sqrt(3/5));   w3 = sym(5/9);
-Kf = simplify(subs(Bf.'*E*I*Bf*L/2,   xi,xi1)*w1 + ...
-              subs(Bf.'*E*I*Bf*L/2,   xi,xi2)*w2 + ...
-              subs(Bf.'*E*I*Bf*L/2,   xi,xi3)*w3) ;
+Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2 + ...
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi3)*w3) ;
          
-Kc = simplify(subs(Bc.'*G*Aast*Bc*L/2,xi,xi1)*w1 + ...
-              subs(Bc.'*G*Aast*Bc*L/2,xi,xi2)*w2 + ...            
-              subs(Bc.'*G*Aast*Bc*L/2,xi,xi3)*w3);
+Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
+              subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2 + ...            
+              subs(Bs.'*G*Aast*Bs*L/2,xi,xi3)*w3);
 
-disp('Kf = ((E*I)/(3*L)) * '),    pretty(Kf/(E*I/(3*L)))
-disp('Kc = ((G*Aast)/(9*L)) * '), pretty(Kc/(G*Aast/(9*L)))
+disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
+disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
 return %bye, bye!
