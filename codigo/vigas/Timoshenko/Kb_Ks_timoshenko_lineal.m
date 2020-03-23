@@ -60,4 +60,13 @@ f1 = int(N1*[fz; m]*L/2, xi, -1, 1);
 f2 = int(N2*[fz; m]*L/2, xi, -1, 1);
 fe = [f1; f2]
 
+%% Calculo el vector de fuerzas nodales equivalentes correspondientes a una
+%% carga distribuida trapezoidal y sin momentos distribuidos
+syms q1 q2
+fz = N1*q1 + N2*q2;
+m = 0;
+f1 = int(N1*[fz; m]*L/2, xi, -1, 1);
+f2 = int(N2*[fz; m]*L/2, xi, -1, 1);
+fe = [f1; f2]
+
 return %bye, bye!

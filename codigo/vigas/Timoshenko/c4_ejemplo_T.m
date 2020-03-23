@@ -51,8 +51,11 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
     
    Ke = Kb + Ks;
 
-   % vector de fuerzas nodales equivalentes
-   fe = +(qe(e,1)*Le/2) * [ 1; 0; 1; 0 ];   % FALTA
+   % vector de fuerzas nodales equivalentes (ver Kb_Ks_timoshenko_lineal.m)
+   fe = [ Le*(2*qe(e,1) + qe(e,2))/6
+          0
+          Le*(qe(e,1) + 2*qe(e,2))/6
+          0                          ];
    
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
