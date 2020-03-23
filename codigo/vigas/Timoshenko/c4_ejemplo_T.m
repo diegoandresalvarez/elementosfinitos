@@ -79,7 +79,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
    
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
-end;
+end
 
 %% se resuelve el sistema de ecuaciones
 % f = vector de fuerzas nodales equivalentes
@@ -143,7 +143,7 @@ for e = 1:nef
    
    gxz = Bc*ae;                % gamma_xz  
    cor(:,e) = -Aast*G*gxz;     % fuerza cortante   
-end;
+end
 
 %% se calculan los desplazamientos al interior de cada EF
 nint = 10;           % numero de puntos donde se interpolara dentro del EF
@@ -178,7 +178,7 @@ vect_mov = reshape(a,2,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: w = %12.4g m, theta = %12.4g rad \n', ...
       i, vect_mov(i,Y), vect_mov(i,TH));
-end;
+end
 
 disp(' ');
 disp('Fuerzas nodales de equilibrio (solo se imprimen los diferentes de cero)');
@@ -187,8 +187,8 @@ q = reshape(q,2,nno)';
 for i = 1:nno   
    if ~isequal(q(i,:),[0 0])
       fprintf('Nodo %3d W = %12.4g N, Mx = %12.4g N-m\n', i, q(i,Y), q(i,TH));
-   end;
-end;
+   end
+end
 
 %% Grafico la solucion analitica y la solucion por el MEF
 %% 1) grafico los desplazamientos de la barra
@@ -198,7 +198,7 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h1t = plot(xx{e}, ww{e}, 'r--');       % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para el desplazamiento', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Desplazamiento (m)')       % titulo del eje Y
@@ -210,7 +210,7 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h2t = plot(xx{e}, tt{e}, 'r--');       % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para el giro', 'FontSize', 15)
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Giro (rad)')               % titulo del eje Y
@@ -235,7 +235,7 @@ hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h4t = plot(xcor(:), cor(:), 'r--');   % grafico solucion por MEF
-end;
+end
 title('Solucion con el MEF para la fuerza cortante', 'FontSize', 15);
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Fuerza cortante (N)')      % titulo del eje Y
