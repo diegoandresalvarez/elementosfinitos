@@ -1,5 +1,5 @@
-% Ejemplo 4.12 Oñate (1995)
-% Ejemplo 2.8 Oñate (2013)
+% Ejemplo 4.12 Onate (1995)
+% Ejemplo 2.8 Onate (2013)
 
 % A partir de la interpolacion
 % w = pol grado 1

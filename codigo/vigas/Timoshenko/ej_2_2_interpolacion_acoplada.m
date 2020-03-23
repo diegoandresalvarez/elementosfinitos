@@ -12,8 +12,8 @@ N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);   % = xi*(xi+1)/2;
 %% Se definen w y t (w3, t3 es el nodo central)
 % la idea de esta numeracion es que eliminaremos el nodo central y lo
 % expresaremos en funcion de los gdl asociados a los nodos de los lados
-w = N1*w1 + N2*w3 + N3*w2;  % ¡ojo al orden de los terminos!
-t = N1*t1 + N2*t3 + N3*t2;  % ¡ojo al orden de los terminos!
+w = N1*w1 + N2*w3 + N3*w2;  % OJO al orden de los terminos!!!
+t = N1*t1 + N2*t3 + N3*t2;  % OJO al orden de los terminos!!!
 
 %% Se calcula gxz = A + B*xi + C*xi^2
 gxz = simplify(diff(w,xi)*dxi_dx - t)

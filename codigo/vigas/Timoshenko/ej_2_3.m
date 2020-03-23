@@ -1,5 +1,5 @@
-% Ejemplo 4.7 Oñate (1995)
-% Ejemplo 2.3 Oñate (2013)
+% Ejemplo 4.7 Onate (1995)
+% Ejemplo 2.3 Onate (2013)
 
 % Obtener a partir del elemento de viga de Timoshenko con 
 % w = pol grado 3

@@ -1,5 +1,5 @@
-% Ejemplo 4.10 Oñate (1995)
-% Ejemplo 2.6 Oñate (2013)
+% Ejemplo 4.10 Onate (1995)
+% Ejemplo 2.6 Onate (2013)
 
 % A partir del elemento de viga de Timoshenko con 
 % w = pol grado 2
@@ -83,7 +83,7 @@ subs(gxz,a,{0,0,1,0}), ...
 subs(gxz,a,{0,0,0,1}) ])
 
 % Observe que las raices de gxz son +/- 1/sqrt(3)
-solve(gxz,xi)
+solve(gxz == 0,xi)
 
 %% Se calculan la matriz de rigidez Kb
 % esta es la matriz de rigidez K por la teoría de EB

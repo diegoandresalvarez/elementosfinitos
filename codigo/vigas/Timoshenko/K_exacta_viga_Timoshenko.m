@@ -33,7 +33,7 @@ pretty(simplify(K_T/tmp))
 
 %% Se calcula la matriz de rigidez de Euler-Bernoulli
 % Observe que cuando GAast -> Inf, la matriz de rigidez K se vuelve la 
-% misma matriz de rigidez K de la teoría de Euler-Bernoulli:
+% misma matriz de rigidez K de la teoria de Euler-Bernoulli:
 K_EB = limit(K_T, GAast, inf);
 disp('K_EB = (EI/L^3) * ');
 pretty(simplify(K_EB/(EI/L^3)))

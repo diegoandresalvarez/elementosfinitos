@@ -1,4 +1,4 @@
-% Ejemplo 2.4. Oñate, tomo II
+% Ejemplo 2.4. Onate, tomo II
 
 clear  % borrar memoria y pantalla
 
@@ -8,11 +8,11 @@ T1 = 1; T2 = 2; EB = 3;
 
 syms b h E I G Aast L P lambda nu  % define las variables simbolicas
 
-nef = 16;                           % numero de elementos finitos (EF)
+nef = 8;                           % numero de elementos finitos (EF)
 nno = nef + 1;                     % numero de nodos
 ngdl = 2*nno;                      % numero de grados de libertad
 
-% OJO: Oñate programó:
+% OJO: Onate programo lo siguiente:
 Le = L;                            % longitud de la barra
 % Yo hubiera colocado Le = L/nef. Cuando lo hago asi, el codigo no funciona
 % para compensar, la altura se programa como nef*h
@@ -33,7 +33,7 @@ ac = sym(apoyos(:, 2));      % desplazamientos conocidos
 
 %% Relacion de cargas puntuales
 f = sym(zeros(ngdl,1));   % vector de fuerzas nodales equivalentes global
-f(gdl(nno, Y)) = P;  % carga puntual en x = L
+f(gdl(nno, Y)) = P;       % carga puntual en x = L
 
 %% se separa la memoria para las matrices de rigidez
 KT1 = sym(zeros(ngdl));
