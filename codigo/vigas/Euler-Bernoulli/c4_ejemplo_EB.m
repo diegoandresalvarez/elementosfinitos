@@ -25,7 +25,7 @@ idxEF = T{:,'EF'};
 LaG   = T{idxEF,{'NL1','NL2'}};  % definicion de EFs con respecto a nodos
 E     = T{idxEF,'E'};            % modulo de elasticidad E del EF
 I     = T{idxEF,'I'};            % momento de inercia Iz del EF
-q     = T{idxEF,{'q1e','q2e'}};  % relación de las cargas distribuidas
+q     = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
 q(isnan(q)) = 0;                 % reemplace los NaNs con ceros
 
 %% relacion de los apoyos
@@ -42,7 +42,7 @@ for i = 1:n_apoyos
 end
 d =  setdiff((1:ngdl)',c);       % GDL desconocidos
 
-%% relación de cargas puntuales
+%% relacion de cargas puntuales
 T = readtable([filename '.xlsx'], 'Sheet', 'carga_punt');
 idxNODO = T{:,'nodo'};
 dirfp   = T{:,'direccion'};
@@ -62,7 +62,7 @@ tipores = T{:,'tipo'}; % Y=1 (vertical), TH=2 (rotacional)
 kres    = T{:,'k'};    % constante del resorte
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
-K = zeros(ngdl);  % matriz de rigidez global
+K = sparse(ngdl,ngdl);  % matriz de rigidez global
 n_resortes = length(idxNODO);
 for i = 1:n_resortes
    idx = gdl(idxNODO(i), tipores(i));
@@ -270,21 +270,21 @@ if strcmp(filename, 'viga_con_resortes')
    subplot(2,1,1);
    hold on;
    plot(x, v, 'r.');
-   legend('Elementos finitos', 'Solución teórica')
+   legend('Elementos finitos', 'Solucion teorica')
    subplot(2,1,2);
    hold on;
    plot(x, t, 'r.');
-   legend('Elementos finitos', 'Solución teórica')
+   legend('Elementos finitos', 'Solucion teorica')
 
    figure(2)
    subplot(2,1,1);
    hold on;
    plot(x, M, 'r.');
-   legend('Elementos finitos', 'Solución teórica')
+   legend('Elementos finitos', 'Solucion teorica')
    subplot(2,1,2);
    hold on;
    plot(x, V, 'r.');
-   legend('Elementos finitos', 'Solución teórica')
+   legend('Elementos finitos', 'Solucion teorica')
 end
 
 %%
