@@ -28,8 +28,8 @@ E     = T{idxEF,'E'};            % modulo de elasticidad E del EF
 I     = T{idxEF,'I'};            % momento de inercia Iz del EF
 G     = T{idxEF,'G'};            % modulo de rigidez (para viga de Timoshenko)
 Aast  = T{idxEF,'Aast'};         % area de cortante (para viga de Timoshenko)
-qe    = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
-qe(isnan(qe)) = 0;               % reemplace los NaNs con ceros
+fz    = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
+fz(isnan(fz)) = 0;               % reemplace los NaNs con ceros
 
 %% relacion de los apoyos
 T       = readtable(archivo_xlsx, 'Sheet', 'restric');
@@ -96,10 +96,10 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
                             6*Le, 2*Le^2, -6*Le, 4*Le^2 ];
 
    % vector de fuerzas nodales equivalentes de una carga trapezoidal 
-   fe = [ (  Le*(7*qe(e,1) + 3*qe(e,2)))/20    % = Y1
-          (Le^2*(3*qe(e,1) + 2*qe(e,2)))/60    % = M1
-          (  Le*(3*qe(e,1) + 7*qe(e,2)))/20    % = Y2
-         -(Le^2*(2*qe(e,1) + 3*qe(e,2)))/60 ]; % = M2
+   fe = [ (  Le*(7*fz(e,1) + 3*fz(e,2)))/20    % = Y1
+          (Le^2*(3*fz(e,1) + 2*fz(e,2)))/60    % = M1
+          (  Le*(3*fz(e,1) + 7*fz(e,2)))/20    % = Y2
+         -(Le^2*(2*fz(e,1) + 3*fz(e,2)))/60 ]; % = M2
    
    % se ensambla la matriz de rigidez K y el vector de fuerzas nodales
    % equivalentes f

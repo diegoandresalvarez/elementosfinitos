@@ -28,8 +28,8 @@ E     = T{idxEF,'E'};            % modulo de elasticidad E del EF
 I     = T{idxEF,'I'};            % momento de inercia Iz del EF
 G     = T{idxEF,'G'};            % momento de cortante G del EF
 Aast  = T{idxEF,'Aast'};         % area reducida Aast del EF
-qe    = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
-qe(isnan(qe)) = 0;               % reemplace los NaNs con ceros
+fz    = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
+fz(isnan(fz)) = 0;               % reemplace los NaNs con ceros
 
 %% relacion de los apoyos
 T       = readtable(archivo_xlsx, 'Sheet', 'restric');
@@ -98,10 +98,10 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
                               6*Le, (2-beta)*Le^2, -6*Le, (4+beta)*Le^2 ];
 
    % vector de fuerzas nodales equivalentes de una carga trapezoidal 
-   fe = [ (  Le*(80*E(e)*I(e)*qe(e,1) + 40*E(e)*I(e)*qe(e,2) + 7*G(e)*Aast(e)*Le^2*qe(e,1) + 3*G(e)*Aast(e)*Le^2*qe(e,2)))/(20* G(e)*Aast(e)*Le^2 + 240*E(e)*I(e) )    % = Y1
-          (Le^2*(30*E(e)*I(e)*qe(e,1) + 30*E(e)*I(e)*qe(e,2) + 3*G(e)*Aast(e)*Le^2*qe(e,1) + 2*G(e)*Aast(e)*Le^2*qe(e,2)))/(60*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e)))    % = M1
-          (  Le*(40*E(e)*I(e)*qe(e,1) + 80*E(e)*I(e)*qe(e,2) + 3*G(e)*Aast(e)*Le^2*qe(e,1) + 7*G(e)*Aast(e)*Le^2*qe(e,2)))/(20*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e)))    % = Y2
-         -(Le^2*(30*E(e)*I(e)*qe(e,1) + 30*E(e)*I(e)*qe(e,2) + 2*G(e)*Aast(e)*Le^2*qe(e,1) + 3*G(e)*Aast(e)*Le^2*qe(e,2)))/(60*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e))) ]; % = M2
+   fe = [ (  Le*(80*E(e)*I(e)*fz(e,1) + 40*E(e)*I(e)*fz(e,2) + 7*G(e)*Aast(e)*Le^2*fz(e,1) + 3*G(e)*Aast(e)*Le^2*fz(e,2)))/(20* G(e)*Aast(e)*Le^2 + 240*E(e)*I(e) )    % = Y1
+          (Le^2*(30*E(e)*I(e)*fz(e,1) + 30*E(e)*I(e)*fz(e,2) + 3*G(e)*Aast(e)*Le^2*fz(e,1) + 2*G(e)*Aast(e)*Le^2*fz(e,2)))/(60*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e)))    % = M1
+          (  Le*(40*E(e)*I(e)*fz(e,1) + 80*E(e)*I(e)*fz(e,2) + 3*G(e)*Aast(e)*Le^2*fz(e,1) + 7*G(e)*Aast(e)*Le^2*fz(e,2)))/(20*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e)))    % = Y2
+         -(Le^2*(30*E(e)*I(e)*fz(e,1) + 30*E(e)*I(e)*fz(e,2) + 2*G(e)*Aast(e)*Le^2*fz(e,1) + 3*G(e)*Aast(e)*Le^2*fz(e,2)))/(60*(G(e)*Aast(e)*Le^2 +  12*E(e)*I(e))) ]; % = M2
    
    % se ensambla la matriz de rigidez K y el vector de fuerzas nodales
    % equivalentes f
