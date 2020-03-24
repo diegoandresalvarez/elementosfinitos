@@ -55,8 +55,13 @@ Código:
 * MATLAB: [interseccion_polinomios_en_raices_pol_Legendre.m](../../2D/extrapolacion_de_esfuerzos/interseccion_polinomios_en_raices_pol_Legendre.m)
 
 ##  Cálculo de la matriz K para el EF de 2 nodos de Euler-Bernoulli resolviendo la ecuación diferencial
+* MATLAB: [K_EB_exacta.m](K_EB_exacta.m)
 Ver [aquí](../../repaso_matricial/portico_2d/deduccion_K_y_fe_elemento_portico_2D/).
 
+## Vector f asociado a una carga trapezoidal
+Con el siguiente código se estableció que las fuerzas nodales equivalentes son:
+* [f_EB_carga_trapezoidal.m](f_EB_carga_trapezoidal.m)
+<img src="figs/viga_carga_trapezoidal.svg">
 
 ## Cálculo de los diagramas de cortante, momento, ángulo de inclinación y desplazamiento de una viga
 
@@ -74,9 +79,9 @@ Dicha viga se resolvió utilizando la teoría de **Euler-Bernoulli**:
 
 La salida de este último código es:
 
-<img src="figs/c4_ejemplo_EB_v_theta.svg">
+<img src="../ejemplos/figs/c4_ejemplo_EB_v_theta.svg">
 
-<img src="figs/c4_ejemplo_EB_M_V.svg">
+<img src="../ejemplos/figs/c4_ejemplo_EB_M_V.svg">
 
 siendo las reacciones de la viga:
 ```
@@ -86,3 +91,6 @@ Nodo   1 Ry =         15.4 kN, Mz =        38.83 kN-m
 Nodo 101 Ry =        48.91 kN, Mz =            0 kN-m
 Nodo 161 Ry =        52.69 kN, Mz =            0 kN-m
 ```
+## Cálculo de vigas con rótulas
+
+viga_con_rotulas/
