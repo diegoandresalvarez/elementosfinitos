@@ -113,7 +113,7 @@ Ks = (G*Aast/L) *
 \  2    6    2    3 /
 ```
 
-El vector de fuerzas nodales equivalentes `fe` asociados a una carga distribuída `q` constante:
+El vector de fuerzas nodales equivalentes `fe` asociados a una carga distribuída `q` constante y un momento distribuído `m` tambien uniforme:
 ```
 fe = 
 / L fz \
