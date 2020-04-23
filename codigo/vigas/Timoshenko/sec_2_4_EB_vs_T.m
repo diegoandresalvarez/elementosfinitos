@@ -8,6 +8,7 @@ T1 = 1; T2 = 2; EB = 3;
 
 syms b h E I G Aast L P lambda nu  % define las variables simbolicas
 
+% Cambie el numero de EFs para generar las ecuaciones
 nef = 8;                           % numero de elementos finitos (EF)
 nno = nef + 1;                     % numero de nodos
 ngdl = 2*nno;                      % numero de grados de libertad
@@ -123,7 +124,7 @@ return
 %% A partir de los resultados se hizo el siguiente programa:
 clear, clc, close all
 
-lambda = linspace(0, 6, 50);
+lambda = linspace(0, 6, 5000);
 nu = 0;
 
 rwT1_1 = (15*lambda.^2 + 12*nu + 12)./(20*lambda.^2);
@@ -152,5 +153,25 @@ grid on;
 xlabel('$$\lambda$$','interpreter','latex')
 ylabel('$$r_w$$','interpreter','latex')
 
+%% Y calculamos los limites
+clear
+nu = 0.25;
+syms lambda
 
+rwT1_1 = (15*lambda^2 + 12*nu + 12)/(20*lambda^2);
+rwT2_1 = (12*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 12*nu + 12));
+rwT1_2 = (75*lambda^2 + 48*nu + 48)/(80*lambda^2);
+rwT2_2 = (48*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 48*nu + 48));
+rwT1_4 = (315*lambda^2 + 192*nu + 192)/(320*lambda^2);
+rwT2_4 = (192*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 192*nu + 192));
+rwT1_8 = (1275*lambda^2 + 768*nu + 768)/(1280*lambda^2);
+rwT2_8 = (768*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 768*nu + 768));
 
+limit(rwT1_1, lambda, inf)   % = 3/4 
+limit(rwT2_1, lambda, inf)   % = 0
+limit(rwT1_2, lambda, inf)   % = 15/16
+limit(rwT2_2, lambda, inf)   % = 0
+limit(rwT1_4, lambda, inf)   % = 63/64
+limit(rwT2_4, lambda, inf)   % = 0
+limit(rwT1_8, lambda, inf)   % = 255/256
+limit(rwT2_8, lambda, inf)   % = 0
