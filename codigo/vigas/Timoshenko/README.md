@@ -149,7 +149,19 @@ fe =
 ```
 
 ## Ejercicio de la Sección 2.4 de Oñate: comparación EB vs T (1 GL) vs T (2 GL)
-* [sec_2_4_EB_vs_T.m])(sec_2_4_EB_vs_T.m)
+El código
+
+* [sec_2_4_EB_vs_T.m](sec_2_4_EB_vs_T.m)
+
+implementa el ejercicio que hay en la Sección 2.4 de Oñate (2013) y obtiene este gráfico:
+
+<img src="figs/lambda_vs_rw_0_a_6.svg">
+
+Básicamente este ejercicio compara los desplazamientos calculados con las teorías de Euler-Bernoulli y Timoshenko utilizando una matriz de rigidez por cortante `Ks` calculada con integración reducida (1 punto de GL) e integración completa (2 puntos de GL). Se deduce de este ejercicio que:
+* En una viga esbelta (`λ` muy grande) el efecto del esfuerzo cortante es despreciable y la solución numérica coincide con la predicha por la teoría de Euler-Bernoulli.
+* A medida que el número de EFs aumenta, también así lo hace la calidad de la solución para el EF con que aplica integración reducida a `Ks`.
+* Con la integración exacta de `Ks` se produce el fenómeno de *shear locking* (bloqueo de la solución). Dicho fenómeno hace que la viga sea en el límite `λ→∞` infinitamente rígida. Este EF con integración exacta solo funcionaría con un número exagerado de EFs (asumiendo que `λ` no tiende a infinito), y aún así su precisión no sería buena, lo que lo hace inutilizable en la mayoría de los casos.
+* Con la integración reducida de `Ks` se evita el fenómeno del bloqueo por cortante (shear locking) y el EF resultante es válido para vigas de pequeño y gran canto. Veremos más adelante, que en este caso el punto central de Gauss-Legendre es adicionalmente el punto óptimo para el cálculo de los esfuerzos.
 
 ## Cálculo de las funciones de forma del elemento de viga de Euler-Bernoulli cuadrático
 * [Kb_Ks_timoshenko_cuadratico.m](Kb_Ks_timoshenko_cuadratico.m)
