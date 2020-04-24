@@ -163,14 +163,23 @@ Básicamente este ejercicio compara los desplazamientos calculados con las teor�
 * Con la integración exacta de `Ks` se produce el fenómeno de *shear locking* (bloqueo de la solución). Dicho fenómeno hace que la viga sea en el límite `λ→∞` infinitamente rígida. Este EF con integración exacta solo funcionaría con un número exagerado de EFs (asumiendo que `λ` no tiende a infinito), y aún así su precisión no sería buena, lo que lo hace inutilizable en la mayoría de los casos.
 * Con la integración reducida de `Ks` se evita el fenómeno del bloqueo por cortante (shear locking) y el EF resultante es válido para vigas de pequeño y gran canto. Veremos más adelante, que en este caso el punto central de Gauss-Legendre es adicionalmente el punto óptimo para el cálculo de los esfuerzos.
 
+## Ejemplo viga Euler-Bernoulli vs viga Timoshenko
+El programa 
+* [c4_ejemplo_T.m](c4_ejemplo_T.m)
+* [c4_ejemplo_EB.m -> ../Euler-Bernoulli/c4_ejemplo_EB.m](c4_ejemplo_EB.m)
+calcula la viga de Timoshenko con elementos finitos de dos nodos. Dicho programa hace una comparación con el método de Euler-Bernoulli
+
+Por ejemplo, el programa anterior calcula la viga:
+
+<img src="../ejemplos/figs/viga_Uribe_Escamilla_ej_5_5.png">
+
+obteniendo la siguiente comparación (para h = 2.0 m):
+
+<img src="figs/eb_vs_t_h_20_1.png">
+
+
 ## Cálculo de las funciones de forma del elemento de viga de Euler-Bernoulli cuadrático
 * [Kb_Ks_timoshenko_cuadratico.m](Kb_Ks_timoshenko_cuadratico.m)
-
-## Ejemplo viga Euler-Bernoulli vs viga Timoshenko
-eb_vs_t_h_20_1.png
-c4_ejemplo_EB.m -> ../Euler-Bernoulli/c4_ejemplo_EB.m
-c4_ejemplo_T.m
-
 
 ##  Cálculo de la matriz K para el EF de 2 nodos calculado utilizando integración exacta:
 * [K_exacta_viga_T.m](K_exacta_viga_T.m)
