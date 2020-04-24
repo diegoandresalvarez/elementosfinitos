@@ -164,12 +164,7 @@ Básicamente este ejercicio compara los desplazamientos calculados con las teor�
 * Con la integración reducida de `Ks` se evita el fenómeno del bloqueo por cortante (shear locking) y el EF resultante es válido para vigas de pequeño y gran canto. Veremos más adelante, que en este caso el punto central de Gauss-Legendre es adicionalmente el punto óptimo para el cálculo de los esfuerzos.
 
 ## Ejemplo viga Euler-Bernoulli vs viga Timoshenko
-El programa 
-* [c4_ejemplo_T.m](c4_ejemplo_T.m)
-* [c4_ejemplo_EB.m -> ../Euler-Bernoulli/c4_ejemplo_EB.m](c4_ejemplo_EB.m)
-calcula la viga de Timoshenko con elementos finitos de dos nodos. Dicho programa hace una comparación con el método de Euler-Bernoulli
-
-Por ejemplo, el programa anterior calcula la viga:
+El programa [c4_ejemplo_T.m](c4_ejemplo_T.m) calcula la viga de Timoshenko con elementos finitos de dos nodos. Dicho programa utiliza [c4_ejemplo_EB.m](c4_ejemplo_EB.m) para hacer una comparación con el método de Euler-Bernoulli. Por ejemplo, [c4_ejemplo_T.m](c4_ejemplo_T.m) calcula la viga:
 
 <img src="../ejemplos/figs/viga_Uribe_Escamilla_ej_5_5.png">
 
