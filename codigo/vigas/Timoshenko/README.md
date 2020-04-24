@@ -173,7 +173,7 @@ Por ejemplo, el programa anterior calcula la viga:
 
 <img src="../ejemplos/figs/viga_Uribe_Escamilla_ej_5_5.png">
 
-obteniendo la siguiente comparación (para h = 2.0 m):
+obteniendo la siguiente comparación para h = 2.0 m. (NOTA: esta viga es demasiado alta para que Timoshenko o Euler-Bernoulli sea aplicable, pero la idea es exagerar las diferencias):
 
 <img src="figs/eb_vs_t_h_20_1.png">
 
