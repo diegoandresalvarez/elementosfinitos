@@ -25,6 +25,14 @@ Ks = int(Bs.'*G*Aast*Bs*dx_dxi,xi,-1,1);
 disp('Solucion exacta = ')
 disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
 disp('Ks = (G*Aast/L) * '), pretty(Ks/(G*Aast/L))
+
+%% Evaluo la curvatura
+kappa = simplify(dxi_dx*(diff(N1,xi)*t1 + diff(N2,xi)*t2));
+disp('kappa = '), pretty(kappa)
+
+%% Evaluo gamma_xz
+gxz =  simplify(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
+disp('gxz = '), pretty(collect(gxz,xi))
 fprintf('\n\n\n\n\n\n');
 
 %% Evaluo las matrices con una cuadratura de Gauss-Legendre de orden 1
@@ -49,14 +57,6 @@ Ks = simplify(subs(Bs.'*G*Aast*Bs*dx_dxi,xi, xi1)*w1 + ...
 disp('Integrando con GL de orden 2 = ')
 disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
 disp('Ks = (G*Aast/L) * '), pretty(Ks/(G*Aast/L))
-
-%% Evaluo la curvatura
-kappa = simplify(dxi_dx*(diff(N1,xi)*t1 + diff(N2,xi)*t2));
-disp('kappa = '), pretty(kappa)
-
-%% Evaluo gamma_xz
-gxz =  simplify(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
-disp('gxz = '), pretty(gxz)
 
 %% Calculo el vector de fuerzas nodales equivalentes correspondientes a una
 %% carga distribuida de magnitud q constante

@@ -2,7 +2,7 @@ clear, clc, close all
 
 %% Definicion de variables
 syms xi x1 x2 x3 L E I Aast G
-% syms w1 w2 w3 t1 t2 t3
+syms w1 w2 w3 t1 t2 t3
 
 %% Defino las posiciones de los nodos
 x3 = x1+L;
@@ -37,6 +37,15 @@ Ks = int(Bs.'*G*Aast*Bs*L/2,xi,-1,1);
 
 disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
+
+%% Evaluo la curvatura
+kappa = simplify(dxi_dx*(diff(N1,xi)*t1 + diff(N2,xi)*t2 + + diff(N3,xi)*t3));
+disp('kappa = '), pretty(kappa)
+
+%% Evaluo gamma_xz
+gxz =  simplify(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2 + diff(N3,xi)*w3) - (N1*t1 + N2*t2 + + N3*t3));
+disp('gxz = '), pretty(collect(gxz,xi))
+fprintf('\n\n\n\n\n\n');
 
 %% Integro las matrices con una cuadratura de Gauss-Legendre de orden 2
 disp('Integral con una cuadratura de Gauss-Legendre de orden 2 = ');
