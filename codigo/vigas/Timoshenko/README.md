@@ -331,13 +331,13 @@ Este programa usa la la imposición del campo de deformaciones angulares para `g
 * [ej_2_2_interpolacion_acoplada.m](ej_2_2_interpolacion_acoplada.m)
 
 El programa calcula los términos `w3` y `t3` en:
-```
+```matlab
 w = N1*w1 + N2*w3 + N3*w2;  % OJO al orden de los terminos!!!
 t = N1*t1 + N2*t3 + N3*t2;  % OJO al orden de los terminos!!!
 ```
 
 imponiendo al campo de deformaciones angulares `gxz = A + B*xi + C*xi^2` la condición `B=0` y `C=0`:
-```
+```matlab
 sol = solve(B==0, C==0, w3,t3);
 disp('w3 = '); disp(sol.w3)
 disp('t3 = '); disp(sol.t3)
