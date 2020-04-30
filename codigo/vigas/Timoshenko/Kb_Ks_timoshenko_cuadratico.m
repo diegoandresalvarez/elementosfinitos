@@ -61,7 +61,7 @@ disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
 %% Integro las matrices con una cuadratura de Gauss-Legendre de orden 3
-disp('Integral con una cuadratura de Gauss-Legendre de orden 3 = w1');
+disp('Integral con una cuadratura de Gauss-Legendre de orden 3 = ');
 xi1 = -sym(sqrt(3/5));   w1 = sym(5/9);
 xi2 =  sym(0);           w2 = sym(8/9);
 xi3 = +sym(sqrt(3/5));   w3 = sym(5/9);
