@@ -7,7 +7,6 @@ El programa:
 calcula:
 
 Las matrices de deformación por flexión `Bb` y por cortante `Bs`:
-
 ```
 Bb =
 [ 0, -1/L, 0, 1/L]
@@ -174,7 +173,153 @@ obteniendo la siguiente comparación para h = 2.0 m. (NOTA: esta viga es demasia
 
 
 ## Cálculo de las funciones de forma del elemento de viga de Euler-Bernoulli cuadrático
+El programa:
 * [Kb_Ks_timoshenko_cuadratico.m](Kb_Ks_timoshenko_cuadratico.m)
+
+calcula:
+
+Las matrices de deformación por flexión `Bb` y por cortante `Bs`:
+```
+Bb = (2/L) * 
+/         1                    1 \
+| 0, xi - -, 0, -2 xi, 0, xi + - |
+\         2                    2 /
+```
+```
+Bs = (2/L) * 
+/                                      2                               \
+|      1    L xi (xi - 1)         L (xi  - 1)       1    L xi (xi + 1) |
+| xi - -, - -------------, -2 xi, -----------, xi + -, - ------------- |
+\      2          4                    2            2          4       /
+```
+
+Las matrices `Kb` y `Ks` que se calculan por la integración exacta:
+```
+Kb = ((E*I)/(3*L)) * 
+/ 0,  0, 0,  0, 0,  0 \
+|                     |
+| 0,  7, 0, -8, 0,  1 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+| 0, -8, 0, 16, 0, -8 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+\ 0,  1, 0, -8, 0,  7 /
+```
+```
+Ks = ((G*Aast)/(9*L)) * 
+/          9 L                          3 L \
+|   21,    ---,   -24,  6 L,    3,    - --- |
+|           2                            2  |
+|                                           |
+|            2             2              2 |
+|  9 L    6 L           3 L    3 L     3 L  |
+|  ---,   ----,  -6 L,  ----,  ---,  - ---- |
+|   2       5             5     2       10  |
+|                                           |
+|  -24,   -6 L,   48,    0,    -24,    6 L  |
+|                                           |
+|            2             2             2  |
+|         3 L          24 L           3 L   |
+|  6 L,   ----,    0,  -----,  -6 L,  ----  |
+|           5            5              5   |
+|                                           |
+|          3 L                          9 L |
+|   3,     ---,   -24,  -6 L,   21,   - --- |
+|           2                            2  |
+|                                           |
+|             2            2             2  |
+|   3 L    3 L          3 L     9 L   6 L   |
+| - ---, - ----,  6 L,  ----, - ---,  ----  |
+\    2      10            5      2      5   /
+```
+
+Las matrices `Kb` y `Ks` que se calculan con Gauss-Legendre usando 2 puntos de integración:
+```
+Kb = ((E*I)/(3*L)) * 
+/ 0,  0, 0,  0, 0,  0 \
+|                     |
+| 0,  7, 0, -8, 0,  1 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+| 0, -8, 0, 16, 0, -8 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+\ 0,  1, 0, -8, 0,  7 /
+```
+```
+Ks = ((G*Aast)/(9*L)) * 
+/         9 L                       3 L \
+|   21,   ---,  -24,  6 L,   3,   - --- |
+|          2                         2  |
+|                                       |
+|                                     2 |
+|  9 L     2           2    3 L      L  |
+|  ---,   L ,  -6 L,  L ,   ---,   - -- |
+|   2                        2        2 |
+|                                       |
+|  -24,  -6 L,  48,    0,   -24,   6 L  |
+|                                       |
+|          2            2            2  |
+|  6 L,   L ,    0,  4 L ,  -6 L,   L   |
+|                                       |
+|         3 L                       9 L |
+|   3,    ---,  -24, -6 L,   21,  - --- |
+|          2                         2  |
+|                                       |
+|           2                           |
+|   3 L    L           2     9 L     2  |
+| - ---, - --,  6 L,  L ,  - ---,   L   |
+\    2      2                 2         /
+```
+
+Las matrices `Kb` y `Ks` que se calculan con Gauss-Legendre usando 3 puntos de integración:
+```
+Kb = ((E*I)/(3*L)) * 
+/ 0,  0, 0,  0, 0,  0 \
+|                     |
+| 0,  7, 0, -8, 0,  1 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+| 0, -8, 0, 16, 0, -8 |
+|                     |
+| 0,  0, 0,  0, 0,  0 |
+|                     |
+\ 0,  1, 0, -8, 0,  7 /
+```
+```
+Ks = ((G*Aast)/(9*L)) * 
+/          9 L                          3 L \
+|   21,    ---,   -24,  6 L,    3,    - --- |
+|           2                            2  |
+|                                           |
+|            2             2              2 |
+|  9 L    6 L           3 L    3 L     3 L  |
+|  ---,   ----,  -6 L,  ----,  ---,  - ---- |
+|   2       5             5     2       10  |
+|                                           |
+|  -24,   -6 L,   48,    0,    -24,    6 L  |
+|                                           |
+|            2             2             2  |
+|         3 L          24 L           3 L   |
+|  6 L,   ----,    0,  -----,  -6 L,  ----  |
+|           5            5              5   |
+|                                           |
+|          3 L                          9 L |
+|   3,     ---,   -24,  -6 L,   21,   - --- |
+|           2                            2  |
+|                                           |
+|             2            2             2  |
+|   3 L    3 L          3 L     9 L   6 L   |
+| - ---, - ----,  6 L,  ----, - ---,  ----  |
+\    2      10            5      2      5   /
+```
+
 
 ##  Cálculo de la matriz K para el EF de 2 nodos calculado utilizando integración exacta:
 * [K_exacta_viga_T.m](K_exacta_viga_T.m)
@@ -182,7 +327,30 @@ obteniendo la siguiente comparación para h = 2.0 m. (NOTA: esta viga es demasia
 * [c4_ejemplo_con_K_T_exacta.m](c4_ejemplo_con_K_T_exacta.m)
 
 ## Interpolación acoplada (linked interpolation):
+Este programa usa la la imposición del campo de deformaciones angulares para `gxz` con el objeto de calcular la interpolación acoplada de la sección 2.8.3:
 * [ej_2_2_interpolacion_acoplada.m](ej_2_2_interpolacion_acoplada.m)
+
+El programa calcula los términos `w3` y `t3` en:
+```
+w = N1*w1 + N2*w3 + N3*w2;  % OJO al orden de los terminos!!!
+t = N1*t1 + N2*t3 + N3*t2;  % OJO al orden de los terminos!!!
+```
+
+imponiendo al campo de deformaciones angulares `gxz = A + B*xi + C*xi^2` la condición `B=0` y `C=0`:
+```
+sol = solve(B==0, C==0, w3,t3);
+disp('w3 = '); disp(sol.w3)
+disp('t3 = '); disp(sol.t3)
+```
+
+De este modo, obtiene la interpolación acoplada:
+```
+w = (1/2 - xi/2)*w1 + (xi/2 + 1/2)*w2 + (1 - xi^2)*(t1 - t2)*L/8
+t = (1/2 - xi/2)*t1 + (xi/2 + 1/2)*t2
+```
+
+---
+
 * [ej_2_3.m](ej_2_3.m)
 * [ej_2_4.m](ej_2_4.m)
 * [ej_2_5.m](ej_2_5.m)
