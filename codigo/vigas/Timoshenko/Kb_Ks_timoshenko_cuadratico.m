@@ -52,7 +52,7 @@ disp('Integral con una cuadratura de Gauss-Legendre de orden 2 = ');
 xi1 = -sym(sqrt(1/3));   w1 = 1;
 xi2 = +sym(sqrt(1/3));   w2 = 1;
 Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
-              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2) ;
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2);
          
 Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
               subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2);
