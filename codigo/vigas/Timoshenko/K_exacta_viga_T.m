@@ -52,15 +52,21 @@ sol = dsolve(...
        v(L) == 0,         ...           
        t(L) == 0); 
 
-f = [ -subs(sol.V, x, 0)   % Yi  se evaluan las reacciones verticales y los
-      +subs(sol.M, x, 0)   % Mi  momentos en los apoyos y se les multiplica
-      +subs(sol.V, x, L)   % Yj  por -1 para estimar la fuerza nodal 
-      -subs(sol.M, x, L) ];% Mj  equivalente
+f_T = [ -subs(sol.V, x, 0)   % Yi  se evaluan las reacciones verticales y los
+        +subs(sol.M, x, 0)   % Mi  momentos en los apoyos y se les multiplica
+        +subs(sol.V, x, L)   % Yj  por -1 para estimar la fuerza nodal 
+        -subs(sol.M, x, L) ];% Mj  equivalente
 
+%% Y en el limitem cuando beta -> inf, obtenemos el vector f para EB
+f_EB = limit(f_T, GAast, inf);
+disp('f_EB =');
+pretty(simplify(f_EB))
+    
+%%    
 clear beta
 syms beta
-f = simplify(subs(f, GAast, (12 * EI)/(L^2 * beta)));
-disp('f = ');
-pretty(f)
+f_T = simplify(subs(f_T, GAast, (12 * EI)/(L^2 * beta)));
+disp('f_T = ');
+pretty(f_T)
 
 %% bye, bye!
