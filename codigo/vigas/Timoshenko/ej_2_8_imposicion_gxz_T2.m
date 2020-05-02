@@ -38,12 +38,13 @@ a = {w1,t1,w2,t2};
 %% Se calcula la matriz N
 N = simplify([ ...
 subs(w,a,{1,0,0,0}), ...
-subs(w,a,{0,1,0,0}), ...
+subs(t,a,{0,1,0,0}), ...
 subs(w,a,{0,0,1,0}), ...
-subs(w,a,{0,0,0,1}) ])
+subs(t,a,{0,0,0,1}) ])
 
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
-fprintf('sum(N) = %s\n', char(expand(sum(N))));
+fprintf('sum(N([1 3])) = %s\n', char(expand(sum(N([1 3])))));
+fprintf('sum(N([2 4])) = %s\n', char(expand(sum(N([2 4])))));
 
 %% Se recalcula dt/dx y se calcula la matriz Bb
 dt_dx = simplify(diff(t,xi)*dxi_dx);
