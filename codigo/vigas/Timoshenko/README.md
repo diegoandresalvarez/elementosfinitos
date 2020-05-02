@@ -349,17 +349,87 @@ w = (1/2 - xi/2)*w1 + (xi/2 + 1/2)*w2 + (1 - xi^2)*(t1 - t2)*L/8
 t = (1/2 - xi/2)*t1 + (xi/2 + 1/2)*t2
 ```
 
+## Imposición de un campo de deformaciones angulares para gxz:
+Los programas 
+* [Bs_sustitutiva_T2.m](Bs_sustitutiva_T2.m) y [ej_2_8_imposicion_gxz_T2.m](ej_2_8_imposicion_gxz_T2.m)
+* [Bs_sustitutiva_T3.m](Bs_sustitutiva_T3.m) y [ej_2_9_imposicion_gxz_T3.m](ej_2_9_imposicion_gxz_T3.m)
+
+imponen las deformaciones
+
+<!---
+Compile en: https://tex.s2cms.com
+
+\gamma_{xz}(\xi) = \sum_{k=1}^{n_\gamma} N_{\gamma_k}(\xi) \gamma_k = \sum_{k=1}^{n_\gamma} N_{\gamma_k}(\xi) \ma{B}_s(\xi_k)\ve{a} = \overline{\ma{B}_s}(\xi) \ve{a}
+--->
+
+![](https://i.upmath.me/svg/%5Cgamma_%7Bxz%7D(%5Cxi)%20%3D%20%5Csum_%7Bk%3D1%7D%5E%7Bn_%5Cgamma%7D%20N_%7B%5Cgamma_k%7D(%5Cxi)%20%5Cgamma_k%20%3D%20%5Csum_%7Bk%3D1%7D%5E%7Bn_%5Cgamma%7D%20N_%7B%5Cgamma_k%7D(%5Cxi)%20%5Cma%7BB%7D_s(%5Cxi_k)%5Cve%7Ba%7D%20%3D%20%5Coverline%7B%5Cma%7BB%7D_s%7D(%5Cxi)%20%5Cve%7Ba%7D)
+
+con `n_gamma = 1` y `n_gamma = 2` en EF de Timoshenko de 2 y 3 nodos respectivamente. El programa calcula en ambos casos las matrices `Bs_substitutiva` y `Ks` para dichos elementos.
+
 ---
 
+El programa
 * [ej_2_3.m](ej_2_3.m)
+
+a partir del elemento de viga de Timoshenko con `w = pol grado 3` y `t = pol grado 2`, obtiene un elemento de variación lineal para el momento flector y constante para el esfuerzo cortante.
+
+```
+-1        -1/sqrt(3)            0            1/sqrt(3)         1 
+ x-------------x----------------x----------------x-------------x--> xi
+ w1            w2                                w3            w4
+ t1                             t5                             t4
+```
+
+---
+El programa
 * [ej_2_4.m](ej_2_4.m)
+
+a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 2`, obtiene un elemento de variación lineal para el momento flector y constante para el esfuerzo cortante.
+
+```
+-1                              0                              1 
+ x------------------------------x------------------------------x--> xi
+ w1                             w2                             w3
+ t1                             t2                             t3
+```
+
+---
+
+El programa
 * [ej_2_5.m](ej_2_5.m)
+
+a partir del elemento de viga de Timoshenko con `w = pol grado 3` y `t = pol grado 2` e imponiendo que `gxz = 0`, obtiene un elemento de viga de dos nodos de Euler-Bernoulli.
+
+```
+-1        -1/sqrt(3)            0            1/sqrt(3)         1 
+ x-------------x----------------x----------------x-------------x--> xi
+ w1            w2                                w3            w4
+ t1                             t5                             t4
+```
+
+---
+
+El programa
 * [ej_2_6.m](ej_2_6.m)
+
+obtiene a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 2` e imponiendo que `gxz(+/- 1/sqrt(3)) = 0`, un elemento de viga de dos nodos de Euler-Bernoulli.
+```
+-1                              0                              1 
+ x------------------------------x------------------------------x--> xi
+ w1                             w2                             w3
+ t1                             t2                             t3
+ ```
+
+---
+
+El programa
 * [ej_2_7.m](ej_2_7.m)
 
+obtiene a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 1` e imponiendo gxz constante y eliminando el nodo `w2`, el EF de viga de Timoshenko de dos nodos.
 
-## Imposición de un campo de deformaciones angulares para gxz:
-* [Bs_sustitutiva_T2.m](Bs_sustitutiva_T2.m)
-* [Bs_sustitutiva_T3.m](Bs_sustitutiva_T3.m)
-* [ej_2_8_imposicion_gxz_T2.m](ej_2_8_imposicion_gxz_T2.m)
-* [ej_2_9_imposicion_gxz_T3.m](ej_2_9_imposicion_gxz_T3.m)
+```
+-1                              0                              1 
+ x------------------------------x------------------------------x--> xi
+ w1                             w2                             w3
+ t1                                                            t3
+```
