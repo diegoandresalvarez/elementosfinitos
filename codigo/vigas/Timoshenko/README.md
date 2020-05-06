@@ -407,12 +407,14 @@ a partir del elemento de viga de Timoshenko con `w = pol grado 3` y `t = pol gra
  t1                             t5                             t4
 ```
 
+**NOTA: este elemento no cumple la condición de sólido rígido \sum_i N_i = 0**
+
 ---
 
 El programa
 * [ej_2_6.m](ej_2_6.m)
 
-obtiene a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 2` e imponiendo que `gxz(+/- 1/sqrt(3)) = 0`, un elemento de viga de dos nodos de Euler-Bernoulli.
+a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 2` e imponiendo que `gxz(+/- 1/sqrt(3)) = 0`, obtiene un elemento de viga de dos nodos de Euler-Bernoulli.
 ```
 -1                              0                              1 
  x------------------------------x------------------------------x--> xi
@@ -420,12 +422,14 @@ obtiene a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t =
  t1                             t2                             t3
  ```
 
+**NOTA: este elemento no cumple la condición de sólido rígido \sum_i N_i = 0**
+
 ---
 
 El programa
 * [ej_2_7.m](ej_2_7.m)
 
-obtiene a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 1` e imponiendo gxz constante y eliminando el nodo `w2`, el EF de viga de Timoshenko de dos nodos.
+a partir del elemento de viga de Timoshenko con `w = pol grado 2` y `t = pol grado 1` e imponiendo gxz constante y eliminando el nodo `w2`, obtiene el EF de viga de Timoshenko de dos nodos.
 
 ```
 -1                              0                              1 
