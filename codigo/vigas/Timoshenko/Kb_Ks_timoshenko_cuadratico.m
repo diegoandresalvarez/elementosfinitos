@@ -52,7 +52,7 @@ disp('Integral con una cuadratura de Gauss-Legendre de orden 2 = ');
 xi1 = -sym(sqrt(1/3));   w1 = 1;
 xi2 = +sym(sqrt(1/3));   w2 = 1;
 Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
-              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2) ;
+              subs(Bb.'*E*I*Bb*L/2,   xi,xi2)*w2);
          
 Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
               subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2);
@@ -61,7 +61,7 @@ disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
 %% Integro las matrices con una cuadratura de Gauss-Legendre de orden 3
-disp('Integral con una cuadratura de Gauss-Legendre de orden 3 = w1');
+disp('Integral con una cuadratura de Gauss-Legendre de orden 3 = ');
 xi1 = -sym(sqrt(3/5));   w1 = sym(5/9);
 xi2 =  sym(0);           w2 = sym(8/9);
 xi3 = +sym(sqrt(3/5));   w3 = sym(5/9);

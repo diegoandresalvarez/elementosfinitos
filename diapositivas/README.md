@@ -18,7 +18,8 @@
   * [Deducción de la ecuación `K*a - f = q` para el EF de barra isoparamétrico](03_EF_1d_n_nodos_isoparametricos.pdf)
 
 * Elementos finitos de flexión de vigas:
-   * [04_EF_vigas.pdf](04_EF_vigas.pdf)
+  * Vigas de Euler-Bernoulli: [04a_EF_vigas_EulerBernoulli.pdf](04a_EF_vigas_EulerBernoulli.pdf)
+  * Vigas de Timoshenko-Ehrenfest: [04b_EF_vigas_Timoshenko.pdf](04b_EF_vigas_Timoshenko.pdf)
 
 * Elementos finitos para tensión y deformación plana:
   * [EFs bidimensionales: triangular de 3 nodos y cuadrático de 4 nodos](05a_EF_2D_T3_y_Q4.pdf)

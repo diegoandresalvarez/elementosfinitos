@@ -32,6 +32,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
       0 -1  0 +1 ];
    
    % Matriz de rigidez de cortante del elemento e   
+   p = nef; % numero de puntos de integracion (1 por EF)
    Ks = GAast_L * [ ...  % Con cuadratura de GL de orden 1
       1     Le/2    -1     Le/2
       Le/2  Le^2/4  -Le/2  Le^2/4
@@ -42,6 +43,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
    % locking (bloqueo de la solucion). En este caso calcule la viga con 
    % h = 0.01
 %{
+   p = 2*nef; % numero de puntos de integracion (2 por EF)   
    Ks = (G*Aast/L) * [ ...  % Con cuadratura de GL de orden 2
      1      Le/2    -1     Le/2
      Le/2   Le^2/3  -Le/2  Le^2/6
@@ -78,6 +80,18 @@ ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
 q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
+
+%% Criterio para verificar si Ks|dd es singular o invertible
+j = size(Kdd,1);
+s = 1;  % por gxz
+fprintf('j - s*p = %d\n', j - s*p);
+if j - s*p > 0 
+    disp('Como j-s*p > 0, la matriz Ks|dd posiblemente es singular')
+else % if j - s*p <= 0 
+    disp(['Como j-s*p <= 0, la matriz Ks|dd es invertible. ' ...
+          'Disminuya el numero de puntos de integracion de GL o ' ...
+          'incremente el número de EFs.'])
+end    
 
 %% calculo de los momentos flectores
 %% (se calcula el momento en el centro de cada elemento finito)
@@ -142,6 +156,8 @@ end
 
 %% imprimo los resultados
 format short g
+disp(' ');
+disp(' ');
 disp('Desplazamientos nodales                      ');
 disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 vect_mov = reshape(a,2,nno)'; % vector de movimientos

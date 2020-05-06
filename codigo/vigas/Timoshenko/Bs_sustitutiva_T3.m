@@ -11,7 +11,7 @@ Bs = @(xi) (2/L)*[ xi - 1/2, -(L*xi*(xi - 1))/4, -2*xi, ...
 Ng1 = poly2sym(polyfit([-1/sqrt(3) +1/sqrt(3)], [1 0], 1), xi); 
 Ng2 = poly2sym(polyfit([-1/sqrt(3) +1/sqrt(3)], [0 1], 1), xi); 
 
-% Se calcula la matriz Bc_sustitutiva
+% Se calcula la matriz Bs_sustitutiva
 Bs_sustitutiva = Ng1*Bs(sym(-1/sqrt(3))) + Ng2*Bs(sym(+1/sqrt(3)));
 
 % y la correspondiente matriz de rigidez
