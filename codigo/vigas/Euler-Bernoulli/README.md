@@ -93,4 +93,4 @@ Nodo 161 Ry =        52.69 kN, Mz =            0 kN-m
 ```
 ## Cálculo de vigas con rótulas
 
-viga_con_rotulas/
+[viga_con_rotulas/](viga_con_rotulas)
