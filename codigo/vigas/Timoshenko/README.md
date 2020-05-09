@@ -374,7 +374,7 @@ El programa
 a partir del elemento de viga de Timoshenko con `w = pol grado 3` y `t = pol grado 2`, obtiene un elemento de variación lineal para el momento flector y constante para el esfuerzo cortante.
 
 ```
--1        -1/sqrt(3)            0            1/sqrt(3)         1 
+-1           -1/3               0               1/3            1 
  x-------------x----------------x----------------x-------------x--> xi
  w1            w2                                w3            w4
  t1                             t5                             t4
@@ -401,7 +401,7 @@ El programa
 a partir del elemento de viga de Timoshenko con `w = pol grado 3` y `t = pol grado 2` e imponiendo que `gxz = 0`, obtiene un elemento de viga de dos nodos de Euler-Bernoulli.
 
 ```
--1        -1/sqrt(3)            0            1/sqrt(3)         1 
+-1           -1/3               0               1/3            1 
  x-------------x----------------x----------------x-------------x--> xi
  w1            w2                                w3            w4
  t1                             t5                             t4
