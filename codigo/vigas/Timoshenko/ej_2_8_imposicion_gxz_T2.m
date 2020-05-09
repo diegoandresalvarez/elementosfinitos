@@ -32,7 +32,7 @@ gxz = expand(diff(w,xi)*dxi_dx - t);
 A = feval(symengine, 'coeff', gxz, xi, 0); % Aqui se esta llamando a la 
 B = feval(symengine, 'coeff', gxz, xi, 1); % funcion "coeff" del MUPAD
 
-%% Se define el vector a
+%% Se define el vector de movimientos nodales ae
 ae = {w1,t1,w2,t2};
 
 %% Se calcula la matriz N
