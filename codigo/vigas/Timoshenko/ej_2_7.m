@@ -1,7 +1,7 @@
 % Ejemplo 4.11 Onate (1995)
 % Ejemplo 2.7 Onate (2013)
 
-% A partir del elemento de viga de Timoshenko con 
+%% A partir del elemento de viga de Timoshenko con 
 % w = pol grado 2
 % t = pol grado 1
 % e imponiendo gxz constante y eliminando el nodo w2
@@ -10,13 +10,13 @@
 clear, clc
 
 syms xi w1 w2 w3 t1 t2 t3 E I Aast G L
+dx_dxi = L/2;
+dxi_dx = 2/L;
 
 % -1                              0                              1 
 %  x------------------------------x------------------------------x--> xi
 %  w1                             w2                             w3
 %  t1                                                            t3
-
-dxi_dx = 2/L;
 
 %% Funciones de forma Lagrangianas
 N1_1 = poly2sym(polyfit([-1 1],[1 0],1),xi);       % = (1-xi)/2;
@@ -40,14 +40,14 @@ B = feval(symengine, 'coeff', gxz, xi, 1); % funcion "coeff" del MUPAD
 sol.w2 = solve(B==0, w2);
 disp('w2 = '); disp(sol.w2)
 
-%% En funcion de w2 se reescribe w
+%% Se reescribe w en funcion de w2 
 w = N1_2*w1 + N2_2*sol.w2 + N3_2*w3;
 w = collect(w,{'w1','t1','w3','t3'});
 
-%% Se define el vector a
+%% Se define el vector de movimientos nodales del elemento ae
 ae = {w1,t1,w3,t3};
 
-%% Se calcula la matriz N
+%% Se calculan las matrices Nw y Nt
 Nw = simplify([ ...
 subs(w,ae,{1,0,0,0}), ...
 subs(w,ae,{0,1,0,0}), ...
@@ -66,30 +66,27 @@ fprintf('sum(Nt) = %s\n', char(expand(sum(Nt))));
 
 %% Se recalcula dt/dx y se calcula la matriz Bb
 dt_dx = simplify(diff(t,xi)*dxi_dx);
-Bb = simplify([ ...
-subs(dt_dx,ae,{1,0,0,0}), ...
-subs(dt_dx,ae,{0,1,0,0}), ...
-subs(dt_dx,ae,{0,0,1,0}), ...
-subs(dt_dx,ae,{0,0,0,1}) ])
-disp('Observe la variacion lineal de Bf (y por lo tanto del momento flector)')
+Bb = simplify([ subs(dt_dx,ae,{1,0,0,0}), ...
+                subs(dt_dx,ae,{0,1,0,0}), ...
+                subs(dt_dx,ae,{0,0,1,0}), ...
+                subs(dt_dx,ae,{0,0,0,1}) ])
+disp('Observe que Bb es constante (y el momento flector tambien)')
 
 %% Se recalcula gxz y se calcula la matriz Bs
 gxz = simplify(diff(w,xi)*dxi_dx - t);
-Bs = simplify([ ...
-subs(gxz,ae,{1,0,0,0}), ...
-subs(gxz,ae,{0,1,0,0}), ...
-subs(gxz,ae,{0,0,1,0}), ...
-subs(gxz,ae,{0,0,0,1}) ])
+Bs = simplify([ subs(gxz,ae,{1,0,0,0}), ...
+                subs(gxz,ae,{0,1,0,0}), ...
+                subs(gxz,ae,{0,0,1,0}), ...
+                subs(gxz,ae,{0,0,0,1}) ])
+disp('Observe que Bs es constante (y la fuerza cortante tambien)')          
 
-%% Se calculan la matriz de rigidez Kb
-%Kb = int(Bb.'*E*I*Bb*L/2,   xi,-1,1)
-syms Db
-Kb = int(Bb.'*Db*Bb*L/2,   xi,-1,1)
+%% Se calculan las matrices de rigidez
+syms E I G Aast
+Kb = int(Bb.'*E*I*Bb*dx_dxi,   xi,-1,1);
+Ks = int(Bs.'*G*Aast*Bs*dx_dxi,xi,-1,1);
 
-%% Se calculan la matriz de rigidez Ks
-% 1) La exacta
-%Ks_exacta = int(Bs.'*G*Aast*Bs*L/2,xi,-1,1) % La exacta
-syms Ds
-Ks_exacta = int(Bs.'*Ds*Bs*L/2,xi,-1,1) % La exacta
+disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
+disp('Ks = (G*Aast/L) * '), pretty(Ks/(G*Aast/L))
 
-Kb+ Ks_exacta
+%% bye, bye!
+return

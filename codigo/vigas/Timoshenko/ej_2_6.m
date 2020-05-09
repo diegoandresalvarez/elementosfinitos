@@ -1,7 +1,7 @@
 % Ejemplo 4.10 Onate (1995)
 % Ejemplo 2.6 Onate (2013)
 
-% A partir del elemento de viga de Timoshenko con 
+%% A partir del elemento de viga de Timoshenko con 
 % w = pol grado 2
 % t = pol grado 2
 % e imponiendo que gxz(+/- 1/sqrt(3)) = 0
@@ -12,13 +12,13 @@
 clear, clc
 
 syms xi w1 w2 w3 t1 t2 t3 E I Aast G L
+dx_dxi = L/2;
+dxi_dx = 2/L;
 
 % -1                              0                              1 
 %  x------------------------------x------------------------------x--> xi
 %  w1                             w2                             w3
 %  t1                             t2                             t3
-
-dxi_dx = 2/L;
 
 %% Funciones de forma Lagrangianas
 N1_2 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);   % = xi*(xi-1)/2;
@@ -41,28 +41,27 @@ sol = solve(...
 disp('w2 = '); disp(simplify(sol.w2))
 disp('t2 = '); disp(simplify(sol.t2))
 
-%% En funcion de w2 se reescribe w
+%% Se reemplaza w2 en la definicion original de w
 w = N1_2*w1 + N2_2*sol.w2 + N3_2*w3;
 w = collect(w,{'w1', 't1', 'w3', 't3'});
 
+%% Se reemplaza t2 en la definicion original de t
 t = N1_2*t1 + N2_2*sol.t2 + N3_2*t3;
 t = collect(t,{'w1', 't1', 'w3', 't3'});
 
-%% Se define el vector a
+%% Se define el vector de movimientos nodales del elemento
 ae = {w1,t1,w3,t3};
 
-%% Se calcula la matriz N
-Nw = simplify([ ...
-subs(w,ae,{1,0,0,0}), ...
-subs(w,ae,{0,1,0,0}), ...
-subs(w,ae,{0,0,1,0}), ...
-subs(w,ae,{0,0,0,1}) ])
+%% Se calculan las matrices Nw y Nt
+Nw = simplify([ subs(w,ae,{1,0,0,0}), ...
+                subs(w,ae,{0,1,0,0}), ...
+                subs(w,ae,{0,0,1,0}), ...
+                subs(w,ae,{0,0,0,1}) ])
 
-Nt = simplify([ ...
-subs(t,ae,{1,0,0,0}), ...
-subs(t,ae,{0,1,0,0}), ...
-subs(t,ae,{0,0,1,0}), ...
-subs(t,ae,{0,0,0,1}) ])
+Nt = simplify([ subs(t,ae,{1,0,0,0}), ...
+                subs(t,ae,{0,1,0,0}), ...
+                subs(t,ae,{0,0,1,0}), ...
+                subs(t,ae,{0,0,0,1}) ])
 
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
 fprintf('sum(Nw) = %s\n', char(expand(sum(Nw))));
@@ -70,7 +69,7 @@ fprintf('sum(Nw) = %s\n', char(expand(sum(Nw))));
 % vemos que si cumple, por lo que el libro de Onate tiene un error
 
 fprintf('sum(Nt) = %s\n', char(expand(sum(Nt))));
-% Esta condición no se cumple
+% Esta condicion no se cumple
 
 %% Se recalcula dt/dx y se calcula la matriz Bb
 % Observe que esta es la matriz Bb de la viga de EB
@@ -91,10 +90,11 @@ subs(gxz,ae,{0,0,1,0}), ...
 subs(gxz,ae,{0,0,0,1}) ])
 
 % Observe que las raices de gxz son +/- 1/sqrt(3)
+assume(L ~= 0); % esto es para evitar un warning de la siguiente linea
 solve(gxz == 0,xi)
 
 %% Se calculan la matriz de rigidez Kb
-% esta es la matriz de rigidez K por la teoría de EB
+% esta es la matriz de rigidez K por la teoria de EB
 Kb = int(Bb.'*E*I*Bb*L/2, xi,-1,1)
 
 %% Se calculan la matriz de rigidez Ks

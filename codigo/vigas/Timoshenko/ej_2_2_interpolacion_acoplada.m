@@ -1,7 +1,11 @@
+% Ejemplo 2.3 Onate (2013)
+
 %% Interpolacion acoplada
+clear, clc
 
 syms xi w1 w2 w3 t1 t2 t3 L
 
+dx_dxi = L/2;
 dxi_dx = 2/L;
 
 %% Funciones de forma Lagrangianas
@@ -29,7 +33,7 @@ B = tmp(2);
 C = tmp(3);
 %}
 
-%% Los terminos que acompanan a xi^2 y xi deben hacerse igual a cero (B = C = 0)
+%% Se hacen B y C iguales a cero y se despejan w3 y t3
 sol = solve(B==0, C==0, w3,t3);
 disp('w3 = '); disp(sol.w3)
 disp('t3 = '); disp(sol.t3)
@@ -41,10 +45,10 @@ w = collect(w, {'w1', 'w2'})
 t = N1*t1 + N2*sol.t3 + N3*t2;
 t = collect(t, {'t1', 't2'})
 
-%% Se recalcula gxz
-gxz = simplify(diff(w,xi)*dxi_dx - t)
+%% Se define el vector de movimientos nodales del elemento
+ae = {w1,t1,w2,t2};
 
-%% Se calcula la matriz N
+%% Se calculan las matrices Nw y Nt
 Nw = simplify([ ...
 subs(w,ae,{1,0,0,0}), ...
 subs(w,ae,{0,1,0,0}), ...
@@ -60,6 +64,30 @@ subs(t,ae,{0,0,0,1}) ])
 %% Se verifica la condicion de cuerpo rigido (sum N_i = 1)
 fprintf('sum(Nw) = %s\n', char(expand(sum(Nw))));
 fprintf('sum(Nt) = %s\n', char(expand(sum(Nt))));
+
+%% Se recalcula dt/dx y se calcula la matriz Bb
+dt_dx = simplify(diff(t,xi)*dxi_dx);
+Bb = simplify([ subs(dt_dx,ae,{1,0,0,0}), ...
+                subs(dt_dx,ae,{0,1,0,0}), ...
+                subs(dt_dx,ae,{0,0,1,0}), ...
+                subs(dt_dx,ae,{0,0,0,1}) ])
+disp('Observe que Bb es constante (y el momento flector tambien)')
+
+%% Se recalcula gxz y se calcula la matriz Bs
+gxz = simplify(diff(w,xi)*dxi_dx - t);
+Bs = simplify([ subs(gxz,ae,{1,0,0,0}), ...
+                subs(gxz,ae,{0,1,0,0}), ...
+                subs(gxz,ae,{0,0,1,0}), ...
+                subs(gxz,ae,{0,0,0,1}) ])
+disp('Observe que Bs es constante (y la fuerza cortante tambien)')
+
+%% Se calculan las matrices de rigidez
+syms E I G Aast
+Kb = int(Bb.'*E*I*Bb*dx_dxi,   xi,-1,1);
+Ks = int(Bs.'*G*Aast*Bs*dx_dxi,xi,-1,1);
+
+disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
+disp('Ks = (G*Aast/L) * '), pretty(Ks/(G*Aast/L))
 
 %% bye, bye!
 return
