@@ -52,13 +52,13 @@ Active en el software de captura de pantalla la opción para ver el ratón.
 ## Criterios de evaluación
 * POR DEFINIR
 * Nota máxima: 6.0
-* Si se programe algo que mejore radicalmente mis códigos tendrá una unidad adicional.
+* Si se programa algo que mejore radicalmente los códigos de la WIKI de vigas, se tendrá una unidad adicional.
 * Por mala calidad en el sonido se rebajarán 0.5 unidades.
 
 ---
 
 ## Taller alternativo
 
-En vez de hacer este taller, se puede buscar un artículo científico sobre el tema de vigas de una revista de reputación internacional y se implementa dicho artículo. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0.
+En vez de hacer este taller, se puede implementar un artículo científico sobre el tema de vigas de una revista de impacto internacional. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0.
 
-Ideas: implementar viga de Reddy, Timoshenko con elementos finitos mixtos, etc.
+Ideas: implementar viga de Reddy, Timoshenko con elementos finitos mixtos (enfoques de Hellinger-Reissner, Hu-Washizu), etc.
