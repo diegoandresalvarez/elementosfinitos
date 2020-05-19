@@ -23,7 +23,7 @@ Se solicita calcular y graficar los diagramas de:
 
 Utilizando los siguientes métodos:
 * Viga de Euler-Bernoulli (solución exacta).
-* Viga de Timoshenko que resulta al utilizar la interpolación acoplada que aparece en la diapositiva 66 de [04b_EF_vigas_Timoshenko.pdf](../../diapositivas/04b_EF_vigas_Timoshenko.pdf).
+* Viga de Timoshenko que resulta al utilizar la interpolación acoplada que aparece en la diapositiva 68 de [04b_EF_vigas_Timoshenko.pdf](../../diapositivas/04b_EF_vigas_Timoshenko.pdf).
 * Viga de Timoshenko (método matricial donde la matriz de rigidez aparece al resolver la ecuación diferencial).
 * Programa de análisis estructural que usted registró en http://solidos2020a.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos utilizando las teorías de Euler-Bernoulli y Timoshenko. NOTA: no usar como software el FTOOL.
 
