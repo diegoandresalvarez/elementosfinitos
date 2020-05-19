@@ -4,17 +4,16 @@ Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso 
 
 Trabajo de elaboración individual
 
-Fecha de entrega: POR DEFINIR  a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+Fecha de entrega: mayo 31, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+
+
 
 ## El problema propuesto
 Considere la viga mostrada:
 
-<img src="figs/viga_2019a.svg"/>
+<img src="figs/viga_2020a.svg"/>
 
-**NOTA: esta no es la viga definitiva del taller. Esta es la viga que se solicitó la última vez que dí la materia. Solo la pongo para propósitos de ilustración.**
-
-
-Dicha viga tiene una sección rectangular de 10 cm de ancho y 40 de alto y está hecha de un material con un módulo de Young E = 210 GPa y un coeficiente de Poisson ν = 0.30
+Dicha viga tiene una sección rectangular. En x=0m, la viga tiene 10 cm de ancho y 40 cm de alto; la altura varía linealmente hasta x=2m donde tiene una altura de 20 cm; el tramo de viga entre x=2m y x=6m tiene una 10 cm de ancho y 20 cm de alto; la viga está hecha de un material con un módulo de Young E = 20 GPa y un coeficiente de Poisson ν = 0.30.
 
 Se solicita calcular y graficar los diagramas de:
 * Fuerza cortante
@@ -24,9 +23,11 @@ Se solicita calcular y graficar los diagramas de:
 
 Utilizando los siguientes métodos:
 * Viga de Euler-Bernoulli (solución exacta).
-* Viga de Timoshenko de 3 nodos.
+* Viga de Timoshenko que resulta al utilizar la interpolación acoplada que aparece en la diapositiva 66 de [04b_EF_vigas_Timoshenko.pdf](../../diapositivas/04b_EF_vigas_Timoshenko.pdf).
 * Viga de Timoshenko (método matricial donde la matriz de rigidez aparece al resolver la ecuación diferencial).
 * Programa de análisis estructural que usted registró en http://solidos2020a.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos utilizando las teorías de Euler-Bernoulli y Timoshenko. NOTA: no usar como software el FTOOL.
+
+
 
 ## Lo solicitado en el informe
 Hacer un informe donde se:
@@ -40,18 +41,15 @@ Hacer un informe donde se:
 Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. Los videos se deben subir a YouTube y se deben enlazar en GOOGLE CLASSROOM.
 
 * Hacer un video de no más de 30 minutos donde se haga una revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al análisis de vigas. OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia del mismo y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido. Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video. En ese PDF se pueden incluir pantallazos de los manuales de referencia del software escogido.
-
 * Hacer un video de no más de 15 minutos que ilustre como resolvió la viga utilizando el programa seleccionado. En el mismo video mostrar la comparación de los resultados obtenidos con MATLAB/PYTHON y con el programa escogido. 
-
 * Informe del trabajo con el análisis de resultados.
-
 * Envíe, adicionalmente, los archivos de MAXIMA, EXCEL y del software empleado asociados a este ejercicio.
-
-Por mala calidad en el sonido se rebajarán 0.5 unidades.
 
 Active en el software de captura de pantalla la opción para ver el ratón.
 
 
 
 ## Criterios de evaluación
-POR DEFINIR
+* POR DEFINIR
+* Nota máxima: x.0
+* Por mala calidad en el sonido se rebajarán 0.5 unidades.
