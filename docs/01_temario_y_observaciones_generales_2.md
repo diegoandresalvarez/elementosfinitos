@@ -36,10 +36,12 @@ En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios num
 --->
 
   * **Apuntes de clase:** 30%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado.
-  * **Examen 1:** 15%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
-  * **Examen 2:** 15%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
-  * **Trabajo 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
-  * **Trabajo 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+  * **Examen 1:** 5%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
+  * **Examen 2:** 5%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+  * **Trabajo 1:** 30%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+  * **Trabajo 2:** 30%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+
+  **NOTA:** la semana que se realizará el examen no se solicitarán apuntes de clase.
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.

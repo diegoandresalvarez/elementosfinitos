@@ -11,7 +11,7 @@ Fecha de entrega: mayo 31, 2020 a las 23:59. Por cada día de retraso se tendrá
 ## El problema propuesto
 Considere la viga mostrada:
 
-<img src="figs/viga_2020a.svg"/>
+<img src="figs/viga_2020a_sin_rotula.svg"/>
 
 Dicha viga tiene una sección rectangular. En x=0m, la viga tiene 10 cm de ancho y 40 cm de alto; la altura varía linealmente hasta x=2m donde tiene una altura de 20 cm; el tramo de viga entre x=2m y x=6m tiene una 10 cm de ancho y 20 cm de alto; la viga está hecha de un material con un módulo de Young E = 20 GPa y un coeficiente de Poisson ν = 0.30.
 
@@ -22,7 +22,9 @@ Se solicita calcular y graficar los diagramas de:
 * Desplazamiento vertical
 
 Utilizando los siguientes métodos:
+<!---
 * Viga de Euler-Bernoulli (solución exacta).
+--->
 * Viga de Timoshenko que resulta al utilizar la interpolación acoplada que aparece en la diapositiva 69 de [04b_EF_vigas_Timoshenko.pdf](../../diapositivas/04b_EF_vigas_Timoshenko.pdf).
 * Viga de Timoshenko (método matricial donde la matriz de rigidez aparece al resolver la ecuación diferencial).
 * Programa de análisis estructural que usted registró en http://solidos2020a.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos utilizando las teorías de Euler-Bernoulli y Timoshenko. NOTA: no usar como software el FTOOL.
@@ -59,6 +61,6 @@ Active en el software de captura de pantalla la opción para ver el ratón.
 
 ## Taller alternativo
 
-En vez de hacer este taller, se puede implementar un artículo científico sobre el tema de vigas de una revista de impacto internacional. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0.
+En vez de hacer este taller, se puede implementar un artículo científico sobre el tema de vigas de una revista de impacto internacional. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0. Se debe realizar una exposición de máximo 20 minutos.
 
 Ideas: implementar viga de Reddy, Timoshenko con elementos finitos mixtos (enfoques de Hellinger-Reissner, Hu-Washizu), etc.
