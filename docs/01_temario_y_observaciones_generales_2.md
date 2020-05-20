@@ -13,6 +13,15 @@
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
 ## Evaluaciones y trabajos
+
+Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes, evaluación de los apuntes y talleres.
+
+Los exámenes serán escritos a mano, individuales y de libro abierto. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
+
+Las fechas para los exámenes se definirán dos semanas antes de los mismos. La duración de cada examen será de aproximadamente de 3 horas.
+
+<!---
+
 * Exámenes:
   - 20% - Examen 1: viernes 17 de abril de 2020
   - 20% - Examen 2: viernes 22 de mayo de 2020
@@ -23,6 +32,14 @@
   - 14% - Trabajo 3: fecha por definir
 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
+
+--->
+
+  * **Apuntes de clase:** 30%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado.
+  * **Examen 1:** 15%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+  * **Examen 2:** 15%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+  * **Trabajo 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+  * **Trabajo 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.
