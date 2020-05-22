@@ -10,22 +10,22 @@ cx = [ 0 1.0 0.5 ]; cy = [0 0 sqrt(0.75)]; % coordenadas del triangulo
 syms x y E nu t x1 y1 x2 y2 x3 y3
 
 %% se calculan las matrices PT y A
-PT = [ 1 x y x^2 x*y y^2 x^3 (x^2*y+x*y^2) y^3 ];
-PT_x = diff(PT,x);
-PT_y = diff(PT,y);
+pT = [ 1 x y x^2 x*y y^2 x^3 (x^2*y+x*y^2) y^3 ];
+pT_x = diff(pT,x);
+pT_y = diff(pT,y);
 
 A = [ ...
-   subs(PT,   {x, y}, {x1, y1})
-   subs(PT_x, {x, y}, {x1, y1}) % nodo 1
-   subs(PT_y, {x, y}, {x1, y1})
+   subs(pT,   {x, y}, {x1, y1})
+   subs(pT_x, {x, y}, {x1, y1}) % nodo 1
+   subs(pT_y, {x, y}, {x1, y1})
 
-   subs(PT,   {x, y}, {x2, y2})
-   subs(PT_x, {x, y}, {x2, y2}) % nodo 2
-   subs(PT_y, {x, y}, {x2, y2})
+   subs(pT,   {x, y}, {x2, y2})
+   subs(pT_x, {x, y}, {x2, y2}) % nodo 2
+   subs(pT_y, {x, y}, {x2, y2})
 
-   subs(PT,   {x, y}, {x3, y3})
-   subs(PT_x, {x, y}, {x3, y3}) % nodo 3
-   subs(PT_y, {x, y}, {x3, y3})
+   subs(pT,   {x, y}, {x3, y3})
+   subs(pT_x, {x, y}, {x3, y3}) % nodo 3
+   subs(pT_y, {x, y}, {x3, y3})
    ]
 
 %% se sustituyen las coordenadas del triangulo en A
@@ -33,13 +33,13 @@ A = subs(A,x1,cx(1)); A = subs(A,x2,cx(2)); A = subs(A,x3,cx(3));
 A = subs(A,y1,cy(1)); A = subs(A,y2,cy(2)); A = subs(A,y3,cy(3));
 
 %% se calculan las funciones de forma
-N = PT/A;  % N = PT*inv(A);
+N = pT/A;  % N = PT*inv(A);
 
 %% se calcula la matriz L
 L = [ ...
-   diff(PT_x,x)
-   diff(PT_y,y)
-   diff(PT_x,y) + diff(PT_y,x) ]
+     diff(pT,x,2)
+     diff(pT,y,2)
+   2*diff(pT_x,y) ]
 
 %% Reorganizo las funciones de forma en una matriz de 3x3
 % donde las filas representan el nodo i
@@ -82,14 +82,11 @@ TRI = delaunay(X,Y);
 for i = 1:3    % contador de nodos
    figure;
    for j = 1:3  % contador de grados de libertad
-      subplot(1,3,j);        % Divido el lienzo en 3x1 dibujos
+      subplot(1,3,j);        % divido el lienzo en 3x1 dibujos
       grid on                % creo la rejilla
-      hold on;               % Para que no se sobreescriban los graficos
+      hold on                % para que no se sobreescriban los graficos
 
-      % creo una funcion que pueda evaluar numericamente (es como
-      % matlabFunction del toolbox simbolico de MATLAB R2010b)
-      %  NN = inline(strrep(char(N(i,j)),'*','.*'),'x','y');
-      NN = inline(vectorize(char(N(i,j))),'x','y','x1','y1','x2','y2','x3','y3');
+      NN = matlabFunction(N(i,j), 'Vars', {'x','y','x1','y1','x2','y2','x3','y3'});      
 
       Z = NN(X,Y, cx(1),cy(1), cx(2),cy(2), cx(3),cy(3));
       Z = Z(:);
@@ -104,17 +101,20 @@ for i = 1:3    % contador de nodos
       daspect([1 1 1]);
       view(3);               % vista tridimensional
 
-      xlabel('x', 'FontSize',26); % titulo eje X
-      ylabel('y', 'FontSize',26); % titulo eje Y
+      xlabel('$x$', 'FontSize',26, 'interpreter','latex'); % titulo eje X
+      ylabel('$y$', 'FontSize',26, 'interpreter','latex'); % titulo eje Y
       switch j % imprimo el titulo
          case 1
-            title(sprintf('N_{%d}(x,y)',       i),'FontSize',26);
+            title(sprintf('$N_{%d}(x,y)$',       i), ...
+                'FontSize',26, 'interpreter','latex');
          case 2
-            title(sprintf('(N_b)_{%d}(x,y)',   i),'FontSize',26);
+            title(['$\overline{N}_' num2str(i) '(x,y)$'], ...
+                'FontSize',26, 'interpreter','latex');
          case 3
-            title(sprintf('(N_{bb})_{%d}(x,y)',i),'FontSize',26);
-      end;
-   end;
-end;
+            title(['$\overline{\overline N}_' num2str(i) '(x,y)$'], ...
+                'FontSize',26, 'interpreter','latex');
+      end
+   end
+end
 
 return %bye, bye!
