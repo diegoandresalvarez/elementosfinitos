@@ -1,5 +1,6 @@
 # Tema a evaluar en los exámenes
 
+<!---
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación.
 
 Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, texto explicativo, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).
@@ -46,3 +47,15 @@ Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pu
 * Dinámica con elementos finitos
   * Diapositivas: 
      * [20_dinamica_y_elementos_finitos](../diapositivas/20_dinamica_y_elementos_finitos.pdf)
+
+--->
+
+Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones de evaluación del curso. Por lo tanto, haremos dos exámenes:
+
+**Examen 1:** flexión de vigas de Euler-Bernoulli y Timoshenko.
+
+**Examen 2:** flexión de placas de Kirchhoff-Love y Mindlin + flexión de cascarones planos y curvos.
+
+Estos serán exámenes escritos, individuales y de libro abierto. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
+
+Las fechas para los exámenes se definirán dos semanas antes de los mismos. La duración de cada examen será de aproximadamente de 3 horas. 
