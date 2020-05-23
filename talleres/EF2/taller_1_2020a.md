@@ -13,7 +13,7 @@ Considere la viga mostrada:
 
 <img src="figs/viga_2020a_sin_rotula.svg"/>
 
-Dicha viga tiene una sección rectangular. En x=0m, la viga tiene 10 cm de ancho y 40 cm de alto; la altura varía linealmente hasta x=2m donde tiene una altura de 20 cm; el tramo de viga entre x=2m y x=6m tiene una 10 cm de ancho y 20 cm de alto; la viga está hecha de un material con un módulo de Young E = 20 GPa y un coeficiente de Poisson ν = 0.30.
+Dicha viga tiene una sección rectangular. En x=0m, la viga tiene 10 cm de ancho y 40 cm de alto; la altura varía linealmente hasta x=2m donde tiene una altura de 20 cm; el tramo de viga entre x=2m y x=6m tiene una 10 cm de ancho y 20 cm de alto; la viga está hecha de un material con un módulo de Young E = 20 GPa y un coeficiente de Poisson ν = 0.30. Asuma k1 = k2 = 1000 kN/m.
 
 Se solicita calcular y graficar los diagramas de:
 * Fuerza cortante
@@ -52,7 +52,8 @@ Active en el software de captura de pantalla la opción para ver el ratón.
 
 
 ## Criterios de evaluación
-* POR DEFINIR
+* Análisis y comparación de los resultados con interpolación acoplada, solución de la ecuación diferencial y el software de EFs: 60%.
+* Revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al análisis de viga: 40%.
 * Nota máxima: 6.0
 * Si se programa algo que mejore radicalmente los códigos de la WIKI de vigas, se tendrá una unidad adicional.
 * Por mala calidad en el sonido se rebajarán 0.5 unidades.
