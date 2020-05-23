@@ -123,8 +123,17 @@ f = 4*q*a*b*
 [ 1/4,  1/12, -1/12]
 %}
 
+%% Se calcula una matriz Q que permite calcular las fuerzas cortantes
+d3N_dx3   =       diff(Nvec,xi,3)/(a^3); 
+d3N_dx2dy =  diff(Nvec,xi,xi,eta)/(a^2*b);
+d3N_dxdy2 = diff(Nvec,xi,eta,eta)/(a*b^2);
+d3N_dy3   =      diff(Nvec,eta,3)/(b^3);
 
-% Calculo de la matriz de masa consistente (FALTA VERIFICAR)
+% Se calcula la matriz QQ, de modo que Q = -D*QQ*a
+QQ = simplify([ d3N_dx3 + d3N_dxdy2
+                d3N_dy3 + d3N_dx2dy ])
+
+%% Calculo de la matriz de masa consistente (FALTA VERIFICAR)
 syms rho
 disp ('Calculando la matriz de masa consistente');
 M = simplify(int(int(rho*Nvec.'*Nvec*det_J, xi,-1,1), eta,-1,1));
