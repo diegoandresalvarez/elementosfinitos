@@ -87,7 +87,7 @@ for i = 1:4
 end
 Bb = simplify([BB{1} BB{2} BB{3} BB{4}]);
 
-% matriz constitutiva
+% matriz constitutiva (es la misma que se tiene en tension plana)
 D = E/(1-nu^2) * [ 1  nu 0
                    nu 1  0
                    0  0  (1-nu)/2 ];
@@ -109,7 +109,7 @@ disp ('Calculando la matriz de rigidez: espere aproximadamente dos minutos (en m
 K = simplify(int(int(Bb.'*Db*Bb*det_J, xi, -1, 1), eta, -1, 1))
 
 disp ('Calculando la matriz Db*Bb');
-Db_B = simplify(Db*Bb)
+Db_Bb = simplify(Db*Bb)
 
 disp ('Calculando el vector de fuerzas nodales equivalentes');
 f = int(int(N*q*det_J, xi,-1,1), eta,-1,1);

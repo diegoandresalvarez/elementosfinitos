@@ -414,7 +414,7 @@ for i = 1:nno
 end
 disp('Observe que al comparar ambos metodos los errores relativos maximos son')
 max(err, [], 'omitnan') % = 0.0027815 =  0.27%
-disp('es decir son extremadamente pequeños!!!')
+disp('es decir son extremadamente pequenios!!!')
 
 %%
 return; % bye, bye!

@@ -147,7 +147,7 @@ vect_mov = reshape(aa,3,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: w = %12.4g m, tx = %12.4g rad, ty = %12.4g rad\n', ...
       i, vect_mov(i,ww), vect_mov(i,tx), vect_mov(i,ty));
-end;
+end
 
 disp(' ');
 disp('Fuerzas nodales de equilibrio (solo se imprimen los diferentes de cero)');
@@ -157,8 +157,8 @@ for i = 1:nno
    if ~isequal(q(i,:),[0 0 0])
       fprintf('Nodo %3d W = %12.4g N, Mx = %12.4g N-m, My = %12.4g N-m\n', ...
          i, q(i,ww), q(i,tx), q(i,ty));
-   end;
-end;
+   end
+end
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 escala = 5000; % factor de escalamiento de la deformada
