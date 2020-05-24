@@ -5,7 +5,7 @@ Considere la losa mostrada en la figura
 ![figs/losa.png](figs/losa.png)
 
 dicha losa tiene:
-* dimensión de 2m x 4m, espesor t = 5 cm.
+* dimensión: a = 2m, b = 4m, espesor t = 5 cm.
 * material: E = 210 GPa y ν = 0.30.
 * soporta una carga p = 10 kN/m^2, con u = 0.5m, v = 1m, ξ = 1.25m, η = 1.5 m.
 
