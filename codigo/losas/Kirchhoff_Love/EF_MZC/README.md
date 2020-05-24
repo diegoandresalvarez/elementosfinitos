@@ -34,6 +34,14 @@ Recuerde que M1f y Mf2 nos dicen la forma de colocar el refuerzo óptimo en la p
 
 ![figs/Qmax.png](figs/Qmax.png)
 
+### Momentos de diseño de Wood y Armer en la parte superior e inferior
+
+![figs/WA_sup.png](figs/WA_sup.png)
+
+![figs/WA_inf.png](figs/WA_inf.png)
+
+
+### Comparación contra la solución teórica
 
 El desplazamiento vertical de la losa se comparó contra su solución teórica, la cual se encuentra en Eduard Ventsel and Theodor Krauthammer (2001) - Thin plates and shells: theory, analysis and applications. Marcel Dekker : New York. Páginas 53 y 54.
 
