@@ -66,6 +66,9 @@ function w = calc_w(x, y, E, nu, t, a, b, p, u, v, xi, eta)
 % lo escriben como:
 % p_{mn} = \frac{16 p}{\pi^2 m n u v}
 
+% Por:
+% Diego Andres Alvarez Marin daalvarez@unal.edu.co
+
 D = (E*t^3)/(12*(1 - nu^2)); % rigidez a la flexion de la placa
 nterm = 20; % numero de terminos de la serie a tener en cuenta
 

@@ -193,7 +193,8 @@ for e = 1:nef
 end
 
 %% Se calcula para cada elemento el vector de cortantes en los puntos
-%% de Gauss
+%% de Gauss. Nota: de todos modos algo me dice (Diego) que se debe calcular 
+%% es en el centro del EF
 QxQy = cell(nef,n_gl,n_gl);  % cortantes
 for e = 1:nef
     a = a_e(e); b = b_e(e);
