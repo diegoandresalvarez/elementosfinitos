@@ -24,6 +24,8 @@ La losa se calculó con elementos finitos MZC obteniendo los siguientes diagrama
 
 ![figs/M1fM2fMtmax.svg](figs/M1fM2fMtmax.svg)
 
+Recuerde que M1f y Mf2 nos dicen la forma de colocar el refuerzo óptimo en la parte superior e inferior de la losa, respectivamente.
+
 ### Fuerzas cortantes Qx y Qy
 
 ![figs/QxQy.svg](figs/QxQy.svg)
