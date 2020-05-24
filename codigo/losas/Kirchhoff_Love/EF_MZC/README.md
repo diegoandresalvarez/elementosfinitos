@@ -67,4 +67,4 @@ obteniendo un error absoluto relativo máximo del 0.27815%. Las fórmulas anteri
 
 Código elaborado por:
 * Diego Andrés Alvarez Marín 
-* Sebastián Jaramillo MorenoElaborado por:
+* Sebastián Jaramillo Moreno
