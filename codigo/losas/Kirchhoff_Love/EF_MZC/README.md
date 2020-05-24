@@ -10,7 +10,7 @@ dicha losa tiene:
 * soporta una carga p = 10 kN/m^2, con u = 0.5m, v = 1m, ξ = 1.25m, η = 1.5 m.
 
 
-La losa se calculó con elementos finitos MZC obteniendo los siguientes diagramas:
+La losa se calculó con elementos finitos MZC en el archivo [EF_MZC.m](EF_MZC.m) obteniendo los siguientes diagramas:
 
 ### Deformación vertical w
 
@@ -63,7 +63,7 @@ donde
 
 ![](https://i.upmath.me/svg/%5Cbegin%7Bequation%7D%0A%20%20p_%7Bmn%7D%20%3D%20%5Cfrac%7B16%20p%7D%7B%5Cpi%5E2%20m%20n%7D%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bm%20%5Cpi%20%5Cxi%7D%7Ba%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bn%20%5Cpi%20%5Ceta%7D%7Bb%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bm%20%5Cpi%20u%7D%7B2a%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bn%20%5Cpi%20v%7D%7B2b%7D%5Cright)%0A%5Cend%7Bequation%7D)
 
-obteniendo un error absoluto relativo máximo del 0.27815%.
+obteniendo un error absoluto relativo máximo del 0.27815%. Las fórmulas anteriores se encuentran implementadas en el archivo [calc_w.m](calc_w.m).
 
 Código elaborado por:
 * Diego Andrés Alvarez Marín 
