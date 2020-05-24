@@ -1,33 +1,67 @@
-# Cálculo de una losa simplemente apoyada en sus cuatro bordes
+# Cálculo de una losa simplemente apoyada en sus cuatro bordes utilizando el EF de losa MZC
 
 Considere la losa mostrada en la figura
 
-![figs/losa.png](figs/losa.png | width = 100)
+![figs/losa.png](figs/losa.png)
 
-dicha losa tiene una dimensión de 2m x 4m, está hecha con un material de E =  GPa y ν = 0.30 y soporta una carga q = ***.
+dicha losa tiene:
+* dimensión de 2m x 4m, espesor t = 5 cm.
+* material: E = 210 GPa y ν = 0.30.
+* soporta una carga p = 10 kN/m^2, con u = 0.5m, v = 1m, ξ = 1.25m, η = 1.5 m.
+
 
 La losa se calculó con elementos finitos MZC obteniendo los siguientes diagramas:
 
-## Deformación vertical w
+### Deformación vertical w
 
 ![figs/w.svg](figs/w.svg)
 
-## Momentos flectores Mx y My y torsores Mxy
+### Momentos flectores Mx y My y torsores Mxy
 
 ![figs/MxMyMxyQxQy.svg](figs/MxMyMxy.svg)
 
-## Momentos flectores máximos y mínimos y momentos torsores máximos con sus respectivas inclinaciones
+### Momentos flectores máximos y mínimos y momentos torsores máximos con sus respectivas inclinaciones
 
 ![figs/M1fM2fMtmax.svg](figs/M1fM2fMtmax.svg)
 
-## Fuerzas cortantes Qx y Qy
+### Fuerzas cortantes Qx y Qy
 
 ![figs/QxQy.svg](figs/QxQy.svg)
 
-## Fuerzas cortantes máximas Qmax con su respectivas inclinaciones
+### Fuerzas cortantes máximas Qmax con su respectivas inclinaciones
 
 ![figs/Qmax.svg](figs/Qmax.svg)
 
+
+El desplazamiento vertical de la losa se comparó contra su solución teórica, la cual se encuentra en Eduard Ventsel and Theodor Krauthammer (2001) - Thin plates and shells: theory, analysis and applications. Marcel Dekker : New York. Páginas 53 y 54.
+
+La deformación teórica en la placa esta dada por:
+<!---
+Compile en: https://tex.s2cms.com
+
+\begin{equation}
+  w(x,y) = \frac{1}{\pi^4 D}\sum_{m=1}^\infty \sum_{n=1}^\infty
+  \frac{p_{mn}}{\left(\frac{m^2}{a^2} + \frac{n^2}{b^2}\right)^2}
+  \sin\left(\frac{m \pi x}{a}\right)
+  \sin\left(\frac{n \pi y}{b}\right)
+\end{equation}
+donde
+\begin{equation}
+  p_{mn} = \frac{16 p}{\pi^2 m n}
+  \sin\left(\frac{m \pi \xi}{a}\right)
+  \sin\left(\frac{n \pi \eta}{b}\right)
+  \sin\left(\frac{m \pi u}{2a}\right)
+  \sin\left(\frac{n \pi v}{2b}\right)
+\end{equation}
+--->
+
+![](https://i.upmath.me/svg/%5Cbegin%7Bequation%7D%0A%20%20w(x%2Cy)%20%3D%20%5Cfrac%7B1%7D%7B%5Cpi%5E4%20D%7D%5Csum_%7Bm%3D1%7D%5E%5Cinfty%20%5Csum_%7Bn%3D1%7D%5E%5Cinfty%0A%20%20%5Cfrac%7Bp_%7Bmn%7D%7D%7B%5Cleft(%5Cfrac%7Bm%5E2%7D%7Ba%5E2%7D%20%2B%20%5Cfrac%7Bn%5E2%7D%7Bb%5E2%7D%5Cright)%5E2%7D%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bm%20%5Cpi%20x%7D%7Ba%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bn%20%5Cpi%20y%7D%7Bb%7D%5Cright)%0A%5Cend%7Bequation%7D)
+
+donde
+
+![](https://i.upmath.me/svg/%5Cbegin%7Bequation%7D%0A%20%20p_%7Bmn%7D%20%3D%20%5Cfrac%7B16%20p%7D%7B%5Cpi%5E2%20m%20n%7D%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bm%20%5Cpi%20%5Cxi%7D%7Ba%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bn%20%5Cpi%20%5Ceta%7D%7Bb%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bm%20%5Cpi%20u%7D%7B2a%7D%5Cright)%0A%20%20%5Csin%5Cleft(%5Cfrac%7Bn%20%5Cpi%20v%7D%7B2b%7D%5Cright)%0A%5Cend%7Bequation%7D)
+
+obteniendo un error absoluto relativo máximo del 0.27815%.
 
 Código elaborado por:
 * Diego Andrés Alvarez Marín 
