@@ -18,7 +18,7 @@ La losa se calculó con elementos finitos MZC en el archivo [EF_MZC.m](EF_MZC.m)
 
 ### Momentos flectores Mx y My y torsores Mxy
 
-![figs/MxMyMxyQxQy.png](figs/MxMyMxy.png)
+![figs/MxMyMxy.png](figs/MxMyMxy.png)
 
 ### Momentos flectores máximos y mínimos y momentos torsores máximos con sus respectivas inclinaciones
 
