@@ -10,7 +10,7 @@ clear, clc, close all % borro la memoria, la pantalla y las figuras
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
 ww= 1; tx= 2; ty= 3; % lectura del codigo
 
-E  = 210e9;       % modulo de elasticidad del solido (Pa) = 200GPa
+E  = 210e9;       % modulo de elasticidad del solido (Pa) = 210GPa
 nu = 0.3;         % coeficiente de Poisson
 t  = 0.05;        % espesor de la losa (m)
 p  = -10000;      % carga (N/m^2)
