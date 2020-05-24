@@ -14,25 +14,25 @@ La losa se calculó con elementos finitos MZC en el archivo [EF_MZC.m](EF_MZC.m)
 
 ### Deformación vertical w
 
-![figs/w.svg](figs/w.svg)
+![figs/w.png](figs/w.png)
 
 ### Momentos flectores Mx y My y torsores Mxy
 
-![figs/MxMyMxyQxQy.svg](figs/MxMyMxy.svg)
+![figs/MxMyMxyQxQy.png](figs/MxMyMxy.png)
 
 ### Momentos flectores máximos y mínimos y momentos torsores máximos con sus respectivas inclinaciones
 
-![figs/M1fM2fMtmax.svg](figs/M1fM2fMtmax.svg)
+![figs/M1fM2fMtmax.png](figs/M1fM2fMtmax.png)
 
 Recuerde que M1f y Mf2 nos dicen la forma de colocar el refuerzo óptimo en la parte superior e inferior de la losa, respectivamente.
 
 ### Fuerzas cortantes Qx y Qy
 
-![figs/QxQy.svg](figs/QxQy.svg)
+![figs/QxQy.png](figs/QxQy.png)
 
 ### Fuerzas cortantes máximas Qmax con su respectivas inclinaciones
 
-![figs/Qmax.svg](figs/Qmax.svg)
+![figs/Qmax.png](figs/Qmax.png)
 
 
 El desplazamiento vertical de la losa se comparó contra su solución teórica, la cual se encuentra en Eduard Ventsel and Theodor Krauthammer (2001) - Thin plates and shells: theory, analysis and applications. Marcel Dekker : New York. Páginas 53 y 54.
