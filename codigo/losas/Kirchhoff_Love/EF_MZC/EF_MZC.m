@@ -13,7 +13,7 @@ ww= 1; tx= 2; ty= 3; % lectura del codigo
 E  = 210e9;       % modulo de elasticidad del solido (Pa) = 210GPa
 nu = 0.3;         % coeficiente de Poisson
 t  = 0.05;        % espesor de la losa (m)
-p  = -10000;      % carga (N/m^2)
+q  = -10000;      % carga (N/m^2)
 
 % Definimos la geometria de la losa
 losa
@@ -50,13 +50,16 @@ title('Malla de elementos finitos');
 K = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
 a_e = zeros(nef,1);  b_e = zeros(nef,1); % a y b de cada elemento (ancho y alto)
 
-% matriz constitutiva
+%% matriz constitutiva
 De = (E/(1-nu^2)) * [ 1  nu 0
                       nu 1  0
                       0  0  (1-nu)/2 ];
                
 Dbe = (t^3/12)*De; % matriz constitutiva de flexion generalizada   
 
+D = E*t^3/(12*(1-nu^2));   % rigidez a flexion de la placa   
+
+%% Calculo de Ke y fe
 for e = 1:nef      % ciclo sobre todos los elementos finitos
    % Calculo de la matriz de rigidez del elemento e    
    x1 = xnod(LaG(e,1),X);
@@ -65,8 +68,6 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    
    a = (x2-x1)/2;  a_e(e) = a;
    b = (y3-y2)/2;  b_e(e) = b;
-
-   D = E*t^3/(12*(1-nu^2));   % rigidez a flexion de la placa   
     
    % Calculo la matriz de rigidez Ke
    % Ke se calculo con el programa func_forma_MZC.m
@@ -87,7 +88,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    % Calculo del vector de fuerzas nodales equivalentes del elemento e
    % Fuerzas superficiales
    if (x1 >= 0.9999 && x2 <= 1.501) && (y2 >= 0.9999 && y3 <= 2.001)
-      fe = 4*p*a*b*[1/4;  a/12;  b/12;
+      fe = 4*q*a*b*[1/4;  a/12;  b/12;
                     1/4; -a/12;  b/12; 
                     1/4; -a/12; -b/12;
                     1/4;  a/12; -b/12];
@@ -297,6 +298,16 @@ ang   = atan2(Qy, Qx);
 figure
 plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
 
+%% Se calculan los momentos de disenio de Wood y Armer
+[Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
+figure
+subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_sup,  'Momentos M_x^* sup (N-m/m)');
+subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_sup,  'Momentos M_y^* sup (N-m/m)');
+
+figure
+subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_inf,  'Momentos M_x^* inf (N-m/m)');
+subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_inf,  'Momentos M_y^* inf (N-m/m)');
+
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
 u = 0.5; v = 1; xi = 1.25; eta = 1.5;
@@ -305,7 +316,7 @@ MEF = zeros(nno,1);
 analitica = zeros(nno,1);
 for i = 1:nno
    MEF(i) = vect_mov(i,ww);
-   analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, p, u, v, xi, eta);
+   analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, q, u, v, xi, eta);
    err(i) = abs((MEF(i)-analitica(i))/analitica(i));
 end
 disp('Observe que al comparar ambos metodos los errores relativos maximos son')
@@ -334,12 +345,16 @@ function plot_M_or_Q(nef, xnod, LaG, variable, texto, angulos)
             % se indica la flecha de la direccion principal
             quiver(xnod(:,X),xnod(:,Y),...             
                 norma.*cos(angulos{i}), norma.*sin(angulos{i}),... 
-                esc,'k',...
-                'ShowArrowHead','off','LineWidth',2,'Marker','.');
+                esc, ...                  % con una escala esc
+                'k',...                   % de color negro
+                'ShowArrowHead','off',... % una flecha sin cabeza
+                'LineWidth',2, ...        % con un ancho de linea 2
+                'Marker','.');            % y en el punto (x,y) poner un punto '.'
+            
+            % la misma flecha girada 180 grados
             quiver(xnod(:,X),xnod(:,Y),...             
                 norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
-                esc,'k',...
-                'ShowArrowHead','off','LineWidth',2,'Marker','.');            
+                esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
         end            
     end
 end
