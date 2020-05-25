@@ -2,7 +2,7 @@
 
 Considere la losa mostrada en la figura
 
-![figs/losa.png](figs/losa.png)
+![](../../ejemplos/losa.png)
 
 dicha losa tiene:
 * dimensión: a = 2m, b = 4m, espesor t = 5 cm.
