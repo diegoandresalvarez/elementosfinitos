@@ -1,6 +1,6 @@
 # Placas delgadas: Teoría de Kirchhoff-Love
 
-## Programa para obtener las funciones de forma del elemento finito de losa MZC==
+## Programa para obtener las funciones de forma del elemento finito de losa MZC
 
 Con el programa [func_forma_MZC.m](func_forma_MZC.m) se obtuvieron, por ejemplo, las siguientes funciones de forma:
 ```
@@ -42,9 +42,9 @@ La imagen la creé con Text Tex en LibreOffice Impress y la mejoré con Inkscape
  \frac{\nu}{5} + \frac{b^2}{2 a^2} - \frac{a^2}{b^2} - \frac{7}{10} & \frac{b^2}{2 a^2} - \frac{2 \nu}{5} - \frac{1}{10} & \frac{\nu}{10} - \frac{a^2}{b^2} - \frac{1}{10} & \frac{7}{10} - \frac{b^2}{2 a^2} - \frac{a^2}{2 b^2} - \frac{\nu}{5} & \frac{\nu}{10} + \frac{b^2}{2 a^2} - \frac{1}{10} & \frac{1}{10} - \frac{a^2}{2 b^2} - \frac{\nu}{10} & \frac{\nu}{5} - \frac{b^2}{a^2} + \frac{a^2}{2 b^2} - \frac{7}{10} & \frac{b^2}{a^2} - \frac{\nu}{10} + \frac{1}{10} & \frac{2 \nu}{5} - \frac{a^2}{2 b^2} + \frac{1}{10} & \frac{b^2}{a^2} - \frac{\nu}{5} + \frac{a^2}{b^2} + \frac{7}{10} & \frac{2 \nu}{5} + \frac{b^2}{a^2} + \frac{1}{10} &  - \frac{2 \nu}{5} - \frac{a^2}{b^2} - \frac{1}{10}\\
  \frac{b^2}{2 a^2} - \frac{2 \nu}{5} - \frac{1}{10} & \frac{4 \nu}{15} + \frac{2 b^2}{3 a^2} - \frac{4}{15} & 0 & \frac{1}{10} - \frac{b^2}{2 a^2} - \frac{\nu}{10} & \frac{b^2}{3 a^2} - \frac{\nu}{15} + \frac{1}{15} & 0 & \frac{\nu}{10} - \frac{b^2}{a^2} - \frac{1}{10} & \frac{\nu}{15} + \frac{2 b^2}{3 a^2} - \frac{1}{15} & 0 & \frac{2 \nu}{5} + \frac{b^2}{a^2} + \frac{1}{10} & \frac{4 b^2}{3 a^2} - \frac{4 \nu}{15} + \frac{4}{15} & - \nu\\
  \frac{a^2}{b^2} - \frac{\nu}{10} + \frac{1}{10} & 0 & \frac{\nu}{15} + \frac{2 a^2}{3 b^2} - \frac{1}{15} & \frac{\nu}{10} + \frac{a^2}{2 b^2} - \frac{1}{10} & 0 & \frac{a^2}{3 b^2} - \frac{\nu}{15} + \frac{1}{15} & \frac{2 \nu}{5} - \frac{a^2}{2 b^2} + \frac{1}{10} & 0 & \frac{4 \nu}{15} + \frac{2 a^2}{3 b^2} - \frac{4}{15} &  - \frac{2 \nu}{5} - \frac{a^2}{b^2} - \frac{1}{10} & - \nu & \frac{4 a^2}{3 b^2} - \frac{4 \nu}{15} + \frac{4}{15}
-\end{smallmatrix}\right)
+\end{smallmatrix}\right)b
 --->
-![](figs/K_MZC.svg)
+![](figs/K_MZC.png)
 donde
 ```
 D = \frac{E t^3}{12(1-\nu)}
