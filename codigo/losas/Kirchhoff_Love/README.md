@@ -2,9 +2,7 @@
 
 ## Programa para obtener las funciones de forma del elemento finito de losa MZC==
 
-** Código MATLAB: [func_forma_MZC.m](func_forma_MZC.m)
-
-Con este código se obtuvieron, por ejemplo, las siguientes funciones de forma:
+Con el programa [func_forma_MZC.m](func_forma_MZC.m) se obtuvieron, por ejemplo, las siguientes funciones de forma:
 ```
                                   2           2
            (eta - 1) (xi + 1) (eta  + eta + xi  - xi - 2)
@@ -53,5 +51,6 @@ D = \frac{E t^3}{12(1-\nu)}
 ```
 
 ## Calculo de las funciones de forma y matriz L del elemento de Tocher
-El programa [[file:c8_func_forma_Tocher.m]] deduce y grafica las mencionadas funciones de forma. Por ejemplo, las funciones de forma del nodo 3 son:
-[[image:c8_func_forma_Tocher.png]]
+El programa [func_forma_Tocher.m](func_forma_Tocher.m) deduce y grafica las mencionadas funciones de forma. Por ejemplo, las funciones de forma del nodo 3 son:
+
+![figs/func_forma_Tocher.png](figs/func_forma_Tocher.png)
