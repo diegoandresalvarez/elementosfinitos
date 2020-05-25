@@ -33,7 +33,8 @@ A = subs(A,x1,cx(1)); A = subs(A,x2,cx(2)); A = subs(A,x3,cx(3));
 A = subs(A,y1,cy(1)); A = subs(A,y2,cy(2)); A = subs(A,y3,cy(3));
 
 %% se calculan las funciones de forma
-N = pT/A;  % N = PT*inv(A);
+N = pT/A;  % N = pT*inv(A);
+Nvec = N;
 
 %% se calcula la matriz L
 L = [ ...
@@ -116,5 +117,15 @@ for i = 1:3    % contador de nodos
       end
    end
 end
+
+%% Se calcula una matriz Q que permite calcular las fuerzas cortantes
+d3N_dx3   = diff(Nvec,x,3); 
+d3N_dx2dy = diff(Nvec,x,x,y);
+d3N_dxdy2 = diff(Nvec,x,y,y);
+d3N_dy3   = diff(Nvec,y,3);
+
+% Se calcula la matriz QQ, de modo que Q = -D*QQ*a
+QQ = simplify([ d3N_dx3 + d3N_dxdy2
+                d3N_dy3 + d3N_dx2dy ])
 
 return %bye, bye!
