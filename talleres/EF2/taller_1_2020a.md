@@ -4,7 +4,7 @@ Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso 
 
 Trabajo de elaboración individual
 
-Fecha de entrega: mayo 31, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+Fecha de entrega: junio 7, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
 
 
 
@@ -26,7 +26,8 @@ Utilizando los siguientes métodos:
 * Viga de Euler-Bernoulli (solución exacta).
 --->
 * Viga de Timoshenko que resulta al utilizar la interpolación acoplada que aparece en la diapositiva 69 de [04b_EF_vigas_Timoshenko.pdf](../../diapositivas/04b_EF_vigas_Timoshenko.pdf).
-* Viga de Timoshenko (método matricial donde la matriz de rigidez aparece al resolver la ecuación diferencial).
+* Viga de Euler-Bernoulli - método matricial donde la matriz de rigidez aparece al resolver la ecuación diferencial.
+* Viga de Timoshenko - método matricial donde la matriz de rigidez se calcula numéricamente en cada paso usando la función `bvp4c()` o `bvp5c()` de MATLAB o su equivalente en PYTHON (+2 puntos extra).
 * Programa de análisis estructural que usted registró en http://solidos2020a.shoutwiki.com/wiki/Software_para_an%C3%A1lisis_estructural_por_elementos_finitos utilizando las teorías de Euler-Bernoulli y Timoshenko. NOTA: no usar como software el FTOOL.
 
 
