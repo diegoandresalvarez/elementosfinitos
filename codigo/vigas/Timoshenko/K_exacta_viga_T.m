@@ -5,6 +5,8 @@ syms q x L V(x) M(x) t(x) v(x) EI EA GAast
 
 %% Se calcula la matrix de rigidez
 K_T = sym(zeros(4));
+Nv = sym(zeros(4,1)); % func forma para los desplazamientos
+Nt = sym(zeros(4,1)); % func forma para los giros de la seccion transversal
 for i = 1:4
     sol = dsolve(...
            diff(V,x) == 0,    ... % se definen las ecuaciones diferenciales
@@ -20,6 +22,9 @@ for i = 1:4
                  -subs(sol.M, x, 0)    % M1  reacciones verticales
                  -subs(sol.V, x, L)    % Y2  y los momentos en los
                  +subs(sol.M, x, L) ]; % M2  apoyos
+
+    Nv(i) = sol.v; % v = Nv * [v1; t1 v2 t2]
+    Nt(i) = sol.t; % t = Nt * [v1; t1 v2 t2]             
 end
 
 %% Se imprime la solucion
