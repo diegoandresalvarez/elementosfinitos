@@ -1,7 +1,7 @@
-function [Bf, det_Je] = Bf_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
-%% Calcula la matriz de deformaciones por flexion Bf
+function [Bb, det_Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
+%% Calcula la matriz de deformaciones por flexion Bb
 %
-% [Bf, det_Je] = Bf_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
+% [Bb, det_Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
 %
 % (xi, eta)        punto de integracion de GL
 % (xe, ye)         coordenadas de los nodos del EF
@@ -27,16 +27,16 @@ if det_Je <= 0
    error('El det_Je es negativo');
 end
 
-%% Se ensambla la matriz de deformacion del elemento Bf
+%% Se ensambla la matriz de deformacion del elemento Bb
 nno = length(xe);
-Bf = zeros(3,3*nno);
+Bb = zeros(3,3*nno);
 for i = 1:nno   
    dNi_dx = (+dy_deta*ddN_dxi(i) - dy_dxi*ddN_deta(i))/det_Je;
    dNi_dy = (-dx_deta*ddN_dxi(i) + dx_dxi*ddN_deta(i))/det_Je;
 
-   Bf(:,(3*i-2):(3*i)) = [ 0 -dNi_dx       0    % se ensambla y
+   Bb(:,(3*i-2):(3*i)) = [ 0 -dNi_dx       0    % se ensambla y
                            0       0 -dNi_dy    % asigna la matriz
-                           0 -dNi_dy -dNi_dx ]; % Bf_i
+                           0 -dNi_dy -dNi_dx ]; % Bb_i
 end
 
 return

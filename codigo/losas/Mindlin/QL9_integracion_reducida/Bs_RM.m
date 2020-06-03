@@ -1,7 +1,7 @@
-function [Bc, det_Je] = Bc_RM(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta)
-%% Calcula la matriz de deformaciones por cortante Bc
+function [Bs, det_Je] = Bs_RM(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta)
+%% Calcula la matriz de deformaciones por cortante Bs
 %
-% [Bc, det_Je] = Bc_RM(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta)
+% [Bs, det_Je] = Bc_RM(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta)
 % 
 % (xi, eta)        punto de integracion de GL
 % (xe, ye)         coordenadas de los nodos del EF
@@ -34,14 +34,14 @@ end
 
 %% Se ensambla la matriz de deformacion del elemento Bc
 nno = length(xe);
-Bc  = zeros(2,3*nno);
+Bs  = zeros(2,3*nno);
 for i = 1:nno
    dNi_dx = (+dy_deta*ddN_dxi(i) - dy_dxi*ddN_deta(i))/det_Je;
    dNi_dy = (-dx_deta*ddN_dxi(i) + dx_dxi*ddN_deta(i))/det_Je;
 
    % se ensambla y asigna la matriz Bc_i
-   Bc(:,(3*i-2):(3*i)) = [ dNi_dx  -NNforma(i)  0     
+   Bs(:,(3*i-2):(3*i)) = [ dNi_dx  -NNforma(i)  0     
                            dNi_dy  0            -NNforma(i) ];                        
-end;
+end
 
-return;
+return
