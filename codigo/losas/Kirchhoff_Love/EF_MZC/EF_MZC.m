@@ -291,7 +291,7 @@ subplot(1,3,1); plot_M_or_Q(nef, xnod, LaG, Mf1_xy, 'Mf1_{xy} (N-m/m)', { ang })
 subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, Mf2_xy, 'Mf2_{xy} (N-m/m)', { ang+pi/2 })
 subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mt_max, 'Mt_{max} (N-m/m)', { ang+pi/4, ang-pi/4 })
 
-%% Se calculan y grafican los cortantes máximos, junto con su angulo de inclinacion
+%% Se calculan y grafican los cortantes maximos, junto con su angulo de inclinacion
 Q_max = hypot(Qx, Qy);
 ang   = atan2(Qy, Qx);
 

@@ -5,6 +5,8 @@ syms q x L V(x) M(x) t(x) v(x) EI EA GAast
 
 %% Se calcula la matrix de rigidez
 K_T = sym(zeros(4));
+Nv = sym(zeros(1,4)); % func forma para los desplazamientos
+Nt = sym(zeros(1,4)); % func forma para los giros de la seccion transversal
 for i = 1:4
     sol = dsolve(...
            diff(V,x) == 0,    ... % se definen las ecuaciones diferenciales
@@ -20,6 +22,9 @@ for i = 1:4
                  -subs(sol.M, x, 0)    % M1  reacciones verticales
                  -subs(sol.V, x, L)    % Y2  y los momentos en los
                  +subs(sol.M, x, L) ]; % M2  apoyos
+
+    Nv(i) = sol.v; % v = Nv * [v1; t1 v2 t2]
+    Nt(i) = sol.t; % t = Nt * [v1; t1 v2 t2]             
 end
 
 %% Se imprime la solucion
@@ -30,6 +35,15 @@ pretty(simplify(K_T/tmp))
 % Nota: se puede demostrar que:
 % K22 = K44 = simplify((4+beta)*L^2)
 % K24 = K42 = simplify((2-beta)*L^2)
+
+%{
+% Comprobacion de que a partir de las funciones de forma se puede obtener
+% la matriz de rigidez K_T
+Bb = diff(Nt, x);
+Bs = diff(Nv, x) - Nt;
+K_T2 = int(Bb.'*EI*Bb,x,0,L) + int(Bs.'*GAast*Bs,x,0,L);
+simplify(K_T - K_T2)
+%}
 
 %% Se calcula la matriz de rigidez de Euler-Bernoulli
 % Observe que cuando GAast -> Inf, la matriz de rigidez K se vuelve la 

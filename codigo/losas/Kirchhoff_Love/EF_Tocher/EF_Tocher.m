@@ -190,6 +190,7 @@ for e = 1:nef
          xdef(LaG(e,[1 2 3 1]),ww),...
          xdef(LaG(e,[1 2 3 1]),ww));    % deformada
 end
+% trisurf(LaG, xnod(:,X), xnod(:,Y), xdef(:,ww))
 daspect([1 1 1]); % similar a axis equal, pero en 3D
 axis tight
 colormap jet
@@ -271,6 +272,8 @@ subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, My,  'Momentos My (N-m/m)');
 subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mxy, 'Momentos Mxy (N-m/m)');
 
 %% Se grafican los cortantes
+% NOTA: estos graficos estan dando muy diferentes a los que dieron con
+% diferencias finitas. Sera que hay algun error? No lo encuentro.
 figure
 subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Qx,  'Cortantes Qx (N/m)');
 subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Qy,  'Cortantes Qy (N/m)');

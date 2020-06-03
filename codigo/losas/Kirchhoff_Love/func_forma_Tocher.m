@@ -29,8 +29,8 @@ A = [ ...
    ]
 
 %% se sustituyen las coordenadas del triangulo en A
-A = subs(A,x1,cx(1)); A = subs(A,x2,cx(2)); A = subs(A,x3,cx(3));
-A = subs(A,y1,cy(1)); A = subs(A,y2,cy(2)); A = subs(A,y3,cy(3));
+A = subs(A, {x1, x2, x3}, cx);
+A = subs(A, {y1, y2, y3}, cy);
 
 %% se calculan las funciones de forma
 N = pT/A;  % N = pT*inv(A);
@@ -116,7 +116,7 @@ for i = 1:3    % contador de nodos
    end
 end
 
-%% Se calcula una matriz Q que permite calcular las fuerzas cortantes
+%% Se calcula una matriz QQ que permite calcular las fuerzas cortantes
 d3N_dx3   = diff(Nvec,x,3); 
 d3N_dx2dy = diff(Nvec,x,x,y);
 d3N_dxdy2 = diff(Nvec,x,y,y);
