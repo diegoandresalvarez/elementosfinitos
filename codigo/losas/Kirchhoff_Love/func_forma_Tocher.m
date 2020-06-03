@@ -49,14 +49,12 @@ N = [ ...
    N(4)  N(5)  N(6)
    N(7)  N(8)  N(9) ];
 
-%{
 disp('Las funciones de forma son =')
 for i = 1:3
    fprintf('N{%d}   = \n',i); pretty(N(i,1));
    fprintf('Nb{%d}  = \n',i); pretty(N(i,2));
    fprintf('Nbb{%d} = \n',i); pretty(N(i,3));
 end;
-%}
 
 %% Grafico las funciones de forma
 LL1 = 0:0.05:1;
@@ -124,7 +122,7 @@ d3N_dx2dy = diff(Nvec,x,x,y);
 d3N_dxdy2 = diff(Nvec,x,y,y);
 d3N_dy3   = diff(Nvec,y,3);
 
-% Se calcula la matriz QQ, de modo que Q = -D*QQ*a
+% Se calcula la matriz de cortante QQ, de modo que Q = -D*QQ*a
 QQ = simplify([ d3N_dx3 + d3N_dxdy2
                 d3N_dy3 + d3N_dx2dy ])
 

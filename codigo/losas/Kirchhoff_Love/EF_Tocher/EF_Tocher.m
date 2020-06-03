@@ -16,8 +16,8 @@ t  = 0.05;        % espesor de la losa (m)
 q  = -10000;      % carga (N/m^2)
 
 %% Definimos la geometria de la losa
-Mesh_1   % malla no tan refinada
-%Mesh_2 % malla muy refinada
+%Mesh_1   % malla no tan refinada
+Mesh_2 % malla muy refinada
 
 % ya tenemos en la memoria las variables
 % xnod - posicion (x,y) de los nodos
