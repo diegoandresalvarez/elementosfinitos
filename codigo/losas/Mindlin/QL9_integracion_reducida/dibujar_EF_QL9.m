@@ -1,4 +1,5 @@
-function c9_dibujar_EF_losa(xe, ye, N, ae, te, esc_w, esc_t)
+function dibujar_EF_QL9(xe, ye, N, ae, te, esc_w, esc_t)
+%% Dibuja un EF de losa QL9 deformado
 % xe, ye  nodos del borde de la losa
 % N       funciones de forma de la losa
 % ae      desplazamientos nodales en los nodos del borde de la losa
@@ -54,14 +55,14 @@ grid on
 hold on
 view(3)
 esc_w = 3; esc_t = 3;
-c9_dibujar_EF_losa(xe, ye, Nforma, ae, te, esc_w, esc_t)
+dibujar_EF_QL9(xe, ye, Nforma, ae, te, esc_w, esc_t)
 daspect([1 1 2]);
 axis tight
 
 %}
 
 %% Se definen algunas constantes
-w_ = 1;  tx_ = 2;  ty_ = 3; % lectura del código
+w_ = 1;  tx_ = 2;  ty_ = 3; % lectura del codigo
 
 nno = size(xe,1);           % numero de nodos del elemento finito
 
