@@ -1,7 +1,4 @@
-%% Programa que ilustra el modo de energia nula que aparece en el EF QL9
-%  cuando se hace integracion selectiva
-
-% Calculo de los desplazamientos verticales y angulos de giro, las 
+%% Calculo de los desplazamientos verticales y angulos de giro, las 
 % reacciones, los momentos flectores y las fuerzas cortantes en una losa de
 % Mindlin utilizando los elementos finitos de placa "QL9"
 
@@ -17,7 +14,7 @@ t  = 0.05;           % espesor de la losa (m)
 qdistr = -10000;     % carga (N/m^2)
 
 % Definimos la geometria de la losa (creada con "generar_malla_losa.m")
-load malla_losa_MEN
+load malla_losa
 % ya tenemos en la memoria las variables
 % xnod - posicion (x,y) de los nodos
 % LaG  - definicion de elementos finitos con respecto a nodos
@@ -98,7 +95,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
     
    %% se calcula la matrix de rigidez de flexion Kb del elemento e 
    Kbe = zeros(3*nnoef);
-   % Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
+   Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
    det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
@@ -125,7 +122,6 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
       end
    end 
    
-   %{
    %% se calcula la matriz NN
    for p = 1:n_gl_b
       for q = 1:n_gl_b
@@ -146,7 +142,17 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
          Mbe = Mbe + NN{e,p,q}'*NN{e,p,q}*det_Je_b(p,q)*w_gl_b(p)*w_gl_b(q);                                              % REVISAR !!!!!!!!!!!!!!!!   
       end
    end  
-   %}
+   
+   %% se calcula el vector de fuerzas nodales equivalentes del elemento e      
+   xa = xnod(LaG(e,1),X);   ya = xnod(LaG(e,1),Y);
+   xb = xnod(LaG(e,5),X);   yb = xnod(LaG(e,5),Y);
+   if (xa >= 0.9999 && xb <= 1.601) && (ya >= 0.9999 && yb <= 2.001)
+      ffe = zeros(nnoef, 3); ffe(:,ww) = qdistr;
+      ffe = reshape(ffe', 3*nnoef,1);                                                                                             % REVISAR !!!!!!!!!!!!!
+   else
+      ffe = zeros(3*nnoef,1);
+   end  
+   fe = Mbe*ffe;   
    
    %% se asocian los grados de libertad del elemento locales a los globales
    idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:)  gdl(LaG(e,3),:)  ...
@@ -155,10 +161,8 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
 
    %% se procede al ensamblaje
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Kbe + Kse;
-   % f(idx{e})        = f(idx{e}) + fe;
+   f(idx{e})        = f(idx{e}) + fe;
 end
-
-f(gdl(45,ww)) = -10;
 
 %% Muestro la configuracion de la matriz K (K es rala)
 figure
@@ -166,8 +170,17 @@ spy(K);
 title('Los puntos representan los elementos diferentes de cero')
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
-c = [ gdl( 1,ww) gdl( 1,tx) gdl( 1,ty) ...
-      gdl(37,ww) gdl(37,tx) gdl(37,ty) ];
+
+% determino los grados de libertad correspondientes a los bordes
+lado_x0 = find(abs(xnod(:,X) - 0) < 1e-4);     
+lado_y0 = find(abs(xnod(:,Y) - 0) < 1e-4);
+lado_x2 = find(abs(xnod(:,X) - 2) < 1e-4);     
+lado_y4 = find(abs(xnod(:,Y) - 4) < 1e-4);
+
+c = [ gdl(lado_x0,ww); gdl(lado_x0,ty); 
+      gdl(lado_x2,ww); gdl(lado_x2,ty);
+      gdl(lado_y0,ww); gdl(lado_y0,tx);
+      gdl(lado_y4,ww); gdl(lado_y4,tx) ];
 
 d = setdiff(1:ngdl,c)';
 
@@ -219,9 +232,7 @@ end
 
 %% Se dibuja el plano medio de la malla de elementos finitos y las deformaciones de esta
 escala = 5000;            % factor de escalamiento de la deformada
-%{
 xdef   = escala*vect_mov; % posicion de la deformada
-
 figure; 
 hold on; 
 grid on;
@@ -237,7 +248,7 @@ axis tight
 %colorbar('YTick',-0.6:0.05:0)
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
 view(3);
-%}
+
 
 %% Se dibuja de la malla de elementos finitos y las deformaciones de esta
 figure; 
