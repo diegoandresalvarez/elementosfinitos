@@ -20,7 +20,7 @@ L4_eta{4} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 0 1],3),eta);
 
 % Coordenadas de los nodos
 %
-% Numeración local:
+% Numeracion local:
 %        ^ eta
 %        |
 %        |
@@ -67,7 +67,7 @@ for i = 1:nno
 end
 
 % Imprimo las funciones de forma
-fprintf('\n\nFunciones de forma lagrangianas del elemento rectangular de 16 nodos:\n')
+fprintf('Funciones de forma lagrangianas del elemento rectangular de 16 nodos:\n')
 for i = 1:nno
    fprintf('N%d = %s\n', i, char(N{i}))
 end
@@ -84,14 +84,14 @@ for i = 1:nno
    fprintf('dN%d_deta = %s\n', i, char(simplify(diff(N{i}, eta))))
 end
 
-%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+%% Se verifica la condicion de cuerpo rigido: sum(N) == 1
 suma = 0;
 for i = 1:nno
    suma = suma + N{i};
 end
-fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+fprintf('\nSe verifica la condicion de cuerpo rigido: sum(N) == ');
 disp(simplify(suma));
- 
+
 %% grafico las funciones de forma
 XXI  = linspace(-1, 1, 50);
 EETA = linspace(-1, 1, 50);
