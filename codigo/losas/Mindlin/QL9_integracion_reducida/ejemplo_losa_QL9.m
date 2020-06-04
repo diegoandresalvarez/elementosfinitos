@@ -61,6 +61,12 @@ n_gl_s = 3; % orden de la cuadratura de GL para la integracion de Ks
 n_gl_b = 3; % orden de la cuadratura de GL para la integracion de Kb
 n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
 
+% se utilizara integracion REDUCIDA
+%{
+n_gl_b = 2; % orden de la cuadratura de GL para la integracion de Kb
+n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
+%}
+
 % calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
 [x_gl_b, w_gl_b]  = gausslegendre_quad(n_gl_b);
 [x_gl_s, w_gl_s]  = gausslegendre_quad(n_gl_s);
@@ -266,21 +272,23 @@ view(3);
 
 %% En los puntos de integracion de Gauss-Legendre calcular:
 %% El vector de momentos flectores y torsores (2x2)
-%% El vector de fuerzas cortantes (1x1)
-[x_gl_b, w_gl_b]  = gausslegendre_quad(2);
-[x_gl_s, w_gl_s]  = gausslegendre_quad(1);
+%% El vector de fuerzas cortantes (1x1 o 2x2)
+n_gl_b = 2; [x_gl_b, w_gl_b]  = gausslegendre_quad(n_gl_b);
+
+% Observe que n_gl_s = 1; interpola mal la fuerza cortante.
+n_gl_s = 2; [x_gl_s, w_gl_s]  = gausslegendre_quad(n_gl_s);
 
 %% se calcula de nuevo Bb y Bs en cada punto de GL
-Bb = cell(nef,2,2); % matrices de deformacion generalizada de flexion
-Bs = cell(nef);     % matrices de deformacion generalizada de cortante
+Bb = cell(nef,n_gl_b,n_gl_b); % matrices de deformacion generalizada de flexion
+Bs = cell(nef,n_gl_s,n_gl_s); % matrices de deformacion generalizada de cortante
 for e = 1:nef      % ciclo sobre todos los elementos finitos
     xe = xnod(LaG(e,:),X);
     ye = xnod(LaG(e,:),Y);    
     
     %% se calcula la matrix Bb en los puntos de integracion de GL para el 
     % calculo de los momentos flectores y torsores
-    for p = 1:2
-      for q = 1:2
+    for p = 1:n_gl_b
+      for q = 1:n_gl_b
          xi_gl  = x_gl_b(p);
          eta_gl = x_gl_b(q);
          Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
@@ -289,22 +297,30 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
        
    %% se calcula la matrix Bs en los puntos de integracion de GL para el 
    % calculo de las fuerzas cortantes
-   xi_gl  = x_gl_s(1);
-   eta_gl = x_gl_s(1);
-   Bs{e} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);
+    for p = 1:n_gl_s
+      for q = 1:n_gl_s
+         xi_gl  = x_gl_s(p);
+         eta_gl = x_gl_s(q);
+         Bs{e,p,q} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);            
+      end
+    end
 end
 
 %% Se calculan los momentos y las fuerzas en los puntos de GL
-sigmag_b = cell(nef, 2, 2); % momentos flectores y torsores
-sigmag_s = cell(nef, 1);    % fuerzas cortantes
+sigmag_b = cell(nef, n_gl_b, n_gl_b); % momentos flectores y torsores
+sigmag_s = cell(nef, n_gl_s, n_gl_s); % fuerzas cortantes
 for e = 1:nef               % ciclo sobre todos los elementos finitos
-   for p = 1:2
-      for q = 1:2
+   for p = 1:n_gl_b
+      for q = 1:n_gl_b
          sigmag_b{e,p,q} = Dbg*Bb{e,p,q}*a(idx{e});
       end
    end
    
-   sigmag_s{e} = Dsg*Bs{e}*a(idx{e});
+   for p = 1:n_gl_s
+      for q = 1:n_gl_s
+         sigmag_s{e,p,q} = Dsg*Bs{e,p,q}*a(idx{e});
+      end
+   end
 end
 
 %% Se extrapolan los momentos flectores y fuerzas cortantes a los nodos
@@ -343,8 +359,21 @@ for e = 1:nef
                                              sigmag_b{e,2,1}(3)
                                              sigmag_b{e,2,2}(3) ];
 
-   Qx(LaG(e,:),:) = Qx(LaG(e,:),:) + sigmag_s{e}(1);
-   Qy(LaG(e,:),:) = Qy(LaG(e,:),:) + sigmag_s{e}(2);
+   switch n_gl_s
+     case 1
+       Qx(LaG(e,:),:) = Qx(LaG(e,:),:) + sigmag_s{e}(1);
+       Qy(LaG(e,:),:) = Qy(LaG(e,:),:) + sigmag_s{e}(2);
+     case 2
+       Qx(LaG(e,:),:)  = Qx(LaG(e,:),:)  + A * [ sigmag_s{e,1,1}(1)
+                                                 sigmag_s{e,1,2}(1)
+                                                 sigmag_s{e,2,1}(1)
+                                                 sigmag_s{e,2,2}(1) ];
+
+       Qy(LaG(e,:),:)  = Qy(LaG(e,:),:)  + A * [ sigmag_s{e,1,1}(2)
+                                                 sigmag_s{e,1,2}(2)
+                                                 sigmag_s{e,2,1}(2)
+                                                 sigmag_s{e,2,2}(2) ];
+   end                                         
 
    num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
 end
