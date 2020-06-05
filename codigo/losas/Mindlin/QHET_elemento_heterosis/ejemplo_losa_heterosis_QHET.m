@@ -335,15 +335,13 @@ sigmag_s = cell(nef, n_gl_s, n_gl_s); % fuerzas cortantes
 for e = 1:nef               % ciclo sobre todos los elementos finitos
    for p = 1:n_gl_b
       for q = 1:n_gl_b
-         Dbg_Bb = Dbg*Bb{e,p,q};
-         sigmag_b{e,p,q} = Dbg_Bb*a(idx{e});         
+         sigmag_b{e,p,q} = Dbg*Bb{e,p,q}*a(idx{e});
       end
    end
    
    for p = 1:n_gl_s
       for q = 1:n_gl_s
-         Dsg_Bs = Dsg*Bs{e,p,q};
-         sigmag_s{e,p,q} = Dsg_Bs*a(idx{e});            
+         sigmag_s{e,p,q} = Dsg*Bs{e,p,q}*a(idx{e});
       end
    end
 end
