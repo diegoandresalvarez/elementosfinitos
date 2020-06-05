@@ -101,7 +101,6 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
     
    %% se calcula la matrix de rigidez de flexion Kb del elemento e 
    Kbe = zeros(3*nnoef);
-   Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
    det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
@@ -129,6 +128,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    end 
    
    %% se calcula la matriz NN
+   Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
          xi_gl  = x_gl_b(p);
@@ -253,8 +253,8 @@ daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 %colorbar('YTick',-0.6:0.05:0)
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
-
 
 %% Se dibuja de la malla de elementos finitos y las deformaciones de esta
 figure; 
@@ -262,12 +262,13 @@ hold on;
 grid on;
 colorbar
 for e = 1:nef
-   dibujar_EF_QL9(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
+   dibujar_EF_Q89_RM(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
       Nforma, a(idx{e}), t, escala, escala);
 end
 daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
 
 %% En los puntos de integracion de Gauss-Legendre calcular:
@@ -283,26 +284,26 @@ Bb = cell(nef,n_gl_b,n_gl_b); % matrices de deformacion generalizada de flexion
 Bs = cell(nef,n_gl_s,n_gl_s); % matrices de deformacion generalizada de cortante
 for e = 1:nef      % ciclo sobre todos los elementos finitos
     xe = xnod(LaG(e,:),X);
-    ye = xnod(LaG(e,:),Y);    
+    ye = xnod(LaG(e,:),Y);
     
-    %% se calcula la matrix Bb en los puntos de integracion de GL para el 
+    %% se calcula la matrix Bb en los puntos de integracion de GL para el
     % calculo de los momentos flectores y torsores
     for p = 1:n_gl_b
-      for q = 1:n_gl_b
-         xi_gl  = x_gl_b(p);
-         eta_gl = x_gl_b(q);
-         Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
-      end
-   end
-       
-   %% se calcula la matrix Bs en los puntos de integracion de GL para el 
-   % calculo de las fuerzas cortantes
+        for q = 1:n_gl_b
+            xi_gl  = x_gl_b(p);
+            eta_gl = x_gl_b(q);
+            Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
+        end
+    end
+    
+    %% se calcula la matrix Bs en los puntos de integracion de GL para el
+    % calculo de las fuerzas cortantes
     for p = 1:n_gl_s
-      for q = 1:n_gl_s
-         xi_gl  = x_gl_s(p);
-         eta_gl = x_gl_s(q);
-         Bs{e,p,q} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);            
-      end
+        for q = 1:n_gl_s
+            xi_gl  = x_gl_s(p);
+            eta_gl = x_gl_s(q);
+            Bs{e,p,q} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);
+        end
     end
 end
 

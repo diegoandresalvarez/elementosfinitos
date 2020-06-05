@@ -195,6 +195,7 @@ daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 %colorbar('YTick',-0.6:0.05:0)
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
 %}
 
@@ -204,12 +205,13 @@ hold on;
 grid on;
 colorbar
 for e = 1:nef
-   dibujar_EF_QL9(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
+   dibujar_EF_Q89_RM(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
       Nforma, a(idx{e}), t, escala, escala);
 end
 daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
 
 %% bye, bye !!!
