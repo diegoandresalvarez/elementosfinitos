@@ -4,7 +4,7 @@ Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso 
 
 Trabajo de elaboración individual
 
-Fecha de entrega: junio 7, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+Fecha de entrega: junio 14, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
 
 
 
