@@ -1,11 +1,16 @@
 # Placas gruesas: teoría de Mindlin
 
-==Elemento isoparametrico QL9 (solucion a una losa y ejemplo con modo de energía nula propagable -- Integración reducida)==
-Código de MATLAB: [[file:c9_QL9_integracion_reducida.zip]]
-[[image:c9_MEN_QL9.png]]
+En esta carpeta y sus subcarpetas se implementan los siguientes elementos
 
-==Elemento QHET (elemento heterosis)==
-Código de MATLAB: [[file:c9_QHET_elemento_heterosis.zip]]
+## Integración selectiva y reducida
+Se implementan los elementos finitos
+* [QL9](QL9_integracion_reducida)
+* [Heterosis QHET](QHET_elemento_heterosis)
+
+Adicionalmente se muestran los modos de energía nula del elemento QL9.
+
+
+
 
 ==Ejemplo Oñate p. 320 (inglés), p. 388 (español): imposición de las deformaciones angulares==
 Código de MATLAB: [[file:c9_motivacion_ANS.m]]

@@ -1,5 +1,5 @@
 % NOTA estas funciones de forma y sus derivadas se encontraron con el
-% programa c9_generar_funciones_forma_lagrangianos_9_nodos_rect_2D
+% programa "codigo/2D/deduccion_funciones_forma/FF_lagrangianos_Q9.m"
 
 %% N son las funciones de forma del elemento lagrangiano de 9 nodos
 Nforma = @(xi,eta) [ ...

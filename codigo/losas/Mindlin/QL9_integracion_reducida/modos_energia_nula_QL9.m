@@ -64,6 +64,12 @@ n_gl_s = 3; % orden de la cuadratura de GL para la integracion de Ks
 n_gl_b = 3; % orden de la cuadratura de GL para la integracion de Kb
 n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
 
+% se utilizara integracion REDUCIDA (NO FUNCIONA)
+%{
+n_gl_b = 2; % orden de la cuadratura de GL para la integracion de Kb
+n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
+%}
+
 % calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
 [x_gl_b, w_gl_b]  = gausslegendre_quad(n_gl_b);
 [x_gl_s, w_gl_s]  = gausslegendre_quad(n_gl_s);
@@ -98,7 +104,6 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
     
    %% se calcula la matrix de rigidez de flexion Kb del elemento e 
    Kbe = zeros(3*nnoef);
-   % Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
    det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
@@ -124,30 +129,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
          Kse = Kse + Bs{e,p,q}'*Dsg*Bs{e,p,q}*det_Je_s(p,q)*w_gl_s(p)*w_gl_s(q);         
       end
    end 
-   
-   %{
-   %% se calcula la matriz NN
-   for p = 1:n_gl_b
-      for q = 1:n_gl_b
-         xi_gl  = x_gl_b(p);
-         eta_gl = x_gl_b(q);
-         % Se evaluan las funciones de forma en los puntos de integracion
-         % de Gauss-Legendre
-         N = Nforma(xi_gl, eta_gl);
-         
-         % Se ensambla la matriz de funciones de forma N
-         NN{e,p,q} = zeros(3,3*nnoef);
-         for i = 1:nnoef            
-            NN{e,p,q}(:,3*i-2:3*i) = diag([N(i) N(i) N(i)]);
-         end
-   
-         % matriz requerida para calcular el vector de fuerzas nodales 
-         % equivalentes (se utiliza la integracion completa)
-         Mbe = Mbe + NN{e,p,q}'*NN{e,p,q}*det_Je_b(p,q)*w_gl_b(p)*w_gl_b(q);                                              % REVISAR !!!!!!!!!!!!!!!!   
-      end
-   end  
-   %}
-   
+
    %% se asocian los grados de libertad del elemento locales a los globales
    idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:)  gdl(LaG(e,3),:)  ...
               gdl(LaG(e,4),:)  gdl(LaG(e,5),:)  gdl(LaG(e,6),:) ...
@@ -155,7 +137,6 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
 
    %% se procede al ensamblaje
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Kbe + Kse;
-   % f(idx{e})        = f(idx{e}) + fe;
 end
 
 f(gdl(45,ww)) = -10;
@@ -194,33 +175,11 @@ qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = nan(ngdl,1);     a(c) = ac;   a(d) = ad; % desplazamientos
 q = zeros(ngdl,1);   q(c) = qd;              % fuerzas nodales equivalentes
 
-%% imprimo los resultados
-vect_mov = reshape(a,3,nno)'; % vector de movimientos
-%{
-format short g
-disp('Desplazamientos nodales                      ');
-disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-for i = 1:nno
-   fprintf('Nodo %3d: w = %12.4g m, tx = %12.4g rad, ty = %12.4g rad\n', ...
-      i, vect_mov(i,ww), vect_mov(i,tx), vect_mov(i,ty));
-end
-
-disp(' ');
-disp('Fuerzas nodales de equilibrio (solo se imprimen los diferentes de cero)');
-disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-q = reshape(q,3,nno)';
-for i = 1:nno   
-   if ~isequal(q(i,:),[0 0 0])
-      fprintf('Nodo %3d W = %12.4g N, Mx = %12.4g N-m, My = %12.4g N-m\n', ...
-         i, q(i,ww), q(i,tx), q(i,ty));
-   end
-end
-%}
-
 %% Se dibuja el plano medio de la malla de elementos finitos y las deformaciones de esta
 escala = 5000;            % factor de escalamiento de la deformada
 %{
-xdef   = escala*vect_mov; % posicion de la deformada
+xdef     = escala*vect_mov; % posicion de la deformada
+vect_mov = reshape(a,3,nno)'; % vector de movimientos
 
 figure; 
 hold on; 
@@ -236,6 +195,7 @@ daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 %colorbar('YTick',-0.6:0.05:0)
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
 %}
 
@@ -245,170 +205,14 @@ hold on;
 grid on;
 colorbar
 for e = 1:nef
-   dibujar_EF_QL9(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
+   dibujar_EF_Q89_RM(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
       Nforma, a(idx{e}), t, escala, escala);
 end
 daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
 title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
+colormap jet
 view(3);
 
-%% En los puntos de integracion de Gauss-Legendre calcular:
-%% El vector de momentos flectores y torsores (2x2)
-%% El vector de fuerzas cortantes (1x1)
-[x_gl_b, w_gl_b]  = gausslegendre_quad(2);
-[x_gl_s, w_gl_s]  = gausslegendre_quad(1);
-
-%% se calcula de nuevo Bb y Bs en cada punto de GL
-Bb = cell(nef,2,2); % matrices de deformacion generalizada de flexion
-Bs = cell(nef);     % matrices de deformacion generalizada de cortante
-for e = 1:nef      % ciclo sobre todos los elementos finitos
-    xe = xnod(LaG(e,:),X);
-    ye = xnod(LaG(e,:),Y);    
-    
-    %% se calcula la matrix Bb en los puntos de integracion de GL para el 
-    % calculo de los momentos flectores y torsores
-    for p = 1:2
-      for q = 1:2
-         xi_gl  = x_gl_b(p);
-         eta_gl = x_gl_b(q);
-         Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
-      end
-   end
-       
-   %% se calcula la matrix Bs en los puntos de integracion de GL para el 
-   % calculo de las fuerzas cortantes
-   xi_gl  = x_gl_s(1);
-   eta_gl = x_gl_s(1);
-   Bs{e} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);
-end
-
-%% Se calculan los momentos y las fuerzas en los puntos de GL
-sigmag_b = cell(nef, 2, 2); % momentos flectores y torsores
-sigmag_s = cell(nef, 1);    % fuerzas cortantes
-for e = 1:nef               % ciclo sobre todos los elementos finitos
-   for p = 1:2
-      for q = 1:2
-         sigmag_b{e,p,q} = Dbg*Bb{e,p,q}*a(idx{e});
-      end
-   end
-   
-   sigmag_s{e} = Dsg*Bs{e}*a(idx{e});
-end
-
-%% Se extrapolan los momentos flectores y fuerzas cortantes a los nodos
-%% Se extrapolan los esfuerzos y las deformaciones a los nodos
-num_elem_ady = zeros(nno,1);  % numero de elementos adyacentes
-Mx  = zeros(nno,1);  Qx = zeros(nno,1);
-My  = zeros(nno,1);  Qy = zeros(nno,1);
-Mxy = zeros(nno,1);
-
-% matriz de extrapolacion de esfuerzos para un elemento lagrangiano de 9
-% nodos
-A = [ ... 
-   3^(1/2)/2 + 1,            -1/2,            -1/2,   1 - 3^(1/2)/2
- 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4
-            -1/2,   1 - 3^(1/2)/2,   3^(1/2)/2 + 1,            -1/2
- 1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4
-   1 - 3^(1/2)/2,            -1/2,            -1/2,   3^(1/2)/2 + 1
- 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4
-            -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2
- 3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4
-             1/4,             1/4,             1/4,             1/4 ];
-
-for e = 1:nef
-   Mx(LaG(e,:),:)  = Mx(LaG(e,:),:)  + A * [ sigmag_b{e,1,1}(1)
-                                             sigmag_b{e,1,2}(1)
-                                             sigmag_b{e,2,1}(1)
-                                             sigmag_b{e,2,2}(1) ];
-
-   My(LaG(e,:),:)  = My(LaG(e,:),:)  + A * [ sigmag_b{e,1,1}(2)
-                                             sigmag_b{e,1,2}(2)
-                                             sigmag_b{e,2,1}(2)
-                                             sigmag_b{e,2,2}(2) ];
-
-   Mxy(LaG(e,:),:) = Mxy(LaG(e,:),:) + A * [ sigmag_b{e,1,1}(3)
-                                             sigmag_b{e,1,2}(3)
-                                             sigmag_b{e,2,1}(3)
-                                             sigmag_b{e,2,2}(3) ];
-
-   Qx(LaG(e,:),:) = Qx(LaG(e,:),:) + sigmag_s{e}(1);
-   Qy(LaG(e,:),:) = Qy(LaG(e,:),:) + sigmag_s{e}(2);
-
-   num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
-end
-
-%% Alisado (promedio de los esfuerzos en los nodos)
-Mx  =  Mx./num_elem_ady;
-My  =  My./num_elem_ady;
-Mxy = Mxy./num_elem_ady;
-Qx  =  Qx./num_elem_ady;  
-Qy  =  Qy./num_elem_ady;
-
-%% Se grafican los momentos
-figure
-subplot(1,3,1); plot_M_or_Q(nef, xnod, LaG, Mx,  'Momentos Mx (N-m/m)');
-subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, My,  'Momentos My (N-m/m)');
-subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mxy, 'Momentos Mxy (N-m/m)');
-
-%% Se grafican los cortantes
-figure
-subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Qx,  'Cortantes Qx (N/m)');
-subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Qy,  'Cortantes Qy (N/m)');
-
-%% Se calculan y grafican para cada elemento los momentos principales y
-%% sus direcciones
-Mt_max = sqrt(((Mx-My)/2).^2 + Mxy.^2); % momento torsion maximo
-Mf1_xy = (Mx+My)/2 + Mt_max;            % momento flector maximo
-Mf2_xy = (Mx+My)/2 - Mt_max;            % momento flector minimo
-ang  = 0.5*atan2(2*Mxy, Mx-My);         % angulo de inclinacion de Mf1_xy
-
-%% Mf1_xy, Mf2_xy, Mt_max
-figure
-subplot(1,3,1); plot_M_or_Q(nef, xnod, LaG, Mf1_xy, 'Mf1_{xy} (N-m/m)', { ang })
-subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, Mf2_xy, 'Mf2_{xy} (N-m/m)', { ang+pi/2 })
-subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mt_max, 'Mt_{max} (N-m/m)', { ang+pi/4, ang-pi/4 })
-
-%% Se calculan y grafican los cortantes maximos, junto con su angulo de inclinacion
-Q_max = hypot(Qx, Qy);
-ang   = atan2(Qy, Qx);
-
-figure
-plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
-
-%%
-return; % bye, bye!
-
-%%
-function plot_M_or_Q(nef, xnod, LaG, variable, texto, angulos)
-    X = 1; Y = 2;
-    hold on; 
-    colorbar;
-    % Por simplicidad no se graficaran los resultados asociados al nodo 9
-    for e = 1:nef  
-       fill(xnod(LaG(e,1:8),X), xnod(LaG(e,1:8),Y), variable(LaG(e,1:8)));
-    end
-    axis equal tight
-    colormap jet
-    title(texto, 'FontSize',20);
-   
-    esc = 0.5;
-    if nargin == 6
-        norma = 1; % = variable % si se quiere proporcional
-        for i = 1:length(angulos)
-            % se indica la flecha de la direccion principal
-            quiver(xnod(:,X),xnod(:,Y),...             
-                norma.*cos(angulos{i}), norma.*sin(angulos{i}),... 
-                esc, ...                  % con una escala esc
-                'k',...                   % de color negro
-                'ShowArrowHead','off',... % una flecha sin cabeza
-                'LineWidth',2, ...        % con un ancho de linea 2
-                'Marker','.');            % y en el punto (x,y) poner un punto '.'
-            
-            % la misma flecha girada 180 grados
-            quiver(xnod(:,X),xnod(:,Y),...             
-                norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
-                esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
-        end            
-    end
-end
+%% bye, bye !!!
+return

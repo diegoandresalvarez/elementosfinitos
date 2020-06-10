@@ -1,73 +1,61 @@
 clear, clc, close all
 
-%% Funciones de forma del elemento rectangular lagrangiano de 16 nodos 
+%% Funciones de forma del elemento rectangular lagrangiano de 9 nodos 
 
 X = 1; Y = 2;
 
 % Calculo las funciones de forma unidimensionales
 syms xi eta
-L4_xi = cell(4,1); % contenedor para las funciones de forma (en dir XI)
-L4_xi{1} = poly2sym(polyfit([-1 -1/3 1/3 1],[1 0 0 0],3),xi);
-L4_xi{2} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 1 0 0],3),xi);
-L4_xi{3} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 1 0],3),xi);
-L4_xi{4} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 0 1],3),xi);
+L3_xi = cell(3,1); % contenedor para las funciones de forma (en dir XI)
+L3_xi{1} = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);
+L3_xi{2} = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi);
+L3_xi{3} = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);
 
-L4_eta = cell(4,1); % contenedor para las funciones de forma (en dir ETA)
-L4_eta{1} = poly2sym(polyfit([-1 -1/3 1/3 1],[1 0 0 0],3),eta);
-L4_eta{2} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 1 0 0],3),eta);
-L4_eta{3} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 1 0],3),eta);
-L4_eta{4} = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 0 1],3),eta);
+L3_eta = cell(3,1); % contenedor para las funciones de forma (en dir ETA)
+L3_eta{1} = poly2sym(polyfit([-1 0 1],[1 0 0],2),eta);
+L3_eta{2} = poly2sym(polyfit([-1 0 1],[0 1 0],2),eta);
+L3_eta{3} = poly2sym(polyfit([-1 0 1],[0 0 1],2),eta);
 
 % Coordenadas de los nodos
 %
 % Numeracion local:
-%        ^ eta
-%        |
-%        |
-% 10---9---8---7
-%  |   |   |   |
-% 11--16--15---6
-%  |   |   |   |----> xi
-% 12--13--14---5
-%  |   |   |   |
-%  1---2---3---4
+%     ^ eta
+%     |
+%     |
+% 7---6---5
+% |   |   |
+% 8---9---4----> xi
+% |   |   |
+% 1---2---3
 
 nod = [ ...
 %  xi   eta     % nodo   
    -1   -1      %  1
-   -1/3 -1      %  2
-    1/3 -1      %  3
-    1   -1      %  4
-    1   -1/3    %  5
-    1    1/3    %  6
-    1    1      %  7
-    1/3  1      %  8
-   -1/3  1      %  9
-   -1    1      % 10
-   -1    1/3    % 11
-   -1   -1/3    % 12
-   -1/3 -1/3    % 13
-    1/3 -1/3    % 14
-    1/3  1/3    % 15
-   -1/3  1/3 ]; % 16
+    0   -1      %  2
+    1   -1      %  3
+    1    0      %  4
+    1    1      %  5
+    0    1      %  6
+   -1    1      %  7
+   -1    0      %  8
+    0    0 ];   %  9
 
 nno = size(nod, 1);
 
 % Equivalencia entre coordenada y polinomio
 pos = nod;
-pos(nod==-1  ) = 1;
-pos(nod==-1/3) = 2;
-pos(nod== 1/3) = 3;
-pos(nod== 1  ) = 4;
+pos(nod==-1) = 1;
+pos(nod== 0) = 2;
+pos(nod== 1) = 3;
 
 % Se calculan las funciones de forma bidimensionales
 N = cell(nno,1);
 for i = 1:nno
-   N{i} = simplify(L4_xi{pos(i,X)}*L4_eta{pos(i,Y)});
+   N{i} = simplify(L3_xi{pos(i,1)}*L3_eta{pos(i,2)});
 end
 
 % Imprimo las funciones de forma
-fprintf('Funciones de forma lagrangianas del elemento rectangular de 16 nodos:\n')
+fprintf('Funciones de forma lagrangianas del elemento rectangular de 9 nodos:\n')
 for i = 1:nno
    fprintf('N%d = %s\n', i, char(N{i}))
 end

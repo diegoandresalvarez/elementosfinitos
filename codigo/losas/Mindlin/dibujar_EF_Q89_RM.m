@@ -68,7 +68,7 @@ nno = size(xe,1);           % numero de nodos del elemento finito
 
 %% Se calcula la geometria isoparametrica
 xi  = [               -1:0.1:1   +ones(1,length(-1:0.1:1))                1:-0.1:-1   -ones(1,length(1:-0.1:-1)) ];
-eta = [-ones(1,length(-1:0.1:1))               -1:0.1:1    +ones(1,length(1:-0.1:-1))                1:-0.1:-1   ];
+eta = [-ones(1,length(-1:0.1:1))                -1:0.1:1   +ones(1,length(1:-0.1:-1))                1:-0.1:-1   ];
 n = length(xi);  % number of points of vector xi
 
 x = zeros(n,1);

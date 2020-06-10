@@ -1,6 +1,6 @@
 %% Calculo de los desplazamientos verticales y angulos de giro, las 
 % reacciones, los momentos flectores y las fuerzas cortantes en una losa de
-% Mindlin utilizando los elementos finitos de placa "QL9"
+% Mindlin utilizando los elementos finitos de placa "heterosis" QHET
 
 %%
 clear, clc, close all   % borro la memoria, la pantalla y las figuras
@@ -23,6 +23,9 @@ nef   = size(LaG,1);  % numero de EFs (numero de filas de LaG)
 nnoef = size(LaG,2);  % numero de nodos por EF
 nno   = size(xnod,1); % numero de nodos (numero de filas de xnod)
 ngdl  = 3*nno;        % numero de grados de libertad (tres por nodo)
+                      % se debe tener en cuenta que aqui no se ha removido
+                      % aun el gdl correspondiente al desplazamiento w del
+                      % nodo 9 de cada EF
 
 gdl  = [(1:3:ngdl)' (2:3:ngdl)' (3:3:ngdl)']; % nodos vs grados de libertad
 
@@ -40,12 +43,18 @@ end
 plot(xnod(:,X), xnod(:,Y), 'rx');
 text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
 axis([-0.5, 2.5, -0.5, 4.5])
-title('Malla de una losa con EFs QL9');
+title('Malla de una losa con EFs heterosis QHET');
 
 %% Se cargan las funciones de forma junto con sus derivadas
+funciones_forma
+
+% Se cargan las funciones de forma del elemento serendipito de 8 nodos 
+% junto con sus derivadas con respecto a xi y a eta
+Nwforma  = NSforma;  dNw_dxi  = dNS_dxi;  dNw_deta = dNS_deta;
+
 % Se cargan las funciones de forma del elemento lagrangiano de 9 nodos 
 % junto con sus derivadas con respecto a xi y a eta
-funciones_forma_lagrangiano_9_nodos    % Nforma, dN_dxi, dN_deta
+Ntforma  = NLforma;  dNt_dxi  = dNL_dxi;  dNt_deta = dNL_deta;
 
 %% parametros de la cuadratura de Gauss-Legendre (INTEGRACION SELECTIVA)
 % se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
@@ -100,13 +109,14 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    ye = xnod(LaG(e,:),Y);    
     
    %% se calcula la matrix de rigidez de flexion Kb del elemento e 
-   Kbe = zeros(3*nnoef);
+   Kbe = zeros(3*nnoef-1);
    det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
          xi_gl  = x_gl_b(p);
          eta_gl = x_gl_b(q);
-         [Bb{e,p,q}, det_Je_b(p,q)] = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
+         [Bb{e,p,q}, det_Je_b(p,q)] = Bb_RM(xi_gl, eta_gl, xe, ye, dNt_dxi, dNt_deta);
+         Bb{e,p,q}(:, 25) = []; % se elimina el GDL asociado a w9         
 
          % se arma la matriz de rigidez del elemento e
          Kbe = Kbe + Bb{e,p,q}'*Dbg*Bb{e,p,q}*det_Je_b(p,q)*w_gl_b(p)*w_gl_b(q);
@@ -114,13 +124,14 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    end
    
    %% se calcula la matrix Ks
-   Kse = zeros(3*nnoef);   
+   Kse = zeros(3*nnoef-1);   
    det_Je_s = zeros(n_gl_s); % Jacobianos con n_gl_s puntos de integracion
    for p = 1:n_gl_s
       for q = 1:n_gl_s
          xi_gl  = x_gl_s(p);        
          eta_gl = x_gl_s(q);
-         [Bs{e,p,q}, det_Je_s(p,q)] = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);   
+         [Bs{e,p,q}, det_Je_s(p,q)] = Bs_RM(xi_gl, eta_gl, xe, ye, Ntforma, dNw_dxi, dNw_deta);   
+         Bs{e,p,q}(:, 25) = []; % se elimina el GDL asociado a w9
 
          % se arma la matriz de rigidez del elemento e
          Kse = Kse + Bs{e,p,q}'*Dsg*Bs{e,p,q}*det_Je_s(p,q)*w_gl_s(p)*w_gl_s(q);         
@@ -128,20 +139,22 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    end 
    
    %% se calcula la matriz NN
-   Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
+   Mbe = zeros(3*nnoef-1); % matriz que se utiliza en el calculo de fe   
    for p = 1:n_gl_b
       for q = 1:n_gl_b
          xi_gl  = x_gl_b(p);
          eta_gl = x_gl_b(q);
          % Se evaluan las funciones de forma en los puntos de integracion
          % de Gauss-Legendre
-         N = Nforma(xi_gl, eta_gl);
+         Nw = Nwforma(xi_gl, eta_gl);
+         Nt = Ntforma(xi_gl, eta_gl);
          
          % Se ensambla la matriz de funciones de forma N
          NN{e,p,q} = zeros(3,3*nnoef);
          for i = 1:nnoef            
-            NN{e,p,q}(:,3*i-2:3*i) = diag([N(i) N(i) N(i)]);
+            NN{e,p,q}(:,3*i-2:3*i) = diag([Nw(i) Nt(i) Nt(i)]);
          end
+         NN{e,p,q}(:, 25) = []; % se elimina el GDL asociado a w9
    
          % matriz requerida para calcular el vector de fuerzas nodales 
          % equivalentes (se utiliza la integracion completa)
@@ -158,12 +171,15 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    else
       ffe = zeros(3*nnoef,1);
    end  
+   ffe(25) = []; % se elimina el GDL asociado a w9
    fe = Mbe*ffe;   
    
    %% se asocian los grados de libertad del elemento locales a los globales
+   % se debe tener en cuenta que cada elemento finito tiene 3*9 - 1 = 26 gdl   
+   % observe que se elimino el "gdl 25"
    idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:)  gdl(LaG(e,3),:)  ...
               gdl(LaG(e,4),:)  gdl(LaG(e,5),:)  gdl(LaG(e,6),:) ...
-              gdl(LaG(e,7),:)  gdl(LaG(e,8),:)  gdl(LaG(e,9),:) ];
+              gdl(LaG(e,7),:)  gdl(LaG(e,8),:)  gdl(LaG(e,9), [tx ty]) ];
 
    %% se procede al ensamblaje
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Kbe + Kse;
@@ -189,6 +205,10 @@ c = [ gdl(lado_x0,ww); gdl(lado_x0,ty);
       gdl(lado_y4,ww); gdl(lado_y4,tx) ];
 
 d = setdiff(1:ngdl,c)';
+
+% De los grados de libertad desconocidos se eliminan los gdl
+% correspondientes al nodo central de cada elemento finito
+d = setdiff(d, gdl(LaG(:,9),ww));
 
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
@@ -263,7 +283,7 @@ grid on;
 colorbar
 for e = 1:nef
    dibujar_EF_Q89_RM(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), ...
-      Nforma, a(idx{e}), t, escala, escala);
+      Nwforma, [a(idx{e}(1:24)); 0; a(idx{e}(25:26))], t, escala, escala);
 end
 daspect([1 1 1]); % similar a "axis equal", pero en 3D
 axis tight
@@ -292,7 +312,8 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
         for q = 1:n_gl_b
             xi_gl  = x_gl_b(p);
             eta_gl = x_gl_b(q);
-            Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
+            Bb{e,p,q} = Bb_RM(xi_gl, eta_gl, xe, ye, dNt_dxi, dNt_deta);
+            Bb{e,p,q}(:, 25) = []; % se elimina el GDL asociado a w9
         end
     end
     
@@ -302,7 +323,8 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
         for q = 1:n_gl_s
             xi_gl  = x_gl_s(p);
             eta_gl = x_gl_s(q);
-            Bs{e,p,q} = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);
+            Bs{e,p,q} = Bs_RM(xi_gl, eta_gl, xe, ye, Ntforma, dNw_dxi, dNw_deta);
+            Bs{e,p,q}(:, 25) = []; % se elimina el GDL asociado a w9
         end
     end
 end
