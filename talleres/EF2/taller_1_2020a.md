@@ -4,7 +4,7 @@ Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso 
 
 Trabajo de elaboración individual
 
-Fecha de entrega: junio 7, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+Fecha de entrega: junio 14, 2020 a las 23:59. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
 
 
 
@@ -57,12 +57,15 @@ Active en el software de captura de pantalla la opción para ver el ratón.
 * Revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al análisis de viga: 40%.
 * Nota máxima: 6.0
 * Si se programa algo que mejore radicalmente los códigos de la WIKI de vigas, se tendrá una unidad adicional.
+* Si se modela la viga usando EFs de tensión plana y se comparan los resultados de desplazamiento horizontal `u`, esfuerzo normal `sx` y desplazamiento vertical del eje neutro de la viga `w`, se tendrá una unidad adicional.
 * Por mala calidad en el sonido se rebajarán 0.5 unidades.
 
 ---
 
 ## Taller alternativo
 
-En vez de hacer este taller, se puede implementar un artículo científico sobre el tema de vigas de una revista de impacto internacional. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0. Se debe realizar una exposición de máximo 20 minutos.
+* En vez de hacer este taller, se puede implementar un artículo científico sobre el tema de vigas de una revista de impacto internacional. El profesor debe dar visto bueno sobre el artículo. En este caso, la nota máxima sera 8.0. 
+* Se debe realizar una exposición de máximo 20 minutos, preferiblemente hecha con [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) o [Jupyter](https://jupyter.readthedocs.io/en/latest/) o con el [MATLAB Live Editor](https://www.mathworks.com/products/matlab/live-editor.html).
+* Si se modela la viga usando EFs de tensión plana y se comparan los resultados de desplazamiento horizontal `u`, esfuerzo normal `sx` y desplazamiento vertical del eje neutro de la viga `w`, se tendrá una unidad adicional.
 
 Ideas: implementar viga de Reddy, Timoshenko con elementos finitos mixtos (enfoques de Hellinger-Reissner, Hu-Washizu), etc.
