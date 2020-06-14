@@ -132,7 +132,12 @@ d3N_dy3   =      diff(Nvec,eta,3)/(b^3);
 % Se calcula la matriz QQ, de modo que Q = -D*QQ*a
 QQ = simplify([ d3N_dx3 + d3N_dxdy2
                 d3N_dy3 + d3N_dx2dy ])
-
+            
+%% Condicion de solido rigido
+disp('El EF MZC si cumple la condición de cuerpo rígido con las deflexiones')
+disp('pero no en las rotaciones')
+pretty(simplify(sum(N)))
+            
 %% Calculo de la matriz de masa consistente (FALTA VERIFICAR)
 syms rho
 disp ('Calculando la matriz de masa consistente');
