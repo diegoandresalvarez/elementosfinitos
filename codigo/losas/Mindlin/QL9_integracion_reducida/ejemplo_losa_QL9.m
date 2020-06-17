@@ -99,7 +99,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    xe = xnod(LaG(e,:),X);   
    ye = xnod(LaG(e,:),Y);    
     
-   %% se calcula la matrix de rigidez de flexion Kb del elemento e 
+   %% se calcula la matriz de rigidez de flexion Kb del elemento e 
    Kbe = zeros(3*nnoef);
    det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
    for p = 1:n_gl_b
