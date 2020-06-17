@@ -1,7 +1,7 @@
-function [Bb, det_Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
+function [Bb, det_Je, Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
 %% Calcula la matriz de deformaciones por flexion Bb
 %
-% [Bb, det_Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
+% [Bb, det_Je, Je] = Bb_RM(xi, eta, xe, ye, dN_dxi, dN_deta)
 %
 % (xi, eta)        punto de integracion de GL
 % (xe, ye)         coordenadas de los nodos del EF
