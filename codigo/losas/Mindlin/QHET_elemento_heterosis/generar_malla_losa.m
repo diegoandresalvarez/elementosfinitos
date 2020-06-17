@@ -1,4 +1,4 @@
-% Programa para generar la malla de elementos finitos
+% Programa para generar la malla de elementos finitos QHET y QQQQ-L
 
 X = 1;
 Y = 2;
