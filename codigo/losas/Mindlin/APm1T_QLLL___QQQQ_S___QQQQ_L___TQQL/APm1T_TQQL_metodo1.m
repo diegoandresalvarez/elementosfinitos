@@ -41,7 +41,7 @@ igualdad([11 12])
 
 %% Se calcula la matriz P
 syms a1 a2 a3 a4 a5 a6
-ee = mat2cell(eye(6),[ 1 1 1 1 1 1 ], 6 ); % produce {[1 0 0 0 0 0];[0 1 0 0 0 0 ]; ... ;[0 0 0 0 0 1]}
+ee = mat2cell(eye(6),[ 1 1 1 1 1 1 ], 6 )'; % produce {[1 0 0 0 0 0];[0 1 0 0 0 0 ]; ... ;[0 0 0 0 0 1]}
 P = subs(lhs(IG), {a1, a2, a3, a4, a5, a6}, ee)
 
 %% Se calcula la matriz T

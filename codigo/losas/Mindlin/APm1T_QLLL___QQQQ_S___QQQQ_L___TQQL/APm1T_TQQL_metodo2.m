@@ -1,6 +1,8 @@
-%% Se ejecuta el método anterior, con el proposito de comparar la respuesta
+%% Se ejecuta el metodo anterior, con el proposito de comparar la respuesta
 APm1T_TQQL_metodo1
-clearvars -except invP_T_metodo1; clc
+
+clearvars -except invP_T_metodo1; 
+clc
 
 %        ^ eta (xib2)
 %   xib3 |         
@@ -80,5 +82,5 @@ A_invP_T = A(xi,eta)*inv(P)*T
 gp = A_invP_T*gpg                                % eq 6.70
 
 %% Se verifica que el metodo 1 y el metodo 2 sean iguales
-disp('El error en la próxima resta debe ser despreciable')
+disp('El error en la proxima resta debe ser despreciable')
 double(P\T) - invP_T_metodo1

@@ -26,34 +26,34 @@ idx = [ 1 2 3 4 5    % puntos usados por gamma_xi  +
 gpg = [ gxi1  gxi2  gxi3  gxi4  gxi5      % Los +
         geta3 geta6 geta7 geta8 geta9 ];  % Los x   
      
-n = size(idx,2);  % numero de puntos que definen las funciones de forma
-N = sym(zeros(2,n));
+ngamma = size(idx,2);  % numero de puntos que definen las funciones de forma
+N = sym(zeros(2,ngamma));
 
 for i = [ XI ETA ]
    xxi  = nod(idx(i,:), XI); 
    eeta = nod(idx(i,:), ETA);
    switch i
       case XI
-         A         = [ ones(n,1) xxi eeta  xxi.*eeta  eeta.^2 ];
+         A         = [ ones(ngamma,1) xxi eeta  xxi.*eeta  eeta.^2 ];
          variables = [ 1 xi eta xi*eta eta^2 ];
       case ETA
-         A         = [ ones(n,1) xxi eeta  xxi.*eeta  xxi.^2 ];      
+         A         = [ ones(ngamma,1) xxi eeta  xxi.*eeta  xxi.^2 ];      
          variables = [ 1 xi eta xi*eta xi^2 ];
    end
 
-   for j = 1:n
+   for j = 1:ngamma
       % se arma el sistema de ecuaciones
-      b = zeros(n,1);   b(j) = 1;
+      b = zeros(ngamma,1);   b(j) = 1;
       coef_alpha = A\b;
       fprintf('j = %d (%s):  ', j, char(gpg(i,j))); 
-      N(i,j) = simple(variables*coef_alpha);
+      N(i,j) = simplify(variables*coef_alpha);
       disp(N(i,j))
    end
    fprintf('----------------------------------------------------------\n');
 end
 
 %% Se imprime el polinomio de interpolacion
-gp = sum(simple(N.*gpg), 2)
+gp = sum(simplify(N.*gpg), 2)
 
 syms gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4
 syms gxi5 geta5 gxi6 geta6 gxi7 geta7 gxi8 geta8 gxi9 geta9
@@ -68,6 +68,6 @@ for i = 1:length(gpg)
    A_invP_T(XI, i) = feval(symengine, 'coeff', gp(1), gpg(i), 1);
    A_invP_T(ETA,i) = feval(symengine, 'coeff', gp(2), gpg(i), 1);   
 end
-gp_metodo1 = simple(A_invP_T*gpg.')
+gp_metodo1 = simplify(A_invP_T*gpg.')
 
 A_invP_T_metodo1 = A_invP_T

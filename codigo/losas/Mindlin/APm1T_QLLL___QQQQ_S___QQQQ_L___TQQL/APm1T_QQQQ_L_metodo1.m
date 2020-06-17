@@ -1,4 +1,5 @@
-clear, clc
+clear
+clc
 
 %% Se definen las constantes
 XI = 1; ETA = 2;
@@ -50,14 +51,14 @@ for i = 1:2
       b = zeros(n,1);   b(j) = 1;
       coef_alpha = A\b;
       fprintf('j = %d (%s):  ', j, char(gpg(i,j))); 
-      N(i,j) = simple(variables*coef_alpha);
+      N(i,j) = simplify(variables*coef_alpha);
       disp(N(i,j))
    end
    fprintf('----------------------------------------------------------\n');
 end
 
 %% Se imprime el polinomio de interpolacion
-gp = sum(simple(N.*gpg), 2)
+gp = sum(simplify(N.*gpg), 2)
 
 %% Se calcula la matriz A*inv(P)*T
 gpg = [ gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4 gxi5 geta5 ...
@@ -70,6 +71,6 @@ for i = 1:length(gpg)
    A_invP_T(1,i) = feval(symengine, 'coeff', gp(1), gpg(i), 1);
    A_invP_T(2,i) = feval(symengine, 'coeff', gp(2), gpg(i), 1);   
 end
-gp_metodo1 = simple(A_invP_T*gpg.')
+gp_metodo1 = simplify(A_invP_T*gpg.')
 
 A_invP_T_metodo1 = A_invP_T

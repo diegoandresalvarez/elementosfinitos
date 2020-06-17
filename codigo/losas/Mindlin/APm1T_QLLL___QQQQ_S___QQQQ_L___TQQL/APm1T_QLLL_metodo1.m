@@ -1,8 +1,22 @@
-clear, clc
+clear
+clc
 
 %% Se definen las constantes
 XI = 1; ETA = 2;
 syms xi eta gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4
+
+%          ^ eta
+%          |
+%          |
+%          3
+%   (4)----+----(3)
+%    |           |  
+%    |           |
+%  4 x           x 2  ------> xi
+%    |           |
+%    |           |
+%   (1)----+----(2)
+%         1
 
 %% Se definen los puntos de colocacion
 nod = [...
@@ -22,41 +36,35 @@ gpg = [ gxi1  gxi3      % Los +
 n = size(idx,2);  % numero de puntos que definen las funciones de forma
 N = sym(zeros(2,n));
 
-for i = 1:2
+for i = 1:n
    xxi  = nod(idx(i,:), XI); 
    eeta = nod(idx(i,:), ETA);
-   switch i
-      case 1
-         A         = [ ones(n,1) xxi eeta ];
-         variables = [ 1  xi  eta ];
-      case 2
-         A         = [ ones(n,1) xxi eeta ];      
-         variables = [ 1 xi eta ];
-   end
+   A         = [ ones(n,1) xxi eeta ];
+   variables = [ 1         xi  eta  ];
 
    for j = 1:n
       % se arma el sistema de ecuaciones
       b = zeros(n,1);   b(j) = 1;
       coef_alpha = A\b;
-      fprintf('j = %d (%s):  ', j, char(gpg(i,j))); 
-      N(i,j) = simple(variables*coef_alpha);
-      disp(N(i,j))
+      %fprintf('j = %d (%s):  ', j, char(gpg(i,j))); 
+      N(i,j) = simplify(variables*coef_alpha);
+      %disp(N(i,j))
    end
-   fprintf('----------------------------------------------------------\n');
+   %fprintf('----------------------------------------------------------\n');
 end
 
 %% Se imprime el polinomio de interpolacion
-gp = sum(simple(N.*gpg), 2)
+gp = sum(simplify(N.*gpg), 2)
 
 %% Se calcula la matriz A*inv(P)*T
 gpg = [ gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4 ];
 
-A_invP_T = sym(zeros(2, 8));
+A_invP_T = sym(zeros(2, 8)); % esta es la matriz M (paso 2, metodo 1)
 
 for i = 1:length(gpg)
    A_invP_T(1,i) = feval(symengine, 'coeff', gp(1), gpg(i), 1);
    A_invP_T(2,i) = feval(symengine, 'coeff', gp(2), gpg(i), 1);   
 end
-gp_metodo1 = simple(A_invP_T*gpg.')
+gp_metodo1 = simplify(A_invP_T*gpg.')
 
 A_invP_T_metodo1 = A_invP_T
