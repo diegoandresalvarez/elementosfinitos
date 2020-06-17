@@ -1,6 +1,8 @@
-%% Se ejecuta el método anterior, con el proposito de comparar la respuesta
+%% Se ejecuta el metodo anterior, con el proposito de comparar la respuesta
 APm1T_QQQQ_L_metodo1
-clearvars -except A_invP_T_metodo1 gp_metodo1; clc
+
+clearvars -except A_invP_T_metodo1 gp_metodo1
+clc
 
 %             ^ eta
 %             |
@@ -81,12 +83,12 @@ gpg = [ gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4 gxi5 geta5 ...
    
 P = T*Ag                                         % eq 6.68
 
-A_invP_T = factor(A(xi,eta)*inv(P)*T)
+A_invP_T = simplify(A(xi,eta)*inv(P)*T)
 
 gp = A_invP_T*gpg                                % eq 6.70
 
-disp(simple(gp-gp_metodo1))
+disp(simplify(gp-gp_metodo1))
 
-disp(simple(A_invP_T - A_invP_T_metodo1))
+disp(simplify(A_invP_T - A_invP_T_metodo1))
 
-disp(simple((A_invP_T- A_invP_T_metodo1)*gpg))
+disp(simplify((A_invP_T- A_invP_T_metodo1)*gpg))

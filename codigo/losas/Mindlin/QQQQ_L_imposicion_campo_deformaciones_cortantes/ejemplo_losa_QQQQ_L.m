@@ -1,6 +1,6 @@
 %% Calculo de los desplazamientos verticales y angulos de giro, las 
 % reacciones, los momentos flectores y las fuerzas cortantes en una losa de
-% Mindlin utilizando los elementos finitos de placa "QL9"
+% Mindlin utilizando los elementos finitos de placa "QQQQ-L"
 
 %%
 clear, clc, close all   % borro la memoria, la pantalla y las figuras
@@ -40,7 +40,7 @@ end
 plot(xnod(:,X), xnod(:,Y), 'rx');
 text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
 axis([-0.5, 2.5, -0.5, 4.5])
-title('Malla de una losa con EFs QL9');
+title('Malla de una losa con EFs QQQQ-L');
 
 %% Se cargan las funciones de forma junto con sus derivadas
 % Se cargan las funciones de forma del elemento lagrangiano de 9 nodos 
@@ -51,23 +51,11 @@ funciones_forma_lagrangiano_9_nodos    % Nforma, dN_dxi, dN_deta
 % se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
 % xi como en la direccion de eta
 
-% se utilizara integracion COMPLETA
-%{
-n_gl_b = 3; % orden de la cuadratura de GL para la integracion de Kb
-n_gl_s = 3; % orden de la cuadratura de GL para la integracion de Ks
-%}
+%% Cuadratura de GL para la integracion de Kb y Ks
+n_gl = 3;
+n_gl_b = n_gl; % orden de la cuadratura de GL para la integracion de Kb
+n_gl_s = n_gl; % orden de la cuadratura de GL para la integracion de Ks
 
-% se utilizara integracion SELECTIVA
-n_gl_b = 3; % orden de la cuadratura de GL para la integracion de Kb
-n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
-
-% se utilizara integracion REDUCIDA
-%{
-n_gl_b = 2; % orden de la cuadratura de GL para la integracion de Kb
-n_gl_s = 2; % orden de la cuadratura de GL para la integracion de Ks
-%}
-
-% calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
 [x_gl_b, w_gl_b]  = gausslegendre_quad(n_gl_b);
 [x_gl_s, w_gl_s]  = gausslegendre_quad(n_gl_s);
 
@@ -99,33 +87,23 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    xe = xnod(LaG(e,:),X);   
    ye = xnod(LaG(e,:),Y);    
     
-   %% se calcula la matriz de rigidez de flexion Kb del elemento e 
+   %% se calculan las matrices de rigidez de flexion Kb y cortante Ks del elemento e 
    Kbe = zeros(3*nnoef);
-   det_Je_b = zeros(n_gl_b); % Jacobianos con n_gl_b puntos de integracion   
-   for p = 1:n_gl_b
-      for q = 1:n_gl_b
+   Kse = zeros(3*nnoef); 
+   det_Je = zeros(n_gl); % Jacobianos con n_gl puntos de integracion   
+   for p = 1:n_gl
+      for q = 1:n_gl
          xi_gl  = x_gl_b(p);
          eta_gl = x_gl_b(q);
-         [Bb{e,p,q}, det_Je_b(p,q)] = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
+         
+         [Bb{e,p,q}, det_Je(p,q), Je_pq] = Bb_RM(xi_gl, eta_gl, xe, ye, dN_dxi, dN_deta);
+         Bs{e,p,q} = Bs_QQQQ_L(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta, Je_pq);
 
          % se arma la matriz de rigidez del elemento e
-         Kbe = Kbe + Bb{e,p,q}'*Dbg*Bb{e,p,q}*det_Je_b(p,q)*w_gl_b(p)*w_gl_b(q);
+         Kbe = Kbe + Bb{e,p,q}'*Dbg*Bb{e,p,q}*det_Je(p,q)*w_gl_b(p)*w_gl_b(q);
+         Kse = Kse + Bs{e,p,q}'*Dsg*Bs{e,p,q}*det_Je(p,q)*w_gl_s(p)*w_gl_s(q);         
       end
    end
-   
-   %% se calcula la matrix Ks
-   Kse = zeros(3*nnoef);   
-   det_Je_s = zeros(n_gl_s); % Jacobianos con n_gl_s puntos de integracion
-   for p = 1:n_gl_s
-      for q = 1:n_gl_s
-         xi_gl  = x_gl_s(p);        
-         eta_gl = x_gl_s(q);
-         [Bs{e,p,q}, det_Je_s(p,q)] = Bs_RM(xi_gl, eta_gl, xe, ye, Nforma, dN_dxi, dN_deta);   
-
-         % se arma la matriz de rigidez del elemento e
-         Kse = Kse + Bs{e,p,q}'*Dsg*Bs{e,p,q}*det_Je_s(p,q)*w_gl_s(p)*w_gl_s(q);         
-      end
-   end 
    
    %% se calcula la matriz NN
    Mbe = zeros(3*nnoef); % matriz que se utiliza en el calculo de fe   
@@ -145,7 +123,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    
          % matriz requerida para calcular el vector de fuerzas nodales 
          % equivalentes (se utiliza la integracion completa)
-         Mbe = Mbe + NN{e,p,q}'*NN{e,p,q}*det_Je_b(p,q)*w_gl_b(p)*w_gl_b(q);                                              % REVISAR !!!!!!!!!!!!!!!!   
+         Mbe = Mbe + NN{e,p,q}'*NN{e,p,q}*det_Je(p,q)*w_gl_b(p)*w_gl_b(q);                                              % REVISAR !!!!!!!!!!!!!!!!   
       end
    end  
    

@@ -1,4 +1,4 @@
-%% Se ejecuta el método anterior, con el proposito de comparar la respuesta
+%% Se ejecuta el metodo anterior, con el proposito de comparar la respuesta
 APm1T_QQQQ_S_metodo1
 clearvars -except A_invP_T_metodo1 gp_metodo1; clc
 
@@ -98,8 +98,8 @@ A_invP_T(:,[7 8]) = [];
 gpg = [ gxi1 geta1 gxi2 geta2 gxi3 geta3            gxi4 geta4 ...
         gxi5 geta5 gxi6 geta6 gxi7 geta7 gxi8 geta8 gxi9 geta9 ].';
 
-disp(simple(gp-gp_metodo1))
+disp(simplify(gp-gp_metodo1))
 
-disp(simple(A_invP_T - A_invP_T_metodo1))
+disp(simplify(A_invP_T - A_invP_T_metodo1))
 
-disp(simple((A_invP_T- A_invP_T_metodo1)*gpg))
+disp(simplify((A_invP_T- A_invP_T_metodo1)*gpg))

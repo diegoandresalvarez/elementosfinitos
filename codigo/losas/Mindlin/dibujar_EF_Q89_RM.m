@@ -1,5 +1,5 @@
-function dibujar_EF_QL9(xe, ye, N, ae, te, esc_w, esc_t)
-%% Dibuja un EF de losa QL9 deformado
+function dibujar_EF_Q89_RM(xe, ye, N, ae, te, esc_w, esc_t)
+%% Dibuja un EF de losa de Mindlin de 8 o 9 nodos QL9 deformado
 % xe, ye  nodos del borde de la losa
 % N       funciones de forma de la losa
 % ae      desplazamientos nodales en los nodos del borde de la losa
