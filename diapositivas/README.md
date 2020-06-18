@@ -35,10 +35,10 @@
   * [07_solidos_tridimensionales.pdf](07_solidos_tridimensionales.pdf)
   * El problema de la representación gráfica: https://www.youtube.com/watch?v=J3yH7Uz68bQ
 
-* [Capítulo 8 Oñate: Losas delgadas: teoría de Kirchhoff-Love](08_Losas_delgadas_Kirchhoff.pdf)
-
-* [Capítulo 9 Oñate: Losas gruesas: teoría de Mindlin](09_Losas_gruesas_Reissner_Mindlin.pdf)
-  * Artículo de lectura obligada sobre el método de los elementos finitos usando la teoría de Mindlin: [Song Cen and Yan Shang (2015), “Developments of Mindlin-Reissner Plate Elements,” Mathematical Problems in Engineering, vol. 2015, Article ID 456740, 12 pages. doi:10.1155/2015/456740](http://dx.doi.org/10.1155/2015/456740)
+  * Elementos finitos de losa gruesa y delgada
+    * [Losas delgadas: teoría de Kirchhoff-Love](08_Losas_delgadas_Kirchhoff_Love.pdf)
+    * [Losas gruesas: teoría de Mindlin](09_Losas_gruesas_Reissner_Mindlin.pdf)
+    * Artículo de lectura obligada sobre el método de los elementos finitos usando la teoría de Mindlin: [Song Cen and Yan Shang (2015), “Developments of Mindlin-Reissner Plate Elements,” Mathematical Problems in Engineering, vol. 2015, Article ID 456740, 12 pages. doi:10.1155/2015/456740](http://dx.doi.org/10.1155/2015/456740)
   * Otro documento http://shodhganga.inflibnet.ac.in/bitstream/10603/1972/8/08_chapter%202.pdf (desconozco su referencia bibliográfica).
 
 * [Capítulo 10 Oñate: Análisis de láminas con elementos planos](10_Laminas_con_elementos_planos.pdf)
