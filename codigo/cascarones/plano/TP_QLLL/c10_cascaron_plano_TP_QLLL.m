@@ -83,7 +83,7 @@ Bc = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de cortante
 %% se ensambla la matriz de rigidez global y el vector de fuerzas nodales
 %% equivalentes global
 for e = 1:nef      % ciclo sobre todos los elementos finitos   
-   %% se calcula la matriz de transformación de coordenadas (sec 10.7.1)
+   %% se calcula la matriz de transformaci??n de coordenadas (sec 10.7.1)
    [T{e}, lambda{e}] = calculo_T(xnod(LaG(e,[1 2 3]),:));
    %[T{e}, lambda{e}] = calculo_T2(xnod(LaG(e,[1 2 3]),:));   
      
@@ -223,9 +223,9 @@ title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
 % la ecuacion "tau = T*taup*T'" para 
 %
 % Tenga en cuenta que no tiene sentido graficar los momentos en coordenadas
-% locales, ya que la elección de los ejes locales es algo arbitraria y 
+% locales, ya que la elecci??n de los ejes locales es algo arbitraria y 
 % depende de la numeracion de la malla. Por lo tanto solo se deben reportar
-% los gráficos de los momentos máximos/minimos
+% los gr??ficos de los momentos m??ximos/minimos
 
 % El diagrama de momento solo no sirve... hay que incluirle las fuerzas de
 % membrana y calcular en la superficie superior e inferior los esfuerzos
