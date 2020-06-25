@@ -1,5 +1,5 @@
 function [Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = WoodArmer(Mx, My, Mxy)
-% Calculo los momentos de flexión Mxast_sup y Myast_sup 
+% Calculo los momentos de flexion Mxast_sup y Myast_sup 
 % asociados al refuerzo en la parte superior de la losa:
 % Se aplican las ecuaciones /*@\eqref{eq:Mxast_Myast_caso1_WA}@*/
 Mxast_sup = Mx + abs(Mxy);
@@ -25,7 +25,7 @@ else
     end
 end 
 
-% Calculo los momentos de flexión Mxast_inf y Myast_inf 
+% Calculo los momentos de flexion Mxast_inf y Myast_inf 
 % asociados al refuerzo en la parte inferior de la losa:
 % Se aplican las ecuaciones /*@\eqref{eq:Mxast_Myast_caso2_WA}@*/
 Mxast_inf = Mx - abs(Mxy);
@@ -38,14 +38,14 @@ else
     if Mxast_inf > 0
         Mxast_inf = 0;
         Myast_inf = My - abs(Mxy^2/Mx);
-        if Myast_inf < 0
+        if Myast_inf > 0
             Myast_inf = 0;
         end        
     end    
     if Myast_inf > 0
         Mxast_inf = Mx - abs(Mxy^2/My);
         Myast_inf = 0;
-        if Mxast_inf < 0
+        if Mxast_inf > 0
             Mxast_inf = 0;
         end                
     end
