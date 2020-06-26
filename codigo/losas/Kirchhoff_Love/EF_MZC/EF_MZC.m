@@ -300,13 +300,32 @@ plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
 
 %% Se calculan los momentos de disenio de Wood y Armer
 [Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
+Mmax = max(abs([Mxast_sup; Myast_sup; Mxast_inf; Myast_inf]));
+
+% se graficaran los momentos de disenio utilizando la misma escala de
+% colores en valor absoluto, de este modo Mxast_sup=+100 y Mxast_inf=-100 
+% tendran el mismo color
 figure
 subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_sup,  'Momentos M_x^* sup (N-m/m)');
+caxis([0 Mmax]);                                % misma escala de colores
+colorbar('ylim', [0 max(Mxast_sup)]);           % rango de colores a mostrar
+colormap parula
 subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_sup,  'Momentos M_y^* sup (N-m/m)');
+caxis([0 Mmax]);                                % misma escala de colores
+colorbar('ylim', [0 max(Myast_sup)]);           % rango de colores a mostrar
+colormap parula
 
 figure
 subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_inf,  'Momentos M_x^* inf (N-m/m)');
+colormap parula
+caxis([-Mmax 0]);                               % misma escala de colores
+oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
+colorbar('ylim', [min(Mxast_inf) 0]);           % rango de colores a mostrar
 subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_inf,  'Momentos M_y^* inf (N-m/m)');
+colormap parula
+caxis([-Mmax 0]);                               % misma escala de colores
+oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
+colorbar('ylim', [min(Myast_inf) 0]);           % rango de colores a mostrar
 
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
