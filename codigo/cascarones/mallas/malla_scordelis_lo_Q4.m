@@ -1,4 +1,6 @@
-%% Generación de la malla para elementos rectangulares de 4 nodos
+%% TECHO DE SCORDELIS-LO
+%% Generacion de la malla para elementos rectangulares de 4 nodos
+
 
 clear, clc, close all
 
@@ -58,6 +60,5 @@ view(3)
 
 %% Se graba el resultado a disco
 filename = sprintf('scordelli_lo_Q4_malla_%d_%d', nef_x, nef_t);
-;
 save(filename, 'xnod', 'nno', 'LaG', 'nef');
-fprintf('Resultados grabados en el archivo %s.mat \n', filename)
+fprintf('Resultados grabados en el archivo %s.mat \n', filename);

@@ -1,4 +1,5 @@
-%% Generación de la malla para elementos rectangulares de 4 nodos
+%% DOMO SEMIESFERICO
+%% Generacion de la malla para elementos rectangulares de 4 nodos
 clear, clc, close all
 
 %% Se especifica el numero de elementos de la malla
@@ -68,3 +69,11 @@ text(xnod(:,X), xnod(:,Y), xnod(:,Z), num2str((1:nno)'));
 filename = 'semiesfera_Q4.mat';
 save(filename, 'xnod', 'nno', 'LaG', 'nef');
 fprintf('Resultados grabados en el archivo %s\n', filename)
+
+%% Mi propia implementacion de la funcion changem del MAPPING TOOLBOX
+% mathworks.com/matlabcentral/answers/401395-function-changem-or-substitute-values-of-a-matrix
+function mapout = changem(mapout, newcode, oldcode)
+   assert(numel(newcode) == numel(oldcode), 'newcode and oldecode must have the same number of elements');
+   [toreplace, bywhat] = ismember(mapout, oldcode);
+   mapout(toreplace) = newcode(bywhat(toreplace));
+end
