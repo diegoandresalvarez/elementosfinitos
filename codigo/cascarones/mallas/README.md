@@ -18,7 +18,7 @@ El archivo [malla_scordelis_lo_Q4.m](malla_scordelis_lo_Q4.m) genera dicha bóve
 
 ## Domo semiesférico
 
-![domo_semiesferico.png](domo_semiesferico.png)
+![domo_semiesferico.png](figs/domo_semiesferico.png)
 
 El archivo [malla_domo_semiesferico_Q4.m](malla_domo_semiesferico_Q4.m) genera dicha bóveda para los EFs Q4:
 
