@@ -20,7 +20,7 @@ tt(ww:6:end) = qdistr;
 % determino los grados de libertad correspondientes a los bordes
 base = find(abs(xnod(:,Z) - 0) < 1e-4);
 
-%           nodo direccion desplazamiento(m)
+%  nodo direccion desplazamiento(m)
 restricciones = [...
    base repmat([uu 0],size(base))
    base repmat([vv 0],size(base))

@@ -108,8 +108,8 @@ end
 Bbar_sp = tmp;
 
 %% Se aplican las matrices de transformacion
-Bb     = Bbp*Te;
-Bm     = Bmp*Te;
+Bb     =     Bbp*Te;
+Bm     =     Bmp*Te;
 Bbar_s = Bbar_sp*Te;
 
 return

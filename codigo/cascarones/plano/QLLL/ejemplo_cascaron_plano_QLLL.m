@@ -5,7 +5,8 @@ clear, clc, close all   % borro la memoria, la pantalla y las figuras
 % Reissner-Mindlin utilizando los elementos finitos QLLL
 
 %% defino las variables/constantes
-X = 1; Y = 2; Z = 3; % algunas constantes que ayudaran en la lectura del codigo
+% algunas constantes que ayudaran en la lectura del codigo
+X = 1; Y = 2; Z = 3; 
 uu = 1; vv = 2; ww = 3; tx = 4; ty = 5; tz = 6;
 
 %% Se carga la malla de elementos finitos
