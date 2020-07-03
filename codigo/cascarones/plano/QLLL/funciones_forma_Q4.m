@@ -1,3 +1,5 @@
+%% Funciones de forma del EF rectangular de 4 nodos Q4
+
 %% N son las funciones de forma del elemento rectangular de 4 nodos
 Nforma = @(xi,eta) [  ((xi - 1)*(eta - 1))/4    % N1
                      -((xi + 1)*(eta - 1))/4    % N2
@@ -18,10 +20,10 @@ dN_deta = @(xi,eta) [  (xi - 1)/4               % dN1_deta
                       
 %{
 syms xi eta
-L2_xi_1  = factor(poly2sym(polyfit([-1 1],[1 0],1),xi));
-L2_xi_2  = factor(poly2sym(polyfit([-1 1],[0 1],1),xi));
-L2_eta_1 = factor(poly2sym(polyfit([-1 1],[1 0],1),eta));
-L2_eta_2 = factor(poly2sym(polyfit([-1 1],[0 1],1),eta));
+L2_xi_1  = poly2sym(polyfit([-1 1],[1 0],1),xi);
+L2_xi_2  = poly2sym(polyfit([-1 1],[0 1],1),xi);
+L2_eta_1 = poly2sym(polyfit([-1 1],[1 0],1),eta);
+L2_eta_2 = poly2sym(polyfit([-1 1],[0 1],1),eta);
 
 N = sym(zeros(1,4));
 N(1) = L2_xi_1 * L2_eta_1;

@@ -28,21 +28,20 @@ for e = 1:nef
    % Calculo la posicion del centro de gravedad del elemento finito
    cg(:,e) = mean(xnod(LaG(e,:), :));
    
-   h = text(cg(X,e), cg(Y,e), cg(Z,e), num2str(e));
-   set(h,'Color', [1 0 0]);
+   h = text(cg(X,e), cg(Y,e), cg(Z,e), num2str(e), 'Color', [1 0 0]);
 end
 plot3(xnod(:,X), xnod(:,Y), xnod(:,Z), 'r*');
-text(xnod(:,X), xnod(:,Y), xnod(:,Z), num2str((1:nno)'));
+text (xnod(:,X), xnod(:,Y), xnod(:,Z), num2str((1:nno)'));
 daspect([1 1 1]);
 view(3);
 grid on;
-title('Malla de elementos finitos','FontSize', 26);
+title('Malla de elementos finitos', 'FontSize', 26);
 
 %% Se cargan las funciones de forma junto con sus derivadas
 % Se cargan las funciones de forma del elemento rectangular de 4 nodos 
 % junto con sus derivadas con respecto a xi y a eta
 % Nforma, dN_dxi, dN_deta
-c9_funciones_forma_rect_4_nodos
+funciones_forma_Q4
 
 %% parametros de la cuadratura de Gauss-Legendre (INTEGRACION COMPLETA)
 % se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
@@ -52,46 +51,51 @@ c9_funciones_forma_rect_4_nodos
 n_gl = 2; % orden de la cuadratura de GL
 
 % Calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
-[x_gl, w_gl]  = gausslegendre_quad(n_gl);
+[x_gl, w_gl] = gausslegendre_quad(n_gl);
 
 %% matrices constitutivas del elemento en coordenadas locales
-Dfp = E/(1-nu^2)* [ 1  nu 0
-                    nu 1  0
-                    0  0  (1-nu)/2 ];
+Dpp = E/(1-nu^2) * [ 1  nu 0
+                     nu 1  0
+                     0  0  (1-nu)/2 ];
 G = E/(2*(1+nu));    % modulo de rigidez
 alpha = 5/6;         % coeficiente de distorsion transversal de la losa de RM
-Dcp = diag([alpha*G, alpha*G]);
+Dsp = diag([alpha*G, alpha*G]);
 
-Dmgp = t*Dfp;        % matriz constitutiva generalizada de membrana
-Dfgp = (t^3/12)*Dfp; % matriz constitutiva generalizada de flexion
-Dcgp = t*Dcp;        % matriz constitutiva generalizada de cortante
+Dmgp = t*Dpp;        % matriz constitutiva generalizada de membrana
+Dbgp = (t^3/12)*Dpp; % matriz constitutiva generalizada de flexion
+Dsgp = t*Dsp;        % matriz constitutiva generalizada de cortante
 
 %% se reserva la memoria RAM de diferentes variables
 K   = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
 f   = zeros(ngdl,1);     % vector de fuerzas nodales equivalentes global
-idx = cell(nef, 1);      % grados de libertad de cada elemento finito
-T   = cell(nef, 1);      % matriz de transformacion de cada elemento finito
-lambda = cell(nef, 1);   % matriz de transformacion de cada elemento finito
+idx = cell(nef, 1);      % grados de libertad de cada EF
+T   = cell(nef, 1);      % matriz de transformacion de cada EF
+lambda = cell(nef, 1);   % matriz de transformacion de cada EF
 
 % en los siguientes contenedores se almacenara la matriz respectiva para 
 % cada punto de integracion: 
-NN  = cell(nef,n_gl,n_gl); % matrices de funciones de forma calculadas con n_gl puntos de integracion
-Bf = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de flexion
+NN = cell(nef,n_gl,n_gl); % matrices de funciones de forma calculadas con n_gl puntos de integracion
+Bb = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de flexion
 Bm = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de membrana
-Bc = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de cortante
+Bs = cell(nef,n_gl,n_gl); % matrices de deformacion generalizada de cortante
 
 %% se ensambla la matriz de rigidez global y el vector de fuerzas nodales
 %% equivalentes global
 for e = 1:nef      % ciclo sobre todos los elementos finitos   
-   %% se calcula la matriz de transformaci??n de coordenadas (sec 10.7.1)
-   [T{e}, lambda{e}] = calculo_T(xnod(LaG(e,[1 2 3]),:));
-   %[T{e}, lambda{e}] = calculo_T2(xnod(LaG(e,[1 2 3]),:));   
+   %% se calcula la matriz de transformacion de coordenadas (sec 10.7.1)
+   % ALGORITMO 1:
+     [T{e}, lambda{e}] = calculo_T(xnod(LaG(e,[1 2 3]),:));
+   %% se calcula la matriz de transformacion de coordenadas (sec 10.7.2)
+   % ALGORITMO 2:
+   % [T{e}, lambda{e}] = calculo_T2(xnod(LaG(e,[1 2 3]),:));   
      
    %% se convierten las coordenadas globales a locales
-   xnod_e_loc = xnod(LaG(e,:),:)*lambda{e}';  
+   xnod_e_loc = xnod(LaG(e,:),:)*lambda{e}'; % eq 8.51 -> xpT = xT*lambdaeT
    xe = xnod_e_loc(:,X);
    ye = xnod_e_loc(:,Y);
    ze = xnod_e_loc(:,Z);
+   
+   % se verifica que todos los puntos esten sobre el plano x'y'
    if range(ze) > 1e-3
       error('Los nodos del elemento %d no son coplanares\n', e);
    end
@@ -107,13 +111,14 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
          xi_gl  = x_gl(p);
          eta_gl = x_gl(q);
          
-         [Bf{e,p,q}, Bm{e,p,q}, Bc{e,p,q}, det_Je(p,q)] = Bf_Bm_Bc_QLLL(xi_gl, eta_gl, xe, ye, T{e});
+         [Bb{e,p,q}, Bm{e,p,q}, Bs{e,p,q}, det_Je(p,q)] = ...
+                                Bb_Bm_Bs_QLLL(xi_gl, eta_gl, xe, ye, T{e});
          
-         Kfe = Bf{e,p,q}'*Dfgp*Bf{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);
+         Kbe = Bb{e,p,q}'*Dbgp*Bb{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);
          Kme = Bm{e,p,q}'*Dmgp*Bm{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);        
-         Kce = Bc{e,p,q}'*Dcgp*Bc{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);         
+         Kse = Bs{e,p,q}'*Dsgp*Bs{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);         
 
-         Ke = Ke + Kfe + Kce + Kme;
+         Ke = Ke + (Kbe + Kse + Kme);
         
          % Se evaluan las funciones de forma en los puntos de integracion
          % de Gauss-Legendre
@@ -123,13 +128,13 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
          for i = 1:nnoef
             % Se ensambla la matriz de funciones de forma N
             NN{e,p,q}(:,5*i-4:5*i) = diag([N(i) N(i) N(i) N(i) N(i)]);
-         end;                  
+         end
 
          % matriz requerida para calcular el vector de fuerzas nodales 
          % equivalentes (se utiliza la integracion completa)
          Mloc = Mloc + NN{e,p,q}'*NN{e,p,q}*det_Je(p,q)*w_gl(p)*w_gl(q);
-      end;
-   end;       
+      end
+   end     
 
    %% se calcula el vector de fuerzas nodales equivalentes del elemento e
    fe = T{e}'*Mloc*T{e} * tt;
@@ -140,7 +145,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    %% se procede al ensamblaje
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:) + fe;
-end;
+end
 
 %% Muestro la configuracion de la matriz K (K es rala)
 figure
@@ -176,7 +181,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 ac = restric(:,2);   % desplazamientos conocidos
 
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
+ad = Kdd\(fc - Kdc*ac);      % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 aa = nan(ngdl,1);    aa(c) = ac;  aa(d) = ad; % desplazamientos
 q  = zeros(ngdl,1);  q(c)  = qd;              % fuerzas nodales equivalentes
@@ -189,7 +194,7 @@ vect_mov = reshape(aa,6,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: u = %12.4g m, v = %12.4g m, w = %12.4g m, tx = %12.4g rad, ty = %12.4g rad, tz = %12.4g rad\n', ...
            i, vect_mov(i,uu), vect_mov(i,vv), vect_mov(i,ww), vect_mov(i,tx), vect_mov(i,ty), vect_mov(i,tz));
-end;
+end
 
 disp(' ');
 disp('Fuerzas nodales de equilibrio (solo se imprimen los diferentes de cero)');
@@ -199,8 +204,8 @@ for i = 1:nno
    if ~isequal(q(i,:),[0 0 0 0 0 0])
       fprintf('Nodo %3d: Fx = %12.4g N, Fy = %12.4g N, Fz = %12.4g N, Mx = %12.4g N-m, My = %12.4g N-m, Mz = %12.4g N-m\n', ...
          i, q(i,uu), q(i,vv), q(i,ww), q(i,tx), q(i,ty), q(i,tz));
-   end;
-end;
+   end
+end
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 escala = 100; % factor de escalamiento de la deformada
@@ -220,21 +225,18 @@ title(sprintf('Deformada escalada %d veces', escala), 'FontSize', 20);
 
 % FALTA HACER LO QUE SIGUE:
 % Hacer la conversion de los esfuerzos de ejes locales a globales mediante
-% la ecuacion "tau = T*taup*T'" para 
+% la ecuacion "sigma = T'*sigmap*T"  
 %
 % Tenga en cuenta que no tiene sentido graficar los momentos en coordenadas
-% locales, ya que la elecci??n de los ejes locales es algo arbitraria y 
+% locales, ya que la eleccion de los ejes locales es algo arbitraria y 
 % depende de la numeracion de la malla. Por lo tanto solo se deben reportar
-% los gr??ficos de los momentos m??ximos/minimos
+% los graficos de los momentos maximos/minimos
 
 % El diagrama de momento solo no sirve... hay que incluirle las fuerzas de
 % membrana y calcular en la superficie superior e inferior los esfuerzos
 % minimos y maximos
 
 return
-
-
-
 
 %% En los puntos de integracion de Gauss-Legendre calcular en coord locales: 
 %% El vector de momentos flectores y torsores (1x1)
@@ -251,7 +253,7 @@ for e = 1:nef       % ciclo sobre todos los elementos finitos
    TT = lambda{e}'; % Tenga en cuenta que lambda = T' (ver main.pdf)  
    for p = 1:n_gl_f
       for q = 1:n_gl_f
-         sigmagp_f_e_p_q = Dfgp*Bf{e,p,q}*aa(idx{e});
+         sigmagp_f_e_p_q = Dbgp*Bb{e,p,q}*aa(idx{e});
          
          mom_f{e,p,q} = TT*[sigmagp_f_e_p_q(1) sigmagp_f_e_p_q(3) 0
                             sigmagp_f_e_p_q(3) sigmagp_f_e_p_q(2) 0
@@ -264,7 +266,7 @@ for e = 1:nef       % ciclo sobre todos los elementos finitos
    for p = 1:n_gl_c
       for q = 1:n_gl_c
          sigmagp_m{e,p,q} = Dmgp*Bm{e,p,q}*aa(idx{e});
-         sigmagp_c{e,p,q} = Dcgp*Bc{e,p,q}*aa(idx{e});             
+         sigmagp_c{e,p,q} = Dsgp*Bs{e,p,q}*aa(idx{e});             
       end
    end
 end

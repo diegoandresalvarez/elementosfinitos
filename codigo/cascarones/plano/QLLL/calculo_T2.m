@@ -1,5 +1,5 @@
 function [T, lambdae]  = calculo_T2(xnod_e)
-%% Calcula la matriz de transformación de coordenadas (sec 10.7.2)
+%% Calcula la matriz de transformacion de coordenadas (sec 10.7.2)
 %
 % [T, lambdae] = calculo_T2(xnod(LaG(e,:),:);
 
@@ -27,10 +27,11 @@ if vyp(2) < 0
    vxp = -vxp;
 end
 
-lambdae  = [ vxp; vyp; vzp ];
-lambdage = [ -vyp; vxp ];
+% el sparse() es para obligar a que Le y T sean sparse
+lambdae  = sparse([  vxp; vyp; vzp ]);
+lambdage = sparse([ -vyp; vxp ]);
    
-Le = blkdiag(lambdae, sparse(lambdage)); % forzamos a que T sea sparse
+Le = blkdiag(lambdae, lambdage); 
 T  = blkdiag(Le,Le,Le,Le);               % 4 veces para los 4 nodos
 
 return
