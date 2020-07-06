@@ -11,6 +11,22 @@ La idea de este trabajo es modelar mediante un programa profesional dos cascaron
 
 [Yeongbin Ko, Youngyu Lee, Phill-Seung Lee and Klaus-Jürgen Bathe (2017). *Performance of the MITC3+ and MITC4+ shell elements in widely-used benchmark problems*. Computers and Structures 193, p. 187--206. DOI: https://doi.org/10.1016/j.compstruc.2017.08.003](http://web.mit.edu/kjb/www/Principal_Publications/Performance_of_the_MITC3+_and_MITC4+_shell_elements_in_widely_used_benchmark_problems.pdf)
 
+Los ejercicios a realizar se sortearán de la siguiente forma:
+
+![sorteo_2020a.png](figs/sorteo_2020a.png)
+
+donde los ejercicios correspondientes son:
+- 3.2 circular plate problems (clamped and simply supported cases) 
+- 3.3 pinched cylinder problem
+- 3.4 Scordelis-Lo roof problem
+- 3.5 twisted beam problems (in-plane and out-of-plane load)
+- 3.6 hook problem 
+- 3.7 hemispherical shell with cut-out problem
+- 3.8 full hemisphere shell
+- 3.9 hyperbolic paraboloid shell
+
+Los estudiantes con el ejercicio número 2 deberán buscar en la literatura la solución teórica al problema 2 y programarla.
+
 ## Trabajo individual
 Se solicita realizar para cada cascarón:
 * Explicar detalladamente como se modelaron las condiciones de frontera.
