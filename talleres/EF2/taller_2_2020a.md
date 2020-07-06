@@ -9,9 +9,7 @@ Trabajo de realización individual.
 ## El problema propuesto
 La idea de este trabajo es modelar mediante un programa profesional dos cascarones. Dichos cascarones los asignará el profesor a partir de los que figuran en el artículo:
 
-[Yeongbin Ko, Youngyu Lee, Phill-Seung Lee and Klaus-Jürgen Bathe (2017).
-Performance of the MITC3+ and MITC4+ shell elements in widely-used
-benchmark problems.*. Computers and Structures 193, p. 187--206. DOI: https://doi.org/10.1016/j.compstruc.2017.08.003](http://web.mit.edu/kjb/www/Principal_Publications/Performance_of_the_MITC3+_and_MITC4+_shell_elements_in_widely_used_benchmark_problems.pdf)
+[Yeongbin Ko, Youngyu Lee, Phill-Seung Lee and Klaus-Jürgen Bathe (2017). *Performance of the MITC3+ and MITC4+ shell elements in widely-used benchmark problems*. Computers and Structures 193, p. 187--206. DOI: https://doi.org/10.1016/j.compstruc.2017.08.003](http://web.mit.edu/kjb/www/Principal_Publications/Performance_of_the_MITC3+_and_MITC4+_shell_elements_in_widely_used_benchmark_problems.pdf)
 
 ## Trabajo individual
 Se solicita realizar para cada cascarón:
