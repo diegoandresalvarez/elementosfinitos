@@ -2,7 +2,7 @@
 
 Con el objeto de aplicar la teoría aprendida se requiere hacer el análisis de los desplazamientos, diagramas de momentos flectores y de torsión, de fuerza cortante y esfuerzos críticos en un cascarón utilizando la teoría de Mindlin y un software profesional de análisis y diseño estructural. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que propongan soluciones a los problemas propuestos.
 
-Fecha de entrega: *** a las 7:00 a.m. Por cada hora de retraso se descontarán 0.3 unidades en la nota final.
+Fecha de entrega: lunes julio 21 a las 7:00 am. Por cada hora de retraso se descontarán 0.3 unidades en la nota final.
 
 Trabajo de realización individual.
 
@@ -22,9 +22,9 @@ Se solicita realizar para cada cascarón:
 
 Como se están analizando unos problemas "benchmark" se conoce la respuesta exacta de cada cascarón en ciertos puntos. Se solicita comparar la respuesta obtenida con dicha respuesta exacta.
 
-* Para cada cascarón hacer un videos de máximo 20 minutos cada uno donde se detalle el modelado, análisis y diseño de cada cascarón utilizando el programa escogido.
+* Para cada cascarón hacer un videos de máximo 30 minutos cada uno donde se detalle el modelado, análisis y diseño de cada cascarón utilizando el programa escogido.
 
-* Hacer adicionalmente un video de máximo 30 minutos se debe haga una revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al **ANALISIS** y **DISEÑO** de cascarones. OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia del mismo y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido. Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video.
+* Hacer adicionalmente un video de máximo 30 minutos se debe haga una revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al **ANALISIS** y **DISEÑO** de cascarones. OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia del mismo y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido. Con respecto a la parte de diseño es estudiar como el software diseña el refuerzo en las losas (teorías empleadas, fórmulas, hipótesis empleadas, etc.). Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video.
 
 Espero que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe importante información sobre las hipótesis de modelado que hace cada software.
 
