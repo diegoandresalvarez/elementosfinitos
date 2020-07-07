@@ -35,6 +35,8 @@ Se solicita realizar para cada cascarón:
 * Hacer el cálculo de los momentos de diseño Mx^* y My^*. En su defecto aprender a manejar la funcionalidad de su programa para el diseño del refuerzo del cascarón.
 * Hacer el cálculo de los esfuerzos de von Mises y de los esfuerzos máximos/mínimos en la superficie superior/inferior del cascarón.
 * Calcular las reacciones en los apoyos.
+* Calcular con la teoría de losas gruesas y con la teoría de losas delgadas.
+
 
 Como se están analizando unos problemas "benchmark" se conoce la respuesta exacta de cada cascarón en ciertos puntos. Se solicita comparar la respuesta obtenida con dicha respuesta exacta.
 
@@ -44,7 +46,9 @@ Como se están analizando unos problemas "benchmark" se conoce la respuesta exac
 
 Espero que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe importante información sobre las hipótesis de modelado que hace cada software.
 
-Finalmente, los videos producidos se deben subir a YouTube
+Finalmente, los videos producidos se deben subir a YouTube.
+
+En conclusión: se deben entregar dos videos más los correspondientes PDFs con las presentaciones utilizadas en esos videos.
 
 ## Criterios de evaluación
 * 1.5 unidades por cada video de modelación del cascarón:
