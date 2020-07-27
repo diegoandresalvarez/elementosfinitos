@@ -2,7 +2,7 @@
 
 Con el objeto de aplicar la teoría aprendida se requiere hacer el análisis de los desplazamientos, diagramas de momentos flectores y de torsión, de fuerza cortante y esfuerzos críticos en un cascarón utilizando la teoría de Mindlin y un software profesional de análisis y diseño estructural. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que propongan soluciones a los problemas propuestos.
 
-Fecha de entrega: miércoles julio 22 a las 7:00 am. Por cada hora de retraso se descontarán 0.3 unidades en la nota final.
+Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada hora de retraso se descontarán 0.3 unidades en la nota final.
 
 Trabajo de realización individual.
 
@@ -42,7 +42,7 @@ Como se están analizando unos problemas "benchmark" se conoce la respuesta exac
 
 * Para cada cascarón hacer un videos de máximo 30 minutos cada uno donde se detalle el modelado, análisis y diseño de cada cascarón utilizando el programa escogido.
 
-* Hacer adicionalmente un video de máximo 30 minutos se debe haga una revisión crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al **ANALISIS** y **DISEÑO** de cascarones. OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia del mismo y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido. Con respecto a la parte de diseño es estudiar como el software diseña el refuerzo en las losas (teorías empleadas, fórmulas, hipótesis empleadas, etc.). Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video.
+* Hacer adicionalmente un video de máximo 30 minutos se debe haga una reseña crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa en cuanto al **ANALISIS** y **DISEÑO** de cascarones. OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia del mismo y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido. Con respecto a la parte de diseño es estudiar como el software diseña el refuerzo en las losas (teorías empleadas, fórmulas, hipótesis empleadas, etc.). Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video.
 
 Espero que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe importante información sobre las hipótesis de modelado que hace cada software.
 
@@ -54,12 +54,11 @@ En conclusión: se deben entregar dos videos más los correspondientes PDFs con 
 * 1.5 unidades por cada video de modelación del cascarón:
   - 0.1 Modeló adecuadamente los apoyos? la estructura? el material?
   - 0.2 Refinó adecuadamente la malla de elementos finitos? No de forma arbitraria sino utilizando los criterios escritos en: https://github.com/diegoandresalvarez/elementosfinitos/blob/master/diapositivas/05e_generando_una_buena_malla.pdf
-  - 0.3 Interpretó adecuadamente los gráficos resultantes? Ubicó los momentos máximos y mínimos con sus respectivas inclinaciones? Las fuerzas cortantes máximas? Los puntos críticos de la estructura?
+  - 0.6 Interpretó adecuadamente los gráficos resultantes? Ubicó los momentos máximos y mínimos con sus respectivas inclinaciones? Las fuerzas cortantes máximas? Los puntos críticos de la estructura? Explicó, por ejemplo, qué quiere decir ese *Mxy* positivo que encontró en cierta zona de la viga? Qué produjo dicho esfuerzo? y qué indica sobre el comportamiento de la viga?
   - 0.3 Exploró todas las capacidades de visualización de resultados que ofrece el software?
   - 0.3 Reprodujo los resultados exactos que están listados en el artículo?
-  - 0.3 Verificó que el software modelara la respuesta del cascarón para espesores pequeños?
 
-* 3.0 unidades por el video de la revisión crítica de cada programa.
+* 3.0 unidades por el video de la reseña crítica de cada programa.
   - 0.5 Listó las hipótesis/suposiciones que hace el software?
   - 0.5 Listó las capacidades y limitaciones que tiene el software?
   - 0.5 Listó las advertencias o consejos que hace el software en cuento a la modelación?

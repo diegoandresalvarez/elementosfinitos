@@ -16,10 +16,9 @@
 
 Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes, evaluación de los apuntes y talleres.
 
-Los exámenes serán escritos a mano, individuales y de libro abierto. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
+Los exámenes serán orales e individuales. Se realizarán siguiendo [este](protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
 
-Las fechas para los exámenes se definirán dos semanas antes de los mismos. La duración de cada examen será de aproximadamente de 3 horas.
-
+La fecha del examen se definirá dos semanas antes de su realización.
 <!---
 
 * Exámenes:
@@ -35,13 +34,25 @@ En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios num
 
 --->
 
-  * **Apuntes de clase:** 30%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado.
-  * **Examen 1:** 5%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
-  * **Examen 2:** 5%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
-  * **Trabajo 1:** 30%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
-  * **Trabajo 2:** 30%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+  * **Apuntes de clase:** 20%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado.
+  * **Examen 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
+  * **Examen 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+  * **Trabajo 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+  * **Trabajo 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
 
-  **NOTA:** la semana que se realizará el examen no se solicitarán apuntes de clase.
+## Criterios de calificación de los apuntes
+ * Los apuntes en un cuaderno se calificarán así:
+   * 5.0 Apuntes completos y de buena claridad
+   * 4.0 Apuntes de buena calidad pero parcialmente completos; hay detalles que hacen falta
+   * 2.5 Apuntes mediocres e incompletos: es difícil estudiar de ellos
+   * 1.0 Apuntes supermalos
+   * 0.0 No hizo apuntes
+
+ * Los apuntes subrayando las copias se calificarán así:
+   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro. Deduce fórmulas en la margen del texto.
+   * 1.0 Se limitó a subrayar o a marcar con resaltador. Eventualmente hay notas a mano, pero son pocas. No se evidencia que estudió con juicio las hojas.
+   * 0.0 No hizo apuntes o simplemente presentó un PDF resaltado.
+  
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.
@@ -58,15 +69,15 @@ El curso se desarrollará teniendo en cuenta diferentes aspectos pedagógicos co
 - Trabajo dirigido fuera de clase, ya sea individual o por grupo, por parte de los estudiantes con el propósito de afianzar los conceptos aprendidos.
 
 ## Contenido
-1. VIGAS DE EULER BERNOULLI
+1. VIGAS DE EULER-BERNOULLI
    - Ecuaciones fundamentales
    - Formulación por elementos finitos
 
-2. VIGAS DE TIMOSHENKO
+2. VIGAS DE TIMOSHENKO-EHRENFEST
    - Ecuaciones fundamentales
    - Formulación por elementos finitos
 
-3. LOSAS DE KIRCHHOFF
+3. LOSAS DE KIRCHHOFF-LOVE
    - Ecuaciones fundamentales
    - Formulación por elementos finitos
 
