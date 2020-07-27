@@ -54,7 +54,7 @@ En conclusión: se deben entregar dos videos más los correspondientes PDFs con 
 * 1.5 unidades por cada video de modelación del cascarón:
   - 0.1 Modeló adecuadamente los apoyos? la estructura? el material?
   - 0.2 Refinó adecuadamente la malla de elementos finitos? No de forma arbitraria sino utilizando los criterios escritos en: https://github.com/diegoandresalvarez/elementosfinitos/blob/master/diapositivas/05e_generando_una_buena_malla.pdf
-  - 0.3 Interpretó adecuadamente los gráficos resultantes? Ubicó los momentos máximos y mínimos? Los puntos críticos de la estructura?
+  - 0.3 Interpretó adecuadamente los gráficos resultantes? Ubicó los momentos máximos y mínimos con sus respectivas inclinaciones? Las fuerzas cortantes máximas? Los puntos críticos de la estructura?
   - 0.3 Exploró todas las capacidades de visualización de resultados que ofrece el software?
   - 0.3 Reprodujo los resultados exactos que están listados en el artículo?
   - 0.3 Verificó que el software modelara la respuesta del cascarón para espesores pequeños?
