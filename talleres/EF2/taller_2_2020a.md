@@ -64,7 +64,7 @@ En conclusión: se deben entregar dos videos más los correspondientes PDFs con 
   - 0.5 Listó las capacidades y limitaciones que tiene el software?
   - 0.5 Listó las advertencias o consejos que hace el software en cuento a la modelación?
   - 0.5 Hizo una revisión general del software y dió su opinión acerca del mismo? Intuitividad, facilidad de uso, claridad de los manuales, ayudas disponibles en internet y en YouTube.
-  - 1.0 Explicó el modelo matemático que hace el software para la diseño del refuerzo? Aquellos estudiantes que tengan un programa que no haga la parte de diseño estructural deberán hacer una pequeña investigación y explicar en 5 minutos las teorías que encontraron que existen para la terminación del refuerzo en los cascarones. Deben incluir las referencias a las fuentes (artículos, libros) que usaron como referecia.
+  - 1.0 Explicó el modelo matemático que hace el software para la diseño del refuerzo? Aquellos estudiantes que tengan un programa que no haga la parte de diseño estructural deberán hacer una pequeña investigación y explicar en 5 minutos las teorías que encontraron que existen para la terminación del refuerzo en los cascarones. Deben incluir las referencias a las fuentes (artículos, libros) que usaron como referencia.
 
 * Si el video tiene mala calidad en el sonido se tendrá se rebajará 1.0 unidad en dicho video. Por lo tanto, se sugiere utilizar un micrófono diferente al del portátil para grabar el video (por ejemplo usar un manos libres).
 * Se sugiere aprender a manejar un programa de edición de videos. Esto les facilitará grandemente la realización del mismo.
