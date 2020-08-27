@@ -1,18 +1,11 @@
 # Observaciones generales y temario del curso "4101210 - Aplicaciones de elementos finitos 1"
 
-## Detalles del curso
-- Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
-- Intensidad horaria semanal presencial: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
-  - Lunes     14:00-16:00 C410
-  - Miércoles 14:00-16:00 C410
-- Tiempo de actividad autónoma por semana: 8 horas
-- Semanas: 16
-- Créditos: 3
-
 ## Citas para preguntas
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
+
 ## Evaluaciones y trabajos
+<!---
 - 17% - Exámen 1: septiembre 27, 2019
 - 17% - Exámen 2: noviembre 6, 2019
 - 17% - Exámen 3: enero 24, 2020
@@ -22,8 +15,43 @@
 ```
 NOTA FINAL = 0.17*Examen1 + 0.17*Examen2 + 0.17*Examen3 + 0.17*Examen4 + 0.16*Trabajo1 + 0.16*Trabajo2 + 0.10*TallerFinal
 ```
+--->
+Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones usuales de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes orales, evaluación de los apuntes y talleres.
 
+* **Apuntes de clase:** 20%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado, tanto de lo visto en clase, en las diapositivas y en el libro guía.
+* **Examen oral 1:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Examen oral 2:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Trabajo 1:** 20%, taller de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+* **Trabajo 2:** 20%, taller de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+
+<!--- 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
+--->
+
+## Examenes
+Los exámenes serán orales e individuales. Se realizarán siguiendo [este](https://github.com/diegoandresalvarez/solidos/blob/master/docs/protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
+
+La fecha del examen se definirá dos semanas antes de su realización.
+
+## Criterios de calificación de los apuntes
+ * Los apuntes en un cuaderno se calificarán así:
+   * 5.0 Apuntes completos y de buena claridad. Incluyen no solo lo enseñado en clase y en las diapositivas, sino el contenido que el profesor asignó como lectura en los textos guía.
+   * 4.0 Apuntes de buena calidad pero parcialmente completos; hay detalles que hacen falta
+   * 2.5 Apuntes mediocres e incompletos: es difícil estudiar de ellos
+   * 1.0 Apuntes supermalos
+   * 0.0 No hizo apuntes
+
+y/o
+
+ * Los apuntes subrayando las copias del libro/diapositivas se calificarán así:
+   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro y/o de las diapositivas. Deduce fórmulas en la margen del texto. Marca los errores que encontró en el libro.
+   * 1.0 Se limitó a subrayar o a marcar con resaltador. Eventualmente hay notas a mano, pero son pocas. No se evidencia que estudió con juicio las hojas.
+   * 0.0 No hizo apuntes o simplemente presentó un PDF resaltado.
+
+* Por cada día de retrazo en la entrega de los apuntes se tendrá una décima menos.
+* Si los apuntes se entregan un día antes de la fecha prevista, se tendrán dos décimas adicionales.
+* Si los apuntes se entregan dos días o más días antes de la fecha prevista, se tendrán cuatro décimas adicionales.
+* Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de estructuras en tensión y deformación planas, estructuras de revolución, estructuras tridimensionales y placas.
@@ -36,7 +64,7 @@ El curso se desarrollará teniendo en cuenta diferentes aspectos pedagógicos co
 - Presentación y sustentación de proyectos por parte de los estudiantes.
 - Trabajo dirigido fuera de clase, ya sea individual o por grupo, por parte de los estudiantes con el propósito de afianzar los conceptos aprendidos.
 
-## Contenido
+## Contenido programático de elementos finitos 1
 1. PRINCIPIOS VARIACIONALES
    - Nociones de cálculo variacional.
    - Principio de la energía potencial mínima.
@@ -75,22 +103,27 @@ El curso se desarrollará teniendo en cuenta diferentes aspectos pedagógicos co
    - Ejercicios
 
 ## Bibliografía
+<!---
 Eugenio Oñate. Cálculo de estructuras por el método de elementos finitos: análisis estático lineal. Barcelona:Centro Internacional de Métodos Numéricos en Ingeniería, CIMNE 1995. 2 edición. (en la biblioteca hay 15 ejemplares: `624.171/O59c2`).
 
 La versión en inglés (más moderna) se puede descargar así:
-
-https://bibliotecas.unal.edu.co/ `->` Recursos electrónicos `->` Springer Books `->` buscar "Oñate"
+--->
 
 - [Eugenio Oñate (2009). Structural Analysis with the Finite Element Method - Linear Statics, Volume 1](https://link.springer.com/book/10.1007/978-1-4020-8733-2)
 - [Eugenio Oñate (2013). Structural Analysis with the Finite Element Method - Beams, Plates and Shells, Volume 2](https://link.springer.com/book/10.1007%2F978-1-4020-8743-1)
 
+Estos libros se pueden descargar de: 
+
+https://bibliotecas.unal.edu.co/ `->` Recursos electrónicos `->` Springer Books `->` buscar "Oñate"
 
 ## Observaciones que se quieren dejar por escrito:
+<!--- 
 ### Asistencia al curso
 La puerta se cerrará 10 minutos después de haber iniciado la clase (de acuerdo con el reloj del computador del salón).
 
 ### Falta a los exámenes
 Siempre que usted falte a un examen, debe haber algún documento que lo exonere de dicha inasistencia. Cuando usted por algún motivo de fuerza mayor no pueda asistir al examen, usted debe avisarle al profesor con anterioridad ya sea personalmente o por correo. En esos casos en lo posible, debe demostrarlo. Por ejemplo: si le tocó viajar a su pueblo esa semana porque algo sucedió un evento familiar de trascendencia, entonces una forma de certificar que usted viajó son los tiquetes de ida y vuelta a su pueblo. Sin una excusa o una notificación previa no se repetirán los exámenes y usted tendrá como nota un cero.
+--->
 
 ### Fraude en los exámenes o trabajos
 Estos se penalizarán así:
@@ -99,5 +132,7 @@ Estos se penalizarán así:
 - Carta a la Dirección del Departamento de Ingeniería Civil reportando el suceso.
 - Se pierden adicionalmente todos los privilegios que se tienen de una calificación con notas mayores a 5.0 en todas las notas obtenidas en el semestre.
 
+<!---
 ### "Minuciosamente" en los exámenes
 En todos los exámenes se debe relacionar con palabras las fórmulas y motivar físicamente el por qué de un procedimiento o fórmula (es decir, se debe escribir la explicación suponiendo que usted está escribiendo un libro). Si no se hace esto, se le rebajará en ese punto en particular el 50% de la nota.
+--->

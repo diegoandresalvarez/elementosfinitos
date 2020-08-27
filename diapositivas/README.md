@@ -22,11 +22,12 @@
   * Vigas de Timoshenko-Ehrenfest: [04b_EF_vigas_Timoshenko.pdf](04b_EF_vigas_Timoshenko.pdf)
 
 * Elementos finitos para tensión y deformación plana:
-  * [EFs bidimensionales: triangular de 3 nodos y cuadrático de 4 nodos](05a_EF_2D_T3_y_Q4.pdf)
-  * [Deducción de la ecuación `K*a - f = q` para un EF bidimensional de `n` nodos](05b_EF_2D_T3.pdf)
-  * [Funciones de forma de los EFs rectangulares y triangulares de `n` nodos](05c_funciones_forma_EF_2D_Tn_Qn.pdf)
-  * [EFs triangulares y cuadráticos isoparamétricos de n nodos](05d_EF_2D_Tn_Qn_isoparametrico.pdf)
-  * [El Patch Test](05_anexo_El_Patch_Test.pdf)
+  * a. [EFs bidimensionales: triangular de 3 nodos y cuadrático de 4 nodos](05a_EF_2D_T3_y_Q4.pdf)
+  * b. [Deducción de la ecuación `K*a - f = q` para un EF bidimensional de `n` nodos](05b_EF_2D_T3.pdf)
+  * c. [Funciones de forma de los EFs rectangulares y triangulares de `n` nodos](05c_funciones_forma_EF_2D_Tn_Qn.pdf)
+  * d. [EFs triangulares y cuadráticos isoparamétricos de n nodos](05d_EF_2D_Tn_Qn_isoparametrico.pdf)
+  * e. [Reglas para la creación de una buena malla de EFs](05e_generando_una_buena_malla.pdf)
+  * f. [El Patch Test](05f_El_Patch_Test.pdf)
 
 * Sólidos de revolución
   * [06_solidos_de_revolucion.pdf](06_solidos_de_revolucion.pdf)
@@ -35,17 +36,17 @@
   * [07_solidos_tridimensionales.pdf](07_solidos_tridimensionales.pdf)
   * El problema de la representación gráfica: https://www.youtube.com/watch?v=J3yH7Uz68bQ
 
-  * Elementos finitos de losa gruesa y delgada
-    * [Losas delgadas: teoría de Kirchhoff-Love](08_Losas_delgadas_Kirchhoff_Love.pdf)
-    * [Losas gruesas: teoría de Mindlin](09_Losas_gruesas_Reissner_Mindlin.pdf)
-    * Artículo de lectura obligada sobre el método de los elementos finitos usando la teoría de Mindlin: [Song Cen and Yan Shang (2015), “Developments of Mindlin-Reissner Plate Elements,” Mathematical Problems in Engineering, vol. 2015, Article ID 456740, 12 pages. doi:10.1155/2015/456740](http://dx.doi.org/10.1155/2015/456740)
+* Elementos finitos de losa gruesa y delgada
+  * [Losas delgadas: teoría de Kirchhoff-Love](08_Losas_delgadas_Kirchhoff_Love.pdf)
+  * [Losas gruesas: teoría de Mindlin](09_Losas_gruesas_Reissner_Mindlin.pdf)
+  * Artículo de lectura obligada sobre el método de los elementos finitos usando la teoría de Mindlin: [Song Cen and Yan Shang (2015), “Developments of Mindlin-Reissner Plate Elements,” Mathematical Problems in Engineering, vol. 2015, Article ID 456740, 12 pages. doi:10.1155/2015/456740](http://dx.doi.org/10.1155/2015/456740)
   * Otro documento http://shodhganga.inflibnet.ac.in/bitstream/10603/1972/8/08_chapter%202.pdf (desconozco su referencia bibliográfica).
 
-* [Capítulo 10 Oñate: Análisis de láminas con elementos planos](10_Laminas_con_elementos_planos.pdf)
+* [Análisis de láminas con elementos planos](10_Laminas_con_elementos_planos.pdf)
 
-* [Capítulo 12 Oñate: Análisis de láminas con elementos de sólido degenerados](12_Laminas_con_elementos_de_solido_degenerados.pdf)
+* [Análisis de láminas con elementos de sólido degenerados](12_Laminas_con_elementos_de_solido_degenerados.pdf)
 
-* [Capítulo "20" (varios libros): Dinámica y elementos finitos (caso lineal)](20_dinamica_y_elementos_finitos.pdf) 
+* [Dinámica y elementos finitos (caso lineal)](20_dinamica_y_elementos_finitos.pdf) 
 
 ---
 
@@ -62,4 +63,4 @@
 * [Rombach, G. A. (2004). Finite Element Design of Concrete Structures: practical problems and their solutions. Thomas Telford:London](https://www.scribd.com/document/367033645/Finite-element-Design-of-Concrete-Structures-Practical-problems-and-their-solutions-Second-edition-G-A-Rombach-University-of-Hamburg-Harburg-pd)
 * http://www.scribd.com/doc/19184786/How-to-Design-rc-Flat-Slabs-Using-Finite-Element-Analysis
 
-* American Concrete Institute (2002). Examples for the design of structural concrete with strut-and.tie models. REINECK, Karl-Heinz, editor. ACI SP-208. USA.
+* American Concrete Institute (2002). Examples for the design of structural concrete with strut-and-tie models. REINECK, Karl-Heinz, editor. ACI SP-208. USA.
