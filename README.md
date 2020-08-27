@@ -19,7 +19,7 @@ Tomado de:
 - Créditos: 3
 - Intensidad horaria semanal: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
 - Elementos finitos 1:
-  - Viernes  7:00-16:00 en MICROSOFT TEAMS
+  - Viernes 7:00-9:00 en MICROSOFT TEAMS
   - Viernes 14:00-16:00 en MICROSOFT TEAMS
 - Elementos finitos 2:
   - POR DEFINIR
