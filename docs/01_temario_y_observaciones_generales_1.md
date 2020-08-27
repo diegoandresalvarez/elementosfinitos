@@ -34,17 +34,19 @@ Los exámenes serán orales e individuales. Se realizarán siguiendo [este](http
 La fecha del examen se definirá dos semanas antes de su realización.
 
 ## Criterios de calificación de los apuntes
+
+Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre impresiones del libro y diapositivas:
+
  * Los apuntes en un cuaderno se calificarán así:
-   * 5.0 Apuntes completos y de buena claridad. Incluyen no solo lo enseñado en clase y en las diapositivas, sino el contenido que el profesor asignó como lectura en los textos guía.
+   * 5.0 Apuntes completos y de buena claridad. Incluyen no solo lo enseñado en clase y en las diapositivas, sino también el contenido que el profesor asignó como lectura en los textos guía.
    * 4.0 Apuntes de buena calidad pero parcialmente completos; hay detalles que hacen falta
    * 2.5 Apuntes mediocres e incompletos: es difícil estudiar de ellos
    * 1.0 Apuntes supermalos
    * 0.0 No hizo apuntes
 
-y/o
-
- * Los apuntes subrayando las copias del libro/diapositivas se calificarán así:
+ * Los apuntes sobre las copias del libro/diapositivas se calificarán así:
    * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro y/o de las diapositivas. Deduce fórmulas en la margen del texto. Marca los errores que encontró en el libro.
+   * 4.0 Anotaciones adicionales de buena calidad pero parcialmente completos; hay detalles que hacen falta.
    * 1.0 Se limitó a subrayar o a marcar con resaltador. Eventualmente hay notas a mano, pero son pocas. No se evidencia que estudió con juicio las hojas.
    * 0.0 No hizo apuntes o simplemente presentó un PDF resaltado.
 
