@@ -34,7 +34,7 @@ def ensamblar(K, idx, Ke):
             K[idx[i], idx[j]] += Ke[i,j]
 
 # %% defino las variables
-E, A, L, P = sp.symbols('E A L P')         # define las variables simbólicas
+b, E, A, L, P = sp.symbols('b E A L P')         # define las variables simbólicas
 
 long = [L,  L,  L/2]                       # longitud de la barra
 
@@ -72,11 +72,12 @@ Kcc = K.extract(c,c);      Kcd = K.extract(c,d)
 Kdc = K.extract(d,c);      Kdd = K.extract(d,d)
 
 ac = sp.Matrix([0, 0])   # SymPy los toma como vectores columna
-fc = sp.Matrix([0, P])
+fd = sp.Matrix([0, b*L/2])
+fc = sp.Matrix([P/2 - b*L/2, P])
 
 # %% resuelvo el sistema de ecuaciones
 ad = Kdd.solve(fc - Kdc*ac)
-qd = Kcc*ac + Kcd*ad
+qd = Kcc*ac + Kcd*ad - fd
 
 # %% formo los vectores de desplazamientos (a) y fuerzas (q)
 a = sp.zeros(4,1); q = sp.zeros(4,1)     # separo la memoria
@@ -89,11 +90,16 @@ for i in range(len(d)):
     # q[d[i]] = qc[i] = 0
 
 # %% calculo las cargas axiales en cada barra
-N = sp.zeros(3,1)
+fax = sp.zeros(3,1)
 for e in range(3):
-   N[e] = k[e]*(a[LaG[e,NL2]] - a[LaG[e,NL1]])
+   fax[e] = k[e]*(a[LaG[e,NL2]] - a[LaG[e,NL1]])
+
+# %% se simplifican las expresiones
+a   = sp.simplify(a)
+q   = sp.simplify(q)
+fax = sp.simplify(fax)
 
 # %% imprimo los resultados
 print('\n\na = \n'); sp.pprint(a)
 print('\n\nq = \n'); sp.pprint(q)
-print('\n\nN = \n'); sp.pprint(N)
+print('\n\nfax = \n'); sp.pprint(fax)

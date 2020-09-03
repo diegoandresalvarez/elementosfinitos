@@ -1,5 +1,5 @@
 % Se definen las variables simbolicas
-syms E A L u3 u4 P
+syms b E A L u3 u4 P
 
 % Se calculan las rigideces para cada barra
 k1 = E*A/L; k2 = E*A/L; k3 = 2*E*A/L;
@@ -16,7 +16,8 @@ K = [ ...
 a = [0; 0; u3; u4]
 
 % Se define el vector de fuerzas nodales de equilibrio
-f = [ 0; 0; 0; P]
+%f = [ 0; 0; 0; P]
+f = [ 0; b*L/2; P/2 - b*L/2; P]
 
 % Se definen g.d.l. conocidos y desconocidos asociados a los desplazamientos
 c = [1 2];         d = [3 4];

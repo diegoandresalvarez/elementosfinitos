@@ -4,7 +4,7 @@
 NL1 = 1; NL2 = 2;
 
 %% defino las variables
-syms E A L P          % define las variables simbolicas
+syms b E A L P          % define las variables simbolicas
 
 long = [L;  L;  L/2]; % longitud de la barra
 
@@ -45,12 +45,13 @@ Kcc = K(c,c); Kcd = K(c,d);
 Kdc = K(d,c); Kdd = K(d,d);
 
 ac = sym([0; 0]);
-fc = sym([0; P]);
+fd = sym([0; b*L/2]);
+fc = sym([P/2 - b*L/2; P]);
 
 %% resuelvo el sistema de ecuaciones
 % recuerde que \ es para resolver el sistema de ecuaciones eficientemente
 ad = Kdd\(fc-Kdc*ac);  % = linsolve(Kdd, fc-Kdc*ac)
-qd = Kcc*ac + Kcd*ad;
+qd = Kcc*ac + Kcd*ad - fd;
 
 %% formo los vectores de desplazamientos (a) y fuerzas (q)
 a = sym(zeros(4,1)); q = sym(zeros(4,1));  % separo la memoria
@@ -58,12 +59,12 @@ a(c) = ac;           q(c) = qd;
 a(d) = ad;         % q(d) = qc = 0;
 
 %% calculo las cargas axiales en cada barra
-N = sym(zeros(3,1));
+fax = sym(zeros(3,1));
 for e = 1:3
-   N(e) = k(e)*(a(LaG(e,NL2)) - a(LaG(e,NL1)));
+   fax(e) = k(e)*(a(LaG(e,NL2)) - a(LaG(e,NL1)));
 end
 
 %% imprimo los resultados
 fprintf('\n\n a = \n'); pretty(a)
 fprintf('\n\n q = \n'); pretty(q)
-fprintf('\n\n N = \n'); pretty(N)
+fprintf('\n\n fax = \n'); pretty(simplify(fax))
