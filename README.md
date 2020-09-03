@@ -13,6 +13,21 @@ Tomado de:
 * [Omar Darío Cardona. Vulnerabilidad sísmica estructural y diseño del refuerzo sismorresistente de la Catedral Basílica de Manizales, Colombia. Revista Internacional de Ingeniería de Estructuras. Vol 7. No. 1 2002. págs 47-66](http://idea.manizales.unal.edu.co/gestion_riesgos/descargas/gestion/Catedralm1.pdf)
 * [WIKIMEDIA Fotografía de la Catedral Basílica de Manizales por Pablo Andrés Toro Arias](https://commons.wikimedia.org/wiki/File:2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg)
 
+## Detalles del curso
+- Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
+- Semanas: 16
+- Créditos: 3
+- Intensidad horaria semanal: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
+- Elementos finitos 1:
+  - Viernes 7:00-9:00 en MICROSOFT TEAMS
+  - Viernes 14:00-16:00 en MICROSOFT TEAMS
+- Elementos finitos 2:
+  - POR DEFINIR
+  - POR DEFINIR
+
+- Tiempo de actividad autónoma por semana: 8 horas
+
+
 ## Tabla de contenido: 
 - [Temario y observaciones generales del curso 1](docs/01_temario_y_observaciones_generales_1.md)
 - [Temario y observaciones generales del curso 2](docs/01_temario_y_observaciones_generales_2.md)

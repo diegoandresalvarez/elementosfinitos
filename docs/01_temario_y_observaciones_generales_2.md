@@ -1,14 +1,5 @@
 # Observaciones generales y temario del curso "4200685 - Aplicaciones de elementos finitos 2"
 
-## Detalles del curso
-- Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
-- Intensidad horaria semanal presencial: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
-  - Miércoles 16:00-18:00 C201
-  - Viernes 8:00-10:00 C201
-- Tiempo de actividad autónoma por semana: 8 horas
-- Semanas: 16
-- Créditos: 3
-
 ## Citas para preguntas
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
 
