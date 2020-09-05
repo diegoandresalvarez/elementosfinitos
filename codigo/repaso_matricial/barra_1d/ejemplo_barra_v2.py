@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Ejemplo 1.1. Oñate
-
 import numpy as np
 import sympy as sp
 

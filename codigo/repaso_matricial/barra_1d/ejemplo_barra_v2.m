@@ -1,5 +1,3 @@
-% Ejemplo 1.1. Oñate
-
 % se definen algunas constantes que hacen el código más legible
 NL1 = 1; NL2 = 2;
 
