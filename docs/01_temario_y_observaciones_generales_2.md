@@ -32,18 +32,27 @@ En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios num
   * **Trabajo 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
 
 ## Criterios de calificación de los apuntes
+Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre impresiones del libro y diapositivas:
+
  * Los apuntes en un cuaderno se calificarán así:
-   * 5.0 Apuntes completos y de buena claridad
+   * 5.0 Apuntes completos y de buena claridad. Incluyen no solo lo enseñado en clase y en las diapositivas, sino también el contenido que el profesor asignó como lectura en los textos guía.
    * 4.0 Apuntes de buena calidad pero parcialmente completos; hay detalles que hacen falta
    * 2.5 Apuntes mediocres e incompletos: es difícil estudiar de ellos
    * 1.0 Apuntes supermalos
    * 0.0 No hizo apuntes
 
- * Los apuntes subrayando las copias se calificarán así:
-   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro. Deduce fórmulas en la margen del texto.
+ * Los apuntes sobre las impresiones del libro/diapositivas en papel se calificarán así: 
+   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro y/o de las diapositivas. Deduce fórmulas en la margen del texto. Marca los errores que encontró en el libro. Contienen las explicaciones extra que se hacen en los videos pero que no se explican en el libro.
+   * 4.0 Anotaciones adicionales de buena calidad pero parcialmente completos; hay detalles que hacen falta.
    * 1.0 Se limitó a subrayar o a marcar con resaltador. Eventualmente hay notas a mano, pero son pocas. No se evidencia que estudió con juicio las hojas.
    * 0.0 No hizo apuntes o simplemente presentó un PDF resaltado.
-  
+
+La razón del porqué se deben hacer las notas en papel y no electrócamente es que hay estudios que demuestran que estudiar sobre papel es más efectivo que aprender sobre una pantalla. Ver por ejemplo los artículos [1](https://www.eldiario.es/consumoclaro/consumo_digital/mejor-leer-libros-impresos-electronicos_1_3220278.html) y [2](https://www.xataka.com/otros/los-estudiantes-aprenden-mucho-mas-efectivamente-de-los-libros-impresos-que-de-pantallas-aunque-ellos-creen-lo-contrario).
+
+* Por cada día de retrazo en la entrega de los apuntes se tendrá una décima menos.
+* Si los apuntes se entregan un día antes de la fecha prevista, se tendrán dos décimas adicionales.
+* Si los apuntes se entregan dos días o más días antes de la fecha prevista, se tendrán cuatro décimas adicionales.
+* Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.

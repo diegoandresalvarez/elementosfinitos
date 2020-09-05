@@ -44,11 +44,13 @@ Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre im
    * 1.0 Apuntes supermalos
    * 0.0 No hizo apuntes
 
- * Los apuntes sobre las copias del libro/diapositivas se calificarán así:
-   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro y/o de las diapositivas. Deduce fórmulas en la margen del texto. Marca los errores que encontró en el libro.
+ * Los apuntes sobre las impresiones del libro/diapositivas en papel se calificarán así: 
+   * 5.0 Hace muchas notas en el extremo de la página que complementan o ayudan a entender el texto del libro y/o de las diapositivas. Deduce fórmulas en la margen del texto. Marca los errores que encontró en el libro. Contienen las explicaciones extra que se hacen en los videos pero que no se explican en el libro.
    * 4.0 Anotaciones adicionales de buena calidad pero parcialmente completos; hay detalles que hacen falta.
    * 1.0 Se limitó a subrayar o a marcar con resaltador. Eventualmente hay notas a mano, pero son pocas. No se evidencia que estudió con juicio las hojas.
    * 0.0 No hizo apuntes o simplemente presentó un PDF resaltado.
+
+La razón del porqué se deben hacer las notas en papel y no electrócamente es que hay estudios que demuestran que estudiar sobre papel es más efectivo que aprender sobre una pantalla. Ver por ejemplo los artículos [1](https://www.eldiario.es/consumoclaro/consumo_digital/mejor-leer-libros-impresos-electronicos_1_3220278.html) y [2](https://www.xataka.com/otros/los-estudiantes-aprenden-mucho-mas-efectivamente-de-los-libros-impresos-que-de-pantallas-aunque-ellos-creen-lo-contrario).
 
 * Por cada día de retrazo en la entrega de los apuntes se tendrá una décima menos.
 * Si los apuntes se entregan un día antes de la fecha prevista, se tendrán dos décimas adicionales.
