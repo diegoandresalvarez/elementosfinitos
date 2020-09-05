@@ -21,7 +21,7 @@ a = sp.Matrix([0, 0, u3, u4])  # SymPy lo toma como un vector columna
 
 # Se define el vector de fuerzas nodales de equilibrio
 # f = sp.Matrix([ 0, 0, 0, P ])
-f = sp.Matrix([ 0, b*L/2, P/2 - b*L/2, P])
+f = sp.Matrix([ b*L/2, b*L/2, P/2 + b*L, P])
 
 # Se definen g.d.l. conocidos y desconocidos asociados a los desplazamientos
 c = sp.Matrix([1, 2]) - sp.ones(2,1);       d = sp.Matrix([3, 4]) - sp.ones(2,1)
@@ -37,5 +37,5 @@ fc  = f.extract(d,[0]);    fd  = f.extract(c,[0])
 ad = sp.simplify(Kdd.solve(fc - Kdc*ac))
 qd = sp.simplify(Kcc*ac + Kcd*ad - fd)
 
-sp.pprint(ad)
-sp.pprint(qd)
+print('ad = '); sp.pprint(ad)
+print('qd = '); sp.pprint(qd)

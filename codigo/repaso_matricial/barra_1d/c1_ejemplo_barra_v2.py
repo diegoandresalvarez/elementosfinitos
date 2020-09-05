@@ -8,11 +8,13 @@ import sympy as sp
 # se definen algunas constantes que hacen el código más legible
 NL1, NL2 = 0, 1
 
-def ensamblar(K, idx, Ke):
+
+# %% funciones para el ensamblaje
+def ensamblar_mat(K, idx, Ke):
     ''' Ensambla la matriz de rigidez local Ke en la matriz de rigidez global K
 
     Uso:
-    ensamblar(K, idx, Ke)
+    ensamblar_mat(K, idx, Ke)
 
     Parametros de entrada:
     K   -> matriz de rigidez global
@@ -32,6 +34,31 @@ def ensamblar(K, idx, Ke):
     for i in range(nfil):
         for j in range(ncol):
             K[idx[i], idx[j]] += Ke[i,j]
+            
+def ensamblar_vec(v, idx, ve):
+    ''' Ensambla el vector local ve en el vector global v
+
+    Uso:
+    ensamblar_vec(v, idx, ve)
+
+    Parametros de entrada:
+    K   -> vector global
+    idx -> grados de libertad donde debe proceder el ensamblaje
+    Ke  -> vector local
+    '''
+
+    # se verifican las dimensiones de las matrices
+    nfil, ncol = v.shape
+    assert ncol == 1, "v debe ser un vector columna"
+
+    nfil, ncol = ve.shape
+    assert nfil == len(idx),\
+            "ve debe ser vector columna y debe tener el mismo número de elementos que idx"
+
+    # se procede con el ensamblaje
+    for i in range(nfil):
+        v[idx[i]] += ve[i]
+            
 
 # %% defino las variables
 b, E, A, L, P = sp.symbols('b E A L P')         # define las variables simbólicas
@@ -46,12 +73,23 @@ LaG = np.array([[1, 3],         # fila = barra
 
 k = [E*A/longitud for longitud in long]    # (k minúscula) rigidez de cada barra
 
+# %% Fuerzas nodales equivalentes para cada barra
+# fe = sp.zeros((2,3));
+fe = sp.Matrix([[ b*L/2, b*L/2, 0 ],
+                [ b*L/2, b*L/2, 0 ]])
+
+# %% Se prepara el vector de fuerzas nodales equivalentes global
+f = sp.zeros(4,1)
+f[3-1] = P/2          # se agregan las cargas puntuales
+f[4-1] = P
+
 # %% ensamblo la matriz de rigidez global (K mayúscula)
 K = sp.zeros(4)       # separa memoria para matriz de rigidez global K
 for e in range(3):    # para cada una de las barras e = 1, 2 y 3
    idx = LaG[e,:]     # extrae indices de los nodos globales de la barra e
    Ke  = k[e]*np.array([[1, -1],[-1, 1]])  # matriz de rigidez local
-   ensamblar(K, idx, Ke)                   # ensamblaje matricial
+   ensamblar_mat(K, idx, Ke)               # ensambla matriz de rigidez
+   ensamblar_vec(f, idx, fe[:,e])          # ensambla vector de fuerzas nodales equivalentes
 
 print("Imprimamos la matriz de rigidez =")   
 sp.pprint(K)
@@ -70,10 +108,8 @@ c = sp.Matrix(c);            d = sp.Matrix(d)   # se convierten de Numpy a SymPy
 #| qc |   | Kdc Kdd || ad |   | fc |     en este caso en particular fd=0
 Kcc = K.extract(c,c);      Kcd = K.extract(c,d)
 Kdc = K.extract(d,c);      Kdd = K.extract(d,d)
-
-ac = sp.Matrix([0, 0])   # SymPy los toma como vectores columna
-fd = sp.Matrix([0, b*L/2])
-fc = sp.Matrix([P/2 - b*L/2, P])
+fd  = f.extract(c,[0]);    fc  = f.extract(d,[0])
+ac  = sp.Matrix([0, 0])   # SymPy los toma como vectores columna
 
 # %% resuelvo el sistema de ecuaciones
 ad = Kdd.solve(fc - Kdc*ac)
@@ -100,6 +136,6 @@ q   = sp.simplify(q)
 fax = sp.simplify(fax)
 
 # %% imprimo los resultados
-print('\n\na = \n'); sp.pprint(a)
-print('\n\nq = \n'); sp.pprint(q)
+print('\n\na = \n');   sp.pprint(a)
+print('\n\nq = \n');   sp.pprint(q)
 print('\n\nfax = \n'); sp.pprint(fax)

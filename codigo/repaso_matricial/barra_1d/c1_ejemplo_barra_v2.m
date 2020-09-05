@@ -15,15 +15,27 @@ LaG = [1 3   % fila = barra
        3 4]; % col2 = nodo global asociado a nodo local 2
 
 k = E.*A./long;       % (k minuscula) rigidez de cada barra
-    
+
+% Fuerzas nodales equivalentes para cada barra
+% fe = sym(zeros(2,3));
+fe = [ b*L/2   b*L/2   0
+       b*L/2   b*L/2   0 ];
+
+%% Se prepara el vector de fuerzas nodales equivalentes global
+f = sym(zeros(4,1));
+f(3) = P/2;           % se agregan las cargas puntuales
+f(4) = P;
+
 %% ensamblo la matriz de rigidez global (K mayuscula)
 K = sym(zeros(4));    % separa memoria para matriz de rigidez global K
 for e = 1:3           % para cada una de las barras e = 1, 2 y 3
    idx = LaG(e,:);    % extrae indices de los nodos globales de la barra e
-   Ke = k(e)*[1 -1; -1 1];       % matriz de rigidez local
-   K(idx,idx) = K(idx,idx) + Ke; % suma matriz de rigidez local
+   Ke = k(e)*[1 -1; -1 1];            % matriz de rigidez local
+   K(idx,idx) = K(idx,idx) + Ke;      % suma matriz de rigidez local
+   f(idx)     = f(idx)     + fe(:,e); % suma vector de fuerzas nodales equivalentes local
 end
 
+%% Se imprime la matriz de rigidez
 disp('Imprimamos la matriz de rigidez =')   
 sympref('AbbreviateOutput', false);
 pretty(K)
@@ -43,14 +55,12 @@ c = [1 2];    d = setdiff(1:4,c);
 
 Kcc = K(c,c); Kcd = K(c,d);
 Kdc = K(d,c); Kdd = K(d,d);
-
+fd  = f(c);   fc  = f(d);
 ac = sym([0; 0]);
-fd = sym([0; b*L/2]);
-fc = sym([P/2 - b*L/2; P]);
 
 %% resuelvo el sistema de ecuaciones
 % recuerde que \ es para resolver el sistema de ecuaciones eficientemente
-ad = Kdd\(fc-Kdc*ac);  % = linsolve(Kdd, fc-Kdc*ac)
+ad = Kdd\(fc - Kdc*ac);  % = linsolve(Kdd, fc - Kdc*ac)
 qd = Kcc*ac + Kcd*ad - fd;
 
 %% formo los vectores de desplazamientos (a) y fuerzas (q)
