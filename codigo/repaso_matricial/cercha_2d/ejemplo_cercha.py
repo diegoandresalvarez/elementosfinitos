@@ -18,8 +18,8 @@ ang   = np.degrees(np.arctan2(300,400)) # ángulo especificado en grados
 
 #barra              1    2     3    4    5
 theta = np.array([ang,   0, -ang,   0, -90 ]) # angulo de inclinacion
-long  = np.array([500, 400,  500, 400, 300 ]) # longitud barra
-area  = np.array([100,  40,  150,  40,  30 ]) # area barra
+L     = np.array([500, 400,  500, 400, 300 ]) # Litud barra
+A     = np.array([100,  40,  150,  40,  30 ]) # A barra
 
 # LaG: local a global: matriz que relaciona nodos locales y globales
 LaG = np.array([[1, 3],   # (se lee la barra x va del nodo i al nodo j)
@@ -35,8 +35,8 @@ gdl = np.array([[1, 2],  # fila = nodo
                 [7, 8]]) - 1
 
 # propiedades del material
-E = 2040         # ton/cm^2
-k = E*area/long  # rigidez de cada barra
+E = 2040   # ton/cm^2
+k = E*A/L  # rigidez de cada barra
 
 #%% ensamblo la matriz de rigidez global
 K   = np.zeros((8,8))
@@ -55,10 +55,10 @@ for e in range(5):  # para cada barra
 
     # matriz de rigidez local expresada en el sistema de coordenadas locales 
     # para la barra e
-    Kloc = k[e]*np.array([[ 1,  0, -1,  0],    
-                          [ 0,  0,  0,  0],    
-                          [-1,  0,  1,  0],    
-                          [ 0,  0,  0,  0]])
+    Kloc = np.array([[ k[e],  0, -k[e],  0],    
+                     [ 0,     0,  0,     0],    
+                     [-k[e],  0,  k[e],  0],    
+                     [ 0,     0,  0,     0]])
 
     # sumo a K global
     K[np.ix_(idx[e],idx[e])] += T[e].T@Kloc@T[e]
@@ -75,8 +75,9 @@ c = np.array([1, 2, 4])-1;    d = np.array([3, 5, 6, 7, 8])-1
 #| qc |   | Kdc Kdd || ad |   | fc |    en este caso en particular fd=0
 
 # %% extraigo las submatrices y especifico las cantidades conocidas
-Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]
-Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]
+Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]
+Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]
+
 # desplazamientos para los gdls c = [1 2 4]
 ac = np.array([0, 0, 0])
 
@@ -92,12 +93,12 @@ a = np.zeros(8); q = np.zeros(8)  # separo la memoria
 a[c] = ac;       q[c] = qd
 a[d] = ad      # q[d] = qc = 0
 
-# %% calculo las cargas axiales (N) en cada barra
-N = np.zeros(5)
+# %% calculo las fuerzas axiales (fax) en cada barra
+fax = np.zeros(5)
 for e in range(5): # para cada barra
-    N[e] = k[e]*np.array([-1, 0, 1, 0])@T[e]@a[idx[e]]
+    fax[e] = np.array([-k[e], 0, k[e], 0])@T[e]@a[idx[e]]
 
 #%% imprimo los resultados
-print('a = \n', a, '\n')
-print('q = \n', q, '\n')
-print('N = \n', N, '\n')
+print('a = \n', a,   '\n')
+print('q = \n', q,   '\n')
+print('N = \n', fax, '\n')

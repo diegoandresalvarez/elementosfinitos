@@ -73,6 +73,6 @@ for e = 1:3
 end
 
 %% imprimo los resultados
-fprintf('\n\n a = \n'); pretty(a)
-fprintf('\n\n q = \n'); pretty(q)
+fprintf('\n\n a = \n');   pretty(a)
+fprintf('\n\n q = \n');   pretty(q)
 fprintf('\n\n fax = \n'); pretty(simplify(fax))

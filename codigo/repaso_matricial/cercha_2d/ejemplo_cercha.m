@@ -2,16 +2,16 @@
 
 %% Unidades en toneladas y cm
 
-%% se definen algunas constantes que hacen el código más legible
+%% se definen algunas constantes que hacen el codigo mas legible
 NL1 = 1; NL2 = 2;
 
 %% defino las variables
-ang   = atan2(300,400)*180/pi; % angulo especificado en grados
+ang   = atan2d(300,400); % angulo especificado en grados
 
 %barra    1       2       3       4       5
 theta = [ ang     0       -ang    0       -90  ]; % angulo de inclinacion 
-long  = [ 500     400     500     400      300 ]; % longitud barra
-area  = [ 100     40      150     40       30  ]; % area barra
+L     = [ 500     400     500     400      300 ]; % longitud barra
+A     = [ 100     40      150     40       30  ]; % area barra
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
 LaG = [1 3    % fila = barra
@@ -27,8 +27,8 @@ gdl = [1 2    % fila = nodo
        7 8]; 
       
 % propiedades del material
-E = 2040;           % ton/cm^2
-k = E.*area./long;  % rigidez de cada barra
+E = 2040;     % ton/cm^2
+k = E.*A./L;  % rigidez de cada barra
 
 %% separo memoria
 K = zeros(8); 
@@ -47,12 +47,12 @@ for e = 1:5  % para cada barra
             0  0  c  s 
             0  0 -s  c ];
 
-   % matriz de rigidez local expresada en el sistema de coordenadas locales para
-   % la barra e
-   Kloc = k(e)*[ 1  0 -1  0   
-                 0  0  0  0
-                -1  0  1  0
-                 0  0  0  0 ];
+   % matriz de rigidez local expresada en el sistema de coordenadas locales 
+   % para la barra e
+   Kloc = [ k(e)  0 -k(e)  0   
+            0     0  0     0
+           -k(e)  0  k(e)  0
+            0     0  0     0 ];
 
    % sumo a K global
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + T{e}'*Kloc*T{e};
@@ -79,7 +79,7 @@ ac = [0; 0; 0];
 fc = [0; 5*cosd(ang); 5*sind(ang); 0; -20]; %ton
 
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\(fc-Kdc*ac); % = linsolve(Kdd, fc-Kdc*ac)
+ad = Kdd\(fc - Kdc*ac); % = linsolve(Kdd, fc - Kdc*ac)
 qd = Kcc*ac + Kcd*ad;
 
 % armo los vectores de desplazamientos (a) y fuerzas (q)
@@ -87,11 +87,11 @@ a = zeros(8,1);  q = zeros(8,1);  % separo la memoria
 a(c) = ac;       q(c) = qd;
 a(d) = ad;     % q(d) = qc = 0
 
-%% calculo las cargas axiales (N) en cada barra
-N = zeros(5,1);
+%% calculo las fuerzas axiales (fax) en cada barra
+fax = zeros(5,1);
 for e = 1:5 % para cada barra
-   N(e) = k(e)*[-1 0 1 0]*T{e}*a(idx{e});
+   fax(e) = [-k(e) 0 k(e) 0]*T{e}*a(idx{e});
 end
 
 %% imprimo los resultados
-a, q, N 
+a, q, fax 
