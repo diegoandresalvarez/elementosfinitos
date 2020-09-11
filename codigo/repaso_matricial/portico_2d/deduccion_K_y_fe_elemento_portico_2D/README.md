@@ -1,6 +1,8 @@
 ## Deducción de la matriz de rigidez de un pórtico en 2D
 
-El programa [c1_deduccion_K_portico2D.m](c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbólica** para deducir la matriz de rigidez de un elemento finito de pórtico bidimensional:
+Los programas siguientes sirven para deducir la matriz de rigidez de un elemento finito de pórtico bidimensional:
+* MATLAB: [deduccion_K_portico2D.m](deduccion_K_portico2D.m) (usa el toolbox de álgebra simbólica)
+* PYTHON: [deduccion_K_portico2D.py](deduccion_K_portico2D.py)
 
 <!---
 Compile en: https://tex.s2cms.com
@@ -37,9 +39,9 @@ v_j\\
 
 
 
-## Cálculo de la carga nodal equivalente para una carga triangular: 
-El programa [c1_calcular_carga_nodal_equivalente_carga_triangular.m](c1_calcular_carga_nodal_equivalente_carga_triangular.m) calcula el vector de fuerzas nodales equivalentes asociadas a la carga triangular mostrada en la figura:
+## Cálculo de la carga nodal equivalente para una carga triangular
+El programa [deduccion_fe_carga_triangular.m](deduccion_fe_carga_triangular.m) calcula el vector de fuerzas nodales equivalentes asociadas a la carga triangular mostrada en la figura:
 
-![Image](c1_carga_nodal_equivalente_carga_triangular.svg)
+![Image](fe_carga_triangular.svg)
 
 para un elemento finito de pórtico bidimensional. Dicho programa utiliza el **toolbox de álgebra simbólica**.

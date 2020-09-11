@@ -15,7 +15,7 @@
 %%
 clear, clc
 
-%% Se definen las variables simbólicas y algunas constantes
+%% Se definen las variables simbolicas y algunas constantes
 syms AE EI L u1 v1 t1 u2 v2 t2 
 L2 = L^2; 
 L3 = L^3;
@@ -64,7 +64,7 @@ K = subs(fe([1 2 3 4 5]'), {u1, v1, t1, u2, v2}', ee)
 
 clearvars t1 t2 ae
 
-%% Se definen las variables simbólicas y algunas constantes
+%% Se definen las variables simbolicas y algunas constantes
 syms t1 t2 
 
 %% Se define el vector de desplazamientos nodales a para el elemento doblemente empotrado

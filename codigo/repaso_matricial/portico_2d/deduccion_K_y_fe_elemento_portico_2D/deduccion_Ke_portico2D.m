@@ -25,4 +25,3 @@ K = sym(zeros(6));
 K([1 4],[1 4])         = Kaxial;
 K([2 3 5 6],[2 3 5 6]) = Kflexion;
 K
-
