@@ -1,10 +1,10 @@
-function c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, ...
+function dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, ...
     qxloc,qyloc, qe, ae, esc_def, esc_faxial, esc_V, esc_M)
 % Esta funcion dibuja el elemento de portico deformado junto con sus 
 % respectivos diagramas de fuerza axial, fuerza cortante y momento flector.
 %
 % El diagrama de momento flector se grafica en el lado opuesto de la fibra
-% a tracción
+% a traccion
 %
 % PARAMETROS DE ENTRADA (junto con algunos ejemplos):
 % A = area
@@ -31,7 +31,9 @@ function c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, ...
 % esc_M      = 10;  % escalamiento del diagrama de momentos
 
 %% se definen algunas constantes
-X = 1; Y = 2; X1  = 1; Y1 = 2; M1 = 3; X2 = 4; Y2 = 5; M2 = 6; 
+X = 1; Y = 2; 
+X1 = 1; Y1 = 2; M1 = 3; X2 = 4; Y2 = 5; M2   = 6; 
+v_ = 1; t_ = 2; M_ = 3; V_ = 4; u_ = 5; fax_ = 6;
 
 %% resolver la ecuacion diferencial
 npuntos = 1001;
@@ -41,12 +43,13 @@ sol   = bvp5c(@ecuacion_diferencial, @condiciones_de_apoyo, sol);
 
 %% Calculos intermedios
 s     = sol.x;
-axial = sol.y(6,:);          % Fuerza axial [kN]
-V     = sol.y(4,:);          % Fuerza cortante [kN]
-M     = sol.y(3,:);          % Momento flector [kN/m]
-u     = sol.y(5,:);          % Desplazamiento horizontal de la viga [m]
-v     = sol.y(1,:);          % Desplazamiento vertical de la viga [m]
-%theta = atan(sol.y(2,:));   % Angulo de giro  [rad]
+
+axial = sol.y(fax_,:);        % Fuerza axial [kN]
+V     = sol.y(V_,  :);        % Fuerza cortante [kN]
+M     = sol.y(M_,  :);        % Momento flector [kN/m]
+u     = sol.y(u_,  :);        % Desplazamiento horizontal de la viga [m]
+v     = sol.y(v_,  :);        % Desplazamiento vertical de la viga [m]
+%theta = atan(sol.y(t_,:));   % Angulo de giro [rad]
 
 % rotacion de la solucion antes de dibujar
 ang = atan2(y2-y1, x2-x1);
@@ -97,7 +100,7 @@ text(ss(end), mm(end), num2str(+qe(M2)));
 [minM,idminM] = min(M); text(ss(idminM), mm(idminM), num2str(minM));
 [maxM,idmaxM] = max(M); text(ss(idmaxM), mm(idmaxM), num2str(maxM));
 
-%% ------------------------------------------------------------------------
+%% se define la ecuacion diferencial asociada
    function dydx = ecuacion_diferencial(x,y)
       % aqui se implementa la ecuacion diferencial para vigas de material
       % homogeneo y seccion transversal constante (A, E, I, qx, qy las 
@@ -111,21 +114,19 @@ text(ss(end), mm(end), num2str(+qe(M2)));
       %        dx^2
 
       dydx = zeros(6,1);
-      %         y(1)          = v
-      dydx(1) = y(2);       % = theta
-      dydx(2) = y(3)/(E*I); % = M/(EI)
-      dydx(3) = y(4);       % = V
-      dydx(4) = qyloc(x);   % = qyloc
-      dydx(5) = y(6)/(A*E); % = u
-      dydx(6) = -qxloc(x);  % = faxial
+      %            y(v_)            = v
+      dydx(v_)   = y(t_);         % = theta
+      dydx(t_)   = y(M_)/(E*I);   % = M/(EI)
+      dydx(M_)   = y(V_);         % = V
+      dydx(V_)   = qyloc(x);      % = qyloc
+      dydx(u_)   = y(fax_)/(A*E); % = u
+      dydx(fax_) = -qxloc(x);     % = faxial
    end
 
-%% ------------------------------------------------------------------------
-
+%% se definen las condiciones de frontera de la ecuacion diferencial
    function res = condiciones_de_apoyo(YL,YR)
       % condiciones de apoyo (cond. de frontera de la ecuacion diferencial)
       u1  = 1; v1 = 2; t1 = 3; u2 = 4; v2 = 5; t2   = 6;
-      v_  = 1; t_ = 2; M_ = 3; V_ = 4; u_ = 5; fax_ = 6;
       res = [ % YL: apoyo izquierdo (LEFT), YR: apoyo derecho (RIGHT)
               YL(u_) - ae(u1)          % uloc(0)     = u1
               YL(v_) - ae(v1)          % vloc(0)     = v1

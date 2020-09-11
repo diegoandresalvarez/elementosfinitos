@@ -2,7 +2,8 @@ clear, clc, close all
 
 %% Unidades en kN y m
 %% constantes
-X = 1; Y = 2; TH = 3;
+NL1 = 1; NL2 = 2; MAT = 3;
+X   = 1; Y   = 2; TH  = 3;
 
 %% Se define la estructura
 xnod = [ ...  % coordenadas de cada nodo [x, y]
@@ -17,13 +18,13 @@ xnod = [ ...  % coordenadas de cada nodo [x, y]
 % col2 = nodo global asociado a nodo local 2
 % (se lee la barra x va del nodo i al nodo j)
 
-barra = [ % nod1 nod2 material
+barra = [ % NL1  NL2  material
             1    2    1
             4    1    2
             2    3    2 ];
 
-LaG = barra(:,[1 2]);  % local a global
-mat = barra(:,3);      % material
+LaG = barra(:, [NL1 NL2]);  % local a global
+mat = barra(:, MAT);        % material
 
 %        area      inercias_y       modulo de elasticidad
 %        A(m^2)     I(m^4)          E(ton/m^2)
@@ -57,8 +58,8 @@ for e = 1:nbar
    line(xnod(LaG(e,:),X), xnod(LaG(e,:),Y));
    
    % Calculo la posicion del centro de gravedad de la barra
-   cgx = (xnod(LaG(e,1),X) + xnod(LaG(e,2),X))/2;
-   cgy = (xnod(LaG(e,1),Y) + xnod(LaG(e,2),Y))/2;   
+   cgx = (xnod(LaG(e,NL1),X) + xnod(LaG(e,NL2),X))/2;
+   cgy = (xnod(LaG(e,NL1),Y) + xnod(LaG(e,NL2),Y))/2;   
    h = text(cgx, cgy, num2str(e)); set(h, 'Color', [1 0 0]);
 end
 
@@ -87,9 +88,9 @@ qyloc = { ...
 % especificadas con respecto al sistema de coordenadas globales)
 fe = cell(nbar,1);
 for e = 1:nbar
-   x1 = xnod(LaG(e,1), X);  x2 = xnod(LaG(e,2), X);
-   y1 = xnod(LaG(e,1), Y);  y2 = xnod(LaG(e,2), Y);
-   fe{e} = c1_calc_fuerzas_nodales_equivalentes(...
+   x1 = xnod(LaG(e,NL1), X);  x2 = xnod(LaG(e,NL2), X);
+   y1 = xnod(LaG(e,NL1), Y);  y2 = xnod(LaG(e,NL2), Y);
+   fe{e} = calc_fuerzas_nodales_equivalentes(...
         A(mat(e)), E(mat(e)), I(mat(e)), x1,y1, x2,y2, qxloc{e},qyloc{e});
 end
 %          fxi    fyi    mi     fxj    fyj    mj
@@ -105,10 +106,10 @@ T   = cell(nbar,1);
 idx = zeros(nbar,6);
 for e = 1:nbar  % para cada barra
    % saco los 6 gdls de la barra e
-   idx(e,:) = [gdl(LaG(e,1),:) gdl(LaG(e,2),:)];
+   idx(e,:) = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)];
    
-   x1 = xnod(LaG(e,1), X);  x2 = xnod(LaG(e,2), X);
-   y1 = xnod(LaG(e,1), Y);  y2 = xnod(LaG(e,2), Y);
+   x1 = xnod(LaG(e,NL1), X);  x2 = xnod(LaG(e,NL2), X);
+   y1 = xnod(LaG(e,NL1), Y);  y2 = xnod(LaG(e,NL2), Y);
    
    L = hypot(x2-x1, y2-y1);
    
@@ -134,9 +135,9 @@ for e = 1:nbar  % para cada barra
 
    % matriz de rigidez local en coordenadas globales
    Ke{e} = T{e}'*Kloc*T{e};
-   K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % sumo Ke{e} a K global
-   f(idx(e,:))          = f(idx(e,:))          + fe{e}; % sumo a f global
-end;
+   K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % ensambla Ke{e} a K global
+   f(idx(e,:))          = f(idx(e,:))          + fe{e}; % ensambla fe{e} a f global
+end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 apoyos = [...
@@ -180,17 +181,17 @@ q  = zeros(ngdl,1);   q(c) = qd;             % fuerzas nodales equivalentes
 
 %% imprimo las fuerzas internas en cada barra referidas a las coordenadas
 %% globales
-qe_coord_loc  = cell(nbar,1);
-qe_coord_glob = cell(nbar,1);
+qe_loc  = cell(nbar,1);
+qe_glob = cell(nbar,1);
 for e = 1:nbar % para cada barra
    fprintf('\n\n Fuerzas internas para barra %d en coord. globales = \n', e);
-   qe_coord_glob{e} = Ke{e}*a(idx(e,:)) - fe{e};
-   disp(qe_coord_glob{e})
+   qe_glob{e} = Ke{e}*a(idx(e,:)) - fe{e};
+   disp(qe_glob{e})
    
    fprintf('\n\n Fuerzas internas para barra %d en coord. locales = \n', e);
-   qe_coord_loc{e} = T{e}*qe_coord_glob{e};
-   disp(qe_coord_loc{e});   
-end;
+   qe_loc{e} = T{e}*qe_glob{e};
+   disp(qe_loc{e});   
+end
 
 %% imprimo los resultados
 format short g
@@ -200,7 +201,7 @@ vect_mov = reshape(a,3,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: u = %12.4g mm, v = %12.4g mm, theta = %12.4g rad \n', ...
       i, 1000*vect_mov(i,X), 1000*vect_mov(i,Y), vect_mov(i,TH));
-end;
+end
 
 disp(' ');
 disp('Fuerzas nodales de equilibrio (solo imprimo los diferentes de cero)')
@@ -210,8 +211,8 @@ for i = 1:nno
    if ~all(abs(qq(i,:) - [0 0 0]) < 1e-5)
       fprintf('Nodo %3d qx = %12.4g kN, qy = %12.4g kN, mom = %12.4g kN*m\n', ...
          i, qq(i,X), qq(i,Y), qq(i,TH));
-   end;
-end;
+   end
+end
 
 %% Dibujar la estructura y su deformada
 esc_def    = 50;            % escalamiento de la deformada
@@ -227,13 +228,13 @@ figure(4); hold on; title('Fuerza cortante [kN]');   xlabel('x, m'); ylabel('y, 
 figure(5); hold on; title('Momento flector [kN-m]'); xlabel('x, m'); ylabel('y, m'); axis equal
 
 for e = 1:nbar
-   x1 = xnod(LaG(e,1), X);  x2 = xnod(LaG(e,2), X);
-   y1 = xnod(LaG(e,1), Y);  y2 = xnod(LaG(e,2), Y);
+   x1 = xnod(LaG(e,NL1), X);  x2 = xnod(LaG(e,NL2), X);
+   y1 = xnod(LaG(e,NL1), Y);  y2 = xnod(LaG(e,NL2), Y);
 
-   c1_dibujar_barra_deformada_portico(...
+   dibujar_barra_deformada_portico(...
       A(mat(e)), E(mat(e)), I(mat(e)), ...
       x1,y1, x2,y2, qxloc{e}, qyloc{e}, ...
-      qe_coord_loc{e}, T{e}*a(idx(e,:)), ...
+      qe_loc{e}, T{e}*a(idx(e,:)), ...
       esc_def, esc_faxial, esc_V, esc_M);
 end
 

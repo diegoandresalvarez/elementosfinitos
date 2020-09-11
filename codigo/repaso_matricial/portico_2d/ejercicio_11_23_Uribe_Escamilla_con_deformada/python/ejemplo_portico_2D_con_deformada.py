@@ -2,13 +2,13 @@
 
 #%% Unidades en kN y m
 
-from math import atan2
 import numpy as np
 import matplotlib.pyplot as plt
-from c1_dibujar_barra_deformada_portico import c1_dibujar_barra_deformada_portico
+from dibujar_barra_deformada_portico import dibujar_barra_deformada_portico
 
 #%% constantes
-LOC1 = 0; LOC2 = 1; X = 0; Y = 1; TH = 2
+NL1, NL2, MAT = 0, 1, 2
+X, Y, TH      = 0, 1, 2
 
 #%% Se define la estructura
 xnod = np.array([[3, 4],   # coordenadas de cada nodo [x, y]
@@ -22,24 +22,24 @@ xnod = np.array([[3, 4],   # coordenadas de cada nodo [x, y]
 # col2 = nodo global asociado a nodo local 2
 # (se lee la barra x va del nodo i al nodo j)
 
-#                 nod1  nod2 material
+#                  NL1   NL2   material
 barra = np.array([[1,    2,    1],
                   [4,    1,    2],
                   [2,    3,    2]])-1
 
-LaG = barra[:, [0, 1]]  # local a global
-mat = barra[:, 2]       # material
+LaG = barra[:, [NL1, NL2]]  # local a global
+mat = barra[:, MAT]        # material
 
-#                  area       inercias_y       modulo de elasticidad
+#                  área       inercias_y       módulo de elasticidad
 #                  A(m^2)     I(m^4)           E(ton/m^2)
 props = np.array([[.30*.35,   .30*.35**3/12,     190e4],
                   [.30*.30,   .30*.30**3/12,     190e4]])
 
 A = props[:,0];   I = props[:,1];   E = props[:,2]
 
-nno  = xnod.shape[0] # numero de nodos (numero de filas de xnod)
-nbar = LaG.shape[0]  # numero de EFs (numero de filas de LaG)
-ngdl = 3*nno         # numero de grados de libertad (tres por nodo)
+nno  = xnod.shape[0] # número de nodos (numero de filas de xnod)
+nbar = LaG.shape[0]  # número de EFs (numero de filas de LaG)
+ngdl = 3*nno         # número de grados de libertad (tres por nodo)
 
 #%% gdl: grados de libertad
 # fila = nodo
@@ -52,7 +52,7 @@ gdl = np.arange(ngdl).reshape(nno, 3)  # nodos vs grados de libertad
 cargas_aplica = np.array([[gdl[1-1,X], 1.5]])
 dofs_cargados = cargas_aplica[:,0].astype(int)
 
-f = np.zeros((ngdl, 1))
+f = np.zeros(ngdl)
 f[dofs_cargados] = cargas_aplica[:,1]
 
 #%% Se dibuja la estructura junto con su numeración
@@ -61,8 +61,8 @@ for e in range(nbar):
    plt.plot(xnod[LaG[e,:],X], xnod[LaG[e,:],Y], 'b-')
    
    # Calculo la posición del centro de gravedad de la barra
-   cgx = (xnod[LaG[e,LOC1],X] + xnod[LaG[e,LOC2],X])/2
-   cgy = (xnod[LaG[e,LOC1],Y] + xnod[LaG[e,LOC2],Y])/2
+   cgx = (xnod[LaG[e,NL1],X] + xnod[LaG[e,NL2],X])/2
+   cgy = (xnod[LaG[e,NL1],Y] + xnod[LaG[e,NL2],Y])/2
    plt.text(cgx, cgy, str(e+1), color='red')
 
 plt.plot(xnod[:,X], xnod[:,Y], 'ro')
@@ -75,7 +75,7 @@ plt.title('Numeración de la estructura')
 plt.show()
 
 #%% fuerzas distribuidas aplicadas sobre las barras en coordenadas locales
-ang1 = atan2(2,4);
+ang1 = np.arctan2(2,4);
 
 qxloc = [
    lambda x: -2.8*np.sin(ang1)*np.cos(ang1),
@@ -94,11 +94,11 @@ qyloc = [
 # especificadas con respecto al sistema de coordenadas globales)
 
 fe = nbar*[None]
-#                  fxi    fyi      mi     fxj      fyj     mj
-#                  ton    ton      ton-m  ton      ton     ton-m
-fe[0] = np.array([[0,     -5.60,  -3.733,  0,     -5.60,   +3.733 ]]).T # OJO con los signos
-fe[1] = np.array([[0,      0   ,   0    ,  0,      0   ,   0      ]]).T # mirar pag 613
-fe[2] = np.array([[0,      0   ,   0    ,  0,      0   ,   0      ]]).T
+#                 fxi    fyi      mi     fxj      fyj     mj
+#                 ton    ton      ton-m  ton      ton     ton-m
+fe[0] = np.array([0,     -5.60,  -3.733,  0,     -5.60,   +3.733 ]) # OJO con los signos
+fe[1] = np.array([0,      0   ,   0    ,  0,      0   ,   0      ]) # mirar pag 613
+fe[2] = np.array([0,      0   ,   0    ,  0,      0   ,   0      ])
 
 #%% ensamblo la matriz de rigidez global
 K   = np.zeros((ngdl,ngdl))  # separo memoria
@@ -107,10 +107,10 @@ T   = nbar*[None]
 idx = np.zeros((nbar,6), dtype=int)
 for e in range(nbar): # para cada barra
    # saco los 6 gdls de la barra e
-   idx[e,:] = np.r_[gdl[LaG[e,LOC1],:], gdl[LaG[e,LOC2],:]]
+   idx[e] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
    
-   x1 = xnod[LaG[e,LOC1], X];  x2 = xnod[LaG[e,LOC2], X]
-   y1 = xnod[LaG[e,LOC1], Y];  y2 = xnod[LaG[e,LOC2], Y]
+   x1 = xnod[LaG[e,NL1], X];  x2 = xnod[LaG[e,NL2], X]
+   y1 = xnod[LaG[e,NL1], Y];  y2 = xnod[LaG[e,NL2], Y]
    
    L = np.hypot(x2-x1, y2-y1)
    
@@ -137,8 +137,8 @@ for e in range(nbar): # para cada barra
 
    # matriz de rigidez local en coordenadas globales
    Ke[e] = T[e].T @ Kloc @ T[e]
-   K[np.ix_(idx[e,:],idx[e,:])] += Ke[e] # sumo Ke[e] a K global
-   f[idx[e,:]]                  += fe[e] # sumo a f global
+   K[np.ix_(idx[e],idx[e])] += Ke[e] # ensambla Ke{e} a K global
+   f[idx[e]]                += fe[e] # ensambla fe{e} a f global
 
 #%% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 apoyos = np.array([[gdl[3-1,X],  0],
@@ -161,34 +161,34 @@ d = np.setdiff1d(np.arange(ngdl), c)
 #| qc |   | Kdc Kdd || ad |   | fc |
 
 # %% extraigo las submatrices y especifico las cantidades conocidas
-Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
-Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
+Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
+Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
 
 # f = vector de fuerzas nodales equivalentes
 # q = vector de fuerzas nodales de equilibrio del elemento
 # a = desplazamientos
-ac = apoyos[:,1][:,np.newaxis] # desplazamientos conocidos en contorno
+ac = apoyos[:,1] # desplazamientos conocidos en contorno
 
 # %% resuelvo el sistema de ecuaciones
-ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
-qd = Kcc@ac + Kcd@ad - fd              # fuerzas de equilibrio desconocidas
+ad = np.linalg.solve(Kdd, fc - Kdc@ac)   # desplazamientos desconocidos
+qd = Kcc@ac + Kcd@ad - fd                # fuerzas de equilibrio desconocidas
 
 # armo los vectores de desplazamientos (a) y fuerzas (q)
-a = np.zeros((ngdl,1)); a[c] = ac; a[d] = ad # desplazamientos
-q = np.zeros((ngdl,1)); q[c] = qd            # fuerzas nodales equivalentes
+a = np.zeros(ngdl); a[c] = ac; a[d] = ad # desplazamientos
+q = np.zeros(ngdl); q[c] = qd            # fuerzas nodales equivalentes
 
 #%% imprimo las fuerzas internas en cada barra referidas a las coordenadas
 # globales
-qe_coord_loc   = nbar*[None]
-qe_coord_glob = nbar*[None]
+qe_loc  = nbar*[None]
+qe_glob = nbar*[None]
 for e in range(nbar): # para cada barra
    print('\n\n Fuerzas internas para barra %d en coord. globales =' % (e+1))
-   qe_coord_glob[e] = Ke[e]@a[idx[e,:]] - fe[e]
-   print(qe_coord_glob[e])
+   qe_glob[e] = Ke[e]@a[idx[e]] - fe[e]
+   print(qe_glob[e])
    
    print('\n\n Fuerzas internas para barra %d en coord. locales =' % (e+1))
-   qe_coord_loc[e] = T[e]@qe_coord_glob[e]
-   print(qe_coord_loc[e])
+   qe_loc[e] = T[e]@qe_glob[e]
+   print(qe_loc[e])
 
 #%% imprimo los resultados
 print('Desplazamientos nodales                                               ')
@@ -240,13 +240,13 @@ plt.ylabel('y, m')
 plt.axis('equal')
 
 for e in range(nbar):
-   x1 = xnod[LaG[e,LOC1], X];  x2 = xnod[LaG[e,LOC2], X]
-   y1 = xnod[LaG[e,LOC1], Y];  y2 = xnod[LaG[e,LOC2], Y]
+   x1 = xnod[LaG[e,NL1], X];  x2 = xnod[LaG[e,NL2], X]
+   y1 = xnod[LaG[e,NL1], Y];  y2 = xnod[LaG[e,NL2], Y]
 
-   c1_dibujar_barra_deformada_portico(
+   dibujar_barra_deformada_portico(
       A[mat[e]], E[mat[e]], I[mat[e]],
       x1,y1, x2,y2, qxloc[e], qyloc[e], 
-      np.squeeze(qe_coord_loc[e]), np.squeeze(T[e] @ a[idx[e,:]]),
+      qe_loc[e], T[e] @ a[idx[e]],
       esc_def, esc_faxial, esc_V, esc_M)
 
 plt.show()

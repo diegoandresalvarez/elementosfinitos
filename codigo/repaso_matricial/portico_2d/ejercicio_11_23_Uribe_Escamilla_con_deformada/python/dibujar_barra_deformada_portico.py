@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from math import atan2
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_bvp
 
-def c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc, 
+def dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc, 
                                        qe, ae, esc_def, esc_faxial, esc_V, esc_M):
     '''
     Esta función dibuja el elemento de pórtico deformado junto con sus 
@@ -42,7 +41,9 @@ def c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc,
     '''
 
     #%% se definen algunas constantes
-    X = 0; Y = 1; X1 = 0; Y1 = 1; M1 = 2; X2 = 3; Y2 = 4; M2 = 5
+    X, Y = 0, 1
+    X1, Y1, M1, X2, Y2, M2   = 0, 1, 2, 3, 4, 5
+    v_, t_, M_, V_, u_, fax_ = 0, 1, 2, 3, 4, 5    
     
     #%% se define la ecuación diferencial asociada
     def ecuacion_diferencial(x,y):
@@ -59,24 +60,22 @@ def c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc,
         
         m = x.shape[0]
         dydx = np.zeros((6,m))
-        #           y[0,:]         = v
-        dydx[0,:] = y[1,:]       # = theta
-        dydx[1,:] = y[2,:]/(E*I) # = M/(EI)
-        dydx[2,:] = y[3,:]       # = V
-        dydx[3,:] = qyloc(x)     # = qyloc
-        dydx[4,:] = y[5,:]/(A*E) # = u
-        dydx[5,:] = -qxloc(x)    # = faxial
+        #               y[v_,:]           = v
+        dydx[v_,   :] = y[t_,:]         # = theta
+        dydx[t_,   :] = y[M_,:]/(E*I)   # = M/(EI)
+        dydx[M_,   :] = y[V_,:]         # = V
+        dydx[V_,   :] = qyloc(x)        # = qyloc
+        dydx[u_,   :] = y[fax_,:]/(A*E) # = u
+        dydx[fax_, :] = -qxloc(x)       # = faxial
           
         return dydx
     
     
-    #%% ------------------------------------------------------------------------
-    
+    #%% se definen las condiciones de frontera de la ecuacion diferencial    
     def condiciones_de_apoyo(YL,YR):
         # condiciones de apoyo (cond. de frontera de la ecuacion diferencial)
-        u1  = 0; v1 = 1; t1 = 2; u2 = 3; v2 = 4; t2   = 5
-        v_  = 0; t_ = 1;                 u_ = 4
-        #                M_ = 2; V_ = 3;        fax_ = 5
+        u1, v1, t1, u2, v2, t2   = 0, 1, 2, 3, 4, 5
+
         return np.array([ 
                     # YL: apoyo izquierdo (LEFT), YR: apoyo derecho (RIGHT)
                     YL[u_] - ae[u1],        # uloc(0)     = u1
@@ -89,21 +88,22 @@ def c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc,
     #%% resolver la ecuación diferencial
     npuntos = 1001
     xinit = np.linspace(0, np.hypot(x2-x1, y2-y1), npuntos)
-    yinit = np.zeros((6,npuntos))
+    yinit = np.zeros((6, npuntos))
     sol   = solve_bvp(ecuacion_diferencial, condiciones_de_apoyo, xinit, yinit)
-    #https://docs.scipy.org/doc/scipy-0.18.1/reference/generated/scipy.integrate.solve_bvp.html#scipy.integrate.solve_bvp
+    # https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_bvp.html   
     
     #%% Calculos intermedios
     s     = sol.x
-    axial = sol.y[5,:]            # Fuerza axial [kN]
-    V     = sol.y[3,:]            # Fuerza cortante [kN]
-    M     = sol.y[2,:]            # Momento flector [kN/m]
-    u     = sol.y[4,:]            # Desplazamiento horizontal de la viga [m]
-    v     = sol.y[0,:]            # Desplazamiento vertical de la viga [m]
-    #theta = np.arctan(sol.y[1,:]) # Angulo de giro  [rad]
+    
+    axial = sol.y[fax_, :]    # Fuerza axial [kN]
+    V     = sol.y[V_,   :]    # Fuerza cortante [kN]
+    M     = sol.y[M_,   :]    # Momento flector [kN/m]
+    u     = sol.y[u_,   :]    # Desplazamiento horizontal de la viga [m]
+    v     = sol.y[v_,   :]    # Desplazamiento vertical de la viga [m]
+    #theta = np.arctan(sol.y[t_,:]) # Angulo de giro  [rad]
     
     # rotación de la solución antes de dibujar
-    ang = atan2(y2-y1, x2-x1)
+    ang = np.arctan2(y2-y1, x2-x1)
     T   = np.array([[np.cos(ang),  -np.sin(ang)], # matriz de rotación
                     [np.sin(ang),   np.cos(ang)]])
       
@@ -152,5 +152,16 @@ def c1_dibujar_barra_deformada_portico(A, E, I, x1,y1, x2,y2, qxloc,qyloc,
     plt.plot([x1, x2], [y1, y2], 'b-', np.r_[x1, ss, x2], np.r_[y1, mm, y2], 'r-', linewidth=2)
     plt.text(ss[ 0], mm[ 0], str(-qe[M1]))
     plt.text(ss[-1], mm[-1], str(+qe[M2]))
+
+    # se grafican los máximos y los mínimos en caso que no estén en los bordes
+    idminM = np.argmin(M); 
+    if idminM not in [0, npuntos-1]: 
+        plt.text(ss[idminM], mm[idminM], str(M[idminM]))
+    
+    idmaxM = np.argmax(M); 
+    if idmaxM not in [0, npuntos-1]: 
+        plt.text(ss[idmaxM], mm[idmaxM], str(M[idmaxM]))
+    
+    print(idminM, idmaxM)
 
 #%% bye, bye!

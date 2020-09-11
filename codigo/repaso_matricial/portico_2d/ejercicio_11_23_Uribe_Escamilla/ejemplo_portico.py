@@ -64,7 +64,7 @@ idx = np.zeros((nb, 6), dtype=int) # almacena los 6 gdls de las barras
 # %% ensamblo la matriz de rigidez global (K) y vector de fuerzas global (f)
 for e in range(nb): # para cada barra
     # saco los 6 gdls de la barra e
-    idx[e,:] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
+    idx[e] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
     
     # matriz de transformaciÓn de coordenadas para la barra e
     c = np.cosd(theta[e]); s = np.sind(theta[e])
@@ -89,8 +89,8 @@ for e in range(nb): # para cada barra
     # matriz de rigidez local en coordenadas globales
     Ke[e] = T[e].T@Kloc@T[e]         
  
-    K[np.ix_(idx[e,:],idx[e,:])] += Ke[e] # ensamblo Ke en K global
-    f[idx[e,:]]                  += fe[e] # ensamblo fe en f global
+    K[np.ix_(idx[e],idx[e])] += Ke[e] # ensamblo Ke en K global
+    f[idx[e]]                += fe[e] # ensamblo fe en f global
 
 # %% localizo la carga puntual de 1.5 ton en el gdl 4
 f[4-1] += 1.5
@@ -129,7 +129,7 @@ print(a)
 #    globales
 for e in range(nb): # para cada barra
     print(f'\n\nFuerzas internas para barra {e+1} en coordenadas globales = ')
-    qe_coord_glob = Ke[e]@a[idx[e,:]] - fe[e]
+    qe_coord_glob = Ke[e]@a[idx[e]] - fe[e]
     print(qe_coord_glob)
     
     print(f'\nFuerzas internas para barra {e+1} en coordenadas locales =')
