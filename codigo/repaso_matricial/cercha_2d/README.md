@@ -14,7 +14,7 @@ https://www.researchgate.net/publication/31754481_Analisis_de_estructuras_J_Urib
 Souciones con:
 * MATLAB: [ejemplo_cercha.m](ejemplo_cercha.m)
 * PYTHON: [ejemplo_cercha.py](ejemplo_cercha.py)
-* OpenSees: [ejemplo_cercha_OpenSees.tcl](ejemplo_cercha_OpenSees.tcl)
+* [OpenSees](https://opensees.berkeley.edu/): [ejemplo_cercha_OpenSees.tcl](ejemplo_cercha_OpenSees.tcl)
 
 ## Cercha con apoyo inclinado
 ![figura](ejemplo_cercha_apoyo_inclinado.svg)
