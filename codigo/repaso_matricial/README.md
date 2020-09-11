@@ -9,15 +9,15 @@ Subdirectorio: [barra_1d](./barra_1d/)
 
 Los programas de esta carpeta, estiman las reacciones en los apoyos (nodos 1 y 2), los desplazamientos en los nodos no restringidos (nodos 3 y 4) y las fuerzas axiales en los nodos y barras de la estructura mostrada:
 
-![figura](barra_1d/01_tres_barras_a_traccion_onate_1_1.svg)
+![figura](barra_1d/tres_barras_a_traccion.svg)
 
 ## Análisis matricial de cerchas 2D
 Los programas de esta carpeta, resuelven la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
-![Image](cercha_2d/c1_ej_11_3_uribe_escamilla.svg)
+![Image](cercha_2d/ej_11_3_uribe_escamilla.svg)
 
 ## Análisis matricial de cerchas 2D con apoyos inclinados
 Los programas de esta carpeta, resuelven la estructura mostrada. El material es acero con E=2040 ton/m². Las áreas están dadas entre paréntesis en cm²:
-![Image](cercha_2d_apoyo_inclinado/c1_ejemplo_cercha_inclined_support.svg)
+![Image](cercha_2d/ejemplo_cercha_apoyo_inclinado.svg)
 
 ## Análisis matricial de pórticos 2D
 
