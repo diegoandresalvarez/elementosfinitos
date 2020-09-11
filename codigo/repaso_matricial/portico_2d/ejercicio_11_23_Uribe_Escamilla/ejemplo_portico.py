@@ -11,7 +11,7 @@ np.cosd = lambda x : np.cos(np.deg2rad(x))
 np.sind = lambda x : np.sin(np.deg2rad(x))
 
 # se definen algunas constantes que hacen el código más legible
-NL1, NL2 = 0 ,1
+NL1, NL2 = 0, 1
 X,   Y   = 0, 1
 
 # %% defino las variables
@@ -67,7 +67,7 @@ for e in range(nb): # para cada barra
     idx[e,:] = np.r_[gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:]]
     
     # matriz de transformaciÓn de coordenadas para la barra e
-    c = np.cosd(theta[e]); s = np.sind(theta[e]);  # sin y cos de la inclinación
+    c = np.cosd(theta[e]); s = np.sind(theta[e])
     T[e] = np.array([[ c,  s,  0,  0,  0,  0],
                      [-s,  c,  0,  0,  0,  0],
                      [ 0,  0,  1,  0,  0,  0],
@@ -107,9 +107,8 @@ d = np.setdiff1d(np.arange(ngdl), c)  # d = [4 5 6 7 8 9] - 1
 #| qd |   | Kcc Kcd || ac |   | fd |    recuerde que siempre qc=0
 #|    | = |         ||    | - |    |
 #| qc |   | Kdc Kdd || ad |   | fc |    en este caso en particular fd=0
-
-Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
-Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
+Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
+Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
 
 # desplazamientos para los gdls c = [1 2 3 10 11 12]
 ac = np.array([0, 0, 0, 0, 0, 0]) # desplazamientos conocidos

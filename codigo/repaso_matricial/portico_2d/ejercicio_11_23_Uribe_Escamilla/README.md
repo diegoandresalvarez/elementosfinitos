@@ -1,10 +1,14 @@
-##  Ejemplo 11.23 Uribe Escamilla: análisis de un pórtico bidimensional
+#  Ejemplo 11.23 de Uribe Escamilla: análisis de un pórtico bidimensional
 
-Los programas de esta carpeta, estiman las reacciones en los apoyos, los desplazamientos y las fuerzas axiales de las barras del pórtico 2D que se muestra a continuación:
+Los programas:
+* MATLAB: [ejemplo_portico.m](ejemplo_portico.m)
+* PYTHON: [ejemplo_portico.py](ejemplo_portico.py)
 
-![figura](c1_portico_2d_uribe_escamilla.svg)
+estiman las reacciones en los apoyos, los desplazamientos y las fuerzas axiales de las barras del pórtico 2D que se muestra a continuación:
 
-Se incluye el archivo `c1_ej_11_23_uribe_escamilla.pdf` para que se compare con el libro de Uribe Escamilla. Dicho libro se puede descargar libremente de:
+![figura](ejemplo_portico.svg)
+
+Se incluye el archivo [ejemplo_portico.pdf](ejemplo_portico.pdf) para que se compare con el libro de Uribe Escamilla. Dicho libro se puede descargar libremente de:
 
 https://www.researchgate.net/publication/31754481_Analisis_de_estructuras_J_Uribe_Escamilla (el ejemplo se encuentra en la página 526 de esta versión del libro).
 

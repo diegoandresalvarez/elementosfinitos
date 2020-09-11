@@ -2,7 +2,7 @@
 
 %% Unidades en toneladas y metros
 
-% se definen algunas constantes que hacen el código más legible
+% se definen algunas constantes que hacen el codigo mas legible
 NL1 = 1; NL2 = 2;
 X = 1;   Y = 2;
 
@@ -10,29 +10,29 @@ X = 1;   Y = 2;
 Aviga = 0.30*0.35;       Acol  = 0.30*0.30;       % m^2    area
 Iviga = 0.30*0.35^3/12;  Icol  = 0.30*0.30^3/12;  % m^4    inercia_y
 
-% barra   1             2          3
-A     = [ Aviga         Acol       Acol          ]; % areas
-I     = [ Iviga         Icol       Icol          ]; % inercias_y
-long  = [ hypot(4,2)    5          hypot(2,6)    ]; % long barra (m)
-theta = [ atan2(2,4)    atan2(4,3) atan2(-6,2)   ]*180/pi; % angulo inclinacion (grados)
+% barra   1            2            3
+A     = [ Aviga        Acol         Acol         ]; % areas
+I     = [ Iviga        Icol         Icol         ]; % inercias_y
+long  = [ hypot(4,2)   5            hypot(2,6)   ]; % long barra (m)
+theta = [ atan2d(2,4)  atan2d(4,3)  atan2d(-6,2) ]; % angulo inclinacion (grados)
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
 % (se lee la barra x va del nodo i al nodo j)
-LaG = [1 2    % fila = barra
-       4 1    % col1 = nodo global asociado a nodo local 1
-       2 3];  % col2 = nodo global asociado a nodo local 2
+LaG = [ 1 2         % fila = barra
+        4 1         % col1 = nodo global asociado a nodo local 1
+        2 3 ];      % col2 = nodo global asociado a nodo local 2
 
 % gdl: grados de libertad
-ngdl = 12; % numero de grados de libertad
-gdl  = [ 4  5  6   % fila = nodo
-         7  8  9   % col1 = gdl en direccion x
-        10 11 12   % col2 = gdl en direccion y
-         1  2  3]; % col3 = gdl en direccion angular antihoraria
+ngdl = 12;          % numero de grados de libertad
+gdl  = [ 4  5  6    % fila = nodo
+         7  8  9    % col1 = gdl en direccion x
+        10 11 12    % col2 = gdl en direccion y
+         1  2  3 ]; % col3 = gdl en direccion angular antihoraria
 
-E = 190*10000; %ton/m^2  modulo de elasticidad
+E = 190*10000;      % ton/m^2  modulo de elasticidad
 
-nb = size(LaG,1); %numero de barras (numero de filas de LaG)
-nn = size(gdl,1); %numero de nodos  (numero de filas de gdl)
+nb = size(LaG,1);   % numero de barras (numero de filas de LaG)
+nn = size(gdl,1);   % numero de nodos  (numero de filas de gdl)
 
 %% fuerzas nodales equivalentes para las diferentes barras
 % (en este ejemplo las fuerzas nodales equivalentes estas siendo 
@@ -57,13 +57,13 @@ for e = 1:nb  % para cada barra
    idx(e,:) = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)];
    
    % matriz de transformacion de coordenadas para la barra e
-   c = cosd(theta(e)); s = sind(theta(e));  % sin y cos de la inclinacion
-   T{e} = [ c  s  0  0  0  0;        
-           -s  c  0  0  0  0;        
-            0  0  1  0  0  0;
-            0  0  0  c  s  0;
-            0  0  0 -s  c  0;
-            0  0  0  0  0  1];
+   c = cosd(theta(e)); s = sind(theta(e));
+   T{e} = [ c  s  0  0  0  0        
+           -s  c  0  0  0  0        
+            0  0  1  0  0  0
+            0  0  0  c  s  0
+            0  0  0 -s  c  0
+            0  0  0  0  0  1 ];
          
    % matriz de rigidez local expresada en el sistema de coordenadas locales
    % para la barra e
@@ -79,7 +79,7 @@ for e = 1:nb  % para cada barra
    Ke{e} = T{e}'*Kloc*T{e};            
    K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % sumo Ke{e} a K global
    f(idx(e,:))          = f(idx(e,:))          + fe{e}; % sumo a f global
-end;
+end
 
 %% localizo la carga puntual de 1.5 ton en el gdl 4
 f(4) = f(4) + 1.5;
@@ -104,7 +104,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 ac = [0; 0; 0; 0; 0; 0]; % desplazamientos conocidos
 
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\(fc-Kdc*ac);   % calculo desplazamientos desconocidos
+ad = Kdd\(fc - Kdc*ac);    % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd; % calculo fuerzas de equilibrio desconocidas
 
 % armo los vectores de desplazamientos (a) y fuerzas (q)
@@ -123,4 +123,4 @@ for e = 1:nb % para cada barra
    
    fprintf('\nFuerzas internas para barra %d en coord. locales = \n', e);
    disp(T{e}*qe_coord_glob)
-end;
+end
