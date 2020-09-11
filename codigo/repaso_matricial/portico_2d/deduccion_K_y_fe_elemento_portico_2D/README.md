@@ -1,8 +1,8 @@
 ## Deducción de la matriz de rigidez de un pórtico en 2D
 
 Los programas siguientes sirven para deducir la matriz de rigidez de un elemento finito de pórtico bidimensional:
-* MATLAB: [deduccion_K_portico2D.m](deduccion_K_portico2D.m) (usa el toolbox de álgebra simbólica)
-* PYTHON: [deduccion_K_portico2D.py](deduccion_K_portico2D.py)
+* MATLAB: [deduccion_Ke_portico2D.m](deduccion_Ke_portico2D.m) (usa el toolbox de álgebra simbólica)
+* PYTHON: [deduccion_Ke_portico2D.py](deduccion_Ke_portico2D.py)
 
 <!---
 Compile en: https://tex.s2cms.com
