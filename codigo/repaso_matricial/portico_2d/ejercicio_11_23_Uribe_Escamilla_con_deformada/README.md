@@ -6,9 +6,9 @@ Los programas:
 
 estiman las reacciones en los apoyos, y grafican la deformada y los diagramas de fuerza axial, fuerza cortante y momento flector del pórtico 2D que se muestra a continuación:
 
-![figura](ejemplo_portico.svg)
+![figura](../ejercicio_11_23_Uribe_Escamilla/ejemplo_portico.svg)
 
-Se incluye el archivo [ejemplo_portico.pdf](ejemplo_portico.pdf) para que se compare con el libro de Uribe Escamilla. Dicho libro se puede descargar libremente de:
+Se incluye el archivo [ejemplo_portico.pdf](../ejercicio_11_23_Uribe_Escamilla/ejemplo_portico.pdf) para que se compare con el libro de Uribe Escamilla. Dicho libro se puede descargar libremente de:
 
 https://www.researchgate.net/publication/31754481_Analisis_de_estructuras_J_Uribe_Escamilla (el ejemplo se encuentra en la página 526 de esta versión del libro).
 
