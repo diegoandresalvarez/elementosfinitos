@@ -44,8 +44,8 @@ M      = y(3,:);           % Momento flector [kN/m]
 %u     = y(5,:);           % Desplazamiento horizontal de la viga [m]
 %v     = y(1,:);           % Desplazamiento vertical de la viga [m]
 %theta = atan(sol.y(2,:)); % Angulo de giro  [rad]
-X1 = +faxial(1);   Y1 = -V(1);   M1 = +M(1);   % 1 => en x=0
-X2 = -faxial(2);   Y2 = +V(2);   M2 = -M(2);   % 2 => en x=L
+X1 = +faxial(1);   Y1 = -V(1);   M1 = +M(1);   % 1   => en x=0
+X2 = -faxial(end); Y2 = +V(end); M2 = -M(end); % end => en x=L
 
 feloc = [ X1; Y1; M1; X2; Y2; M2 ];
 

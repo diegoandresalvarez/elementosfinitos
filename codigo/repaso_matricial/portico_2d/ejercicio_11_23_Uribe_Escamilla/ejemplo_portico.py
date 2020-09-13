@@ -96,7 +96,7 @@ for e in range(nb): # para cada barra
 f[4-1] += 1.5
 
 # %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
-c = np.array([1, 2, 3, 10, 11, 12]) - 1;
+c = np.array([1, 2, 3, 10, 11, 12]) - 1
 d = np.setdiff1d(np.arange(ngdl), c)  # d = [4 5 6 7 8 9] - 1
 
 # %% extraigo las submatrices y especifico las cantidades conocidas

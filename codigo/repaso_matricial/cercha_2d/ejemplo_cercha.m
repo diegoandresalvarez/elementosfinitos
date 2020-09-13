@@ -14,25 +14,25 @@ L     = [ 500     400     500     400      300 ]; % longitud barra
 A     = [ 100     40      150     40       30  ]; % area barra
 
 % LaG: local a global: matriz que relaciona nodos locales y globales
-LaG = [1 3    % fila = barra
-       1 4    % col1 = nodo global asociado a nodo local 1
-       3 2    % col2 = nodo global asociado a nodo local 2
-       4 2  
-       3 4 ]; % (se lee la barra x va del nodo i al nodo j)
+LaG = [ 1 3     % fila = barra
+        1 4     % col1 = nodo global asociado a nodo local 1
+        3 2     % col2 = nodo global asociado a nodo local 2
+        4 2  
+        3 4 ];  % (se lee la barra x va del nodo i al nodo j)
 
 % gdl: grados de libertad
-gdl = [1 2    % fila = nodo
-       3 4    % col1 = gdl en direccion x
-       5 6    % col2 = gdl en direccion y
-       7 8]; 
+gdl = [ 1 2     % fila = nodo
+        3 4     % col1 = gdl en direccion x
+        5 6     % col2 = gdl en direccion y
+        7 8 ]; 
       
 % propiedades del material
 E = 2040;     % ton/cm^2
 k = E.*A./L;  % rigidez de cada barra
 
-%% separo memoria
-K = zeros(8); 
-T = cell(5,1); 
+%% se separa la memoria antes de los calculos
+K   = zeros(8); 
+T   = cell(5,1); 
 idx = cell(5,1);
 
 %% ensamblo la matriz de rigidez global
@@ -54,7 +54,7 @@ for e = 1:5  % para cada barra
            -k(e)  0  k(e)  0
             0     0  0     0 ];
 
-   % sumo a K global
+   % se ensambla la matriz de rigidez local Ke en la matriz de rigidez global K
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + T{e}'*Kloc*T{e};
 end
 

@@ -4,7 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from dibujar_barra_deformada_portico import dibujar_barra_deformada_portico
+from misfunciones import dibujar_barra_deformada_portico, calc_fuerzas_nodales_equivalentes
 
 #%% constantes
 NL1, NL2, MAT = 0, 1, 2
@@ -94,11 +94,19 @@ qyloc = [
 # especificadas con respecto al sistema de coordenadas globales)
 
 fe = nbar*[None]
+for e in range(nbar):
+   x1 = xnod[LaG[e,NL1], X];  x2 = xnod[LaG[e,NL2], X]
+   y1 = xnod[LaG[e,NL1], Y];  y2 = xnod[LaG[e,NL2], Y]
+   fe[e] = calc_fuerzas_nodales_equivalentes(
+        A[mat[e]], E[mat[e]], I[mat[e]], x1,y1, x2,y2, qxloc[e],qyloc[e])
+
+'''
 #                 fxi    fyi      mi     fxj      fyj     mj
 #                 ton    ton      ton-m  ton      ton     ton-m
 fe[0] = np.array([0,     -5.60,  -3.733,  0,     -5.60,   +3.733 ]) # OJO con los signos
 fe[1] = np.array([0,      0   ,   0    ,  0,      0   ,   0      ]) # mirar pag 613
 fe[2] = np.array([0,      0   ,   0    ,  0,      0   ,   0      ])
+'''
 
 #%% ensamblo la matriz de rigidez global
 K   = np.zeros((ngdl,ngdl))  # separo memoria
@@ -137,8 +145,8 @@ for e in range(nbar): # para cada barra
 
    # matriz de rigidez local en coordenadas globales
    Ke[e] = T[e].T @ Kloc @ T[e]
-   K[np.ix_(idx[e],idx[e])] += Ke[e] # ensambla Ke{e} a K global
-   f[idx[e]]                += fe[e] # ensambla fe{e} a f global
+   K[np.ix_(idx[e],idx[e])] += Ke[e] # ensambla Ke{e} en K global
+   f[idx[e]]                += fe[e] # ensambla fe{e} en f global
 
 #%% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 apoyos = np.array([[gdl[3-1,X],  0],
@@ -182,16 +190,16 @@ q = np.zeros(ngdl); q[c] = qd            # fuerzas nodales equivalentes
 qe_loc  = nbar*[None]
 qe_glob = nbar*[None]
 for e in range(nbar): # para cada barra
-   print('\n\n Fuerzas internas para barra %d en coord. globales =' % (e+1))
+   print(f'\n\n Fuerzas internas para barra {e+1} en coord. globales =')
    qe_glob[e] = Ke[e]@a[idx[e]] - fe[e]
    print(qe_glob[e])
    
-   print('\n\n Fuerzas internas para barra %d en coord. locales =' % (e+1))
+   print(f'\n\n Fuerzas internas para barra {e+1} en coord. locales =')
    qe_loc[e] = T[e]@qe_glob[e]
    print(qe_loc[e])
 
 #%% imprimo los resultados
-print('Desplazamientos nodales                                               ')
+print('Desplazamientos nodales')
 print('~'*80)
 vect_mov = a.reshape((nno,3)) # vector de movimientos
 for i in range(nno):

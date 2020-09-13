@@ -49,12 +49,12 @@ K   = zeros(ngdl);    % matriz de rigidez global
 f   = zeros(ngdl,1);  % vector de fuerzas nodales equivalentes global
 Ke  = cell(nb,1);     % matriz de rigidez local en coordenadas globales
 T   = cell(nb,1);     % matriz de transformacion de coordenadas
-idx = zeros(nb,6);    % almacena los 6 gdls de las barras
+idx = cell(nb,1);     % almacena los 6 gdls de las barras
 
 %% ensamblo la matriz de rigidez global (K) y vector de fuerzas global (f)
 for e = 1:nb  % para cada barra
    % saco los 6 gdls de la barra e
-   idx(e,:) = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)];
+   idx{e} = [gdl(LaG(e,NL1),:) gdl(LaG(e,NL2),:)];
    
    % matriz de transformacion de coordenadas para la barra e
    c = cosd(theta(e)); s = sind(theta(e));
@@ -77,8 +77,8 @@ for e = 1:nb  % para cada barra
 
    % matriz de rigidez local en coordenadas globales
    Ke{e} = T{e}'*Kloc*T{e};            
-   K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % sumo Ke{e} a K global
-   f(idx(e,:))          = f(idx(e,:))          + fe{e}; % sumo a f global
+   K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke{e}; % sumo Ke{e} a K global
+   f(idx{e})        = f(idx{e})        + fe{e}; % sumo a f global
 end
 
 %% localizo la carga puntual de 1.5 ton en el gdl 4
@@ -118,7 +118,7 @@ fprintf('Desplazamientos de los nodos en coord. globales = \n'); a
 %% globales
 for e = 1:nb % para cada barra
    fprintf('\n\nFuerzas internas para barra %d en coord. globales = \n', e);
-   qe_coord_glob = Ke{e}*a(idx(e,:)) - fe{e};
+   qe_coord_glob = Ke{e}*a(idx{e}) - fe{e};
    disp(qe_coord_glob)
    
    fprintf('\nFuerzas internas para barra %d en coord. locales = \n', e);

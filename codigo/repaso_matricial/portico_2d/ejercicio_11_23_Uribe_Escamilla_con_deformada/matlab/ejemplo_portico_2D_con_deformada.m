@@ -135,8 +135,8 @@ for e = 1:nbar  % para cada barra
 
    % matriz de rigidez local en coordenadas globales
    Ke{e} = T{e}'*Kloc*T{e};
-   K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % ensambla Ke{e} a K global
-   f(idx(e,:))          = f(idx(e,:))          + fe{e}; % ensambla fe{e} a f global
+   K(idx(e,:),idx(e,:)) = K(idx(e,:),idx(e,:)) + Ke{e}; % ensambla Ke{e} en K global
+   f(idx(e,:))          = f(idx(e,:))          + fe{e}; % ensambla fe{e} en f global
 end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
