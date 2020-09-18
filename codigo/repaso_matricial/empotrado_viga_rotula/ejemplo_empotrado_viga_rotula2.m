@@ -3,10 +3,11 @@
 clear
 clc
 
-E = 200e9; % Pa
+E = 200e6; % kPa
 I = 50e-6; % m^4
 
-% v1 t2               v3          v4 t5            v6 t7
+%   A-----------------B------------------------------C
+% v1 t2               v3             v4 t5         v6 t7
 
 % Barra 1
 idx1 = [1 2 3];
@@ -36,7 +37,7 @@ disp('M1 = '); disp(+subs(sol.M, x, 0));
 disp('M2 = '); disp(-subs(sol.M, x, L));
 %}
 % Y1 = (5*L*q)/8; Y2 = (3*L*q)/8; M1 = (L^2*q)/8; M2 = 0;
-q = -9e3; % N/m
+q = -9; % kN/m
 f1 = [ (5*L*q)/8; (L^2*q)/8; (3*L*q)/8  ]; % Y1 M1 Y2
 
  % Barra 2
@@ -58,15 +59,12 @@ K3 = [ ...
    6*EI/L^2,    4*EI/L,  -6*EI/L^2,     2*EI/L
  -12*EI/L^3, -6*EI/L^2,  12*EI/L^3,  -6*EI/L^2
    6*EI/L^2,    2*EI/L,  -6*EI/L^2,     4*EI/L];
-
-
-
 f3 = [ 0; 0; 0; 0];
 
 % Se ensambla la matriz de rigidez global   
 ngdl = 7;
 K = zeros(ngdl);                    f = zeros(ngdl,1); 
-                                    f(4) = -30e3; %N
+                                    f(4) = -30; %kN
 K(idx1,idx1) = K1;                  f(idx1) = f1;
 K(idx2,idx2) = K(idx2,idx2) + K2;   f(idx2) = f(idx2) + f2;
 K(idx3,idx3) = K(idx3,idx3) + K3;   f(idx3) = f(idx3) + f3;
@@ -88,7 +86,6 @@ ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a  = zeros(ngdl,1);   a(c) = ac;  a(d) = ad; % desplazamientos
 q  = zeros(ngdl,1);   q(c) = qd;             % fuerzas nodales equivalentes
-
 
 a
 q

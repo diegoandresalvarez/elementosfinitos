@@ -6,9 +6,10 @@ clc
 EI = 1; % kN*m^2
 
 %        b1         b2         b3      b4         b5
-% v1 t2 ---- v3 t4 ---- v5 t6 ---- v7 ---- v8 t9 ---- v10 t11
+% v1 t2 ---- v3 t4 ---- v5 t6 ---- v7 ---- v8 t9 ---- v10 t11      >>>  GDLs
+%   A          B          C         D                    E
 
-ke = cell(5,1);
+ke  = cell(5,1);
 idx = cell(5,1);
 
 % Barra 1
@@ -61,9 +62,9 @@ ke{5} = [ ...
 % Se ensambla la matriz de rigidez global   
 ngdl = 11; nbar = 5;
 K = zeros(ngdl);                    f = zeros(ngdl,1); 
-                                    f(3) = -4; %N
-                                    f(4) = +4; %N                                    
-                                    f(8) = -2; %N                                                                        
+                                    f(3) = -4; %kN
+                                    f(4) = +4; %kN                                    
+                                    f(8) = -2; %kN
                                     
 for e = 1:nbar
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + ke{e};   
@@ -82,7 +83,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 ac = [ 0; 0; 0 ]; % desplazamientos conocidos en contorno
 
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
+ad = Kdd\(fc - Kdc*ac);      % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a  = zeros(ngdl,1);   a(c) = ac;  a(d) = ad; % desplazamientos
 q  = zeros(ngdl,1);   q(c) = qd;             % fuerzas nodales equivalentes
