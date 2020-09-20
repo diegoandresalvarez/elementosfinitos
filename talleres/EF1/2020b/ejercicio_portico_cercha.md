@@ -28,5 +28,5 @@ Pasos intermedios solicitados:
 NOTA FINAL: 
  * Quienes ya hallan visto el curso Mecánica de Sólidos 2 deben hacer el cálculo utilizando la teoría de vigas de Timoshenko-Ehrenfest. Incluir la deducción de las matrices y vectores de fuerzas nodales equivalentes.
  * Quienes no hallan visto el curso Mecánica de Sólidos 2 deben hacer el cálculo utilizando la teoría de vigas de Euler-Bernoulli (recuerde activar en el software ya sea shear area = 0 o desactivar la opción "usar deformaciones por cortante").
-
+ 
 Si tienen dudas, por favor hágalas en el grupo de WhatsApp del curso, no a mi WhatsApp personal.
