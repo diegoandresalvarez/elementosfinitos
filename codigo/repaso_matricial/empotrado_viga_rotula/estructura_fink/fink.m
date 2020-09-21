@@ -21,17 +21,17 @@ xnod = [ ...  % coordenadas de cada nodo [x, y]
 
 % nod1  nod2 material  tipo(1=EE,2=ER,3=RR)
 barra = [
-     2     1     2     1    %  1   2=empotrado, 1=rotula
+     2     1     2     2    %  1   2=empotrado, 1=rotula
      2     3     2     1    %  2
-     3     4     2     1    %  3
-     5     1     1     1    %  4   5=empotrado, 1=rotula
-     5     6     1     1    %  5
-     7     6     1     1    %  6   7=empotrado, 6=rotula
-     7     4     1     1    %  7
-     5     2     1     1    %  8
-     2     6     1     1    %  9
-     6     3     1     1    % 10
-     3     7     1     1 ]; % 11
+     3     4     2     2    %  3
+     5     1     1     2    %  4   5=empotrado, 1=rotula
+     5     6     1     2    %  5
+     7     6     1     2    %  6   7=empotrado, 6=rotula
+     7     4     1     2    %  7
+     5     2     1     3    %  8
+     2     6     1     3    %  9
+     6     3     1     3    % 10
+     3     7     1     3 ]; % 11
  
 LaG = barra(:,[1 2]);  % local a global
 mat = barra(:,3);      % material
@@ -39,8 +39,8 @@ mat = barra(:,3);      % material
 %    area      inercias_y       modulo de elast.  densidad
 %    A(m^2)     I(m^4)          E(kPa)            (kg/m3)
 props = [...
-    pi*0.04^2  pi*0.04^4/4        200e6            7800     % inclinado
-    0.04*0.04  0.04*0.04^3/12     200e6            7800  ]; % horizontal
+    pi*0.04^2  pi*0.04^4/4        200e6          7800     % inclinado
+    0.04*0.04  0.04*0.04^3/12     200e6          7800  ]; % horizontal
 % seccion circular de radio 4 cm para los elementos inclinados
 % seccion rectangular de lado 4 cm para los elementos horizontales
 A = props(mat,1); I = props(mat,2); E = props(mat,3); rho = props(mat,4);
@@ -56,7 +56,14 @@ nbar = size(LaG,1);  % numero de EFs (numero de filas de LaG)
 % col1 = gdl en direccion x
 % col2 = gdl en direccion y
 % col3 = gdl en direccion angular antihoraria
-gdl = [ (1:3:21)' (2:3:21)'  (3:3:21)' ];
+gdl = [ ...
+   1    2  NaN    % 1  % nodos vs grados de libertad
+  11   12   13    % 2
+  14   15   16    % 3
+  17   18  NaN    % 4
+   3    4    5    % 5
+   6    7  NaN    % 6
+   8    9  10 ];  % 7
 
 ngdl = nanmax(gdl(:));  % numero de grados de libertad
 
@@ -66,11 +73,11 @@ idx = cell(nbar,1);
 for e = 1:nbar
    switch barra(e,4) 
       case 1 %EE
-         idx{e} = [gdl(LaG(e,1),[1 2 3]) gdl(LaG(e,2),[1 2 3])];    
+         idx{e} = [ gdl(LaG(e,1),[1 2 3]) gdl(LaG(e,2),[1 2 3]) ];    
       case 2 %ER
-         idx{e} = [gdl(LaG(e,1),[1 2 3]) gdl(LaG(e,2),[1 2])];             
+         idx{e} = [ gdl(LaG(e,1),[1 2 3]) gdl(LaG(e,2),[1 2])   ];             
       case 3 %RR
-         idx{e} = [gdl(LaG(e,1),[1 2])   gdl(LaG(e,2),[1 2])];                      
+         idx{e} = [ gdl(LaG(e,1),[1 2])   gdl(LaG(e,2),[1 2])   ];                      
    end   
 end
 
@@ -145,7 +152,7 @@ for e = 1:nbar  % para cada barra
    
    Kg(idx{e},idx{e}) = Kg(idx{e},idx{e}) + Ke{e};  % sumo Ke{e} a K global
    fg(idx{e})        = fg(idx{e}) + T{e}'*feloc{e}; % sumo a f global
-end;
+end
 
 %% grados de libertad del desplazamiento conocidos (c) y desconocidos (d)
 apoyos = [...
@@ -208,7 +215,7 @@ for e = 1:nbar % para cada barra
    fprintf('\n\n Fuerzas internas para barra %d en coord. locales = \n', e);
    qe_coord_loc{e} = T{e}*qe_coord_glob;
    disp(qe_coord_loc{e});   
-end;
+end
 
 %% se estiman los movimientos y las reacciones de cada nodo
 vect_mov = zeros(nno,3); % vector de movimientos
@@ -216,7 +223,13 @@ qq       = zeros(nno,3); % vector de movimientos
 for i = 1:nno
    vect_mov(i,1) = ag(gdl(i,1));   qq(i,1) = qg(gdl(i,1));
    vect_mov(i,2) = ag(gdl(i,2));   qq(i,2) = qg(gdl(i,2));
-   vect_mov(i,3) = ag(gdl(i,3));   qq(i,3) = qg(gdl(i,3));     
+   if isnan(gdl(i,3))
+      vect_mov(i,3) = NaN;
+      qq(i,3)       = NaN;         
+   else
+      vect_mov(i,3) = ag(gdl(i,3));      
+      qq(i,3)       = qg(gdl(i,3));            
+   end
 end
 
 %% imprimo los resultados
@@ -226,7 +239,7 @@ disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 for i = 1:nno
    fprintf('Nodo %3d: u = %12.4g mm, v = %12.4g mm, theta = %12.4g rad \n', ...
       i, 1000*vect_mov(i,X), 1000*vect_mov(i,Y), vect_mov(i,TH));
-end;
+end
 
 
 disp(' ');
@@ -236,8 +249,8 @@ for i = 1:nno
    if ~isequal(qq(i,:), [0 0 0])
       fprintf('Nodo %3d qx = %12.4g kN, qy = %12.4g, mom = %12.4g kN m\n', ...
          i, qq(i,X), qq(i,Y), qq(i,TH));
-   end;
-end;
+   end
+end
 
 
 %% Dibujar la estructura y su deformada
@@ -260,15 +273,15 @@ for e = 1:nbar
 
    switch length(idx{e})
       case 4
-      c1_dibujar_barra_deformada_RR(A(e), E(e), I(e), ...
+      dibujar_barra_deformada_RR(A(e), E(e), I(e), ...
          x1(e),y1(e), x2(e),y2(e), qxloc_e, qyloc_e, qe_coord_loc{e}, T{e}*ag(idx{e}), ...
          esc_def, esc_faxial, esc_V, esc_M);
       case 5
-      c1_dibujar_barra_deformada_ER(A(e), E(e), I(e), ...
+      dibujar_barra_deformada_ER(A(e), E(e), I(e), ...
          x1(e),y1(e), x2(e),y2(e), qxloc_e, qyloc_e, qe_coord_loc{e}, T{e}*ag(idx{e}), ...
          esc_def, esc_faxial, esc_V, esc_M);
       case 6
-      c1_dibujar_barra_deformada_EE(A(e), E(e), I(e), ...
+      dibujar_barra_deformada_EE(A(e), E(e), I(e), ...
          x1(e),y1(e), x2(e),y2(e), qxloc_e, qyloc_e, qe_coord_loc{e}, T{e}*ag(idx{e}), ...
          esc_def, esc_faxial, esc_V, esc_M);
    end

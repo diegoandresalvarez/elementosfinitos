@@ -1,4 +1,4 @@
-function c1_dibujar_barra_deformada_EE(A, E, I, x1,y1, x2,y2, qxloc,qyloc, qe, ae, esc_def, esc_faxial, esc_V, esc_M)
+function dibujar_barra_deformada_EE(A, E, I, x1,y1, x2,y2, qxloc,qyloc, qe, ae, esc_def, esc_faxial, esc_V, esc_M)
 % Este programa dibuja APROXIMADAMENTE el elemento de barra 
 % empotrado a la izquierda y
 % empotrado a la derecha
@@ -24,10 +24,10 @@ ae = [ 0.01          % u1, v1, t1 desplazamientos nodo 1 en coord. locales
       -0.01          % u2, v2, t2 desplazamientos nodo 2 en coord. locales
        0.02
       -0.07 ];
-esc_def    = 10;            % escalamiento de la deformada
-esc_faxial = 10;            % escalamiento del diagrama de axiales
-esc_V      = 10;            % escalamiento del diagrama de cortantes
-esc_M      = 10;            % escalamiento del diagrama de momentos
+esc_def    = 10;     % escalamiento de la deformada
+esc_faxial = 10;     % escalamiento del diagrama de axiales
+esc_V      = 10;     % escalamiento del diagrama de cortantes
+esc_M      = 10;     % escalamiento del diagrama de momentos
 %}
 
 %% se definen algunas constantes
@@ -35,7 +35,7 @@ X1  = 1; Y1 = 2; M1 = 3; X2 = 4; Y2 = 5; M2 = 6;
 
 %% resolver la ecuacion diferencial
 npuntos = 101;
-xinit = linspace(0, sqrt((x2-x1)^2 + (y2-y1)^2), npuntos);
+xinit = linspace(0, hypot(x2-x1, y2-y1), npuntos);
 sol   = bvpinit(xinit, zeros(6,1));
 sol   = bvp5c(@ecuacion_diferencial, @condiciones_de_apoyo, sol);
 

@@ -1,16 +1,16 @@
-function c1_dibujar_barra_deformada_RR(A, E, I, x1,y1, x2,y2, qxloc,qyloc, qe, ae, esc_def, esc_faxial, esc_V, esc_M)
+function dibujar_barra_deformada_ER(A, E, I, x1,y1, x2,y2, qxloc,qyloc, qe, ae, esc_def, esc_faxial, esc_V, esc_M)
 % Este programa dibuja APROXIMADAMENTE el elemento de barra 
-% con rotula a la izquierda y
+% empotrado a la izquierda y
 % con rotura en la derecha
 % OJO no da la solucion exacta, ya se para esta se requiere un xinit muy
 % fino y una tolerancia en la solucion de la ecuacion diferencial muy baja
 
 %% se definen algunas constantes
-X1  = 1; Y1 = 2; X2 = 3; Y2 = 4;
+X1  = 1; Y1 = 2; M1 = 3; X2 = 4; Y2 = 5;
 
 %% resolver la ecuacion diferencial
 npuntos = 101;
-xinit = linspace(0, sqrt((x2-x1)^2 + (y2-y1)^2), npuntos);
+xinit = linspace(0, hypot(x2-x1, y2-y1), npuntos);
 sol   = bvpinit(xinit, zeros(6,1));
 sol   = bvp5c(@ecuacion_diferencial, @condiciones_de_apoyo, sol);
 
@@ -67,8 +67,8 @@ ss = pos(1,:) + x1;
 mm = pos(2,:) + y1;
 
 plot([x1 x2], [y1 y2], 'b-', [x1 ss x2], [y1 mm y2], 'r-','LineWidth',2);
-%text(ss(1),   mm(1),   num2str(-qe(M1)));
-%text(ss(end), mm(end), num2str( qe(M2)));
+text(ss(1),   mm(1),   num2str(-qe(M1)));
+% text(ss(end), mm(end), num2str( qe(M2)));
 
 %% -----------------------------------------------------------------------
    function dydx = ecuacion_diferencial(x,y)
@@ -97,15 +97,15 @@ plot([x1 x2], [y1 y2], 'b-', [x1 ss x2], [y1 mm y2], 'r-','LineWidth',2);
 
    function res = condiciones_de_apoyo(YL,YR)
       % condiciones de apoyo (cond. de frontera de la ecuacion diferencial)
-      u1  = 1; v1 = 2; u2 = 3; v2 = 4;
+      u1  = 1; v1 = 2; t1 = 3; u2 = 4; v2 = 5;
       v_  = 1; t_ = 2; M_ = 3; V_ = 4; u_ = 5; fax_ = 6;      
       res = [ % YL: apoyo izquierdo (LEFT), YR: apoyo derecho (RIGHT)
               YL(u_) - ae(u1)          % uloc(0)     = u1
               YL(v_) - ae(v1)          % vloc(0)     = v1
-              YL(M_)                   % M(0)         = 0
+              YL(t_) - ae(t1)          % thetaloc(0) = t1
               YR(u_) - ae(u2)          % uloc(L)     = u2
               YR(v_) - ae(v2)          % vloc(L)     = v2
-              YR(M_) ];                % M(L)         = 0
+              YR(M_) ];                % M(L)        = 0
    end
 end
 %% end

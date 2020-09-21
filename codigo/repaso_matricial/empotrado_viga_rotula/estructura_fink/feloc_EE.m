@@ -5,7 +5,7 @@ function feloc = feloc_EE(w, x1, y1, x2, y2)
 % empotrada a la derecha
 
 %% Se calcula la longitud de la barra
-L = sqrt((x2-x1)^2 + (y2-y1)^2);  
+L = hypot(x2-x1, y2-y1);  
 
 %% Se calculan las cargas distribuidas wx y wy
 c = (x2-x1)/L;   s = (y2-y1)/L;  % sin y cos de la inclinacion
