@@ -17,18 +17,18 @@ import matplotlib.pyplot as plt
 # %matplotlib inline
 
 # %% defino las variables
-nef = 3                       # número de elementos finitos (EF)
-nno = nef+1                   # número de nodos
-ngdl = nno                    # número de grados de libertad
-E   = 200e9     # Pa          # módulo de elasticidad de la barra
-A   = (0.01)**2 # m^2         # área transversal de la barra
-L   = 2         # m           # longitud de la barra
-b   = 1000      # N/m         # fuerza axial aplicada sobre cada EF
-P   = 250       # N           # carga nodal al final de la barra
+nef  = 3                       # número de elementos finitos (EF)
+nno  = nef+1                   # número de nodos
+ngdl = nno                     # número de grados de libertad
+E    = 200e9     # Pa          # módulo de elasticidad de la barra
+A    = (0.01)**2 # m^2         # área transversal de la barra
+L    = 2         # m           # longitud de la barra
+b    = 1000      # N/m         # fuerza axial aplicada sobre cada EF
+P    = 250       # N           # carga nodal al final de la barra
 
-xnod = np.linspace(0, L, nno) # posición de los nodos
-Le  = np.diff(xnod)           # longitud de cada EF (= np.tile(L/nef, (nef, 1))
-k   = E*A/Le                  # rigidez de cada EF
+xnod = np.linspace(0, L, nno)  # posición de los nodos
+Le   = np.diff(xnod)           # longitud de cada EF (= np.tile(L/nef, (nef, 1))
+k    = E*A/Le                  # rigidez de cada EF
 
 # definición de EFs con respecto a nodos
 rango = lambda a,b : np.arange(a,b+1) # np.arange con el punto final
@@ -59,8 +59,8 @@ d = np.setdiff1d(np.arange(ngdl), c)
 #| qc |   | Kdc Kdd || ad |   | fc |
 
 # %% extraigo las submatrices y especifico las cantidades conocidas
-Kcc = K[c,:][:,c]; Kcd = K[c,:][:,d]; fd = f[c]
-Kdc = K[d,:][:,c]; Kdd = K[d,:][:,d]; fc = f[d]
+Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
+Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
 
 # f = vector de fuerzas nodales equivalentes
 # q = vector de fuerzas nodales de equilibrio del elemento
@@ -81,7 +81,7 @@ faxial = np.zeros(nef)
 for e in range(nef):                   # ciclo sobre todas los elementos finitos
     Be = np.array([[-1/Le[e], 1/Le[e]]])
     ae = a[LaG[e,:]]
-    faxial[e] = (E*A)*Be@ae            # = D*B(e)@a(e)
+    faxial[e] = (E*A)*Be@ae            # = D*B(e)*a(e)
 
 # %% imprimo los resultados
 print('Desplazamientos (m) = \n',                             a[:,np.newaxis])

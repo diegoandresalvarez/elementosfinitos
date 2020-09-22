@@ -18,11 +18,11 @@ from scipy.integrate import solve_bvp
 # %matplotlib inline
 
 # %% Defino las variables
-E   = 200e9     # Pa          # módulo de elasticidad de la barra
-A   = (0.01)**2 # m^2         # área transversal de la barra
-L   = 2         # m           # longitud de la barra
-b   = 1000      # N/m         # fuerza axial aplicada sobre cada EF
-P   = 250       # N           # carga nodal al final de la barra
+E = 200e9     # Pa          # módulo de elasticidad de la barra
+A = (0.01)**2 # m^2         # área transversal de la barra
+L = 2         # m           # longitud de la barra
+b = 1000      # N/m         # fuerza axial aplicada sobre cada EF
+P = 250       # N           # carga nodal al final de la barra
 
 # %% Solución de la ecuacion diferencial
 
