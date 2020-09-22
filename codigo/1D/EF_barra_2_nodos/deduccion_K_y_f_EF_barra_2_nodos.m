@@ -11,10 +11,10 @@ N = [N1 N2];                   % matriz de funciones de forma
 B = [diff(N1,x) diff(N2,x)];   % matriz de deformación
 D = E*A;                       % matriz constitutiva
 
-% Matriz de rigidez (ecuación 2.83)
+% Matriz de rigidez (ecuación 2.76b)
 K = int(B.'*D*B, x, x1, x2);
 disp('K = '); pretty(K)
  
-% Vector de fuerzas nodales equivalentes (ecuación 2.83)
+% Vector de fuerzas nodales equivalentes (ecuación 2.76b)
 f = int(N.'*b, x, x1, x2);
 disp('f = '); pretty(f)

@@ -17,10 +17,10 @@ N = Matrix([[N1, N2]])                        # matriz de funciones de forma
 B = Matrix([[sp.diff(N1,x), sp.diff(N2,x)]])  # matriz de deformación
 D = E*A                                       # matriz constitutiva
 
-# Matriz de rigidez (ecuación 2.83)
+# Matriz de rigidez (ecuación 2.76b)
 K = sp.simplify(sp.integrate(B.T*D*B, (x, x1, x2)))
 print('K = '); sp.pprint(K); print()
 
-# Vector de fuerzas nodales equivalentes (ecuación 2.83)
+# Vector de fuerzas nodales equivalentes (ecuación 2.76b)
 f = sp.simplify(sp.integrate(N.T*b, (x, x1, x2)))
 print('f = '); sp.pprint(f)
