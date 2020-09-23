@@ -22,7 +22,7 @@ Nota: si su programa en MATLAB/PYTHON no hace los diagramas solicitados, debe ha
 Pasos intermedios solicitados:
 * Utilizar como base los programas que figuran en [esta carpeta](../../../codigo/repaso_matricial/portico_2d).
 * Deducir las fórmulas asociadas a las fuerzas nodales equivalentes que se requieran en este cálculo.
-* Comparar los resultados obtenidos con un programa de cálculo estructura. NOTA un cálculo correcto no debe dar una diferencia mayor que 0.01%. Hacer un video de aproximadamente 5 minutos donde muestre los pasos más representativos del cálculo.
+* Comparar los resultados obtenidos con un programa de cálculo estructura. NOTA un cálculo correcto no debe dar una diferencia mayor que 0.01%. Hacer un video de aproximadamente 5 minutos donde muestre los pasos más representativos del cálculo. Cada miembro del grupo debe utilizar el software registrado en la hoja de cálculo que tenemos en GOOGLE CLASSROOM.
 * Incluir las imágenes/tablas que arrojó el software.
 
 NOTA FINAL: 
