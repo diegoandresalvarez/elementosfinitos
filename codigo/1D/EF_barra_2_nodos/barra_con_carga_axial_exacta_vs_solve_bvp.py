@@ -40,7 +40,7 @@ AA = lambda x : np.tile(A, x.shape)
 bb = lambda x : np.tile(b, x.shape)
 
 # Se define la ecuación diferencial expresada como un sistema de dos 
-# ecuaciones diferenciales
+# ecuaciones diferenciales de primer orden
 u      = 0 # y[0] = u(x)      constantes para facilitar la lectura del código
 faxial = 1 # y[1] = faxial(x)    
 sist_eq_dif = lambda x,y : np.vstack([ y[faxial,:]/(EE(x)*AA(x)),    # = u

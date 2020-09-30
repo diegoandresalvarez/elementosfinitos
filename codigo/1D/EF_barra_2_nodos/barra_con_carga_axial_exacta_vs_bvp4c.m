@@ -30,7 +30,7 @@ AA = @(x) A;
 bb = @(x) b;
 
 % Se define la ecuacion diferencial, expresada como un sistema de dos
-% ecuaciones diferenciales
+% ecuaciones diferenciales de primer orden
 u      = 1; % y(1) = u(x)       
 faxial = 2; % y(2) = faxial(x)
 sist_eq_dif = @(x,y) [ y(faxial)/(EE(x)*AA(x)) 
