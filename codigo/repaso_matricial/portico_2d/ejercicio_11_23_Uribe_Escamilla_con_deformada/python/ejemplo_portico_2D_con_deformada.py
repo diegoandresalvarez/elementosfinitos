@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#%% Unidades en kN y m
+#%% Unidades en toneladas y metros
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -212,7 +212,7 @@ print('~'*80)
 qq = q.reshape((nno,3))
 for i in range(nno):
    if not np.allclose(qq[i,:], np.array([0, 0, 0])):
-      print('Nodo %3d qx = %12.4g kN, qy = %12.4g kN, mom = %12.4g kN*m' % 
+      print('Nodo %3d qx = %12.4g ton, qy = %12.4g ton, mom = %12.4g ton*m' % 
          (i+1, qq[i,X], qq[i,Y], qq[i,TH]))
 
 #%% Dibujar la estructura y su deformada
@@ -230,19 +230,19 @@ plt.ylabel('y, m')
 plt.axis('equal')
 
 plt.figure(3)  
-plt.title('Fuerza axial [kN]')
+plt.title('Fuerza axial [ton]')
 plt.xlabel('x, m')
 plt.ylabel('y, m')
 plt.axis('equal')
 
 plt.figure(4)  
-plt.title('Fuerza cortante [kN]')
+plt.title('Fuerza cortante [ton]')
 plt.xlabel('x, m')
 plt.ylabel('y, m')
 plt.axis('equal')
 
 plt.figure(5)  
-plt.title('Momento flector [kN-m]')
+plt.title('Momento flector [ton-m]')
 plt.xlabel('x, m')
 plt.ylabel('y, m')
 plt.axis('equal')

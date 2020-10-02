@@ -1,6 +1,6 @@
 clear, clc, close all
 
-%% Unidades en kN y m
+%% Unidades en toneladas y metros
 %% constantes
 NL1 = 1; NL2 = 2; MAT = 3;
 X   = 1; Y   = 2; TH  = 3;
@@ -209,7 +209,7 @@ disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 qq = reshape(q,3,nno)';
 for i = 1:nno   
    if ~all(abs(qq(i,:) - [0 0 0]) < 1e-5)
-      fprintf('Nodo %3d qx = %12.4g kN, qy = %12.4g kN, mom = %12.4g kN*m\n', ...
+      fprintf('Nodo %3d qx = %12.4g ton, qy = %12.4g ton, mom = %12.4g ton*m\n', ...
          i, qq(i,X), qq(i,Y), qq(i,TH));
    end
 end
@@ -223,9 +223,9 @@ esc_M      = 0.3;           % escalamiento del diagrama de momentos
 xdef = xnod + esc_def*vect_mov(:,[X Y]);
 
 figure(2); hold on; title('Deformada exagerada');    xlabel('x, m'); ylabel('y, m'); axis equal
-figure(3); hold on; title('Fuerza axial [kN]');      xlabel('x, m'); ylabel('y, m'); axis equal
-figure(4); hold on; title('Fuerza cortante [kN]');   xlabel('x, m'); ylabel('y, m'); axis equal
-figure(5); hold on; title('Momento flector [kN-m]'); xlabel('x, m'); ylabel('y, m'); axis equal
+figure(3); hold on; title('Fuerza axial [ton]');      xlabel('x, m'); ylabel('y, m'); axis equal
+figure(4); hold on; title('Fuerza cortante [ton]');   xlabel('x, m'); ylabel('y, m'); axis equal
+figure(5); hold on; title('Momento flector [ton-m]'); xlabel('x, m'); ylabel('y, m'); axis equal
 
 for e = 1:nbar
    x1 = xnod(LaG(e,NL1), X);  x2 = xnod(LaG(e,NL2), X);
