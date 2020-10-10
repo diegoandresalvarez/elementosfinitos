@@ -165,8 +165,8 @@ Dicha barra se resolverá utilizando elementos isoparamétricos de tres nodos:
 
 ![figs/interpolacion_isoparametrica.svg](figs/interpolacion_isoparametrica.svg)
 
-* MATLAB, utilizando la matriz de rigidez deducida anteriormente: [c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m](c3_ejemplo_barra_con_carga_axial_3_nodos_k_dado.m)
-* MATLAB, utilizando las cuadraturas de Gauss-Legendre: [c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m](c3_ejemplo_barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
+* MATLAB, utilizando la matriz de rigidez deducida anteriormente: [barra_con_carga_axial_3_nodos_K_f_dado.m](barra_con_carga_axial_3_nodos_K_f_dado.m)
+* MATLAB, utilizando las cuadraturas de Gauss-Legendre: [barra_con_carga_axial_3_nodos_gauss_legendre.m](barra_con_carga_axial_3_nodos_gauss_legendre.m) (Este programa se requiere el archivo `gausslegendre_quad.m`)
 
 Las UNICAS diferencias entre los dos programas anteriores se muestran a continuación:
 
