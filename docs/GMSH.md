@@ -10,6 +10,6 @@ A continuación se encuentran unos repositorios y videos tutoriales de GMSH:
     * YouTube: https://www.youtube.com/playlist?list=PLu42Gwp4NwSv2qAn-xOGTUysjnUAV2_LP
     * GitHub: https://github.com/alejohg/tutoriales-gmsh
 
-* Tutorial por Steven Vanegas:
+* Tutorial por Steven Vanegas Giraldo:
     * YouTube: https://www.youtube.com/playlist?list=PLbumfTqsGrHqNndRKIb4byEVc6_irR5ND
     * GitHub: https://github.com/stvanegasgi/Tutorial-Gmsh-4.6.0
