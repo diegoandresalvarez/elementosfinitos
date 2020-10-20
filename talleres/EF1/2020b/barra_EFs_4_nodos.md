@@ -9,7 +9,7 @@ Considere la barra doblemente empotrada de sección transversal circular y de m�
 suponga que sobre esta barra actúa una carga distribuída (no mostrada) dada por la función:
 
 ```
-b(x) = sin(x) + 0.3 cos(5x) para x ∈ [0 m, 2 m] 
+b(x) = 40sin(x) + 12cos(5x) para x ∈ [0 m, 2 m] [kN/m]
 ```
 NOTA: el argumento de las funciones sin() y cos() está dado en radianes.
 

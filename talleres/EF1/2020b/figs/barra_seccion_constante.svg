@@ -12,8 +12,8 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="96.565689pt"
    version="1.1"
-   viewBox="0 0 460.79902 96.565688"
-   width="460.79901pt"
+   viewBox="0 0 461.84199 96.565688"
+   width="461.84198pt"
    id="svg2"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="barra_seccion_constante.svg">
@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -39,7 +39,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="995"
+     inkscape:window-height="1051"
      id="namedview337"
      showgrid="true"
      fit-margin-top="0"
@@ -47,8 +47,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.7383513"
-     inkscape:cx="227.38026"
-     inkscape:cy="76.365369"
+     inkscape:cx="295.83593"
+     inkscape:cy="55.080832"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -56,8 +56,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid3535"
-       originx="-67.745521"
-       originy="-0.59323624" />
+       originx="-67.745524"
+       originy="-0.59323727" />
   </sodipodi:namedview>
   <defs
      id="defs4"
@@ -746,7 +746,7 @@
   </g>
   <path
      style="fill:none;stroke:#000000;stroke-width:0.74858356px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="M 8.75448,3.4089214 H 404.75449"
+     d="M 8.75448,3.4089218 H 404.75449"
      id="path232"
      inkscape:connector-curvature="0" />
   <defs
@@ -799,7 +799,7 @@
        style="stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
        x="363.1994"
        y="48.269073"
-       id="tspan240">a la derecha 3 cm</tspan></text>
+       id="tspan240">a la derecha 5 mm</tspan></text>
   <flowRoot
      xml:space="preserve"
      id="flowRoot242"
