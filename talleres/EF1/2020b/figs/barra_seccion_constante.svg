@@ -12,8 +12,8 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    height="96.565689pt"
    version="1.1"
-   viewBox="0 0 461.84199 96.565688"
-   width="461.84198pt"
+   viewBox="0 0 416.05729 96.565688"
+   width="416.05728pt"
    id="svg2"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="barra_seccion_constante.svg">
@@ -47,8 +47,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="1.7383513"
-     inkscape:cx="295.83593"
-     inkscape:cy="55.080832"
+     inkscape:cx="224.50397"
+     inkscape:cy="55.08083"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -56,8 +56,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid3535"
-       originx="-67.745524"
-       originy="-0.59323727" />
+       originx="-67.745526"
+       originy="-0.59323843" />
   </sodipodi:namedview>
   <defs
      id="defs4"
@@ -746,7 +746,7 @@
   </g>
   <path
      style="fill:none;stroke:#000000;stroke-width:0.74858356px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="M 8.75448,3.4089218 H 404.75449"
+     d="M 8.75448,3.4089222 H 404.75449"
      id="path232"
      inkscape:connector-curvature="0" />
   <defs
@@ -787,19 +787,19 @@
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:12px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
-     x="363.1994"
+     x="310.6994"
      y="33.269073"
      id="text236"><tspan
        sodipodi:role="line"
        style="stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
-       x="363.1994"
+       x="310.6994"
        y="33.269073"
        id="tspan238">El apoyo se movió</tspan><tspan
        sodipodi:role="line"
        style="stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:round"
-       x="363.1994"
+       x="310.6994"
        y="48.269073"
-       id="tspan240">a la derecha 5 mm</tspan></text>
+       id="tspan240">a la izquierda 3 mm</tspan></text>
   <flowRoot
      xml:space="preserve"
      id="flowRoot242"
