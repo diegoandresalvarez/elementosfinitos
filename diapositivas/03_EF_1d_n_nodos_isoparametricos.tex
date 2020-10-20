@@ -66,19 +66,19 @@ breaklinks]{hyperref}
 Se interpola la geometría utilizando las mismas funciones de forma que se emplearán para interpolar los desplazamientos:
 \begin{align}
 x^{(e)}(\xi) 
-&= N_1^{(e)}(\xi) x_1^{(e)} + N_2^{(e)}(\xi) x_2^{(e)} + \cdots + N_n^{(e)}(\xi) x_n^{(e)} 
-= \sum_{i=1}^n N_i^{(e)}(\xi) x_i^{(e)} \\
+&= N_1(\xi) x_1^{(e)} + N_2(\xi) x_2^{(e)} + \cdots + N_n(\xi) x_n^{(e)} 
+= \sum_{i=1}^n N_i(\xi) x_i^{(e)} \\
 &= 
 \underbrace{\begin{bmatrix}
-    N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
-    \end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+    N_1(\xi) & N_2(\xi) & \cdots & N_n(\xi)
+    \end{bmatrix}}_{\ma{N}(\xi)}
 \underbrace{\begin{bmatrix}
     x_1^{(e)} \\ x_2^{(e)} \\ \vdots \\ x_n^{(e)}
-    \end{bmatrix}}_{\ma{x}^{(e)}} = \ma{N}^{(e)}(\xi)  \ve{x}^{(e)}
+    \end{bmatrix}}_{\ma{x}^{(e)}} = \ma{N}(\xi)  \ve{x}^{(e)}
 \end{align}
 
 \begin{itemize}
-    \item $\ma{N}^{(e)}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales) del elemento} $e$.
+    \item $\ma{N}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales)}.
     \item $\ve{x}^{(e)}$ es el \emph{vector de coordenadas nodales del elemento} $e$.
 \end{itemize}    
 
@@ -87,17 +87,17 @@ x^{(e)}(\xi)
 Se calcula el jacobiano de la transformación
 \begin{align}
 J^{(e)}(\xi) &= \frac{\dd x^{(e)}(\xi)}{\dd \xi} = 
-\frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) x_i^{(e)}\right) = \sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} x_i^{(e)} \\
+\frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i(\xi) x_i^{(e)}\right) = \sum_{i=1}^n \frac{\dd N_i(\xi)}{\dd \xi} x_i^{(e)} \\
 &= 
 \underbrace{\begin{bmatrix}
-    \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
-    \end{bmatrix}}_{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}}
+    \frac{\dd N_1(\xi)}{\dd \xi} & \frac{\dd N_2(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n(\xi)}{\dd \xi}
+    \end{bmatrix}}_{\frac{\dd \ma{N}(\xi)}{\dd \xi}}
 \underbrace{\begin{bmatrix}
     x_1^{(e)} \\ x_2^{(e)} \\ \vdots \\ x_n^{(e)}
     \end{bmatrix}}_{\ma{x}^{(e)}} \\
-&= \frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}  \ve{x}^{(e)}
+&= \frac{\dd \ma{N}(\xi)}{\dd \xi}  \ve{x}^{(e)}
 \end{align}
-y utilizando el teorema de la función inversa (ver: \url{https://en.wikipedia.org/wiki/Inverse_function_theorem}), también la derivada:
+y, utilizando el \emph{teorema de la función inversa}, también la derivada:
 \begin{align}
 \frac{\dd \xi(x)}{\dd x} = \frac{1}{J^{(e)}(\xi(x))}.
 \end{align}
@@ -106,6 +106,18 @@ y utilizando el teorema de la función inversa (ver: \url{https://en.wikipedia.o
 Recuerde que la transformación isoparamétrica es válida siempre y cuando $J^{(e)}(\xi)>0$ en todos los puntos del EF. Esto garantiza que $x(\xi)$ sea una función biyectiva en el intervalo $\xi\in[-1,1]$.
 
 
+\subsection*{Teorema de la función inversa}
+Tomado de \url{https://en.wikipedia.org/wiki/Inverse_function_theorem}.
+ 
+Considere la función $x:\mathbbm{R} \to \mathbbm{R}$, $\xi \mapsto x(\xi)$ la cual 
+es continuamente diferenciable (esto es $x \in C^1$), con derivada diferente de cero en el punto $a$ (o sea  $x'(a) = \frac{\dd x(a)}{\dd \xi} \neq 0$). Si $b = x(a)$, el teorema de la función inversa dice que $x$ es invertible en un vecindario de $a$, la inversa $x^{-1}$ es continua y diferenciable cerca a $a$ y 
+\[
+\bigl(x^{-1}\bigr)'(b) = \frac{1}{x'(a)} = \frac{1}{x'(x^{-1}(b))}
+\]
+o escrito alternativamente,
+\[
+\frac{\dd \xi(b)}{\dd x} = \frac{1}{\frac{\dd x(a)}{\dd \xi}} = \frac{1}{\frac{\dd x(\xi(b))}{\dd \xi}}.
+\]
 
 \newpage
 
@@ -113,31 +125,31 @@ Recuerde que la transformación isoparamétrica es válida siempre y cuando $J^{
 Se interpolan los desplazamientos al interior del EF utilizando las mismas funciones de forma que se emplearon para interpolar la geometría:
 \begin{align}
 u^{(e)}(\xi) 
-&= N_1^{(e)}(\xi) u_1^{(e)} + N_2^{(e)}(\xi) u_2^{(e)} + \cdots + N_n^{(e)}(\xi) u_n^{(e)} 
-= \sum_{i=1}^n N_i^{(e)}(\xi) u_i^{(e)} \\
+&= N_1(\xi) u_1^{(e)} + N_2(\xi) u_2^{(e)} + \cdots + N_n(\xi) u_n^{(e)} 
+= \sum_{i=1}^n N_i(\xi) u_i^{(e)} \\
 &= 
 \underbrace{\begin{bmatrix}
-N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
-\end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+N_1(\xi) & N_2(\xi) & \cdots & N_n(\xi)
+\end{bmatrix}}_{\ma{N}(\xi)}
 \underbrace{\begin{bmatrix}
    u_1^{(e)} \\ u_2^{(e)} \\ \vdots \\ u_n^{(e)}
-   \end{bmatrix}}_{\ma{a}^{(e)}} = \ma{N}^{(e)}(\xi)  \ve{a}^{(e)}
+   \end{bmatrix}}_{\ma{a}^{(e)}} = \ma{N}(\xi)  \ve{a}^{(e)}
 \end{align}
 
 Desplazamientos virtuales al interior del elemento:
 \begin{align}
 \delta u^{(e)}(\xi) 
-&= N_1^{(e)}(\xi) \delta u_1^{(e)} + N_2^{(e)}(\xi) \delta u_2^{(e)} + \cdots + N_n^{(e)}(\xi) \delta u_n^{(e)} = \sum_{i=1}^n N_i^{(e)}(\xi) \delta u_i^{(e)} \\
+&= N_1(\xi) \delta u_1^{(e)} + N_2(\xi) \delta u_2^{(e)} + \cdots + N_n(\xi) \delta u_n^{(e)} = \sum_{i=1}^n N_i(\xi) \delta u_i^{(e)} \\
 &= 
 \underbrace{\begin{bmatrix}
-   N_1^{(e)}(\xi) & N_2^{(e)}(\xi) & \cdots & N_n^{(e)}(\xi)
-   \end{bmatrix}}_{\ma{N}^{(e)}(\xi)}
+   N_1(\xi) & N_2(\xi) & \cdots & N_n(\xi)
+   \end{bmatrix}}_{\ma{N}(\xi)}
 \underbrace{\begin{bmatrix}
    \delta u_1^{(e)} \\ \delta u_2^{(e)} \\ \vdots \\ \delta u_n^{(e)} 
-   \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{N}^{(e)}(\xi) \delta \ve{a}^{(e)}
+   \end{bmatrix}}_{\delta \ma{a}^{(e)}} = \ma{N}(\xi) \delta \ve{a}^{(e)}
 \end{align}
 
-$\ma{N}^{(e)}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales) del elemento} $e$.
+$\ma{N}(\xi)$ se conoce como la \emph{matriz de funciones de forma (locales)}.
 
 $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
 
@@ -150,16 +162,16 @@ $\delta\ve{a}^{(e)}$ es el \emph{vector de desplazamientos virtuales nodales del
 Deformaciones al interior del elemento:
 \begin{align}
 \varepsilon^{(e)}(\xi) &= \frac{\dd u^{(e)}(\xi)}{\dd x} =
- \frac{\dd u^{(e)}(\xi)}{\dd \xi}\frac{\dd \xi(x)}{\dd x} = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
- &= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{1}{J^{(e)}(\xi)} = 
+ \frac{\dd u^{(e)}(\xi)}{\dd \xi}\frac{\dd \xi(x)}{\dd x} = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i(\xi) u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
+ &= \left(\sum_{i=1}^n \frac{\dd N_i(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
-  \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
-   \end{bmatrix}}_{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}} \frac{1}{J^{(e)}(\xi)}
+  \frac{\dd N_1(\xi)}{\dd \xi} & \frac{\dd N_2(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n(\xi)}{\dd \xi}
+   \end{bmatrix}}_{\frac{\dd \ma{N}(\xi)}{\dd \xi}} \frac{1}{J^{(e)}(\xi)}
 \underbrace{\begin{bmatrix}
    u_1^{(e)} \\ u_2^{(e)} \\ \vdots \\ u_n^{(e)}
    \end{bmatrix}}_{\ma{a}^{(e)}} \\
 &= 
-\underbrace{\frac{\dd \ma{N}^{(e)}(\xi)}{\dd \xi}%
+\underbrace{\frac{\dd \ma{N}(\xi)}{\dd \xi}%
     \frac{1}{J^{(e)}(\xi)}}_{\ma{B}^{(e)}(\xi)}
 \ma{a}^{(e)} = \ma{B}^{(e)}(\xi)  \ve{a}^{(e)}
 \end{align}
@@ -167,10 +179,10 @@ Deformaciones al interior del elemento:
 Deformaciones virtuales al interior del elemento:
 \begin{align}
 \delta \varepsilon^{(e)}(\xi) &= \delta \left(\frac{\dd u^{(e)}(\xi)}{\dd x}\right) = \frac{\dd}{\dd x}\left(\delta u^{(e)}(\xi)\right)
-= \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i^{(e)}(\xi) \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
-&= \left(\sum_{i=1}^n \frac{\dd N_i^{(e)}(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{1}{J^{(e)}(\xi)} = 
+= \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i(\xi) \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
+&= \left(\sum_{i=1}^n \frac{\dd N_i(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
-   \frac{\dd N_1^{(e)}(\xi)}{\dd \xi} & \frac{\dd N_2^{(e)}(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n^{(e)}(\xi)}{\dd \xi}
+   \frac{\dd N_1(\xi)}{\dd \xi} & \frac{\dd N_2(\xi)}{\dd \xi} & \cdots & \frac{\dd N_n(\xi)}{\dd \xi}
    \end{bmatrix} \frac{1}{J^{(e)}(\xi)} }_{\ma{B}^{(e)}(\xi)}
 \underbrace{\begin{bmatrix}
   \delta u_1^{(e)} \\ \delta u_2^{(e)} \\ \vdots \\ \delta u_n^{(e)} 
@@ -231,7 +243,7 @@ Aquí:
     \item $\ve{q}^{(e)} = [R_1^{(e)}\ R_2^{(e)}\ \cdots \ R_n^{(e)}]^T$ es el \emph{vector de fuerzas nodales de equilibrio} del elemento $e$.
 \end{itemize}
 
-En las páginas anteriores se calculó $\ma{N}^{(e)}$, $\ma{B}^{(e)}$ y $\ma{D}^{(e)}$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
+En las páginas anteriores se calculó $\ma{N}$, $\ma{B}^{(e)}$ y $\ma{D}^{(e)}$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
 \begin{align}
 \ma{K}^{(e)} &= \int_{-1}^{+1} \ma{B}_{(e)}^T(\xi) \ma{D}^{(e)}(\xi) \ma{B}^{(e)}(\xi) \frac{\dd x^{(e)}(\xi)}{\dd \xi} \dd \xi\\
 \ma{f}^{(e)} &= \int_{-1}^{+1}  \ma{N}_{(e)}^T(\xi) b^{(e)}(\xi) \frac{\dd x^{(e)}(\xi)}{\dd \xi} \dd \xi
@@ -242,6 +254,8 @@ Finalmente, se aproximan dichas integrales utilizando una cuadratura de $M$ punt
 \ma{K}^{(e)} &\approx \sum_{m=1}^M \ma{B}_{(e)}^T(\xi_m) \ma{D}^{(e)}(\xi_m) \ma{B}^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m\\
 \ma{f}^{(e)} &\approx \sum_{m=1}^M  \ma{N}_{(e)}^T(\xi_m) b^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m
 \end{align}
+
+NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semi-positiva definida. Tiene un valor propio nulo asociado con la translación rígida horizontal. El rango de $\ma{K}^{(e)}$ es $n-1$.
 
 Se deja como ejercicio al lector demostrar que:
 \begin{align}
