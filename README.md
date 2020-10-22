@@ -35,6 +35,7 @@ Tomado de:
 - [Códigos](./codigo/)
 - [Recursos](docs/recursos.md)
 - [Video tutoriales de GiD](docs/GiD.md)
+- [Video tutoriales de GMSH](docs/GMSH.md)
 - [Video tutoriales de COMSOL Multiphysics v. 3.5](docs/COMSOL.md)
 
 ## Examenes y talleres de EFs 1

@@ -7,6 +7,8 @@
 
 * Repaso de análisis matricial de estructuras:
   * [01_Repaso_Calculo_Matricial.pdf](01_Repaso_Calculo_Matricial.pdf)
+  * [01_demo_q_Ka-f_en_barra.pdf](01_demo_q_Ka-f_en_barra.pdf)
+  * [01_demo_EF_cercha_2D.pdf](01_demo_EF_cercha_2D.pdf)
 
 * Elementos finitos de barra de dos nodos:
   * [02_EF_barra_2_nodos.pdf](02_EF_barra_2_nodos.pdf)

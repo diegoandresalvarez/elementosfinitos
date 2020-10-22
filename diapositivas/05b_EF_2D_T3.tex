@@ -434,6 +434,9 @@ Hay que destacar que estas expresiones son totalmente generales y, por consiguie
 
 Finalmente, tenga en cuenta que las ecuaciones anteriores solo involucran hasta las derivadas primeras del desplazamiento; por lo tanto, es posible utilizar elementos finitos continuos de clase $C_0$. Este requisito aplicará también para el caso tridimensional, pero no para el caso de vigas, placas y cascarones.
 
+NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semi-positiva definida. Tiene tres valores propios nulo asociados con las dos translaciones rígidas y con la rotación. El rango de $\ma{K}^{(e)}$ es $2n-3$; este rango puede disminuir si se integra la matriz numéricamente con integración reducida.
+
+
 %En las páginas anteriores se calculó $\ma{N}^\e$, $\ma{B}^\e$ y $\ma{D}^\e$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
 %\begin{align}
 %\ma{K}^\e &= \int_{-1}^{+1} \ma{B}_\e^T(x,y) \ma{D}^\e(x,y) \ma{B}^\e(x,y) \frac{\dd x^\e(x,y)}{\dd \xi} \dd \xi\\
