@@ -13,7 +13,7 @@ b(x) = 40sin(x) + 12cos(5x) para x ∈ [0 m, 2 m] [kN/m]
 ```
 NOTA: el argumento de las funciones sin() y cos() está dado en radianes.
 
-* Resuelva el ejemplo mostrado usando elementos finitos de barra isoparamétricos de 4 nodos equiespaciados. La solución se calculará utilizando *N* elementos finitos, que el usuario podrá modificar a conveniencia. La matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f` se calcularán analíticamente. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra (1 unidad).
+* Resuelva el ejemplo mostrado usando elementos finitos de barra isoparamétricos de 4 nodos equiespaciados. La solución se calculará utilizando *N* elementos finitos, donde *N* es un número par, que el usuario podrá modificar a conveniencia. La matriz de rigidez `K` y el vector de fuerzas nodales equivalentes `f` se calcularán analíticamente. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra (1 unidad).
 
 * Resuelva el punto anterior utilizando integración numérica con cuadraturas de Gauss-Legendre, en vez de la matriz `K` y el vector `f` analíticos (2 unidades).
 
