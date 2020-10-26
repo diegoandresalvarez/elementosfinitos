@@ -78,7 +78,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
       % vector de fuerzas nodales equivalentes
       N = [xi.*(xi-1)/2, (1+xi).*(1-xi), xi.*(xi+1)/2]; % matr. de func. de forma
       fe = fe + w_gl(m)*N'*b*Je; % vector de fuerzas nodales equivalentes
-   end;
+   end
 
    K(idx,idx) = K(idx,idx) + Ke;
    f(idx,:)   = f(idx,:)   + fe;
