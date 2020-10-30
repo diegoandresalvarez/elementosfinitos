@@ -45,8 +45,8 @@ restric = [   gdl(1,X)          0
            
 %% Se definen las cargas distribuidas 
 %             [ elemento lado tix  tiy  tjx  tjy  ]
-carga_distr = [     4     12    0 -7500   0 -10.0
-                    8     12    0 -5000   0  -7.5 ];
+carga_distr = [     4     12    0 -7500   0 -10000
+                    8     12    0 -5000   0  -7500 ];
                  
 nlcd = size(carga_distr,1); % numero de lados con carga distribuida
          

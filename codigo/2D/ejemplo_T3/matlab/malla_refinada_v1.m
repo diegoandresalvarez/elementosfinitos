@@ -432,7 +432,7 @@ carga_distr = [     16     12   0   -9375  0  -10000
                     80     12   0   -6875  0   -7500
                     96     12   0   -6250  0   -6875
                     112    12   0   -5625  0   -6250
-                    128    12   0   -5000  0   -5625];
+                    128    12   0   -5000  0   -5625 ];
                                  
 nlcd = size(carga_distr,1); % numero de lados con carga distribuida
          
