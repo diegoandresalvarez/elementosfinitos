@@ -30,7 +30,7 @@ AA = @(x) A;
 bb = @(x) b;
 
 % Se define la ecuacion diferencial, expresada como un sistema de dos
-% ecuaciones diferenciales
+% ecuaciones diferenciales de primer orden
 u      = 1; % y(1) = u(x)       
 faxial = 2; % y(2) = faxial(x)
 sist_eq_dif = @(x,y) [ y(faxial)/(EE(x)*AA(x)) 
@@ -52,8 +52,9 @@ y_inicial = bvpinit(x,[0 0]); % el [ 0 0 ] hace y_inicial.y = zeros(2,30)
 % Solucion como tal de la ecuacion diferencial
 sol = bvp4c(sist_eq_dif, cond_frontera, y_inicial);
 
-% Evaluar la respuesta en los puntos x
-y = sol.y;
+% Evaluar la respuesta en los puntos x, ya que requiero evaluar la solucion
+% diferentes puntos a los que retorna la funcion bvp4c()
+y = deval(sol, x);
 
 %% Solucion analitica
 u_exacta      = @(x) (-b*x.^2/2 + (P + b*L)*x)/(E*A); % desplazamiento
