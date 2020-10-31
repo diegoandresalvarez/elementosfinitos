@@ -47,8 +47,8 @@ LaG = df['LaG_mat'][['NL1','NL2','NL3']].to_numpy() - 1
 nef = LaG.shape[0]      # número de EFs (número de filas de la matriz LaG)
 
 # %% definición de los materiales
-mat = df['LaG_mat']['material'].to_numpy() - 1
-Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad del sólido
+mat  = df['LaG_mat']['material'].to_numpy() - 1
+Ee   = df['prop_mat']['E'].to_numpy()       # [Pa]     módulo de elasticidad
 nue  = df['prop_mat']['nu'].to_numpy()      # [-]      coeficiente de Poisson
 rhoe = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
 te   = df['prop_mat']['espesor'].to_numpy() # [m]      espesor
@@ -97,7 +97,6 @@ for i in range(nmat):
                       [0,                            0,                            Ee[i]/(2*(1 + nue[i]))]])
 
 for e in range(nef):        # ciclo sobre todos los elementos finitos
-   # Calculo de la matriz de rigidez del elemento e
    x1, y1 = xnod[LaG[e,NL1]]
    x2, y2 = xnod[LaG[e,NL2]]
    x3, y3 = xnod[LaG[e,NL3]]
@@ -109,27 +108,25 @@ for e in range(nef):        # ciclo sobre todos los elementos finitos
       raise Exception(
          f'La numeración local del EF {e+1} debe especificarse en sentido antihorario.\n')
 
-   # Calculo de la matriz de deformaciones B.
-   a1 = x2*y3 - x3*y2;        b1 = y2-y3;        c1 = x3-x2
-   a2 = x3*y1 - x1*y3;        b2 = y3-y1;        c2 = x1-x3
-   a3 = x1*y2 - x2*y1;        b3 = y1-y2;        c3 = x2-x1
+   # Calculo de la matriz de deformaciones B del EF e
+   b1 = y2-y3;        c1 = x3-x2
+   b2 = y3-y1;        c2 = x1-x3
+   b3 = y1-y2;        c3 = x2-x1
 
    B[e] = (1/(2*Ae))*np.array([[ b1,  0,   b2,  0,   b3,  0 ],
                                [  0, c1,    0, c2,    0, c3 ],
                                [ c1, b1,   c2, b2,   c3, b3 ]])
 
+   # Calculo de la matriz de rigidez K del EF e
    Ke = te[mat[e]]*B[e].T@De[mat[e]]@B[e]*Ae
 
-   # Calculo del vector de fuerzas nodales equivalentes del elemento e
-   # Fuerzas másicas (peso propio)
+   # Calculo del vector de f.n.e. fbe del EF e para fuerzas másicas (peso propio)
    fbe = -rhoe[mat[e]]*g*Ae*te[mat[e]]*np.array([0., 1., 0., 1., 0., 1.])/3
-
-   fe = fbe # vector de fuerzas nodales equivalentes
 
    # Ensamblo las contribuciones a las matrices globales
    idx[e] = np.r_[ gdl[LaG[e,NL1],:], gdl[LaG[e,NL2],:], gdl[LaG[e,NL3],:] ]
    K[np.ix_(idx[e],idx[e])] += Ke
-   f[np.ix_(idx[e])]        += fe
+   f[np.ix_(idx[e])]        += fbe
 
 # %% Muestro la configuración de la matriz K (K es rala)
 plt.figure()
@@ -137,26 +134,20 @@ plt.spy(K)
 plt.title('Los puntos representan los elementos diferentes de cero')
 plt.show()
 
-# %% Relación de las cargas superficiales (vector ft)
+# %% # Calculo del vector de f.n.e. fte del EF e para fuerzas superficiales
 cd   = df['carga_distr']
 nlcd = cd.shape[0]    # número de lados con carga distribuída
-ft   = np.zeros(ngdl) # fuerzas nodales equivalentes de cargas superficiales
 for i in range(nlcd):
    e     = cd['elemento'][i] - 1
    lado  = cd['lado'][i]
    carga = cd[['tix','tiy','tjx','tjy']].loc[i].to_numpy()
-   fte = t2ft_T3(xnod[LaG[e,:],:], lado, carga, te[mat[e]])
-
-   ft[np.ix_(idx[e])] += fte
-
-# %% agrego al vector de fuerzas nodales equivalentes las fuerzas
-# superficiales calculadas
-f += ft
+   fte   = t2ft_T3(xnod[LaG[e,:],:], lado, carga, te[mat[e]])
+   f[np.ix_(idx[e])] += fte
 
 # %% restricciones y los grados de libertad del desplazamiento conocidos (c)
 restric = df['restric']
-nres = restric.shape[0]
-c    = np.empty(nres, dtype=int)
+nres    = restric.shape[0]
+c       = np.empty(nres, dtype=int)
 for i in range(nres):
    c[i] = gdl[restric['nodo'][i]-1, restric['dirección'][i]-1]
 
@@ -296,7 +287,7 @@ print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultad
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
-# pip install meshio[all] --user
+# pip install meshio==3.3.1
 
 import meshio
 meshio.write_points_cells(
