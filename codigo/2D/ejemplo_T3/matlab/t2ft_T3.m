@@ -1,5 +1,5 @@
 function ft = t2ft_T3(xnod, lado, carga, espesor)
-% Esta función convierte las fuerzas superficiales aplicadas a un elemento
+% Esta funcion convierte las fuerzas superficiales aplicadas a un elemento
 % finito triangular de 3 nodos a sus correspondientes cargas nodales
 % equivalentes ft
 %
@@ -20,7 +20,7 @@ switch lado
    case 12
       %% Fuerzas sobre el lado 12
       % Se calcula la longitud del lado 12
-      L12 = sqrt((xnod(1,X) - xnod(2,X))^2 + (xnod(1,Y) - xnod(2,Y))^2);
+      L12 = hypot(xnod(1,X) - xnod(2,X), xnod(1,Y) - xnod(2,Y));
       
       % Fuerzas distribuidas aplicadas en los nodos 1 y 2 locales
       t1x = carga(1); t1y = carga(2); t2x = carga(3); t2y = carga(4);
@@ -35,7 +35,7 @@ switch lado
    case 23
       %% Fuerzas sobre el lado 23
       % Se calcula la longitud del lado 23
-      L23 = sqrt((xnod(2,X) - xnod(3,X))^2 + (xnod(2,Y) - xnod(3,Y))^2);
+      L23 = hypot(xnod(2,X) - xnod(3,X), xnod(2,Y) - xnod(3,Y));
       
       % Fuerzas distribuidas aplicadas en los nodos 2 y 3 locales
       t2x = carga(1); t2y = carga(2); t3x = carga(3); t3y = carga(4);
@@ -50,7 +50,7 @@ switch lado
    case 31
       %% Fuerzas sobre el lado 31
       % Se calcula la longitud del lado 31
-      L31 = sqrt((xnod(3,X) - xnod(1,X))^2 + (xnod(3,Y) - xnod(1,Y))^2);
+      L31 = hypot(xnod(3,X) - xnod(1,X), xnod(3,Y) - xnod(1,Y));
       
       % Fuerzas distribuidas aplicadas en los nodos 3 y 1 locales
       t3x = carga(1); t3y = carga(2); t1x = carga(3); t1y = carga(4);

@@ -419,8 +419,8 @@ nef = size(LaG,1);  % numero de EFs (numero de filas de LaG)
 
 %% Se definen las restricciones 
 %             gdl       desplazamiento(m)
-restric = [   gdl(1,X)          0
-              gdl(1,Y)          0
+restric = [   gdl( 1,X)          0
+              gdl( 1,Y)          0
               gdl(17,Y)          0  ];
            
 %% Se definen las cargas distribuidas 

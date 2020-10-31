@@ -24,10 +24,9 @@ g    = 9.81;        % aceleracion de la gravedad (m/s^2)
 % Malla_refinada (malla elaborada por David Felipe Cano Perdomo)
 malla_refinada_v1
 
-
 %% Se dibuja la malla de elementos finitos
 figure; hold on;
-cgx = zeros(1,nef); cgy = zeros(1,nef); % almacena el centro de gravedad
+cgx = zeros(nef,1); cgy = zeros(nef,1); % almacena el centro de gravedad
 for e = 1:nef
    line(xnod(LaG(e,[1 2 3 1]),X), xnod(LaG(e,[1 2 3 1]),Y));
    
@@ -43,8 +42,9 @@ title('Malla de elementos finitos');
 
 %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
-K = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
-B = cell(nef,1);       % contenedor para las matrices de deformacion
+K   = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
+B   = cell(nef,1);       % contenedor para las matrices de deformacion
+idx = cell(nef,1);       % gdl de cada EF (para el ensamblaje)
 
 % matriz constitutiva del elemento para TENSION PLANA
 De = [ Ee/(1-nue^2)     Ee*nue/(1-nue^2)  0
@@ -64,44 +64,36 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
       error('Revise las coordenadas locales del EF %d.\n', e);
    end
    
-   % Calculo de la matriz de deformaciones B.
-   a1 = x2*y3 - x3*y2;        b1 = y2-y3;        c1 = x3-x2;
-   a2 = x3*y1 - x1*y3;        b2 = y3-y1;        c2 = x1-x3;
-   a3 = x1*y2 - x2*y1;        b3 = y1-y2;        c3 = x2-x1;
+   % Calculo de la matriz de deformaciones B del EF e
+   b1 = y2-y3;        c1 = x3-x2;
+   b2 = y3-y1;        c2 = x1-x3;
+   b3 = y1-y2;        c3 = x2-x1;
    
    B{e} = (1/(2*Ae))*[ b1    0      b2    0      b3    0 
                         0   c1       0   c2       0   c3
                        c1   b1      c2   b2      c3   b3 ];
    
+   % Calculo de la matriz de rigidez del EF e
    Ke = te*B{e}'*De*B{e}*Ae;
    
-   % Calculo del vector de fuerzas nodales equivalentes del elemento e
-   % Fuerzas masicas (peso propio)
-   fbe = -rhoe*g*Ae*te[0; 1; 0; 1; 0; 1]/3;
-        
-   fe = fbe; % vector de fuerzas nodales equivalentes
-   
-   % Ensamblo las contribuciones a las matrices globales
-   idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) ];
-   K(idx,idx) = K(idx,idx) + Ke;
-   f(idx,:)   = f(idx,:)   + fe;
-end;
+   % Calculo del vector de f.n.e. de fuerzas masicas del EF e (peso propio)
+   fbe = -rhoe*g*Ae*te*[0; 1; 0; 1; 0; 1]/3;
 
-%% Relacion de las cargas superficiales (vector ft)
-ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
+   % Ensamblo las contribuciones a las matrices globales
+   idx{e} = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) ];
+   K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
+   f(idx{e},:)      = f(idx{e},:)      + fbe;
+end
+
+%% Calculo del vector de f.n.e. de fuerzas superficiales del EF e
 for i = 1:nlcd
    e     = carga_distr(i,1);
    lado  = carga_distr(i,2);
    carga = carga_distr(i,3:6);
    fte = t2ft_T3(xnod(LaG(e,[1 2 3]),[X Y]), lado, carga, te);
-   
-   idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) ];
-   ft(idx,:) = ft(idx,:) + fte;
-end
 
-% Agrego al vector de fuerzas nodales equivalentes las fuerzas
-% superficiales calculadas
-f = f + ft;
+   f(idx{e},:) = f(idx{e},:) + fte;
+end
 
 %% Muestro la configuracion de la matriz K (K es rala)
 figure
@@ -126,7 +118,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
-ac = restric(:,2);   % desplaz. conocidos (para gdl(1,X) gdl(1,Y) gdl(5,Y))
+ac = restric(:,2);   % desplazamientos conocidos
 
 %% resuelvo el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);   % calculo desplazamientos desconocidos
@@ -142,7 +134,7 @@ disp('Nodo Fuerzas nodales equil. X, Y (N) = '); [1:nno; reshape(q,2,nno)]'
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 delta = reshape(a,2,nno)';
-escala = 20000; % factor de escalamiento de la deformada
+escala = 20000;             % factor de escalamiento de la deformada
 xdef = xnod + escala*delta; % posicion de la deformada
 figure
 hold on
@@ -160,63 +152,28 @@ title(sprintf('Deformada escalada %d veces',escala));
 def = zeros(3,nef);
 esf = zeros(3,nef);
 for e = 1:nef
-   idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) ];     
-   ae = a(idx);            % desplazamientos de los gdl del elemento e
+   ae = a(idx{e});         % desplazamientos de los gdl del elemento e
    def(:,e) = B{e}*ae;     % Calculo las deformaciones
    esf(:,e) = De*def(:,e); % Calculo los esfuerzos
-end;
-sx = esf(1,:);  sy = esf(2,:);  txy = esf(3,:);
-ex = def(1,:);  ey = def(2,:);  gxy = def(3,:); 
+end
+sx = esf(1,:)';  sy = esf(2,:)';  txy = esf(3,:)';
+ex = def(1,:)';  ey = def(2,:)';  gxy = def(3,:)'; 
 ez  = -(nue/Ee)*(sx+sy); % Se calculan las deformacion ez en tension plana
 
 %% imprimo y grafico las deformaciones
-disp('Deformaciones: (EF,ex,ey,ez,gxy) = '); [1:nef; ex; ey; ez; gxy]'
+disp('Deformaciones: (EF,ex,ey,ez,gxy) = '); [(1:nef)' ex ey ez gxy]
 figure
-subplot(4,1,1); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ex(e))
-end;
-ylabel('\epsilon_x','FontSize',26); axis equal tight; colorbar; 
-
-subplot(4,1,2); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ey(e))
-end;
-ylabel('\epsilon_y','FontSize',26); axis equal tight; colorbar;
-
-subplot(4,1,3); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ez(e))
-end;
-ylabel('\epsilon_z','FontSize',26); axis equal tight; colorbar;
-
-subplot(4,1,4); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),gxy(e))
-end;
-ylabel('\gamma_{xy}','FontSize',26); axis equal tight; colorbar;
+subplot(2,2,1); plot_def_esf(xnod, LaG, ex,  '\epsilon_x');
+subplot(2,2,2); plot_def_esf(xnod, LaG, ey,  '\epsilon_y');
+subplot(2,2,3); plot_def_esf(xnod, LaG, ez,  '\epsilon_z');
+subplot(2,2,4); plot_def_esf(xnod, LaG, gxy, '\gamma_{xy} [rad]');
 
 %% imprimo y grafico los esfuerzos
-disp('Esfuerzos (Pa):  (EF,sx,sy,txy) = '); [1:nef; sx; sy; txy]'
+disp('Esfuerzos (Pa):  (EF,sx,sy,txy) = '); [(1:nef)' sx sy txy]
 figure
-subplot(3,1,1); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sx(e))
-end;
-ylabel('\sigma_x (Pa)','FontSize',26); axis equal tight; colorbar;
-
-subplot(3,1,2); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sy(e))
-end;
-ylabel('\sigma_y (Pa)','FontSize',26); axis equal tight; colorbar;
-
-subplot(3,1,3); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),txy(e))
-end;
-ylabel('\tau_{xy} (Pa)','FontSize',26); axis equal tight; colorbar;
-
+subplot(3,1,1); plot_def_esf(xnod, LaG, sx,  '\sigma_x [Pa]');
+subplot(3,1,2); plot_def_esf(xnod, LaG, sy,  '\sigma_y [Pa]');
+subplot(3,1,3); plot_def_esf(xnod, LaG, txy, '\tau_{xy} [Pa]');
 
 %% Se calculan y grafican para cada elemento los esfuerzos principales y
 %% sus direcciones
@@ -237,67 +194,48 @@ s3 = zeros(size(s1));
 sv = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2);
 
 %% imprimo los resultados
-disp('Elemento,s1(Pa),s2(Pa),tmax(Pa),angulo(rad) = '); [1:nef; s1; s2; tmax; ang]'
-disp('Elemento,Esfuerzos de von Mises (Pa) = '); [1:nef; sv]'
+disp('Elemento,s1(Pa),s2(Pa),tmax(Pa),angulo(rad) = '); [(1:nef)' s1 s2 tmax ang]
+disp('Elemento,Esfuerzos de von Mises (Pa) = '); [(1:nef)' sv]
 
-esc = 2; % escala para graficar las flechas
 figure
-subplot(3,1,1); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s1(e))
-end;
-% Grafique lineas que indiquen direcciones principales de sigma_1
-quiver(cgx,cgy,...     %  En el punto (cgx,cgy) grafique una flecha (linea)
-   s1.*cos(ang),s1.*sin(ang),... % indicando la direccion principal de sigma_1
-   esc,...                       % con una escala esc
-   'k', ...                      % de color negro
-  'ShowArrowHead','off',...      % una flecha sin cabeza
-  'LineWidth',2,...              % con un ancho de linea 2
-  'Marker','.');                 % y en el punto (x,y) poner un punto '.'
-quiver(cgx,cgy,...               % La misma flecha ahora en la otra direccion,
-   s1.*cos(ang+pi),s1.*sin(ang+pi),...  % es decir girando 180 grados
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\sigma_1 (Pa)','FontSize',26); colorbar
-
-subplot(3,1,2); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s2(e))
-end;
-% Grafique lineas que indiquen direcciones principales de sigma_2
-quiver(cgx,cgy,...                         % flecha indicando la direccion 
-   s2.*cos(ang+pi/2),s2.*sin(ang+pi/2),... % principal de sigma_2
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, s2.*cos(ang-pi/2),s2.*sin(ang-pi/2),...
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\sigma_2 (Pa)','FontSize',26); colorbar
-
-subplot(3,1,3); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),tmax(e))
-end;
-% Grafique lineas que indiquen direcciones principales de tau_max,
-quiver(cgx,cgy, tmax.*cos(ang+pi/4),tmax.*sin(ang+pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang-pi/4),tmax.*sin(ang-pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang+3*pi/4),tmax.*sin(ang+3*pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(cgx,cgy, tmax.*cos(ang-3*pi/4),tmax.*sin(ang-3*pi/4),'k',...
-         'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal; axis([-0.1 0.9 -0.1 0.4]);
-ylabel('\tau_{max} (Pa)','FontSize',26); colorbar
-
-figure; hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sv(e))
-end;
-ylabel('\sigma_v (Pa)','FontSize',26); axis equal tight; colorbar;
-title('Esfuerzos de von Mises (Pa)')
+subplot(2,2,1); plot_def_esf(xnod, LaG, s1,   '(\sigma_1)_{xy} [Pa]', cgx, cgy, { ang })
+subplot(2,2,2); plot_def_esf(xnod, LaG, s2,   '(\sigma_2)_{xy} [Pa]', cgx, cgy, { ang+pi/2 })
+subplot(2,2,3); plot_def_esf(xnod, LaG, tmax, '\tau_{max} [Pa]',      cgx, cgy, { ang+pi/4, ang-pi/4 })
+subplot(2,2,4); plot_def_esf(xnod, LaG, sv,   'Esfuerzos de von Mises [Pa]');
 
 %%
 return; % bye, bye!
+
+function plot_def_esf(xnod, LaG, variable, texto, cgx, cgy, angulos)
+    X = 1; Y = 2;
+    hold on; 
+    colorbar;
+    
+    nef = size(LaG, 1);    
+    for e = 1:nef  
+       fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), variable(e));
+    end
+    axis equal tight
+    colormap jet
+    title(texto, 'FontSize',20);
+   
+    esc = 0.5;
+    if nargin == 7
+        norma = 1; % = variable % si se quiere proporcional
+        for i = 1:length(angulos)
+            % se indica la flecha de la direccion principal
+            quiver(cgx, cgy,...             
+                norma.*cos(angulos{i}), norma.*sin(angulos{i}),... 
+                esc, ...                  % con una escala esc
+                'k',...                   % de color negro
+                'ShowArrowHead','off',... % una flecha sin cabeza
+                'LineWidth',2, ...        % con un ancho de linea 2
+                'Marker','.');            % y en el punto (x,y) poner un punto '.'
+            
+            % la misma flecha girada 180 grados
+            quiver(cgx, cgy,...             
+                norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
+                esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
+        end            
+    end
+end
