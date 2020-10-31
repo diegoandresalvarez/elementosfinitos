@@ -25,8 +25,9 @@ L*b [ ]
 ```
 
 
-## Comparación de varios algoritmos de interpolación implementados en MATLAB
+## Comparación de varios algoritmos de interpolación
 * MATLAB: [comparing_interpolation_algorithms.m](comparing_interpolation_algorithms.m)
+* PYTHON: [comparing_interpolation_algorithms.py](comparing_interpolation_algorithms.py)
 
 
 ## Funciones de forma lagrangianas para EFs de 2, 3, 4 y 5 nodos
