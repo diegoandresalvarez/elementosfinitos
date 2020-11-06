@@ -381,13 +381,13 @@ En la ecuación anterior, el desplazamiento virtual es independiente de los inte
 
 Si el producto punto anterior vale cero es porque $\delta\ve{a} = \ve{0}$ o porque el término entre corchetes es igual a $\ve{0}$. Lo primero no es cierto, ya que se sabe que el desplazamiento virtual $\delta \ve{a}$ representa el conjunto de todos los desplazamientos posibles de los nodos del EF, es decir, $\delta\ve{a}$ es un vector arbitrario. En consecuencia el término entre corchetes es cero y:
 \begin{equation}
- t^\e \iint_{A^\e}  \ma{B}^T(\ve{x})  \ve{\sigma}^\e(\ve{x}) \dd A - t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A -  t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{f}^\e\big(\ve{x}(s)\big) \dd s -  \ve{p} - \ve{q} = \ve{0}.
+ t^\e \iint_{A^\e}  \ma{B}^T(\ve{x})  \ve{\sigma}^\e(\ve{x}) \dd A - t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A -  t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{t}^\e\big(\ve{x}(s)\big) \dd s -  \ve{p} - \ve{q} = \ve{0}.
 \end{equation}
 
 Al reemplazar~\eqref{eq:constitutiva} en la ecuación anterior, se obtiene
 \begin{equation}
 t^\e \iint_{A^\e}  \ma{B}^T(\ve{x}) \big(\ma{D}(\ve{x})\ma{B}(\ve{x})\ve{a}^\e - \ma{D}(\ve{x})\ve{\varepsilon}_0(\ve{x}) + \ve{\sigma}_0(\ve{x})\big) \dd A 
-- t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A -  t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{f}^\e\big(\ve{x}(s)\big) \dd s -  \ve{p} - \ve{q} = \ve{0},
+- t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A -  t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{t}^\e\big(\ve{x}(s)\big) \dd s -  \ve{p} - \ve{q} = \ve{0},
 \end{equation}
 es decir,
 \begin{multline}
@@ -399,7 +399,7 @@ es decir,
 %
 - \underbrace{t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A}_{\ve{f}_\ve{b}}
 %
-- \underbrace{t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{f}^\e\big(\ve{x}(s)\big) \dd s}_{\ve{f}_\ve{t}} 
+- \underbrace{t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{t}^\e\big(\ve{x}(s)\big) \dd s}_{\ve{f}_\ve{t}} 
 %
 - \ve{p} = \ve{q},
 \end{multline}
@@ -424,7 +424,7 @@ donde,
    \\[-1ex]
    $\displaystyle \ve{f}^{(e)}_\ve{b} = t^\e \iint_{A^\e}  \ma{N}^T(\ve{x}) \ve{b}^\e(\ve{x}) \dd A$ &vector de fuerzas nodales equivalentes del elemento $e$ asociado a las fuerzas másicas.\\
    \\[-1ex]
-   $\displaystyle \ve{f}^{(e)}_\ve{t} = t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{f}^\e\big(\ve{x}(s)\big) \dd s$ &vector de fuerzas nodales equivalentes del elemento $e$ asociado a las fuerzas superficiales actuantes en el contorno del EF.\\
+   $\displaystyle \ve{f}^{(e)}_\ve{t} = t^\e \oint_{\partial A^\e} \ma{N}^T\big(\ve{x}(s)\big) \ve{t}^\e\big(\ve{x}(s)\big) \dd s$ &vector de fuerzas nodales equivalentes del elemento $e$ asociado a las fuerzas superficiales actuantes en el contorno del EF.\\
 \\[-1ex]   
    $\ve{p}^{(e)}$       & vector de fuerzas puntuales aplicadas sobre los nodos del EF $e$.
 \end{tabular} 
