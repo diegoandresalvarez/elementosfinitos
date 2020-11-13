@@ -36,7 +36,7 @@ for i = 1:3
    N{i} = lI*lJ*lK; % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(N{i});
 end
-T3.N = N;
+%EF = T3;
 
 %% -------------------------------------------------------------------------
 disp('Funciones de forma de triangulos de 6 nodos')
@@ -81,7 +81,7 @@ for i = 1:6
    N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(N{i});
 end
-T6.N = N;
+EF = T6;
 
 %% -------------------------------------------------------------------------
 disp('Funciones de forma de triangulos de 10 nodos')
@@ -138,7 +138,10 @@ for i = 1:10
    N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =\n',i); pretty(N{i});
 end
-T10.N = N;
+%EF = T10;
+
+EF.nno = size(EF.coord, 1);
+EF.N = N;
 
 LL2 = 0:0.05:1;
 LL3 = 0:0.05:1;
@@ -161,15 +164,13 @@ TRI = delaunay(X,Y);
 numtriang = size(TRI, 1);   % numero de triangulos
 % Se eliminan de la lista de triangulos aquellos cuya area sea negativa o 
 % igual a cero
-idx = false(numtriang,1);
+Area = zeros(numtriang,1);
 for i = 1:numtriang
-   Area = 0.5*det([ 1 X(TRI(i,1)) Y(TRI(i,1))      %Area del EF e
-                    1 X(TRI(i,2)) Y(TRI(i,2))
-                    1 X(TRI(i,3)) Y(TRI(i,3))]);
-   if Area < 1e-3             
-      idx(i) = true;
-   end
+   Area(i) = 0.5*det([ 1 X(TRI(i,1)) Y(TRI(i,1))      %Area del EF e
+                       1 X(TRI(i,2)) Y(TRI(i,2))
+                       1 X(TRI(i,3)) Y(TRI(i,3))]);
 end
+idx = Area < 1e-3;
 TRI(idx,:) = [];
 
 [xsp,ysp,zsp] = sphere;
@@ -177,11 +178,9 @@ xsp = 0.025*xsp;
 ysp = 0.025*ysp;
 zsp = 0.025*zsp;
 
-for i=1:10
-   % creo una funcion que pueda evaluar numericamente (es como
-   % matlabFunction del toolbox simbolico de MATLAB R2010b)
-%	N = inline(strrep(char(T10.N{i}),'*','.*'),'L1','L2','L3');
-	N = inline(vectorize(char(T10.N{i})),'L1','L2','L3');
+for i=1:EF.nno
+   % creo una funcion que pueda evaluar numericamente
+   N = matlabFunction(EF.N{i}, 'Vars', [sym('L1'),sym('L2'),sym('L3')]);
 
    Z = N(L1,L2,L3);
    Z = Z(:);
@@ -195,22 +194,22 @@ for i=1:10
    colormap winter
 %   axis([-0.1 1.1 -0.1 0.96 -0.4 1.1])
    axis tight
-   for j=1:10
-      cxsp = T10.coord(j,:)*x';
-      cysp = T10.coord(j,:)*y';
+   for j=1:EF.nno
+      cxsp = EF.coord(j,:)*x';
+      cysp = EF.coord(j,:)*y';
       surf(xsp+cxsp, ysp+cysp, zsp+0);  % sphere centered at (x(1),y(1),0)
    end
    daspect([1 1 1]);
-   title(sprintf('N_{%d} = %s',i,char(T10.N{i})),'FontSize',20);
+   title(sprintf('N_{%d} = %s',i,char(EF.N{i})),'FontSize',20);
 %   print('-dpdf',sprintf('%d.pdf',i));
 end
 
-%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+%% Se verifica la condicion de cuerpo rigido: sum(N) == 1
 suma = 0;
-for i = 1:10
-   suma = suma + T10.N{i};
+for i = 1:EF.nno
+   suma = suma + EF.N{i};
 end
 syms a b
 suma = subs(suma, {'L1', 'L2', 'L3'}, {1-a-b, a, b});
-fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+fprintf('\nSe verifica la condicion de cuerpo rigido: sum(N) == ');
 disp(simplify(suma));

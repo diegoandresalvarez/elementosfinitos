@@ -2,10 +2,7 @@
 
 # %% Funciones de forma del elemento triangular de 10 nodos
 
-from mpl_toolkits.mplot3d import Axes3D
-
 import matplotlib.pyplot as plt
-from matplotlib import cm
 
 import numpy as np
 import sympy as sp
@@ -28,7 +25,7 @@ if nno == 10:
    #  |   |   | \  
    #  1---4---5---2----> xi
    #
-   #                 xi  eta      do      nodo
+   #                L1    L2    L3       nodo
    nod = np.array([[1  ,  0  ,  0   ],  #  1
                    [0  ,  1  ,  0   ],  #  2
                    [0  ,  0  ,  1   ],  #  3
@@ -79,7 +76,7 @@ print('\nSe verifica la condición de cuerpo rígido: sum(N) == 1:')
 print(sp.simplify(sum(N)) == 1)
 
 # %% grafico las funciones de forma
-XI, ETA = np.mgrid[0:1:30j, 0:1:30j]
+XI, ETA = np.mgrid[0:1:100j, 0:1:100j]
 L1 = 1 - XI - ETA
 
 # calculo las esferitas
@@ -91,17 +88,16 @@ zsp = 0.025*np.cos(v)
 for i in range(nno):
    fig = plt.figure()     # creo un lienzo
    ax = fig.gca(projection='3d')
-   #ax.set_aspect("equal")
-   plt.xlabel(r'$\xi$', fontsize=16)   # titulo eje X
-   plt.ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
-   plt.title(f'$N_{{{i+1}}}(\\xi,\\eta)$', fontsize=20)
+   ax.set_xlabel(r'$\xi$', fontsize=16)   # titulo eje X
+   ax.set_ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
+   ax.set_title(f'$N_{{{i+1}}}(\\xi,\\eta)$', fontsize=20)
 
    # con este comando convierto la funcion de forma de tipo simbólico a
    # tipo función
    NN = sp.lambdify((xi, eta), N[i], 'numpy')
    FF = NN(XI,ETA)
    FF[L1<0] = np.NaN
-   surf = ax.plot_surface(XI, ETA, FF, cmap=cm.viridis)
+   ax.plot_wireframe(XI, ETA, FF)
 
    # se grafican las esferitas en cada nodo
    for j in range(nno):

@@ -2,8 +2,6 @@
 
 # %% Funciones de forma del elemento rectangular serendípito de 4 y 8 nodos
 
-from mpl_toolkits.mplot3d import Axes3D
-
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
@@ -101,10 +99,9 @@ zsp = 0.025*np.cos(v)
 for i in range(nno):
    fig = plt.figure()     # creo un lienzo
    ax = fig.gca(projection='3d')
-   ax.set_aspect("equal")
-   plt.xlabel(r'$\xi$', fontsize=16)   # titulo eje X
-   plt.ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
-   plt.title(f'$N_{i+1}(\\xi,\\eta)$', fontsize=20)
+   ax.set_xlabel(r'$\xi$', fontsize=16)   # titulo eje X
+   ax.set_ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
+   ax.set_title(f'$N_{i+1}(\\xi,\\eta)$', fontsize=20)
 
    # con este comando convierto la funcion de forma de tipo simbólico a
    # tipo función

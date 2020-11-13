@@ -65,10 +65,8 @@ K = subs(K,t*b*d33/(3*a),2*a5);  K = subs(K,-t*b*d33/(3*a),-2*a5);
 K = subs(K,t*d33/2,      2*a6);  K = subs(K,-t*d33/2,      -2*a6);
 
 syms a14 a25 a36 c41 c14 b36 b63 c25 c52
-K = factor(K);                   K = subs(K,a1 + a4, a14);
-K = factor(K);                   K = subs(K,-a1 - a4, -a14);
-K = factor(K);                   K = subs(K,a2 + a5, a25);
-K = factor(K);                   K = subs(K,-a2 - a5, -a25);
+K = subs(K,a1 + a4, a14);        K = subs(K,-a1 - a4, -a14);
+K = subs(K,a2 + a5, a25);        K = subs(K,-a2 - a5, -a25);
 K = subs(K,a2 - 2*a5, c25);      K = subs(K,a5 - 2*a2, c52);
 K = subs(K,a4 - 2*a1, c41);      K = subs(K,a1 - 2*a4, c14);
 K = subs(K,a3 - a6,   b36);      K = subs(K,a6 - a3,   b63);
@@ -78,7 +76,7 @@ K = subs(K,a3 + a6, a36);        K = subs(K,-a3 - a6, -a36);
 K
 
 disp(' ');
-disp('Para facilitar la comparacion de la matriz con el libro de Oñate')
+disp('Para facilitar la comparacion de la matriz con el libro de Onate')
 disp('se muestra unicamente la parte superior de K =')
 triu(K)
 

@@ -88,12 +88,12 @@ for i = 1:nno
    fprintf('dN%d_deta = %s\n', i, char(simplify(diff(N{i}, eta))))
 end
 
-%% Se verifica la condición de cuerpo rígido: sum(N) == 1
+%% Se verifica la condicion de cuerpo rigido: sum(N) == 1
 suma = 0;
 for i = 1:nno
    suma = suma + N{i};
 end
-fprintf('\nSe verifica la condición de cuerpo rígido: sum(N) == ');
+fprintf('\nSe verifica la condicion de cuerpo rigido: sum(N) == ');
 disp(simplify(suma));
 
  
