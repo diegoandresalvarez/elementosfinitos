@@ -14,7 +14,7 @@ IJK = round(1*T3.coord);
 %        0 1 0
 %        0 0 1];
     
-N = cell(3,1);
+T3.N = cell(3,1);
 for i = 1:3
    switch IJK(i,1)
       case 0, lI = 1;
@@ -33,8 +33,8 @@ for i = 1:3
    lJ = poly2sym(lJ,L2);
    lK = poly2sym(lK,L3);
    
-   N{i} = lI*lJ*lK; % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
-   fprintf('\n\nN{%d} =',i); pretty(N{i});
+   T3.N{i} = lI*lJ*lK; % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   fprintf('\n\nN{%d} =',i); pretty(T3.N{i});
 end
 %EF = T3;
 
@@ -56,7 +56,7 @@ IJK = round(2*T6.coord);
 %        0 1 1
 %        1 0 1];
     
-N = cell(6,1);
+T6.N = cell(6,1);
 for i = 1:6  
    switch IJK(i,1)
       case 0, lI = 1;
@@ -78,8 +78,8 @@ for i = 1:6
    lJ = poly2sym(lJ,L2);
    lK = poly2sym(lK,L3);   
    
-   N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
-   fprintf('\n\nN{%d} =',i); pretty(N{i});
+   T6.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   fprintf('\n\nN{%d} =',i); pretty(T6.N{i});
 end
 EF = T6;
 
@@ -109,7 +109,7 @@ IJK = round(3*T10.coord);
 %        2 0 1
 %        1 1 1];
     
-N = cell(10,1);
+T10.N = cell(10,1);
 for i = 1:10  
    switch IJK(i,1)
       case 0, lI = 1;
@@ -135,13 +135,12 @@ for i = 1:10
    lJ = round(1000*lJ)/1000;      lJ = poly2sym(lJ,L2);
    lK = round(1000*lK)/1000;      lK = poly2sym(lK,L3);
       
-   N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
-   fprintf('\n\nN{%d} =\n',i); pretty(N{i});
+   T10.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   fprintf('\n\nN{%d} =\n',i); pretty(T10.N{i});
 end
 %EF = T10;
 
 EF.nno = size(EF.coord, 1);
-EF.N = N;
 
 LL2 = 0:0.05:1;
 LL3 = 0:0.05:1;
@@ -204,11 +203,7 @@ for i=1:EF.nno
 end
 
 %% Se verifica la condicion de cuerpo rigido: sum(N) == 1
-suma = 0;
-for i = 1:EF.nno
-   suma = suma + EF.N{i};
-end
 syms a b
-suma = subs(suma, {'L1', 'L2', 'L3'}, {1-a-b, a, b});
+suma = subs(sum([EF.N{:}]), {'L1', 'L2', 'L3'}, {1-a-b, a, b});
 fprintf('\nSe verifica la condicion de cuerpo rigido: sum(N) == ');
 disp(simplify(suma));
