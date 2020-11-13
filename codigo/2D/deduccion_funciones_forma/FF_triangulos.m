@@ -81,7 +81,7 @@ for i = 1:6
    T6.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =',i); pretty(T6.N{i});
 end
-EF = T6;
+%EF = T6;
 
 %% -------------------------------------------------------------------------
 disp('Funciones de forma de triangulos de 10 nodos')
@@ -138,7 +138,7 @@ for i = 1:10
    T10.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
    fprintf('\n\nN{%d} =\n',i); pretty(T10.N{i});
 end
-%EF = T10;
+EF = T10;
 
 EF.nno = size(EF.coord, 1);
 
