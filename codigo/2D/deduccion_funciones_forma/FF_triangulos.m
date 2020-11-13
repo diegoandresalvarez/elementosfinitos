@@ -170,8 +170,7 @@ for i = 1:numtriang
                        1 X(TRI(i,2)) Y(TRI(i,2))
                        1 X(TRI(i,3)) Y(TRI(i,3))]);
 end
-idx = Area < 1e-3;
-TRI(idx,:) = [];
+TRI(Area < 1e-3,:) = [];
 
 [xsp,ysp,zsp] = sphere;
 xsp = 0.025*xsp;
