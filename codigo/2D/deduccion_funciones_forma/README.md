@@ -53,7 +53,6 @@ Para facilitar la comparación de la matriz con el libro de Oñate se muestra ú
 # Funciones de forma del EF rectangular lagrangiano de 9 nodos
 * MATLAB: [FF_lagrangianos_Q9.m](FF_lagrangianos_Q9.m)
 
-
 # Funciones de forma del EF rectangular lagrangiano de 16 nodos
 * MATLAB: [FF_lagrangianos_Q16.m](FF_lagrangianos_Q16.m)
 * PYTHON: [FF_lagrangianos_Q16.py](FF_lagrangianos_Q16.py)
@@ -91,7 +90,6 @@ Siendo el gráfico de esta función:
 * MATLAB: [FF_triangulos.m](FF_triangulos.m): este método utiliza funciones de forma especificadas con coordenadas de área.
 * MATLAB: [FF_T10_metodo_alternativo.py](FF_T10_metodo_alternativo.py): este método calcula las funciones de forma del EF triangular de 10 nodos asumiendo que es un elemento finito serendípito.
 
-
 Con este código se obtuvo por ejemplo las siguientes funciones de forma:
 ```
 N{3} = 1/2 L3 (3 L3 - 1) (3 L3 - 2)
@@ -108,7 +106,3 @@ Siendo los gráficos de estas funciones:
 ![figs/FF_T10_N7.png](figs/FF_T10_N7.png)
 
 ![figs/FF_T10_N10.png](figs/FF_T10_N10.png)
-
-
-# Funciones de forma del EFs triangular de 10 nodos
-
