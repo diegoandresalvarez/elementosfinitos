@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+# Recuerde escribir primero en la consola %matplotlib qt5
+
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
@@ -136,11 +140,11 @@ dN_dxi  = 16 * [None]
 dN_deta = 16 * [None]
 
 for i in range(16):
-    dN_dxi[i] = simple(sp.diff(N[i], xi))
+    dN_dxi[i] = simplify(sp.diff(N[i], xi))
     print(f'dN_dxi{i} = {char(dN_dxi[i])}')
 
 for i in range(16):
-    dN_deta[i] = simple(sp.diff(N[i], eta))
+    dN_deta[i] = simplify(sp.diff(N[i], eta))
     print(f'dN_dxi{i} = {char(dN_deta[i])}')
 '''
 #%% Calculo el determinante del Jacobiano
@@ -160,7 +164,8 @@ if np.max(detJ) > 0:
 else:
     JR = np.min(detJ) / np.max(detJ)
 
-print(f'Jacobian ratio (JR) = {JR}')
+if JR > 0:
+    print(f'Jacobian ratio (JR) = {JR}')
 print(f'min(detJ) = {np.min(detJ)}')
 print(f'max(detJ) = {np.max(detJ)}')
 
@@ -176,7 +181,10 @@ h = ax2.pcolor(xi, eta, detJ, cmap='jet')
 tickscb = np.linspace(detJ.min(), detJ.max(), 10)
 fig.colorbar(h, ax=ax2, ticks=tickscb), 
 ax2.set_title(f'Determinante de J')
-ax3.set_title(f'Jacobian ratio = {JR:.3}')     
+if JR < 0 or JR > 40:
+    ax3.set_title('Esta forma no es adecuada para un EF.')
+else:
+    ax3.set_title(f'Jacobian ratio = {JR:.3}')     
 ax2.set_aspect('equal', 'box')
 warnings.filterwarnings("ignore")
 ax2.contour(xi, eta, detJ, levels= [0] , linewidths=4)
