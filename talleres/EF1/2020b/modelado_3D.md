@@ -18,7 +18,7 @@ La idea de este trabajo es modelar mediante elementos finitos 3D el componente m
 
 ![solido](figs/solido_render.png)
 
-la cual está contenida en el archivo [solido.iges](figs/solido.iges). El archivo fue creado por Esteban Hernandez Soto (nhernandez@unal.edu.co). Los gráficos y otros resultados arrojados por el programa de elementos finitos deberán ser cuidadosamente analizados de forma grupal.
+la cual está contenida en los archivos [solido.iges](figs/solido.iges), [solido.stl](figs/solido.stl) y [solido.dwg](figs/solido.dwg). El archivo fue creado por Esteban Hernandez Soto (nhernandez@unal.edu.co). Los gráficos y otros resultados arrojados por el programa de elementos finitos deberán ser cuidadosamente analizados de forma grupal.
 
 Las dimensiones del dibujo están dadas en milímetros. Para el modelado, se asumirá que por los huecos circulares pasan tornillos. Las superficies que están en contacto con las cabezas de los tornillos estarán representadas por las regiones mostradas en amarillo (NOTA: esta suposición no es del todo correcta. Para modelar correctamente la acción de los tornillos toca tener en cuenta una teoría llamada *superficies de contacto*, que no la veremos en el curso). Se asumirá que en estas superficies y en los huecos de los tornillos los desplazamientos serán nulos. En las regiones azules, se aplicarán unos esfuerzos de compresión de 50 MPa.
 
