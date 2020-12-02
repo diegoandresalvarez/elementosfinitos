@@ -18,7 +18,7 @@ La idea de este trabajo es modelar mediante elementos finitos 3D el componente m
 
 ![solido](figs/solido_render.png)
 
-la cual está contenida en el archivo [solido.iges](figs/solido.iges). El archivo fue creado por Esteban Hernandez Soto (nhernandez@unal.edu.co). Los gráficos y otros resultados arrojados por el programa de elementos finitos deberán ser cuidadosamente analizados de forma grupal.
+la cual está contenida en el archivo [solido.iges](figs/solido.iges). Tenga en cuenta que las dimensiones de este objeto están dadas en milímetros. El archivo fue creado por Esteban Hernandez Soto (nhernandez@unal.edu.co). Los gráficos y otros resultados arrojados por el programa de elementos finitos deberán ser cuidadosamente analizados de forma grupal.
 
 Las propiedades del material serán:
 * [Aluminio 6061](https://en.wikipedia.org/wiki/6061_aluminium_alloy)
