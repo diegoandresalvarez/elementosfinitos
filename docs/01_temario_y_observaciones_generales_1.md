@@ -18,11 +18,10 @@ NOTA FINAL = 0.17*Examen1 + 0.17*Examen2 + 0.17*Examen3 + 0.17*Examen4 + 0.16*Tr
 --->
 Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones usuales de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes orales, evaluación de los apuntes y talleres.
 
-* **Apuntes de clase:** 20%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado, tanto de lo visto en clase, en las diapositivas y en el libro guía.
-* **Examen oral 1:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
-* **Examen oral 2:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
-* **Trabajo 1:** 20%, taller de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
-* **Trabajo 2:** 20%, taller de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+* **Ejercicios de programación:** 25%, se seleccionarán al azar 3 ejercicios y se evaluarán. Se calificarán qué tan completos están y si incluyen todo lo .
+* **Examen oral 1:** 25%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Examen oral 2:** 25%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Trabajo:** 25%, uso de un software profesional de elementos finitos.
 
 <!--- 
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
@@ -33,6 +32,7 @@ Los exámenes serán orales e individuales. Se realizarán siguiendo [este](http
 
 La fecha del examen se definirá dos semanas antes de su realización.
 
+<!--- 
 ## Criterios de calificación de los apuntes
 
 Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre impresiones del libro y diapositivas:
@@ -56,6 +56,7 @@ La razón del porqué se deben hacer las notas en papel y no electrócamente es 
 * Si los apuntes se entregan un día antes de la fecha prevista, se tendrán dos décimas adicionales.
 * Si los apuntes se entregan dos días o más días antes de la fecha prevista, se tendrán cuatro décimas adicionales.
 * Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
+--->
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de estructuras en tensión y deformación planas, estructuras de revolución, estructuras tridimensionales y placas.
