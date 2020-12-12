@@ -6,7 +6,7 @@ Trabajo en grupos de máximo 3 personas. Los miembros de un mismo grupo no puede
 
 Por favor reportar los grupos de trabajo en GOOGLE CLASSROOM.
 
-Fecha y hora de entrega: se especificará en GOOGLE CLASSROOM. Por cada día hora de retraso se descontará una décima de la nota final.
+Fecha y hora de entrega: se especificará en GOOGLE CLASSROOM. Por cada día hora de retraso se descontarán 2 décimas de la nota final.
 
 <!---
 Presentación individual y grupal: viernes febrero 14, 2020 a las 7:00 a.m.
@@ -124,7 +124,7 @@ Se sugiere aprender a manejar un programa de edición de videos. Esto les facili
 
 * Si se sube un video de mala calidad (por ejemplo 720p de calidad o inferior) se rebajará 1.0 unidad. Mínimo 1080p. Recuerde que no tenemos limitación en el almacenamiento en GOOGLE CLASSROOM. En caso que su equipo no sea capaz de hacer videos con resolución 1080p, infórmelo previamente, mediante un correo.
 
-* Por cada hora de retraso se descontará una décima de la nota final.
+* Por cada hora de retraso se descontarán 2 décimas de la nota final.
 
 * Si se sube el video a YouTube, se tendrá menos 2.0 unidades. Los videos los debe subir directamente a GOOGLE CLASSROOM.
 
