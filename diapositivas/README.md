@@ -27,7 +27,7 @@
   * a. [EFs bidimensionales: triangular de 3 nodos y cuadrático de 4 nodos](05a_EF_2D_T3_y_Q4.pdf)
   * b. [Deducción de la ecuación `K*a - f = q` para un EF bidimensional de `n` nodos](05b_EF_2D_T3.pdf)
   * c. [Funciones de forma de los EFs rectangulares y triangulares de `n` nodos](05c_funciones_forma_EF_2D_Tn_Qn.pdf)
-  * d. [EFs triangulares y cuadráticos isoparamétricos de n nodos](05d_EF_2D_Tn_Qn_isoparametrico.pdf)
+  * d. [EFs rectangulares y triangulares isoparamétricos de n nodos](05d_EF_2D_Tn_Qn_isoparametrico.pdf)
   * e. [Reglas para la creación de una buena malla de EFs](05e_generando_una_buena_malla.pdf)
   * f. [El Patch Test](05f_El_Patch_Test.pdf)
 
