@@ -58,54 +58,61 @@ La razón del porqué se deben hacer las notas en papel y no electrócamente es 
 * Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
 --->
 
+## Descripción de la asignatura
+En este curso se enseñará la teoría de elementos finitos para la estimación de los desplazamientos, deformaciones y esfuerzos en sólidos uni-, bi-, trimensionales y axisimétricos para materiales elásticos lineales.
+
 ## Objetivos
-- Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de estructuras en tensión y deformación planas, estructuras de revolución, estructuras tridimensionales y placas.
-- Hacer énfasis en la programación de computadores como una herramienta para obtener soluciones numéricas de problemas cuya solución analítica es extremadamente compleja.
+* Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de estructuras en tensión y deformación planas, estructuras de revolución y estructuras tridimensionales.
+* Hacer énfasis en la programación de computadores como una herramienta para obtener soluciones numéricas de problemas cuya solución analítica es extremadamente compleja.
 
 ## Metodología
 El curso se desarrollará teniendo en cuenta diferentes aspectos pedagógicos como son:
-- Clases presenciales: el profesor explica los conceptos relevantes en el salón de clase.
-- Realización de talleres prácticos de programación que faciliten, refuercen y aplique los conocimientos adquiridos en la parte teórica cada vez que el tema lo amerite.
-- Presentación y sustentación de proyectos por parte de los estudiantes.
-- Trabajo dirigido fuera de clase, ya sea individual o por grupo, por parte de los estudiantes con el propósito de afianzar los conceptos aprendidos.
+* Clases presenciales: el profesor explica los conceptos relevantes en el salón de clase.
+* Realización de talleres prácticos de programación que faciliten, refuercen y aplique los conocimientos adquiridos en la parte teórica cada vez que el tema lo amerite.
+* Presentación y sustentación de proyectos por parte de los estudiantes.
+* Trabajo dirigido fuera de clase, ya sea individual o por grupo, por parte de los estudiantes con el propósito de afianzar los conceptos aprendidos.
+* Se harán prácticas con programas de elementos finitos.
 
 ## Contenido programático de elementos finitos 1
-1. PRINCIPIOS VARIACIONALES
-   - Nociones de cálculo variacional.
-   - Principio de la energía potencial mínima.
-   - Principio del trabajo virtual.
-   - Ejercicios
+1. CONCEPTOS INICIALES
+   * Nociones de cálculo variacional.
+   * Principio de la energía potencial mínima y principio del trabajo virtual
+   * Breve repaso de ensamblaje matricial
 
 2. ELEMENTOS FINITOS PARA TENSIÓN AXIAL
-   - Formulación variacional.
-   - Formulaciones débil y fuerte.
-   - Elemento finito lineal de dos nodos.
-   - Ensamblaje de matrices.
-   - Análisis de tensiones.
+   * Formulación débil y fuerte.
+   * Funciones de forma globales y locales
+   * Elementos finitos lineales de 2, 3 y *n* nodos
+   * Elemento isoparamétrico unidimensional
+   * Integración numérica de Gauss-Legendre en 1D
 
-3. ELEMENTOS FINITOS PARA TENSIÓN Y DEFORMACIÓN PLANAS
-   - Repaso de tensión y deformación planas
-   - Elemento finito triangular de deformación constante.
-   - Tratamiento de fuerzas másicas y distribuidas.
-   - Elemento finito rectangular de cuatro nodos.
-   - Elemento finito triangular de deformación lineal.
-   - Ejercicios
+3. ELEMENTOS FINITOS PARA TENSIÓN Y DEFORMACIÓN PLANA
+   * Repaso de tensión y deformación planas
+   * Elemento finito triangular de deformación constante (elemento finito CST).
+   * Funciones de forma triangulares y rectangulares lagrangianas y serendípitas
+   * Elementos finitos isoparamétricos en 2D
+   * Integración numérica de Gauss-Legendre en 2D
 
-4. ELEMENTOS FINITOS PARA ESTRUCTURAS DE REVOLUCIÓN
-   - Problema de elasticidad en coordenadas polares.
-   - Elemento finito triangular axi-simétrico.
-   - Ejercicios
+4. ELEMENTOS FINITOS PARA ESTRUCTURAS TRIDIMENSIONALES
+   * Repaso de ecuaciones generales de elasticidad tridimensional
+   * Elemento finito tetraédrico de deformación constante.
+   * Funciones de forma tetraédricas y hexaédricas lagrangianas y serendípitas
+   * Elementos finitos isoparamétricos en 3D
+   * Integración numérica de Gauss-Legendre en 3D
 
-5. ELEMENTOS FINITOS PARA ESTRUCTURAS ESPACIALES
-   - Repaso de ecuaciones generales de elasticidad tridimensional.
-   - Elemento finito tetraédrico de  deformación constante.
-   - Ejercicios
-
-6. FORMULACIÓN ISOPARAMÉTRICA E INTEGRACIÓN NUMÉRICA
-   - Formulación isoparamétrica.
-   - Integración de funciones por cuadraturas de Gauss.
-   - Aplicación para elementos finitos.
-   - Ejercicios
+5. ELEMENTOS FINITOS PARA ESTRUCTURAS DE REVOLUCIÓN
+   * Problema de elasticidad en coordenadas polares.
+   * Elementos finitos triangulares y rectangulares axisimétricos
+   
+6. CRITERIOS PARA LA GENERACIÓN DE UNA BUENA MALLA DE ELEMENTOS FINITOS
+   * Reglas básicas para la creación de una malla
+   * Selección del tipo de elemento finito
+   * Formas aconsejables y no aconsejables de los elementos finitos, mallas estructuradas y no estructuradas
+   * Mallando en el espesor, mallando huecos
+   * Tipos de degeneración de los elementos finitos
+   * Criterios que ayudan a verificar la calidad de la malla: relación jacobiana, relación de aspecto, errores de alisado, relación entre radios, factor de alabeo, etc.
+   * Convergencia de la solución
+   * Refinación de la malla de elementos finitos (métodos h y p)
 
 ## Bibliografía
 <!---
