@@ -5,7 +5,7 @@
 
 ## Evaluaciones y trabajos
 
-Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes, evaluación de los apuntes y talleres.
+El curso se evaluará mediante exámenes, evaluación de los apuntes y talleres.
 
 Los exámenes serán orales e individuales. Se realizarán siguiendo [este](protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
 
@@ -24,13 +24,13 @@ La fecha del examen se definirá dos semanas antes de su realización.
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 
 --->
+* **Examen 1:** 17%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
+* **Examen 2:** 17%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+* **Examen 3:** 16%, cascarones planos y degenerados.
+* **Trabajo 1:** 25%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+* **Trabajo 2:** 25%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
 
-  * **Apuntes de clase:** 20%, se seleccionarán al azar 3 apuntes de clase y se evaluarán. Se calificarán qué tan completos están y si incluyen todo el contenido solicitado.
-  * **Examen 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
-  * **Examen 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
-  * **Trabajo 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
-  * **Trabajo 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
-
+<!---
 ## Criterios de calificación de los apuntes
 Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre impresiones del libro y diapositivas:
 
@@ -49,10 +49,11 @@ Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre im
 
 La razón del porqué se deben hacer las notas en papel y no electrócamente es que hay estudios que demuestran que estudiar sobre papel es más efectivo que aprender sobre una pantalla. Ver por ejemplo los artículos [1](https://www.eldiario.es/consumoclaro/consumo_digital/mejor-leer-libros-impresos-electronicos_1_3220278.html) y [2](https://www.xataka.com/otros/los-estudiantes-aprenden-mucho-mas-efectivamente-de-los-libros-impresos-que-de-pantallas-aunque-ellos-creen-lo-contrario).
 
-* Por cada día de retrazo en la entrega de los apuntes se tendrá una décima menos.
+* Por cada día de retraso en la entrega de los apuntes se tendrá una décima menos.
 * Si los apuntes se entregan un día antes de la fecha prevista, se tendrán dos décimas adicionales.
 * Si los apuntes se entregan dos días o más días antes de la fecha prevista, se tendrán cuatro décimas adicionales.
 * Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
+--->
 
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.
