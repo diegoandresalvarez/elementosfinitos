@@ -111,6 +111,12 @@ N1b = N{2};
 N2  = N{3};
 N2b = N{4};
 
+%% Se verifica la condicion de cuerpo rigido: N1 + N2 == 1
+% observe que solo se suman las funciones de forma asociados a GDL
+% translacionales
+fprintf('\nSe verifica la condicion de cuerpo rigido: N1 + N2 == ');
+disp(simplify(N1 + N2));
+
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
 NN        = expand([N1   N1b*L/2   N2   N2b*L/2]);
 dNN_dxi   = expand(diff(NN,xi));
