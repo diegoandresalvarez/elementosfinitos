@@ -1,4 +1,5 @@
 # Observaciones generales y temario del curso "4200685 - Aplicaciones de elementos finitos 2"
+Curso creado según la resolución: http://www.legal.unal.edu.co/rlunal/home/doc.jsp?d_i=53490
 
 ## Citas para preguntas
 Únicamente solicitándolas previamente, ya sea por correo electrónico o antes/después de la clase.
