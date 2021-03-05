@@ -5,3 +5,5 @@
 
 ## Viga de con resortes
 <img src="figs/viga_con_resortes.svg">
+
+NOTA: esta viga se calculó de forma analítica y la solución por el MEF se está comparando contra la respuesta exacta utilizando las teorías de  Euler-Bernoulli y Timoshenko-Ehrenfest.
