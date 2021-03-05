@@ -96,7 +96,7 @@ b = eye(4,4);
 
 % cada columna de la solucion son los coeficientes de una de las funciones
 % de forma
-alpha = A\b;
+alpha = A\b; % = inv(A)
 
 %% Defino las funciones de forma
 N = cell(4,1);

@@ -59,9 +59,9 @@ print(f'w(xi) = \n{sp.pretty(w)}')
 print('es decir:')
 
 print(f'w(xi) = \n{sp.pretty(N1)} \n*w1 + ')
-print(f'{sp.pretty(N1b)} \n(L/2)*dw_dx1 + ')
-print(f'{sp.pretty(N2)} \n*w2 + ')
-print(f'{sp.pretty(N2b)} \n(L/2)*dw_dx2')
+print(f'{sp.pretty(N1b)}          \n(L/2)*dw_dx1 + ')
+print(f'{sp.pretty(N2)}           \n*w2 + ')
+print(f'{sp.pretty(N2b)}          \n(L/2)*dw_dx2')
 
 print(' ')
 print('Siendo las funciones de forma:')
@@ -76,13 +76,13 @@ N1p  = sp.lambdify([xi], N1)
 N1bp = sp.lambdify([xi], N1b)
 N2p  = sp.lambdify([xi], N2)
 N2bp = sp.lambdify([xi], N2b)
-xical = np.arange(-1, 1.05, 0.05)  # Puntos de evaluación de las funciones.
+xi   = np.arange(-1, 1.05, 0.05)  # Puntos de evaluación de las funciones.
 
 fig, ax = plt.subplots()
-ax.plot(xical, N1p(xical), linewidth=2, label=r'$N_1(\xi)$')
-ax.plot(xical, N1bp(xical), linewidth=2, label=r'$\bar{N}_1(\xi)$')
-ax.plot(xical, N2p(xical), linewidth=2, label=r'$N_2(\xi)$')
-ax.plot(xical, N2bp(xical), linewidth=2, label=r'$\bar{N}_2(\xi)$')
+ax.plot(xi, N1p(xi),  linewidth=2, label=r'$N_1(\xi)$')
+ax.plot(xi, N1bp(xi), linewidth=2, label=r'$\bar{N}_1(\xi)$')
+ax.plot(xi, N2p(xi),  linewidth=2, label=r'$N_2(\xi)$')
+ax.plot(xi, N2bp(xi), linewidth=2, label=r'$\bar{N}_2(\xi)$')
 
 ax.axis('equal')
 ax.set_title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
@@ -103,16 +103,16 @@ xi, L, E, I, q = sp.symbols('xi L E I q')
 # Planteo el sistema de ecuaciones y encuentro los coeficientes
 x1 = -1
 x2 =  1
-A = sp.Matrix([[1, x1,   x1**2, x1**3],  # x = [alpha0; alpha1; alpha2; alpha3]
-               [0,  1, 2*x1,  3*x1**2],
-               [1, x2,   x2**2, x2**3],
-               [0,  1, 2*x2,  3*x2**2]])
+A = sp.Matrix([[1, x1,   x1**2,    x1**3],  # x = [alpha0; alpha1; alpha2; alpha3]
+               [0,  1,    2*x1,  3*x1**2],
+               [1, x2,   x2**2,    x2**3],
+               [0,  1,    2*x2,  3*x2**2]])
 
-alpha = A**-1
+alpha = A.inv()
 
 # %%Defino las funciones de forma
 
-N = sp.zeros(4, 1       )
+N = sp.zeros(4, 1)
 
 print('Las funciones de forma son =')
 nombre = ['N_1(xi)', 'Nb_1(xi)', 'N_2(xi)', 'Nb_2(xi)']
@@ -130,8 +130,8 @@ NN = sp.expand(sp.Matrix([N1, N1b*L/2, N2, N2b*L/2]).T)
 dNN_dxi   = sp.expand(sp.diff(NN, xi))
 dNN2_dxi2 = sp.expand(sp.diff(NN, xi, 2))
 dNN3_dxi3 = sp.expand(sp.diff(NN, xi, 3))
-print(f'\nN = \n{sp.pretty(NN)}')
-print(f'\ndNN_dxi = \n{sp.pretty(dNN_dxi)}')
+print(f'\nN =         \n{sp.pretty(NN)}')
+print(f'\ndNN_dxi =   \n{sp.pretty(dNN_dxi)}')
 print(f'\ndNN2_dxi2 = \n{sp.pretty(dNN2_dxi2)}')
 print(f'\ndNN3_dxi3 = \n{sp.pretty(dNN3_dxi3)}')
 

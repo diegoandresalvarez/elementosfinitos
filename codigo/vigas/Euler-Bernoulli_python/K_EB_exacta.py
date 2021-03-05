@@ -14,17 +14,17 @@ q = 0
 # %%Se calcula la matrix de rigidez
 K = sp.zeros(4)
 
-V = sp.integrate(q, x) + C1  # Ecuaciónes calculadas con constantes.
-M = sp.integrate(V, x) + C2
+V =  sp.integrate(q, x) + C1  # Ecuaciónes calculadas con constantes.
+M =  sp.integrate(V, x) + C2
 t = (sp.integrate(M, x) + C3)/EI
-w = sp.integrate(t, x) + C4
+w =  sp.integrate(t, x) + C4
 
 for i in range(4):
 
-    sol = sp.solve([w.subs(x, 0) - int((i == 0)),  # Condiciones de frontera
-                    t.subs(x, 0) - int((i == 1)),
-                    w.subs(x, L) - int((i == 2)),
-                    t.subs(x, L) - int((i == 3))],
+    sol = sp.solve([w.subs(x, 0) - int(i == 0),  # Condiciones de frontera
+                    t.subs(x, 0) - int(i == 1),
+                    w.subs(x, L) - int(i == 2),
+                    t.subs(x, L) - int(i == 3)],
                    [C1, C2, C3, C4])
 
     constantes = [(C1, sol[C1]), (C2, sol[C2]), (C3, sol[C3]), (C4, sol[C4])]
