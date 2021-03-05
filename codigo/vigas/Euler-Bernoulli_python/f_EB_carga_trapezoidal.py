@@ -30,10 +30,10 @@ C1, C2, C3, C4 = sp.symbols('C1, C2, C3, C4')
 q = (w2-w1)*x/L + w1  # Carga trapezoidal
 
 # %%Solución de la ecuación diferencial de Euler-Bernoulli
-V = sp.integrate(q, x) + C1  # Ecuaciónes calculadas.
-M = sp.integrate(V, x) + C2
+V =  sp.integrate(q, x) + C1  # Ecuaciónes calculadas.
+M =  sp.integrate(V, x) + C2
 t = (sp.integrate(M, x) + C3)/EI
-w = sp.integrate(t, x) + C4
+w =  sp.integrate(t, x) + C4
 
 sol = sp.solve([w.subs(x, 0),  # Condiciones de frontera.
                 w.subs(x, L),

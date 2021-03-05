@@ -33,10 +33,10 @@ w = collect(w, {'w1', 'dw_dx1', 'w2', 'dw_dx2'});
 %     ((L*xi^3)/8 + (L*xi^2)/8 - (L*xi)/8 - L/8)*dw_dx2
 
 % es decir:
-N1  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {1, 0, 0, 0}));
-N1b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 1, 0, 0}));
-N2  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {0, 0, 1, 0}));
-N2b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 0, 0, 1}));
+N1  = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {1, 0, 0, 0})      );
+N1b = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 1, 0, 0})/(L/2));
+N2  = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 0, 1, 0})      );
+N2b = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 0, 0, 1})/(L/2));
 
 %% Se muestra finalmente w
 % Recuerde que 
@@ -96,7 +96,7 @@ b = eye(4,4);
 
 % cada columna de la solucion son los coeficientes de una de las funciones
 % de forma
-alpha = A\b;
+alpha = A\b; % = inv(A)
 
 %% Defino las funciones de forma
 N = cell(4,1);
@@ -110,6 +110,12 @@ N1  = N{1};
 N1b = N{2};
 N2  = N{3};
 N2b = N{4};
+
+%% Se verifica la condicion de cuerpo rigido: N1 + N2 == 1
+% observe que solo se suman las funciones de forma asociados a GDL
+% translacionales
+fprintf('\nSe verifica la condicion de cuerpo rigido: N1 + N2 == ');
+disp(simplify(N1 + N2));
 
 %% Calculo la matriz de funciones de forma y su derivada primera y segunda con respecto a xi
 NN        = expand([N1   N1b*L/2   N2   N2b*L/2]);

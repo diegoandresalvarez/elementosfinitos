@@ -7,15 +7,14 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.artist as art
+from os import path
 
 # %%Defino las constantes y variables
 Y = 0; TH = 1  # Y: vertical, TH: rotacional
 
 #filename = 'viga_Uribe_Escamilla_ej_5_5'
 filename = 'viga_con_resortes'
-archivo_xlsx = pd.read_excel('C:\\Users\\jnramirezg\\Desktop\\Finitos 2 '
-                             + 'codigo\\ejemplos\\' + f'{filename}.xlsx',
+archivo_xlsx = pd.read_excel(path.join('..', 'ejemplos', f'{filename}.xlsx'),
                              sheet_name=None)
 
 # %%Se lee la posición de los nodos
@@ -281,14 +280,20 @@ plt.xlim(xnod[1], xnod[-1])             # Rango en el eje X del gráfico
 # las funciones de discontinuidad
 
 if filename == 'viga_con_resortes':
-    dir_txt = ('C:\\Users\\jnramirezg\\Desktop\\Finitos 2 codigo\\ejemplos\\re'
-               + 'sults_viga_con_resortes_EB\\')
-
-    x = eval(np.loadtxt(f'{dir_txt}x.txt',   comments=[';'], dtype=list)*1)
-    V = eval(np.loadtxt(f'{dir_txt}Vx.txt',  comments=[';'], dtype=list)*1)
-    M = eval(np.loadtxt(f'{dir_txt}Mx.txt',  comments=[';'], dtype=list)*1)             
-    t = eval(np.loadtxt(f'{dir_txt}tx.txt',  comments=[';'], dtype=list)*1)
-    w = eval(np.loadtxt(f'{dir_txt}vxx.txt', comments=[';'], dtype=list)*1)
+    import re
+    def leer(fn):
+        with open(
+                path.join('..', 'ejemplos', 'results_viga_con_resortes_EB', fn),
+                'r') as f:
+            txt = f.read()
+        nums = re.findall(r'\[([^][]+)\]', txt)
+        return np.loadtxt(nums, delimiter=",")
+   
+    x = leer('x.txt')
+    V = leer('Vx.txt')
+    M = leer('Mx.txt')
+    t = leer('tx.txt')
+    w = leer('vxx.txt')
 
     ax1.plot(x, w, 'r.', label='Solución teórica', markersize=5)
     ax2.plot(x, t, 'r.', label='Solución teórica', markersize=5)
