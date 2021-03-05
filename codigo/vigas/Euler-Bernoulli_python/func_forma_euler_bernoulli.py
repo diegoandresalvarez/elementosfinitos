@@ -44,10 +44,10 @@ w = sp.collect(w, {'w1', 'dw_dx1', 'w2', 'dw_dx2'})
 #     w2*(-xi**3/4 + 3*xi/4 + 1/2)
 
 # Es decir
-N1  = sp.expand(w.subs([(w1, 1), (dw_dx1, 0), (w2, 0), (dw_dx2, 0)]))
-N1b = sp.expand((w/(L/2)).subs([(w1, 0), (dw_dx1, 1), (w2, 0), (dw_dx2, 0)]))
-N2  = sp.expand(w.subs([(w1, 0), (dw_dx1, 0), (w2, 1), (dw_dx2, 0)]))
-N2b = sp.expand((w/(L/2)).subs([(w1, 0), (dw_dx1, 0), (w2, 0), (dw_dx2, 1)]))
+N1  = sp.expand(w.subs([(w1, 1), (dw_dx1, 0), (w2, 0), (dw_dx2, 0)])      )
+N1b = sp.expand(w.subs([(w1, 0), (dw_dx1, 1), (w2, 0), (dw_dx2, 0)])/(L/2))
+N2  = sp.expand(w.subs([(w1, 0), (dw_dx1, 0), (w2, 1), (dw_dx2, 0)])      )
+N2b = sp.expand(w.subs([(w1, 0), (dw_dx1, 0), (w2, 0), (dw_dx2, 1)])/(L/2))
 
 # %%Se muestra finalmente w
 # Recuerde que

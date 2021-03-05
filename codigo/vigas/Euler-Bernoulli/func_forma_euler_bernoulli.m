@@ -33,10 +33,10 @@ w = collect(w, {'w1', 'dw_dx1', 'w2', 'dw_dx2'});
 %     ((L*xi^3)/8 + (L*xi^2)/8 - (L*xi)/8 - L/8)*dw_dx2
 
 % es decir:
-N1  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {1, 0, 0, 0}));
-N1b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 1, 0, 0}));
-N2  = expand(subs(w,       {w1, dw_dx1, w2, dw_dx2} , {0, 0, 1, 0}));
-N2b = expand(subs(w/(L/2), {w1, dw_dx1, w2, dw_dx2} , {0, 0, 0, 1}));
+N1  = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {1, 0, 0, 0})      );
+N1b = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 1, 0, 0})/(L/2));
+N2  = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 0, 1, 0})      );
+N2b = expand(subs(w, {w1, dw_dx1, w2, dw_dx2}, {0, 0, 0, 1})/(L/2));
 
 %% Se muestra finalmente w
 % Recuerde que 
