@@ -14,8 +14,8 @@ q = 0
 # %%Se calcula la matrix de rigidez
 K = sp.zeros(4)
 
-V =  sp.integrate(q, x) + C1         # ecuaciones calculadas con constantes
-M =  sp.integrate(V, x) + C2
+V =  sp.integrate(q, x) + C1         # se integran las ec. diferenciales
+M =  sp.integrate(V, x) + C2         # de la viga de Euler-Bernoulli
 t = (sp.integrate(M, x) + C3)/EI
 w =  sp.integrate(t, x) + C4
 for i in range(4):
