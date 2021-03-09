@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Interpolacion polinomica de Hermite.
+# Interpolacion polinomica de Hermite
 
 # %%Importación de librerías
 import sympy as sp
@@ -8,8 +8,7 @@ from sympy.plotting import plot
 
 # %%Definición de variables
 xi, u1, u2, u1p, u2p = sp.symbols('xi u1 u2 u1p u2p')
-x1 = -1
-x2 =  1
+x1, x2 = -1, +1
 
 # %%Funciones de forma lagrangianas
 L1 = sp.interpolate([(-1, 1), (1, 0)], xi)
