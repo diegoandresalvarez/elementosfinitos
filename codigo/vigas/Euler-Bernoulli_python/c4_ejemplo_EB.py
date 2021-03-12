@@ -302,4 +302,5 @@ if filename == 'viga_con_resortes':
 
     ax1.legend(); ax2.legend(); ax3.legend(); ax4.legend()
 
+plt.show()
 # Fin del programa
