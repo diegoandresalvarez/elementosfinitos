@@ -10,14 +10,11 @@ NL1, NL2 = 0, 1
 X, Y, TH = 0, 1, 2
 g        = -9.81    # [m/s²] aceleración de la gravedad
 
-# %% se configuran las unidades
-U_FUER = 'kN'
-U_LONG = 'm'
-
 # %% seleccione la malla a emplear:
-nombre_archivo = 'torre_electrica'
+#nombre_archivo = 'fink'
+#nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
-#nombre_archivo = 'portico_UribeEscamilla_11_23'
+nombre_archivo = 'portico_UribeEscamilla_11_23'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
@@ -164,6 +161,18 @@ for e in range(nbar): # para cada barra
 # haga los números super pequeños iguales a cero, para mejorar la claridad   
 qe_loca[np.abs(qe_loca) < 1e-12] = 0
 
+# %% se configuran las unidades y las escalas para la graficación
+# se configuran las unidades para los reportes
+config = df['config'].set_index('variable')
+U_FUER     = config.loc['U_FUER']['valor']
+U_LONG     = config.loc['U_LONG']['valor']
+
+# se configuran las escalas para la graficación
+esc_def    = config.loc['esc_def']['valor']    # deformada
+esc_faxial = config.loc['esc_faxial']['valor'] # diagrama de fuerzas axiales
+esc_V      = config.loc['esc_V']['valor']      # diagrama de fuerzas cortantes
+esc_M      = config.loc['esc_M']['valor']      # diagrama de momentos flectores
+
 # %% Reporte de los resultados:
 # se crean tablas para reportar los resultados nodales de: desplazamientos (a),
 # fuerzas nodales equivalentes (f) y fuerzas nodales de equilibrio (q)
@@ -216,27 +225,6 @@ for i in range(nno):
 '''      
 
 #%% Dibujar la estructura y su deformada
-esc_def    = 50           # escalamiento de la deformada
-esc_faxial = 0.005        # escalamiento del diagrama de axiales
-esc_V      = 0.005        # escalamiento del diagrama de cortantes
-esc_M      = 0.01         # escalamiento del diagrama de momentos
-
-'''
-# Ejemplo cercha
-esc_def    = 100          # escalamiento de la deformada
-esc_faxial = 30           # escalamiento del diagrama de axiales
-esc_V      = 0.5          # escalamiento del diagrama de cortantes
-esc_M      = 0.5          # escalamiento del diagrama de momentos
-'''
-
-'''
-# Ejemplo portico
-esc_def    = 50           # escalamiento de la deformada
-esc_faxial = 0.3          # escalamiento del diagrama de axiales
-esc_V      = 0.5          # escalamiento del diagrama de cortantes
-esc_M      = 0.5          # escalamiento del diagrama de momentos
-'''
-
 xdef = xnod + esc_def*vect_mov[:,[X, Y]]
 
 plt.figure(2)  
