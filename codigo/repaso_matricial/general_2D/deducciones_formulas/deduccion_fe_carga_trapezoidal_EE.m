@@ -1,20 +1,23 @@
 % Programa para encontrar las cargas nodales equivalentes de:
 
-%   -q1 
-%   /|  -  _
-%   /|  |  |  -  _ 
-%   /|  |  |  |  |  -  _                   E, I, A constante
-%   /|  |  |  |  |  |  |  -  _
-%   /|  |  |  |  |  |  |  |  |  -  _ -q2
-%   /|  |  |  |  |  |  |  |  |  |  |  |\ q(x) -> carga vertical trapezoidal
-%   /|  |  |  |  |  |  |  |  |  |  |  |\
-%   /|  V  V  V  V  V  V  V  V  V  V  |\
-%   /|b1                            b2|\ b(x) -> carga axial trapezoidal
-%   /|----> ----> ---> ---> --> --> ->|\
-%   /|################################|\
-%   /|                                |\
-%    x1                               x2
-%    |---------------L----------------|
+%  -q1 
+%  /|  -  _
+%  /|  |  |  -  _ 
+%  /|  |  |  |  |  -  _                   E, I, A constante
+%  /|  |  |  |  |  |  |  -  _
+%  /|  |  |  |  |  |  |  |  |  -  _ -q2
+%  /|  |  |  |  |  |  |  |  |  |  |  |\ q(x) -> carga vertical trapezoidal
+%  /|  |  |  |  |  |  |  |  |  |  |  |\
+%  /|  V  V  V  V  V  V  V  V  V  V  |\
+%  /|b1                            b2|\ b(x) -> carga axial trapezoidal
+%  /|----> ----> ---> ---> --> --> ->|\
+%  /|################################|\
+%  /|                                |\
+%  /|                                |\
+%  /|                                |\
+%   |                                |
+%   x1                               x2
+%   |---------------L----------------|
 
 clear, clc
 
@@ -100,4 +103,4 @@ disp('Y2 = '); disp(simplify(+subs(sol.V, x, L)));
 % Y los momentos nodales equivalentes
 disp('M1 = '); disp(simplify(+subs(sol.M, x, 0)));
 disp('M2 = '); disp(simplify(-subs(sol.M, x, L)));
-%}      
+%}

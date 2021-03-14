@@ -1,20 +1,20 @@
 % Programa para encontrar las cargas nodales equivalentes de:
 
 %  -q1 
-%   |  -  _
-%   |  |  |  -  _ 
-%   |  |  |  |  |  -  _                   E, I, A constante
-%   |  |  |  |  |  |  |  -  _
-%   |  |  |  |  |  |  |  |  |  -  _ -q2
-%   |  |  |  |  |  |  |  |  |  |  |  -  q(x) -> carga vertical trapezoidal
-%   |  |  |  |  |  |  |  |  |  |  |  |
-%   V  V  V  V  V  V  V  V  V  V  V  V
-%   b1                              b2  b(x) -> carga axial trapezoidal
-%    ----> ----> ---> ---> --> --> -> 
-%   o################################o
-%  / \                              / \
-% -----                            -----
-% /////                            /////
+%  /|  -  _
+%  /|  |  |  -  _ 
+%  /|  |  |  |  |  -  _                   E, I, A constante
+%  /|  |  |  |  |  |  |  -  _
+%  /|  |  |  |  |  |  |  |  |  -  _ -q2
+%  /|  |  |  |  |  |  |  |  |  |  |  -  q(x) -> carga vertical trapezoidal
+%  /|  |  |  |  |  |  |  |  |  |  |  | 
+%  /|  V  V  V  V  V  V  V  V  V  V  V
+%  /|b1                             b2  b(x) -> carga axial trapezoidal
+%  /|----> ----> ---> ---> --> --> ->
+%  /|################################o
+%  /|                               / \
+%  /|                              -----
+%  /|                              /////
 %   |                                |
 %   x1                               x2
 %   |---------------L----------------|
@@ -30,7 +30,7 @@ q = simplify(sol.m*x + sol.b); % carga vertical trapezoidal
 sol = solve(b1 == m*x1+b, b2 == m*x2+b, m, b);
 b = simplify(sol.m*x + sol.b); % carga axial trapezoidal
 
-syms fax(x) V(x) M(x) t(x) u(x) v(x) E A I u1 u2 v1 v2
+syms fax(x) V(x) M(x) t(x) u(x) v(x) E A I u1 u2 v1 v2 t1 t2
 EI = E*I;
 EA = E*A;
 sol = dsolve(...       
@@ -44,7 +44,7 @@ sol = dsolve(...
        u(L) == 0,         ...
        v(0) == 0,         ... % con sus respectivas condiciones de frontera
        v(L) == 0,         ...
-       M(0) == 0,         ...   
+       t(0) == 0,         ...   
        M(L) == 0);
 
 %{   
@@ -81,7 +81,7 @@ sol = dsolve(...
        u(L) == u2,         ...
        v(0) == v1,         ... % con sus respectivas condiciones de frontera
        v(L) == v2,         ...
-       M(0) == 0,          ...   
+       t(0) == t1,         ...   
        M(L) == 0);
       
 disp('q = ');   disp(q);
