@@ -11,7 +11,7 @@ X, Y, TH = 0, 1, 2
 g        = -9.81    # [m/s²] aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-#nombre_archivo = 'fink'
+#nombre_archivo = 'fink'            # CON ESTA HAY UN ERROR
 #nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
 nombre_archivo = 'portico_UribeEscamilla_11_23'
@@ -98,7 +98,7 @@ for e in range(nbar):
    T[e] = calc_Te(x1,y1, x2,y2)
    
    # vector fuerzas nodales equiv. y matriz de rigidez en coordenadas locales
-   # include fuerzas por peso propio
+   # incluye fuerzas por peso propio
    wx = rho[mat[e]]*A[mat[e]]*g * (y2-y1)/L[e]
    b1[e] += wx
    b2[e] += wx

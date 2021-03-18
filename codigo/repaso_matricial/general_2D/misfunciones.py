@@ -112,7 +112,7 @@ def calc_Keloc(tipo, L, A, E, I):
                           [-k,  0,  0,  k,  0,  0],
                           [ 0,  0,  0,  0,  0,  0],                          
                           [ 0,  0,  0,  0,  0,  0]])        
-    elif tipo == 'RE':
+    elif tipo == 'ER':
         AE = A*E;       L2=L**2
         EI = E*I;       L3=L**3
         Keloc = np.array([
@@ -122,7 +122,7 @@ def calc_Keloc(tipo, L, A, E, I):
              [-AE/L,   0      ,   0      ,   AE/L,    0      ,   0      ],
              [ 0   ,  -3*EI/L3,  -3*EI/L2,   0   ,    3*EI/L3,   0      ],
              [ 0   ,   0      ,   0      ,   0   ,    0      ,   0      ]])
-    elif tipo == 'ER':
+    elif tipo == 'RE':
         AE = A*E;       L2=L**2
         EI = E*I;       L3=L**3
         Keloc = np.array([
