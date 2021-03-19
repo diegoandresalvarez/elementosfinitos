@@ -32,7 +32,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
       0 -1  0 +1 ];
    
    % Matriz de rigidez de cortante del elemento e   
-   p = nef; % numero de puntos de integracion (1 por EF)
+     p = nef; % numero de puntos de integracion (1 por EF)
    Ks = GAast_L * [ ...  % Con cuadratura de GL de orden 1
       1     Le/2    -1     Le/2
       Le/2  Le^2/4  -Le/2  Le^2/4
@@ -44,7 +44,7 @@ for e = 1:nef     % ciclo sobre todos los elementos finitos
    % h = 0.01
 %{
    p = 2*nef; % numero de puntos de integracion (2 por EF)   
-   Ks = (G*Aast/L) * [ ...  % Con cuadratura de GL de orden 2
+   Ks = GAast_L * [ ...  % Con cuadratura de GL de orden 2
      1      Le/2    -1     Le/2
      Le/2   Le^2/3  -Le/2  Le^2/6
     -1     -Le/2     1    -Le/2
@@ -90,7 +90,7 @@ if j - s*p > 0
 else % if j - s*p <= 0 
     disp(['Como j-s*p <= 0, la matriz Ks|dd es invertible. ' ...
           'Disminuya el numero de puntos de integracion de GL o ' ...
-          'incremente el número de EFs.'])
+          'incremente el numero de EFs.'])
 end    
 
 %% calculo de los momentos flectores
@@ -183,7 +183,7 @@ subplot(2,1,1);
 hold on;                           % no borre el lienzo 
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h1t = plot(xx{e}, ww{e}, 'r-');       % grafico solucion por MEF
+   h1t = plot(xx{e}, ww{e}, 'r-'); % grafico solucion por MEF
 end
 title('Solucion con el MEF para el desplazamiento')
 xlabel('Eje X (m)')                % titulo del eje X
@@ -196,7 +196,7 @@ subplot(2,1,2);
 hold on;                           % no borre el lienzo 
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h2t = plot(xx{e}, tt{e}, 'r-');       % grafico solucion por MEF
+   h2t = plot(xx{e}, tt{e}, 'r-'); % grafico solucion por MEF
 end
 title('Solucion con el MEF para el giro')
 xlabel('Eje X (m)')                % titulo del eje X
@@ -232,7 +232,7 @@ end
 %end
 title('Solucion con el MEF para la fuerza cortante');
 xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Fuerza cortante (kN)')      % titulo del eje Y
+ylabel('Fuerza cortante (kN)')     % titulo del eje Y
 legend([h4eb h4t], 'Euler-Bernoulli','Timoshenko lineal','Location','Best');
 xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
