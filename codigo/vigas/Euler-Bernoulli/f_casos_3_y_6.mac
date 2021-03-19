@@ -1,0 +1,45 @@
+kill(all)$
+load("pw")$        /* se carga la libreria pw                   */
+ratprint  : false$ /* no muestra el mensaje "rat: replace"      */
+keepfloat : true$  /* no racionalizar numeros en coma flotante  */
+
+assume(L>0);
+assume(a>0);
+assume(L>a);
+
+qpunt(p,a)   :=  p*pwdelta(x-a)$
+qdist(f,a,b) :=  pw([a,f,b], x, 'open)$
+
+/* Se especifica el vector de cargas q(x)                       */
+/* CASO 3*/
+q : qpunt(-P,a) + qdist(0,0,L)$
+
+/* CASO 6
+q : qdist(-2*w*x/L,0,L/2) + qdist(2*w*x/L - 2*w,L/2,L)$
+*/
+
+/* Se resuelve la ecuacion diferencial */
+V : pwint(q,x)       + C1$
+M : pwint(V,x)       + C2$
+t : pwint(M/(E*I),x) + C3$
+v : pwint(t,x)       + C4$
+
+/* Se encuentran las constantes de integracion que satisfacen las 
+   condiciones de frontera */
+sol : solve([ 
+ev(v,x=0) = 0,           /* despl vert en apoyo en x=0 es 0  */
+ev(t,x=0) = 0,           /* theta en apoyo en x=0 es 0       */
+ev(v,x=L) = 0,           /* momento flector en x=L es 0     */
+ev(t,x=L) = 0 ],         /* fuerza cortante en x=L es 0    */
+[ C1, C2, C3, C4 ])$
+
+/* se reemplaza aqui    el valor de las constantes                                  */
+V : V, sol$
+M : M, sol$
+
+F1 : -V, x=0, factor$
+M1 : +M, x=0, factor$
+F2 : +V, x=L, factor$
+M2 : -M, x=L, factor$
+
+print([F1, M1, F2, M2]);

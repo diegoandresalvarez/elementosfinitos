@@ -63,6 +63,10 @@ Con el siguiente código se estableció que las fuerzas nodales equivalentes son
 * [f_EB_carga_trapezoidal.m](f_EB_carga_trapezoidal.m)
 <img src="figs/viga_carga_trapezoidal.svg">
 
+## Vector f asociado a los casos 3 y 6 (diapositivas de Logan)
+Como aquí se requieren funciones de discontinuidad para resolver la ecuación diferencial, se utilizó MAXIMA, ya que MATLAB tiene un bug con funciones de discontinuidad y en SYMPY estos casos aun no están implementados. Recuerde que el código usa la librería [pw](https://sourceforge.net/projects/piecewisefunc/).
+* [f_casos_3_y_6.mac](f_casos_3_y_6.mac)
+
 ## Cálculo de los diagramas de cortante, momento, ángulo de inclinación y desplazamiento de una viga
 
 Considere la siguiente viga, la cual se tomó del libro [J. Uribe Escamilla (2002) - Análisis de estructuras](https://www.researchgate.net/publication/31754481_Analisis_de_estructuras_J_Uribe_Escamilla):
