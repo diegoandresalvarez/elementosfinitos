@@ -31,7 +31,7 @@ kappa = simplify(dxi_dx*(diff(N1,xi)*t1 + diff(N2,xi)*t2));
 disp('kappa = '), pretty(kappa)
 
 %% Evaluo gamma_xz
-gxz =  simplify(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
+gxz =  expand(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
 disp('gxz = '), pretty(collect(gxz,xi))
 fprintf('\n\n\n\n\n\n');
 
