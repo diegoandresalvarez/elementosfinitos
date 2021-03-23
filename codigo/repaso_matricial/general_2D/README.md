@@ -39,6 +39,13 @@ Esta se presenta como una cercha, pórtico y una estructura con rótulas en las 
 * [fink_portico.xlsx](fink_portico.xlsx)
 * [fink.xlsx](fink.xlsx)
 
+Los gráficos asociados a esta estructura son:
+![fig_fink/numeracion.png](fig_fink/numeracion.png)
+![fig_fink/deformada.png](fig_fink/deformada.png)
+![fig_fink/fuerza_axial.png](fig_fink/fuerza_axial.png)
+![fig_fink/fuerza cortante.png](fig_fink/fuerza cortante.png)
+![fig_fink/momento_flector.png](fig_fink/momento_flector.png)
+
 ## Torre eléctrica
 Es la misma documentada en la carpeta [../empotrado_viga_rotula/estructura_fink/](../empotrado_viga_rotula/estructura_fink/).
 
