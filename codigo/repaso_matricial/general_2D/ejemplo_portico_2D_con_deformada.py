@@ -11,10 +11,12 @@ X, Y, TH = 0, 1, 2
 g        = -9.81    # [m/s²] aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-#nombre_archivo = 'fink'            # CON ESTA HAY UN ERROR
+nombre_archivo = 'fink'                    # FALTA IMPLEMENTAR ROTACION APOYO
+#nombre_archivo = 'fink_portico'           # FALTA IMPLEMENTAR ROTACION APOYO
+#nombre_archivo = 'fink_cercha'            # FALTA IMPLEMENTAR ROTACION APOYO
 #nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
-nombre_archivo = 'portico_UribeEscamilla_11_23'
+#nombre_archivo = 'portico_UribeEscamilla_11_23'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
@@ -43,7 +45,8 @@ I    = df['prop_mat']['I'].to_numpy()       # [m⁴]     inercia_y
 rho  = df['prop_mat']['rho'].to_numpy()     # [kg/m³]  densidad
 nmat = E.shape[0]                           # número de materiales
 
-# %% definición del tipo de la barra 'EE'==pórtico, 'RR'==cercha
+# %% definición del tipo de la barra
+# 'EE'==pórtico, 'RR'==cercha, 'RE'/'ER' rotula-empotrado
 tipo = df['LaG_mat']['tipo']
 
 # %% relación de cargas puntuales
@@ -69,7 +72,7 @@ for n in range(nno):
     
 plt.axis('equal')
 plt.grid(b=True, which='both', color='0.65',linestyle='-')
-plt.title('Numeración de la estructura')
+plt.title('Numeración de los nodos y barras de la estructura')
 plt.show()
 
 #%% fuerzas distribuidas aplicadas sobre las barras en coordenadas locales
@@ -119,8 +122,8 @@ for e in range(nbar):
 
 # %% restricciones y los grados de libertad del desplazamiento conocidos (c)
 restric = df['restric']
-nres = restric.shape[0]
-c    = np.empty(nres, dtype=int)
+nres    = restric.shape[0]
+c       = np.empty(nres, dtype=int)
 for i in range(nres):
    c[i] = gdl[restric['nodo'][i]-1, restric['dirección'][i]-1]
 
@@ -128,7 +131,7 @@ for i in range(nres):
 ac = restric['desplazamiento'].to_numpy()
 
 # grados de libertad del desplazamiento desconocidos
-d = np.setdiff1d(range(ngdl), c)
+d = np.setdiff1d(np.arange(ngdl), c)
 
 #%%
 # f = vector de fuerzas nodales equivalentes
@@ -179,7 +182,7 @@ esc_M      = config.loc['esc_M']['valor']      # diagrama de momentos flectores
 vect_mov = a.reshape((nno,3)) # vector de movimientos
 tabla_aq = pd.DataFrame(
     data=np.c_[vect_mov, q.reshape((nno,3))],
-    index=np.arange(nno)+1,
+    index=np.arange(1, nno+1),
     columns=[f'u [{U_LONG}]', f'v [{U_LONG}]', 'theta [rad]', 
              f'qx [{U_FUER}]', f'qy [{U_FUER}]', f'qm [{U_FUER} {U_LONG}]'])
 tabla_aq.index.name = '# nodo'
