@@ -208,7 +208,7 @@ q_global = q.reshape((nno,3))
 xdef = xnod + esc_def*vect_mov[:,[X, Y]]
 
 plt.figure(2)  
-plt.title('Deformada')
+plt.title(f'Deformada (escalada {esc_def} veces)')
 plt.xlabel(f'x [{U_LONG}]')
 plt.ylabel(f'y [{U_LONG}]')
 plt.axis('equal')
