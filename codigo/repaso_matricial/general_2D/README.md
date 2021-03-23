@@ -42,5 +42,5 @@ Esta se presenta como una cercha, pórtico y una estructura con rótulas en las 
 ## Torre eléctrica
 Es la misma documentada en la carpeta [../empotrado_viga_rotula/estructura_fink/](../empotrado_viga_rotula/estructura_fink/).
 
-Esta se presenta como una cercha, pórtico y una estructura con rótulas en las hojas de cálculo
+Esta estructura presenta elementos de pórtico y de cercha y se presenta en la hoja de cálculo:
 * [torre_electrica.xlsx](torre_electrica.xlsx)
