@@ -27,7 +27,7 @@ Para tal fin usar los métodos:
 
 Con el método de los EFs para tensión plana se requiere:
 * Calcular en *x* = 0.95 m, 1.05 m, 1.50 m, 1.95 m, 2.85 m, 3.00 m, 3.50 m y 3.95 m el desplazamiento horizontal *u*, esfuerzo normal *σₓ* y el esfuerzo cortante τxz. Si lo puede hacer en más puntos, aún mejor.
-* A partir de *σₓ* y *τxz* estimar el momento flector *M* y la fuerza cortante *V* en esos puntos.
+* A partir de *σₓ* y *τxz* estimar el momento flector *M* y la fuerza cortante *V* en esos puntos. Para esto, busque en su software una opción de "integración sobre superficie" en su software.
 * Calcular en *z* = 0 m desplazamiento vertical del eje neutro de la viga *w*.
 
 ## Lo solicitado en el informe
