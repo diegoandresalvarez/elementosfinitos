@@ -66,7 +66,7 @@ Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El 
   * 1.0 compara entre sí y analiza los trés métodos de EB y los tres métodos de TE.
   * Compara contra los métodos de EB y TE los resultados obtenidos con el método de los EFs para tensión plana. Los resultados deben aparecer en el mismo gráfico que aquellos estimados por la teoría de vigas (similar a como aparece en el `main.pdf`, en la sección 9.2)
      * 0.4 *σₓ* 
-     * 0.4 *τxz*
+     * 0.4 *τxz* (¿compara, adicionalmente, contra la fórmula de Collingnon-Jourawski?)
      * 0.4 *u*
      * 0.4 *w*
      * 0.4 *M* y *V*
