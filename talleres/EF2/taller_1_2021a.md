@@ -19,8 +19,9 @@ Con las teorías de vigas de EB y TE se solicita calcular y graficar, para cada 
 * Angulo de giro de la sección transversal *θ*
 * Desplazamiento vertical *w*
 
+
 Para tal fin usar los métodos:
-* Matricial que resuelve las ecuaciones diferenciales de EB y TE.
+* Matricial que resuelve las ecuaciones diferenciales de EB y TE (pueden utilizar mis programas en GITHUB).
 * El método exacto de las funciones de discontinuidad visto en Sólidos 2.
 * Programa de análisis estructural que usted registró en GOOGLE CLASSROOM (no usar como software el FTOOL).
 * Programa que modele sólidos utilizando el método de los elementos finitos en tensión plana.
