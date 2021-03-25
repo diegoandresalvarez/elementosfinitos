@@ -90,7 +90,7 @@ disp('Se imprimen las funciones de forma')
 Nw = simplify(subs(Nv, GAast, (12 * EI)/(L^2 * beta))).';
 Nt = simplify(subs(Nt, GAast, (12 * EI)/(L^2 * beta))).';
 coef = (L^3 * (beta + 1));
-disp('Nv^T = 1/(2 * L^3 * (beta + 1)) * '); pretty(collect(2*Nv*coef, x));
+disp('Nw^T = 1/(2 * L^3 * (beta + 1)) * '); pretty(collect(2*Nw*coef, x));
 disp('Nt^T = 1/(L^3 * (beta + 1)) * ');     pretty(collect(  Nt*coef, x));
 
 % se grafican
