@@ -6,6 +6,8 @@ clear, clc, close all
 
 syms x xi E I G Aast L w1 t1 w2 t2 fz m
 
+a = [w1; t1; w2; t2];
+
 %% Defino las funciones de forma
 N1 = (1-xi)/2;
 N2 = (1+xi)/2;
@@ -21,6 +23,7 @@ Bs = [ dxi_dx*diff(N1,xi),                -N1, dxi_dx*diff(N2,xi),              
 %% Defino las matrices de rigidez
 Kb = int(Bb.'*E*I*Bb*dx_dxi,   xi,-1,1);
 Ks = int(Bs.'*G*Aast*Bs*dx_dxi,xi,-1,1);
+Us_ex = simplify(a.'*Ks*a/2);
 
 disp('Solucion exacta = ')
 disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
@@ -31,7 +34,7 @@ kappa = simplify(dxi_dx*(diff(N1,xi)*t1 + diff(N2,xi)*t2));
 disp('kappa = '), pretty(kappa)
 
 %% Evaluo gamma_xz
-gxz =  simplify(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
+gxz =  expand(dxi_dx*(diff(N1,xi)*w1 + diff(N2,xi)*w2) - (N1*t1 + N2*t2));
 disp('gxz = '), pretty(collect(gxz,xi))
 fprintf('\n\n\n\n\n\n');
 
@@ -39,6 +42,7 @@ fprintf('\n\n\n\n\n\n');
 w1 = 2; xi1 = 0;
 Kb = subs(Bb.'*E*I*Bb*dx_dxi, xi, xi1)*w1;
 Ks = subs(Bs.'*G*Aast*Bs*dx_dxi, xi, xi1)*w1;
+Us_1 = simplify(a.'*Ks*a/2);
 
 disp('Integrando con GL de orden 1 = ')
 disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))
@@ -53,6 +57,7 @@ Kb = simplify(subs(Bb.'*E*I*Bb*dx_dxi,   xi, xi1)*w1 + ...
            
 Ks = simplify(subs(Bs.'*G*Aast*Bs*dx_dxi,xi, xi1)*w1 + ...
               subs(Bs.'*G*Aast*Bs*dx_dxi,xi, xi2)*w2);
+Us_2 = simplify(a.'*Ks*a/2);          
 
 disp('Integrando con GL de orden 2 = ')
 disp('Kb = (E*I/L) * '),    pretty(Kb/(E*I/L))

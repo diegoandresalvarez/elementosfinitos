@@ -4,6 +4,8 @@ clear, clc, close all
 syms xi x1 x2 x3 L E I Aast G
 syms w1 w2 w3 t1 t2 t3
 
+a = [w1; t1; w2; t2; w3; t3];
+
 %% Defino las posiciones de los nodos
 x3 = x1+L;
 x2 = (x1+x3)/2;
@@ -34,6 +36,7 @@ disp('Bs = (2/L) * '),    pretty(simplify(Bs/(2/L)))
 disp('Integral exacta de las matrices de rigidez = ');
 Kb = int(Bb.'*E*I*Bb*L/2,   xi,-1,1);
 Ks = int(Bs.'*G*Aast*Bs*L/2,xi,-1,1);
+Us_ex = simplify(a.'*Ks*a/2);
 
 disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
@@ -56,6 +59,7 @@ Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
          
 Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
               subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2);
+Us_2 = simplify(a.'*Ks*a/2);          
 
 disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
@@ -72,6 +76,7 @@ Kb = simplify(subs(Bb.'*E*I*Bb*L/2,   xi,xi1)*w1 + ...
 Ks = simplify(subs(Bs.'*G*Aast*Bs*L/2,xi,xi1)*w1 + ...
               subs(Bs.'*G*Aast*Bs*L/2,xi,xi2)*w2 + ...            
               subs(Bs.'*G*Aast*Bs*L/2,xi,xi3)*w3);
+Us_3 = simplify(a.'*Ks*a/2);          
 
 disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))

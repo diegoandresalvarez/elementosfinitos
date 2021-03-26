@@ -1,20 +1,6 @@
 <span style="color: #ff0000;
 font-size: 200%;">Página de WIKIPEDIA. Trabajo individual</span>
 
-Crear la página de WIKIPEDIA de los siguientes temas (extensión mínima 20000 bytes, enfocarse en el caso lineal estático):
-* Iván: Teoría de vigas de Timoshenko
-* Daniela: Mejorar considerablemente la página de la Teoría de losas de Reissner-Mindlin: https://es.wikipedia.org/wiki/Teor%C3%ADa_de_Mindlin%E2%80%93Reissner
-* Luis: Mejorar considerablemente la página del Principio de los trabajos virtuales https://es.wikipedia.org/wiki/Principio_de_los_trabajos_virtuales y Desplazamientos virtuales: https://es.wikipedia.org/wiki/Desplazamiento_virtual
-
-Para las siguientes fechas deben tener los siguientes avances:
-* Septiembre 18: mínimo 5000 bytes
-* Octubre 2: mínimo 10000 bytes
-* Octubre 16: mínimo 15000 bytes
-* Octubre 30: mínimo 20000 bytes
-
-No se puede utilizar para la realización de dicha página el main.pdf. Por favor consultar otras referencias.
-
-----
 <span style="color: #ff0000;
 font-size: 200%;">Entrega 1: Septiembre 18 de 2015, 23:59. Trabajo individual</span>
 Entregar informe escrito y programas de MATLAB.
@@ -26,10 +12,6 @@ Entregar informe escrito y programas de MATLAB.
 * Usando la función bvp5c de MATLAB implementar la solución de las ecuaciones diferenciales que rigen la viga de Timoshenko. Comparar la respuesta obtenida con aquella utilizando la función bvp5c y las ecuaciones de Euler-Bernoulli sobre el mismo ejemplo usado en clase.
 
 * Usando EFs bidimensionales de tensión plana serendípitos rectangulares de 8 nodos, calcule una viga de una sola luz asumiendo que están sometidas a una carga distribuída q = -10kN/m constante en toda la longitud de la viga.  Considere E = 210 GPa, L = 1m, módulo de elasticidad homogéneo, coeficiente de Poisson = 0.35, sección rectangular constante y para las relaciones altura/luz = h/L 0.05, 0.10, 0.25, 0.50, 1.00. En la sección ubicada en x=0.75m calcule sx, txy, ex, y u y grafique su variación con el espesor.
-** Luis: apoyo izquiedo: empotrado, apoyo derecho: libre. Usar el programa Elmer: https://www.csc.fi/web/elmer
-** Felipe: apoyo izquierdo: rodillo, apoyo derecho: rodillo. Usar el programa Code-Aster: http://www.code-aster.org
-** Daniela: apoyo izquierdo: empotrado, apoyo derecho: empotrado. Usar el programa OpenSees: http://opensees.berkeley.edu/ o si lo prefiere Calculix: http://www.dhondt.de/
-** Iván: apoyo izquierdo: empotrado, apoyo derecho: rodillo. Usar el programa Z88: http://z88.de/
 ** NOTA: Los apoyos de rodillo se asumen que se distribuyen sobre una longitud de 0.10m
 ----
 
@@ -37,10 +19,6 @@ Entregar informe escrito y programas de MATLAB.
 font-size: 200%;">Entrega 2: Noviembre 2 de 2015, 23:59. Trabajo individual</span>
 
 * Implementar los elementos de losa de Reissner-Mindlin TQQL y QQQQ-S en MATLAB. Ilustre los algoritmos con la misma losa con la que se ha trabajado en clase y compare la solución con respecto a la teoría exacta de Kirchhoff para diferentes valores de la constante D.
-
-* Concluir las páginas de WIKIPEDIA (avance 15000 bytes)
-
-* PUNTO OPCIONAL (reemplaza los dos puntos anteriores y se califica sobre 6): Buscar un artículo de elemento de losa de Reissner-Mindlin posterior a 1995 e implementarlo. Ilustre el algoritmo con la misma losa con la que se ha trabajado en clase. Todos deben tener artículos diferentes a sus compañeros.
 
 ----
 

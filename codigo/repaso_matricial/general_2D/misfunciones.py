@@ -93,10 +93,12 @@ def calc_Keloc(tipo, L, A, E, I):
     I      inercia
     L      longitud de la barra
     '''       
+    
+    AE = A*E;       L2=L**2
+    EI = E*I;       L3=L**3
+    
     # matriz de rigidez local expresada en el sistema de coordenadas locales
     if tipo == 'EE':
-        AE = A*E;       L2=L**2
-        EI = E*I;       L3=L**3
         Keloc = np.array([
              [ AE/L,   0      ,   0      ,  -AE/L,    0      ,   0      ],  
              [ 0   ,  12*EI/L3,   6*EI/L2,   0   ,  -12*EI/L3,   6*EI/L2],
@@ -105,7 +107,7 @@ def calc_Keloc(tipo, L, A, E, I):
              [ 0   , -12*EI/L3,  -6*EI/L2,   0   ,   12*EI/L3,  -6*EI/L2],
              [ 0   ,   6*EI/L2,   2*EI/L ,   0   ,   -6*EI/L2,   4*EI/L ]])
     elif tipo == 'RR':
-        k = A*E/L
+        k = AE/L
         Keloc = np.array([[ k,  0,  0, -k,  0,  0],
                           [ 0,  0,  0,  0,  0,  0],
                           [ 0,  0,  0,  0,  0,  0],                          
@@ -113,8 +115,6 @@ def calc_Keloc(tipo, L, A, E, I):
                           [ 0,  0,  0,  0,  0,  0],                          
                           [ 0,  0,  0,  0,  0,  0]])        
     elif tipo == 'ER':
-        AE = A*E;       L2=L**2
-        EI = E*I;       L3=L**3
         Keloc = np.array([
              [ AE/L,   0      ,   0      ,  -AE/L,    0      ,   0      ],  
              [ 0   ,   3*EI/L3,   3*EI/L2,   0   ,   -3*EI/L3,   0      ],
@@ -123,8 +123,6 @@ def calc_Keloc(tipo, L, A, E, I):
              [ 0   ,  -3*EI/L3,  -3*EI/L2,   0   ,    3*EI/L3,   0      ],
              [ 0   ,   0      ,   0      ,   0   ,    0      ,   0      ]])
     elif tipo == 'RE':
-        AE = A*E;       L2=L**2
-        EI = E*I;       L3=L**3
         Keloc = np.array([
              [ AE/L,   0      ,   0      ,  -AE/L,    0      ,   0      ],  
              [ 0   ,   3*EI/L3,   0      ,   0   ,   -3*EI/L3,   3*EI/L2],

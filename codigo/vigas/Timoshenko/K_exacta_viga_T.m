@@ -23,8 +23,8 @@ for i = 1:4
                  -subs(sol.V, x, L)    % Y2  y los momentos en los
                  +subs(sol.M, x, L) ]; % M2  apoyos
 
-    Nv(i) = sol.v; % v = Nv * [v1; t1 v2 t2]
-    Nt(i) = sol.t; % t = Nt * [v1; t1 v2 t2]             
+    Nv(i) = sol.v; % v = Nv * [v1; t1; v2; t2]
+    Nt(i) = sol.t; % t = Nt * [v1; t1; v2; t2]             
 end
 
 %% Se imprime la solucion
@@ -71,16 +71,37 @@ f_T = [ -subs(sol.V, x, 0)   % Yi  se evaluan las reacciones verticales y los
         +subs(sol.V, x, L)   % Yj  por -1 para estimar la fuerza nodal 
         -subs(sol.M, x, L) ];% Mj  equivalente
 
-%% Y en el limitem cuando beta -> inf, obtenemos el vector f para EB
+%% Y en el limite cuando beta -> inf, obtenemos el vector f para EB
 f_EB = limit(f_T, GAast, inf);
-disp('f_EB =');
-pretty(simplify(f_EB))
-    
-%%    
-clear beta
-syms beta
+
+%
+clear beta; syms beta
 f_T = simplify(subs(f_T, GAast, (12 * EI)/(L^2 * beta)));
+
+% se imprimen las respuestas
 disp('f_T = ');
 pretty(f_T)
+
+disp('f_EB =');
+pretty(simplify(f_EB))
+
+%%
+disp('Se imprimen las funciones de forma')
+Nw = simplify(subs(Nv, GAast, (12 * EI)/(L^2 * beta))).';
+Nt = simplify(subs(Nt, GAast, (12 * EI)/(L^2 * beta))).';
+coef = (L^3 * (beta + 1));
+disp('Nw^T = 1/(2 * L^3 * (beta + 1)) * '); pretty(collect(2*Nw*coef, x));
+disp('Nt^T = 1/(L^3 * (beta + 1)) * ');     pretty(collect(  Nt*coef, x));
+
+% se grafican
+Nw2 = expand(subs(Nw, {L, beta}, {1, 1}));
+figure; fplot(Nw2, [0,1], 'LineWidth', 2); 
+title('Funciones de forma Nw(x)')
+legend('Nw1(x)','Nw2(x)','Nw3(x)','Nw4(x)')
+
+Nt2 = expand(subs(Nt, {L, beta}, {1, 1}));
+figure; fplot(Nt2, [0,1], 'LineWidth', 2); 
+title('Funciones de forma Nt(x)')
+legend('Nt1(x)','Nt2(x)','Nt3(x)','Nt4(x)')
 
 %% bye, bye!
