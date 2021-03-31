@@ -1,7 +1,8 @@
 % Programa para deducir la matriz de rigidez de un elemento de viga 2D de
 % Timoshenko a partir de la solucion de la ecuacion diferencial
-clear, clc
-syms q x L V(x) M(x) t(x) v(x) EI EA GAast
+clear, clc, close all
+syms q x L V(x) M(x) t(x) v(x) EI EA beta
+GAast = (12 * EI)/(L^2 * beta);
 
 %% Se calcula la matrix de rigidez
 K_T = sym(zeros(4));
@@ -28,14 +29,11 @@ for i = 1:4
 end
 
 %% Se imprime la solucion
-beta = (12 * EI)/(L^2 * GAast);
-tmp = EI/((1 + beta)*L^3);
-disp('K_T = (EI/((1 + beta)*L^3)) * ');
+tmp = EI/(L^3 * (beta + 1));
+disp('K_T = EI/(L^3 * (beta + 1)) * ');
 pretty(simplify(K_T/tmp))
-% Nota: se puede demostrar que:
-% K22 = K44 = simplify((4+beta)*L^2)
-% K24 = K42 = simplify((2-beta)*L^2)
 
+%%
 %{
 % Comprobacion de que a partir de las funciones de forma se puede obtener
 % la matriz de rigidez K_T
@@ -46,62 +44,42 @@ simplify(K_T - K_T2)
 %}
 
 %% Se calcula la matriz de rigidez de Euler-Bernoulli
-% Observe que cuando GAast -> Inf, la matriz de rigidez K se vuelve la 
-% misma matriz de rigidez K de la teoria de Euler-Bernoulli:
-K_EB = limit(K_T, GAast, inf);
+% Observe que cuando GAast -> Inf (o alternativamente beta -> 0), la matriz 
+% de rigidez K se vuelve la misma matriz de rigidez K de la teoria de 
+% Euler-Bernoulli:
+K_EB = limit(K_T, beta, 0);
 disp('K_EB = (EI/L^3) * ');
 pretty(simplify(K_EB/(EI/L^3)))
 
-%% Se calculan las fuerzas nodales equivalentes:
-syms w
-% q = w;
-q = -w*x/L;
-sol = dsolve(...       
-       diff(V,x) == q,    ... % se definen las ecuaciones diferenciales
-       diff(M,x) == V,    ...
-       diff(t,x) == M/EI, ... 
-       diff(v,x) == t - V/GAast, ...
-       v(0) == 0,         ... % condiciones de frontera para una viga 
-       t(0) == 0,         ... % doblemente empotrada
-       v(L) == 0,         ...           
-       t(L) == 0); 
-
-f_T = [ -subs(sol.V, x, 0)   % Yi  se evaluan las reacciones verticales y los
-        +subs(sol.M, x, 0)   % Mi  momentos en los apoyos y se les multiplica
-        +subs(sol.V, x, L)   % Yj  por -1 para estimar la fuerza nodal 
-        -subs(sol.M, x, L) ];% Mj  equivalente
-
-%% Y en el limite cuando beta -> inf, obtenemos el vector f para EB
-f_EB = limit(f_T, GAast, inf);
-
-%
-clear beta; syms beta
-f_T = simplify(subs(f_T, GAast, (12 * EI)/(L^2 * beta)));
-
-% se imprimen las respuestas
-disp('f_T = ');
-pretty(f_T)
-
-disp('f_EB =');
-pretty(simplify(f_EB))
-
-%%
+%% se calculan las funciones de forma en funcion de xi
+syms xi
 disp('Se imprimen las funciones de forma')
-Nw = simplify(subs(Nv, GAast, (12 * EI)/(L^2 * beta))).';
-Nt = simplify(subs(Nt, GAast, (12 * EI)/(L^2 * beta))).';
+Nv = simplify(expand(subs(Nv, x, L*(1+xi)/2))).';
+Nt = simplify(subs(Nt, x, L*(1+xi)/2)).';
 coef = (L^3 * (beta + 1));
-disp('Nw^T = 1/(2 * L^3 * (beta + 1)) * '); pretty(collect(2*Nw*coef, x));
-disp('Nt^T = 1/(L^3 * (beta + 1)) * ');     pretty(collect(  Nt*coef, x));
+disp('Nw^T = 1/(8 * L^3 * (beta + 1)) * '); pretty(collect(8*Nv*coef, xi));
+disp('Nt^T = 1/(4 * L^3 * (beta + 1)) * '); pretty(collect(4*Nt*coef, xi));
 
 % se grafican
-Nw2 = expand(subs(Nw, {L, beta}, {1, 1}));
-figure; fplot(Nw2, [0,1], 'LineWidth', 2); 
-title('Funciones de forma Nw(x)')
+Nv2 = expand(subs(Nv, {L, beta}, {1, 1}));
+figure; fplot(Nv2, [-1,1], 'LineWidth', 2); 
+title('Funciones de forma Nw(x) (para L = 1, \beta = 1)')
 legend('Nw1(x)','Nw2(x)','Nw3(x)','Nw4(x)')
 
 Nt2 = expand(subs(Nt, {L, beta}, {1, 1}));
-figure; fplot(Nt2, [0,1], 'LineWidth', 2); 
-title('Funciones de forma Nt(x)')
+figure; fplot(Nt2, [-1,1], 'LineWidth', 2); 
+title('Funciones de forma Nt(x) (para L = 1, \beta = 1)')
 legend('Nt1(x)','Nt2(x)','Nt3(x)','Nt4(x)')
+
+%% observe que cuando beta -> 0, Nv contiene de las funciones de forma de 
+% la viga de Euler-Bernoulli
+N_EB = expand(subs(Nv, beta, 0));
+disp('N_EB = '); pretty(N_EB)
+
+% Y observe la relacion entre las derivadas
+dNEB_dx1 = expand(diff(N_EB*2/L, xi));
+dNEB_dx2 = expand(subs(Nt, beta, 0));
+dNEB_dx1 - dNEB_dx2
+
 
 %% bye, bye!
