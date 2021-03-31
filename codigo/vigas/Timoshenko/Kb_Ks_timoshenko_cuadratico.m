@@ -23,7 +23,7 @@ x = simplify(N1*x1 + N2*x2 + N3*x3);
 %% Derivadas
 dx_dxi = diff(x,xi);
 syms xx % creo una variable "dummy" para despejar xi de x = N1*x1 + N2*x2 + N3*x3;
-dxi_dx = diff(solve(xx - x,xi),xx);
+dxi_dx = diff(solve(xx == x,xi),xx);
 
 %% Defino las matrices de deformacion
 Bb = [ 0, diff(N1,xi)*dxi_dx  , 0, diff(N2,xi)*dxi_dx  , 0, diff(N3,xi)*dxi_dx   ];
