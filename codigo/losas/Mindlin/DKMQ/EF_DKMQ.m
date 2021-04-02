@@ -1,19 +1,31 @@
+%% 
 % Calculo de los desplazamientos en una placa utilizando la teoria de
 % Reissner-Mindlin y el elemento finito de placa DKMQ 
+%
+% Algoritmo documentado en:
+% Katili, I. (1993), A new discrete Kirchhoff?Mindlin element based on 
+% Mindlin?Reissner plate theory and assumed shear strain fields?part II: 
+% An extended DKQ element for thick?plate bending analysis. Int. J. Numer. 
+% Meth. Engng., 36: 1885-1908. https://doi.org/10.1002/nme.1620361107
+%
+% Este es el algoritmo de losas usado en MIDAS y AUTODESK ROBOT. En lo
+% posible se intento seguir la nomenclatura del articulo
+%
 % Por:
-% Diego Andres Alvarez Marin
+% Diego Andres Alvarez Marin (daalvarez@unal.edu.co)
 % Sebastian Jaramillo Moreno
 
-clear, clc, close all % borro la memoria, la pantalla y las figuras
+%% borro la memoria, la pantalla y las figuras
+clear, clc, close all 
 
 %% defino las variables/constantes
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
 ww= 1; tx= 2; ty= 3; % lectura del codigo
 
-E  = 210e9;       % modulo de elasticidad del solido (Pa) = 210GPa
-nu = 0.3;         % coeficiente de Poisson
-t  = 0.05;        % espesor de la losa (m)
-q  = -10000;      % carga (N/m^2)
+E  = 210e9;       % [Pa]    modulo de elasticidad = 210GPa
+nu = 0.3;         %         coeficiente de Poisson
+h  = 0.05;        % [m]     espesor de la losa
+q  = -10000;      % [N/m^2] carga
 
 % Definimos la geometria de la losa
 losa
@@ -32,9 +44,9 @@ cgx = zeros(1,nef); cgy = zeros(1,nef); % almacena el centro de gravedad
 for e = 1:nef
    line(xnod(LaG(e,[1 2 3 4 1]),X), xnod(LaG(e,[1 2 3 4 1]),Y));
    
-   % Calculo la posicion del centro de gravedad del triangulo
-   cgx(e) = (xnod(LaG(e,1),X) + xnod(LaG(e,2),X))/2;
-   cgy(e) = (xnod(LaG(e,2),Y) + xnod(LaG(e,3),Y))/2;
+   % Calculo la posicion del centro de gravedad del EF
+   cgx(e) = mean(xnod(LaG(e,:),X));
+   cgy(e) = mean(xnod(LaG(e,:),Y));
    text(cgx(e), cgy(e), num2str(e), 'Color', [1 0 0]);
 end
 plot(xnod(:,X), xnod(:,Y), 'r*');
@@ -48,158 +60,153 @@ title('Malla de elementos finitos');
 n_gl = 2;                 % orden de la cuadratura de Gauss-Legendre
 [x_gl, w_gl] = gausslegendre_quad(n_gl);
 
-%% Se leen las funciones de forma
+%% Se leen las funciones de forma N y P y sus derivadas dN_dxi, dN_deta, 
+%  dP_dxi, dP_deta
 funciones_de_forma;
 
 %% matrices constitutivas
-De = (E/(1-nu^2)) * [ 1  nu 0
-                      nu 1  0
-                      0  0  (1-nu)/2 ];
-               
-Dbe = (t^3/12)*De;         % matriz constitutiva de flexion generalizada  
+Db = (E*h^3/(12*(1-nu^2)));   % plate rigidity
+Hb = Db * [ 1  nu 0           % matriz constitutiva de flexion generalizada
+            nu 1  0           % (Dbe en nuestra nomenclatura) 
+            0  0  (1-nu)/2 ]; 
 
-G = E/(2*(1+nu));          % modulo de cortante
-Dse = (5/6)*G*t*eye(2);    % matriz constitutiva de cortante generalizada                       
+G  = E/(2*(1+nu));     % modulo de cortante
+Hs = (5/6)*G*h*eye(2); % matriz constitutiva de cortante generalizada (Dse)
 
 %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
-K = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
-f = zeros(ngdl,1);     % vector de fuerzas nodales equivalentes global
+K   = sparse(ngdl,ngdl);    % matriz de rigidez global como RALA (sparse)
+f   = zeros(ngdl,1);        % vector de fuerzas nodales equivalentes global
+N   = cell(nef, n_gl, n_gl);
+Bb  = cell(nef, n_gl, n_gl);
+Bs  = cell(nef, n_gl, n_gl);
 idx = cell(nef, 1);    % grados de libertad de cada elemento finito
-
-for e = 1:nef      % ciclo sobre todos los elementos finitos
-    idx{e} = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:) ];
-               
-    % Calculo las matrices de rigidez y el vector de fuerzas nodales
-    % equivalentes del elemento
+for e = 1:nef          % ciclo sobre todos los elementos finitos
+    %% Longitudes de los lados, cosenos y senos (Figura 4)
+    xe = xnod(LaG(e,:),X);       ye = xnod(LaG(e,:),Y);
+    x21 = xe(2) - xe(1);         y21 = ye(2) - ye(1); 
+    x32 = xe(3) - xe(2);         y32 = ye(3) - ye(2);
+    x43 = xe(4) - xe(3);         y43 = ye(4) - ye(3);    
+    x14 = xe(1) - xe(4);         y14 = ye(1) - ye(4);
+    xji = [ x21 x32 x43 x14 ];   yji = [ y21 y32 y43 y14 ];   
+    
+    Lk = hypot(xji, yji);      Ck =xji./Lk;      Sk = yji./Lk;
+    
+    %% Ciclo sobre los puntos de Gauss para calcular Kbe, Kse y fe
     Kbe = zeros(12);
     Kse = zeros(12);
     fe  = zeros(12,1);
-    det_JeN = zeros(n_gl,n_gl); % en esta matriz se almacenaran los Jacobianos
-    det_JeP = zeros(n_gl,n_gl);
+    det_Je = zeros(n_gl,n_gl); % almacenara los Jacobianos
     
     for pp = 1:n_gl
-        for qq = 1:n_gl
-            xi_gl  = x_gl(pp);
-            eta_gl = x_gl(qq);
+        for qq = 1:n_gl           
+            %% Se evaluan las funciones de forma y sus derivadas en los 
+            % puntos de Gauss
+            xi_gl  = x_gl(pp);            eta_gl = x_gl(qq);
 
-            % Se evaluan las funciones de forma en los puntos de integracion
-            % de Gauss-Legendre
-            NNforma = Nforma(xi_gl, eta_gl);
-            PPforma = Pforma(xi_gl, eta_gl);
-            
-            % Se evaluan las derivadas de las funciones de forma en los puntos
-            % de integracion de Gauss-Legendre
-            ddN_dxi  = dN_dxi (xi_gl, eta_gl);       xe = xnod(LaG(e,:),X);
-            ddN_deta = dN_deta(xi_gl, eta_gl);       ye = xnod(LaG(e,:),Y);
+            NN       = Nforma (xi_gl, eta_gl);
+            ddN_dxi  = dN_dxi (xi_gl, eta_gl);       
+            ddN_deta = dN_deta(xi_gl, eta_gl);       
             ddP_dxi  = dP_dxi (xi_gl, eta_gl);       
             ddP_deta = dP_deta(xi_gl, eta_gl);
+                                   
+            %% Matriz jacobiana, su inversa y determinante
+            % Se ensambla la matriz jacobiana
+            dx_dxi  = sum(ddN_dxi .*xe);   dy_dxi  = sum(ddN_dxi .*ye);
+            dx_deta = sum(ddN_deta.*xe);   dy_deta = sum(ddN_deta.*ye);
             
-            xee = [xe; xe(1)];    yee = [ye; ye(1)];
+            Je = [ dx_dxi    dy_dxi
+                   dx_deta   dy_deta ];
             
-            % Coordenadas de los nodos secundarios
-            xes = xe + diff(xee)/2;         yes = ye + diff(yee)/2;
+            % Se calcula su inversa
+            inv_Je = inv(Je);
+            j11 = inv_Je(1,1);              j12 = inv_Je(1,2);
+            j21 = inv_Je(2,1);              j22 = inv_Je(2,2);                       
+                
+            % y su determinante (el Jacobiano)
+            det_Je(pp,qq) = det(Je);
             
-            dx_dxi_N  = sum(ddN_dxi  .* xe);    dy_dxi_N  = sum(ddN_dxi  .* ye);
-            dx_deta_N = sum(ddN_deta .* xe);    dy_deta_N = sum(ddN_deta .* ye);
-            dx_dxi_P  = sum(ddP_dxi  .* xe);    dy_dxi_P  = sum(ddP_dxi  .* ye);
-            dx_deta_P = sum(ddP_deta .* xe);    dy_deta_P = sum(ddP_deta .* ye);
-            
-            % Se ensambla la matriz Jacobiana del elemento
-            % Matriz Jacobiana de funciones principales
-            JeN = [ dx_dxi_N    dy_dxi_N
-                    dx_deta_N   dy_deta_N ];
-            JeP = [ dx_dxi_P    dy_dxi_P
-                    dx_deta_P   dy_deta_P ];
-                    
-            % Se calcula el determinante del Jacobiano
-            det_JeN(pp,qq) = det(JeN);
-            det_JeP(pp,qq) = det(JeP);
-            
-            N{e,pp,qq}     = zeros(3,12);
-            Bb_t{e,pp,qq}  = zeros(3,12);
-            Bb_dt{e,pp,qq} = zeros(3,4);
-            A_dt{e,pp,qq}  = zeros(4,4);
-            A_w{e}         = zeros(4,12);          
-            
-            % Ciclo para nodos principales
+            %% Se ensambla la matriz de funciones de forma N
+            N{e,pp,qq} = zeros(3,12);            
             for i = 1:4
-                % Se ensambla la matriz de funciones de forma N
-                N{e,pp,qq}(:,[3*i-2 3*i-1 3*i]) = [ NNforma(i)    0             0
-                                                    0            NNforma(i)    0
-                                                    0            0           NNforma(i) ];
-                
-                % Se define la matriz B de flexion en los nodos
-                dNi_dx = (+dy_deta_N*ddN_dxi(i) - dy_dxi_N*ddN_deta(i))/det_JeN(pp,qq);
-                dNi_dy = (-dx_deta_N*ddN_dxi(i) + dx_dxi_N*ddN_deta(i))/det_JeN(pp,qq);
-                Bb_t{e,pp,qq}(:,[3*i-2 3*i-1 3*i]) = [  0    dNi_dx    0
-                                                        0    0         dNi_dy
-                                                        0    dNi_dy    dNi_dx    ];
+                N{e,pp,qq}(:,[3*i-2 3*i-1 3*i]) = diag([NN(i), NN(i), NN(i)]);
+            end            
+            
+            %% Se calcula Bb_beta (ecuacion 12)
+            Bb_beta = zeros(3,12);
+            for i = 1:4                
+                dNi_dx = j11*ddN_dxi(i) + j12*ddN_deta(i); % = ai
+                dNi_dy = j21*ddN_dxi(i) + j22*ddN_deta(i); % = bi               
+                Bb_beta(:,[3*i-2 3*i-1 3*i]) = [ 0    dNi_dx         0
+                                                 0         0    dNi_dy
+                                                 0    dNi_dy    dNi_dx ];
             end
             
-            % Ciclo para nodos secundarios
-            for k = 1:4
-                % Se definen las distancias de cada lado
-                xji(k) = xee(k+1)-xee(k);    yji(k) = yee(k+1)-yee(k);
-                Lk(k) = sqrt(xji(k)^2+yji(k)^2);                
-                
-                % Se definen los senos y cosenos directores
-                Ck(k) = xji(k)/Lk(k);  Sk(k) = yji(k)/Lk(k);
-                
-                % Se define la matriz B de flexion en los nodos secundarios
-                dPk_dx = (+dy_deta_N*ddP_dxi(k) - dy_dxi_N*ddP_deta(k))/det_JeN(pp,qq);
-                dPk_dy = (-dx_deta_N*ddP_dxi(k) + dx_dxi_N*ddP_deta(k))/det_JeN(pp,qq);
-                Bb_dt{e,pp,qq}(:,k) = [ dPk_dx*Ck(k)
-                                        dPk_dy*Sk(k)
-                                        dPk_dy*Ck(k) + dPk_dx*Sk(k)   ];
+            %% Se calcula Bb_dbeta (ecuacion 13)
+            Bb_dbeta = zeros(3,4);            
+            for k = 1:4            
+                dPk_dx = j11*ddP_dxi(k) + j12*ddP_deta(k);
+                dPk_dy = j21*ddP_dxi(k) + j22*ddP_deta(k);
+                Bb_dbeta(:,k) = [ dPk_dx*Ck(k)
+                                  dPk_dy*Sk(k)
+                                  dPk_dy*Ck(k) + dPk_dx*Sk(k) ];
             end
             
-            % Se define la matriz An
-            phi_k = (2/((5/6)*(1-nu))).*(t^2./Lk.^2);
-            A_dt{e,pp,qq} = diag(2/3*Lk.*(1+phi_k));
-            A_w{e} = [  1    -xji(1)/2    -yji(1)/2    -1    -xji(1)/2    -yji(1)/2    0    0            0            0    0            0
-                        0    0            0            1    -xji(2)/2    -yji(2)/2    -1    -xji(2)/2    -yji(2)/2    0    0            0
-                        0    0            0            0    0            0            1    -xji(3)/2    -yji(3)/2    -1    -xji(3)/2    -yji(3)/2
-                       -1    -xji(4)/2    -yji(4)/2    0    0            0            0    0            0            1    -xji(4)/2    -yji(4)/2];
-            A_n = A_dt{e,pp,qq}\A_w{e};
+            %% Se calcula An
+            % Ecuacion 22b
+            phi_k = (2/((5/6)*(1 - nu))) .* (h./Lk).^2;
             
-            % se ensambla la matriz B de flexion
-            Bb{e,pp,qq} = Bb_t{e,pp,qq} + Bb_dt{e,pp,qq}*A_n;
+            % Ecuacion 38
+            A_dbeta = diag((2/3) * Lk .* (1+phi_k));
             
-            % Se define la matriz B de cortante
-            L_phi_5 = Lk(1)*phi_k(1);    L_phi_6 = Lk(2)*phi_k(2);
-            L_phi_7 = Lk(3)*phi_k(3);    L_phi_8 = Lk(4)*phi_k(4);
-            j_11 = JeN(1,1);            j_12 = JeN(1,2);
-            j_21 = JeN(2,1);            j_22 = JeN(2,2);
-            Bs_dt{e} = 1/6*[-j_11*(1-eta_gl)*L_phi_5    -j_12*(1+xi_gl)*L_phi_6        j_11*(1+eta_gl)*L_phi_7        j_12*(1-xi_gl)*L_phi_8
-                            -j_21*(1-eta_gl)*L_phi_5    -j_22*(1+xi_gl)*L_phi_6        j_21*(1+eta_gl)*L_phi_7        j_22*(1-xi_gl)*L_phi_8    ];
-            Bs{e,pp,qq} = Bs_dt{e}*A_n;
+            % Ecuacion 39
+            Aw = [  1, -x21/2, -y21/2, -1, -x21/2, -y21/2,  0,      0,      0,  0,      0,      0
+                    0,      0,      0,  1, -x32/2, -y32/2, -1, -x32/2, -y32/2,  0,      0,      0
+                    0,      0,      0,  0,      0,      0,  1, -x43/2, -y43/2, -1, -x43/2, -y43/2
+                   -1, -x14/2, -y14/2,  0,      0,      0,  0,      0,      0,  1, -x14/2, -y14/2 ];
+                              
+            % Ecuacion 37
+            An = A_dbeta\Aw;
             
-            % se arma la matriz de rigidez del elemento e por flexion
-            Kbe = Kbe + Bb{e,pp,qq}'*Dbe*Bb{e,pp,qq}*det_JeN(pp,qq)*w_gl(pp)*w_gl(qq);
+            %% Se calcula la matriz de deformacion por flexion Bb (eq. 41)
+            Bb{e,pp,qq} = Bb_beta + Bb_dbeta*An;
             
-            % se arma la matriz de rigidez del elemento e por cortante
-            Kse = Kse + Bs{e}'*Dse*Bs{e}*det_JeN(pp,qq)*w_gl(pp)*w_gl(qq);
+            %% Se calcula la matriz de deformacion por cortante Bs
+            L5_phi5 = Lk(1)*phi_k(1);    
+            L6_phi6 = Lk(2)*phi_k(2);
+            L7_phi7 = Lk(3)*phi_k(3);    
+            L8_phi8 = Lk(4)*phi_k(4);
+                       
+            % Ecuacion 27
+            Bs_dbeta = (1/6)*[ -j11*(1-eta_gl)*L5_phi5    -j12*(1+xi_gl)*L6_phi6    j11*(1+eta_gl)*L7_phi7    j12*(1-xi_gl)*L8_phi8
+                               -j21*(1-eta_gl)*L5_phi5    -j22*(1+xi_gl)*L6_phi6    j21*(1+eta_gl)*L7_phi7    j22*(1-xi_gl)*L8_phi8 ];
             
-            % vector de fuerzas nodales equivalentes
-            if (   (xe(1) >= 0.9999 & xe(1) <= 1.501) & (xe(2) >= 0.9999 & xe(2) <= 1.501) ...
-                &  (xe(3) >= 0.9999 & xe(3) <= 1.501) & (xe(4) >= 0.9999 & xe(4) <= 1.501))...
-                & ((ye(1) >= 0.9999 & ye(1) <= 2.001) & (ye(2) >= 0.9999 & ye(2) <= 2.001) ...
-                &  (ye(3) >= 0.9999 & ye(3) <= 2.001) & (ye(4) >= 0.9999 & ye(4) <= 2.001))
-                fe = fe + N{e,pp,qq}'*[q 0 0]'*det_JeN(pp,qq)*w_gl(pp)*w_gl(qq);
-            else
-                fe = fe + zeros(12,1);
+            % Ecuacion 43
+            Bs{e,pp,qq} = Bs_dbeta*An;
+            
+            %% se arma la matriz de rigidez del elemento e por flexion (eq. 45)
+            Kbe = Kbe + Bb{e,pp,qq}'*Hb*Bb{e,pp,qq}*det_Je(pp,qq)*w_gl(pp)*w_gl(qq);
+            
+            %% se arma la matriz de rigidez del elemento e por cortante (eq. 47)
+            Kse = Kse + Bs{e,pp,qq}'*Hs*Bs{e,pp,qq}*det_Je(pp,qq)*w_gl(pp)*w_gl(qq);
+            
+            %% vector de fuerzas nodales equivalentes        
+            if (xe(1) >= 0.9999 && xe(2) <= 1.501) && ...
+               (ye(2) >= 0.9999 && ye(3) <= 2.001)
+                fe = fe + N{e,pp,qq}'*[q 0 0]'*det_Je(pp,qq)*w_gl(pp)*w_gl(qq);
             end
         end
     end
     
-    if any(any((det_JeN <= 0) & (det_JeP <= 0)))
-        error('Existen elementos con det_Je negativo en el elemento %d.\n', e);
+    %% se verifica que todos los determinantes sean positivos
+    if any(det_Je(:) <= 0)
+        error('Existen elementos con det_JeN negativo o cero en el elemento %d.\n', e);
     end
     
-    Ke = Kbe + Kse;
-    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
-    f(idx{e},:)      = f(idx{e},:)   + fe;
+    %% ensamblaje matricial
+    idx{e} = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:) ];    
+    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Kbe + Kse;
+    f(idx{e},:)      = f(idx{e},:)      + fe;
 end
 
 %% Muestro la configuracion de la matriz K (K es rala)
@@ -262,25 +269,23 @@ title(sprintf('Deformada escalada %d veces',escala),'FontSize',20)
 view(3)
 
 %% Se calcula para cada elemento el vector de momentos en los puntos
-%% de Gauss
-sigma_b = cell(nef,n_gl,n_gl);  % momentos
+%% de Gauss (ecuacion 49)
+MxMyMxy = cell(nef,n_gl,n_gl);
 for e = 1:nef
     for pp = 1:n_gl
         for qq = 1:n_gl
-            % Se calculan los momentos en los puntos de Gauss
-            sigma_b{e,pp,qq} = Dbe*Bb{e,pp,qq}*aa(idx{e});
+            MxMyMxy{e,pp,qq} = Hb*Bb{e,pp,qq}*aa(idx{e});
         end
     end
 end
 
 %% Se calcula para cada elemento el vector de cortantes en los puntos
-%% de Gauss
-QxQy = cell(nef,n_gl,n_gl);  % cortantes
+%% de Gauss (ecuacion 50)
+QxQy = cell(nef,n_gl,n_gl);
 for e = 1:nef
     for pp = 1:n_gl
         for qq = 1:n_gl
-            % Se calculan las fuerzas cortantes en los puntos de Gauss
-            QxQy{e,pp,qq} = Dse*Bs{e}*aa(idx{e});
+            QxQy{e,pp,qq} = Hs*Bs{e,pp,qq}*aa(idx{e});
         end
     end
 end
@@ -294,26 +299,26 @@ Qx  = zeros(nno,1);
 Qy  = zeros(nno,1);
 
 A = [ ... 
-    3^(1/2)/2 + 1,          -1/2, 1 - 3^(1/2)/2,          -1/2;
-             -1/2, 3^(1/2)/2 + 1,          -1/2, 1 - 3^(1/2)/2;
-    1 - 3^(1/2)/2,          -1/2, 3^(1/2)/2 + 1,          -1/2;
-             -1/2, 1 - 3^(1/2)/2,          -1/2, 3^(1/2)/2 + 1];
+   3^(1/2)/2 + 1,            -1/2,            -1/2,   1 - 3^(1/2)/2
+            -1/2,   1 - 3^(1/2)/2,   3^(1/2)/2 + 1,            -1/2
+   1 - 3^(1/2)/2,            -1/2,            -1/2,   3^(1/2)/2 + 1
+            -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2 ];
 
 for e = 1:nef                             
-   Mx(LaG(e,:),:) = Mx(LaG(e,:),:)   + A * [ sigma_b{e,1,1}(1)
-											 sigma_b{e,1,2}(1)
-											 sigma_b{e,2,1}(1)
-											 sigma_b{e,2,2}(1) ];
+   Mx(LaG(e,:),:) = Mx(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(1)
+											 MxMyMxy{e,1,2}(1)
+											 MxMyMxy{e,2,1}(1)
+											 MxMyMxy{e,2,2}(1) ];
 
-   My(LaG(e,:),:) = My(LaG(e,:),:)   + A * [ sigma_b{e,1,1}(2)
-											 sigma_b{e,1,2}(2)
-											 sigma_b{e,2,1}(2)
-											 sigma_b{e,2,2}(2) ];
+   My(LaG(e,:),:) = My(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(2)
+											 MxMyMxy{e,1,2}(2)
+											 MxMyMxy{e,2,1}(2)
+											 MxMyMxy{e,2,2}(2) ];
                                         
-   Mxy(LaG(e,:),:) = Mxy(LaG(e,:),:) + A * [ sigma_b{e,1,1}(3)
-											 sigma_b{e,1,2}(3)
-											 sigma_b{e,2,1}(3)
-											 sigma_b{e,2,2}(3) ];
+   Mxy(LaG(e,:),:) = Mxy(LaG(e,:),:) + A * [ MxMyMxy{e,1,1}(3)
+											 MxMyMxy{e,1,2}(3)
+											 MxMyMxy{e,2,1}(3)
+											 MxMyMxy{e,2,2}(3) ];
 
    Qx(LaG(e,:),:) = Qx(LaG(e,:),:)   + A * [ QxQy{e,1,1}(1)
 											 QxQy{e,1,2}(1)
@@ -403,7 +408,7 @@ MEF = zeros(nno,1);
 analitica = zeros(nno,1);
 for i = 1:nno
    MEF(i) = vect_mov(i,ww);
-   analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, q, u, v, xi, eta);
+   analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, h, 2, 4, q, u, v, xi, eta);
    err(i) = abs((MEF(i)-analitica(i))/analitica(i));
 end
 disp('Observe que al comparar ambos metodos los errores relativos maximos son')
