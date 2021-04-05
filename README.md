@@ -47,7 +47,10 @@ Tomado de:
 - [Taller 2: estructuras en tensión y deformación plana](talleres/EF1/taller_2_2019b.md)
 - [Taller 3: estructuras 3D y con simetría axial](talleres/EF1/taller_3_2019b.md)
 
+<!---
 ## Examenes y talleres de EFs 2
 - [Tema de los exámenes](docs/tema_examenes_EF2.md)
-- [Taller 1: vigas](talleres/EF2/taller_1_2020a.md)
+--->
+## Talleres de EFs 2
+- [Taller 1: vigas](talleres/EF2/taller_1_2021a.md)
 - [Taller 2: cascarones](talleres/EF2/taller_2_2020a.md)
