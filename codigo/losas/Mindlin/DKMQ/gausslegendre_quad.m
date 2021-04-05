@@ -1,1 +1,1 @@
-/media/daalvarez/HDbodega/github/elementosfinitos/codigo/losas/Kirchhoff_Love/EF_MZC/gausslegendre_quad.m
+../../Kirchhoff_Love/EF_MZC/gausslegendre_quad.m
