@@ -2,7 +2,7 @@
 
 Con el objeto de verificar la validez de las teorías de Euler-Bernoulli, de Timoshenko-Ehrenfest, se requiere hacer el análisis de los desplazamientos, diagramas de momento flector y de fuerza cortante en una viga, utilizando dichas teorías y compararlas con las obtenidas por el método de los elementos finitos para tensión plana. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que proponga soluciones a los problemas propuestos.
 
-Trabajo de elaboración en grupos de máximo dos integrantes. Preferiblemente, uno de los estudiantes del grupo tuvo que haber cursado Mecánica de Sólidos 2 y uno de los estudiantes tuvo que haber cursado con Diego, Elementos Finitos 1.
+Trabajo de elaboración en grupos de máximo dos integrantes. Preferiblemente, pero no obligatoriamente, uno de los estudiantes del grupo tuvo que haber cursado Mecánica de Sólidos 2 y uno de los estudiantes tuvo que haber cursado con Diego, Elementos Finitos 1.
 
 Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
 
@@ -21,13 +21,13 @@ Con las teorías de vigas de EB y TE se solicita calcular y graficar, para cada 
 
 
 Para tal fin usar los métodos:
-* Matricial que resuelve las ecuaciones diferenciales de EB y TE (pueden utilizar mis programas en GITHUB).
-* El método exacto de las funciones de discontinuidad visto en Sólidos 2.
+* Matricial que resuelve las ecuaciones diferenciales de EB y TE (la forma más fácil sería usar este [código](https://github.com/diegoandresalvarez/elementosfinitos/tree/master/codigo/repaso_matricial/general_2D), que ya funciona con el método de Euler-Bernoulli, y adaptarlo al caso de Timoshenko-Ehrenfest).
+* El método exacto de las funciones de discontinuidad visto en Sólidos 2 (obligatorio para quienes vieron ese curso); en caso que ambos integrantes no hayan visto Sólidos 2, deben solicitar a algún compañero que les preste esta tarea, de modo que al menos pueda hacer la interpretación de los resultados.
 * Programa de análisis estructural que usted registró en GOOGLE CLASSROOM (no usar como software el FTOOL).
-* Programa que modele sólidos utilizando el método de los elementos finitos en tensión plana.
+* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM que modele sólidos utilizando el método de los elementos finitos en tensión plana.
 
 Con el método de los EFs para tensión plana se requiere:
-* Calcular en *x* = 0.95 m, 1.05 m, 1.50 m, 1.95 m, 2.85 m, 3.00 m, 3.50 m y 3.95 m el desplazamiento horizontal *u*, esfuerzo normal *σₓ* y el esfuerzo cortante τxz. Si lo puede hacer en más puntos, aún mejor.
+* Calcular ocho diferentes secciones (en *x* = 0.95 m, 1.05 m, 1.50 m, 1.95 m, 2.85 m, 3.00 m, 3.50 m y 3.95 m) el desplazamiento horizontal *u*, esfuerzo normal *σₓ* y el esfuerzo cortante τxz. Si lo puede hacer en más secciones, aún mejor.
 * A partir de *σₓ* y *τxz* estimar el momento flector *M* y la fuerza cortante *V* en esos puntos. Para esto, busque en su software una opción de "integración sobre superficie" en su software.
 * Calcular en *z* = 0 m desplazamiento vertical del eje neutro de la viga *w*.
 
@@ -39,7 +39,7 @@ Hacer un informe donde se:
 * Configure su software de modo que se emplee la misma convención para mostrar los diagramas de fuerzas cortantes y momentos flectores empleados en clase. Los momentos son positivos cuando la fibra a tracción está a compresión. El eje dependiente *M(x)* se grafica hacia arriba.
 
 ## Material a entregar
-Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El video se debe subir a GOOGLE CLASSROOM, no a YouTube u otra plataforma de videos.
+Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El video se debe subir a GOOGLE CLASSROOM, no a YouTube u otra plataforma de videos. El video debe contener un recuadrito en el cual se vea a usted exponiendo el tema.
 
 * VIDEO: Hacer un video de no más de 25 minutos que ilustre como resolvió el ejercicio. En el mismo video mostrar la comparación de los resultados obtenidos con MATLAB/PYTHON y con el programa escogido. No hay que hacer el análisis de resultados en el video. Esto lo hará en el trabajo escrito.
 <!---
@@ -60,7 +60,8 @@ Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El 
   * VIDEO: 0.3 EB + software que calcula vigas
   * VIDEO: 0.3 TE + software que calcula vigas
   * VIDEO: 0.6 EFs de tensión plana. Debe tener en cuenta los consejos para hacer buenas mallas, no simplemente hacer una malla supertupida. Se aconseja refinar sobre la línea de la sección transversal.
-  * VIDEO: 0.6 Estima a partir de *σₓ* el momento flector *M*
+* Estima a partir de *σₓ* y cada *τxz* para cada altura de la viga y para cada sección transversal (cada punto es obligatorio, por cada combinación al altura/sección transversal no realizada se tendrá -0.3 unidades):
+  * VIDEO: 0.6 Estima a partir de *σₓ* el momento flector *M*.
   * VIDEO: 0.6 Estima a partir de *τxz* y la fuerza cortante *V*.
 
 * INFORME: Análisis de resultados (cada punto es obligatorio, por cada punto no realizado se tendrá -2.0 unidades):
