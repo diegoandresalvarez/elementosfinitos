@@ -1,10 +1,3 @@
-<span style="color: #ff0000;
-font-size: 200%;">Página de WIKIPEDIA. Trabajo individual</span>
-
-<span style="color: #ff0000;
-font-size: 200%;">Entrega 1: Septiembre 18 de 2015, 23:59. Trabajo individual</span>
-Entregar informe escrito y programas de MATLAB.
-
 * Desarrollar la formulación de viga de Euler-Bernoulli de tres nodos e implementarla en MATLAB. Ilustre el algoritmo con la misma  viga con la que se ha trabajado en clase.
 
 * Implementar el elemento de viga de Timoshenko de tres nodos en MATLAB.  Ilustre el algoritmo con la misma viga con la que se ha trabajado en clase. Comparar la eficiencia de este elemento con respecto al elemento de viga de Timoshenko de dos nodos. NOTA:
@@ -13,12 +6,5 @@ Entregar informe escrito y programas de MATLAB.
 
 * Usando EFs bidimensionales de tensión plana serendípitos rectangulares de 8 nodos, calcule una viga de una sola luz asumiendo que están sometidas a una carga distribuída q = -10kN/m constante en toda la longitud de la viga.  Considere E = 210 GPa, L = 1m, módulo de elasticidad homogéneo, coeficiente de Poisson = 0.35, sección rectangular constante y para las relaciones altura/luz = h/L 0.05, 0.10, 0.25, 0.50, 1.00. En la sección ubicada en x=0.75m calcule sx, txy, ex, y u y grafique su variación con el espesor.
 ** NOTA: Los apoyos de rodillo se asumen que se distribuyen sobre una longitud de 0.10m
-----
-
-<span style="color: #ff0000;
-font-size: 200%;">Entrega 2: Noviembre 2 de 2015, 23:59. Trabajo individual</span>
 
 * Implementar los elementos de losa de Reissner-Mindlin TQQL y QQQQ-S en MATLAB. Ilustre los algoritmos con la misma losa con la que se ha trabajado en clase y compare la solución con respecto a la teoría exacta de Kirchhoff para diferentes valores de la constante D.
-
-----
-
