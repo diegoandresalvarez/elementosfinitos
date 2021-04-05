@@ -11,13 +11,14 @@ X, Y, TH = 0, 1, 2
 g        = -9.81    # [m/s²] aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-nombre_archivo = 'fink'
+#nombre_archivo = 'fink'
 #nombre_archivo = 'fink_portico'
 #nombre_archivo = 'fink_cercha'
 #nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3_apoyo_inclinado'
 #nombre_archivo = 'portico_UribeEscamilla_11_23'
+nombre_archivo = 'taller_1_2021a'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
