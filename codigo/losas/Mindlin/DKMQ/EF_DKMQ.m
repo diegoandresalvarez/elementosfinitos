@@ -1,22 +1,27 @@
 %% 
 % Calculo de los desplazamientos en una placa utilizando la teoria de
-% Reissner-Mindlin y el elemento finito de placa DKMQ 
+% Reissner-Mindlin y el elemento finito de placa DKQ/DKMQ 
 %
 % Algoritmo documentado en:
-% Katili, I. (1993), A new discrete Kirchhoff?Mindlin element based on 
-% Mindlin?Reissner plate theory and assumed shear strain fields?part II: 
-% An extended DKQ element for thick?plate bending analysis. Int. J. Numer. 
+% Katili, I. (1993), A new discrete Kirchhoff-Mindlin element based on 
+% Mindlin-Reissner plate theory and assumed shear strain fields-part II: 
+% An extended DKQ element for thick-plate bending analysis. Int. J. Numer. 
 % Meth. Engng., 36: 1885-1908. https://doi.org/10.1002/nme.1620361107
 %
-% Este es el algoritmo de losas usado en MIDAS y AUTODESK ROBOT. En lo
-% posible se intento seguir la nomenclatura del articulo
+% Este es el algoritmo de losas usado en MIDAS y AUTODESK ROBOT.
+% Se programo intentando seguir la nomenclatura del articulo
 %
 % Por:
 % Diego Andres Alvarez Marin (daalvarez@unal.edu.co)
 % Sebastian Jaramillo Moreno
 
 %% borro la memoria, la pantalla y las figuras
-clear, clc, close all 
+clear, clc, %close all 
+
+%% seleccion del tipo de EF de losa a emplear
+DKMQ = 1;
+DKQ  = 2;
+EFtype = DKQ;
 
 %% defino las variables/constantes
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
@@ -67,7 +72,7 @@ funciones_de_forma;
 %% matrices constitutivas
 Db = (E*h^3/(12*(1-nu^2)));   % plate rigidity
 Hb = Db * [ 1  nu 0           % matriz constitutiva de flexion generalizada
-            nu 1  0           % (Dbe en nuestra nomenclatura) 
+            nu 1  0           % (Dbe en la nomenclatura del curso) 
             0  0  (1-nu)/2 ]; 
 
 G  = E/(2*(1+nu));     % modulo de cortante
@@ -80,8 +85,8 @@ f   = zeros(ngdl,1);        % vector de fuerzas nodales equivalentes global
 N   = cell(nef, n_gl, n_gl);
 Bb  = cell(nef, n_gl, n_gl);
 Bs  = cell(nef, n_gl, n_gl);
-idx = cell(nef, 1);    % grados de libertad de cada elemento finito
-for e = 1:nef          % ciclo sobre todos los elementos finitos
+idx = cell(nef, 1);         % grados de libertad de cada elemento finito
+for e = 1:nef               % ciclo sobre todos los elementos finitos
     %% Longitudes de los lados, cosenos y senos (Figura 4)
     xe = xnod(LaG(e,:),X);       ye = xnod(LaG(e,:),Y);
     x21 = xe(2) - xe(1);         y21 = ye(2) - ye(1); 
@@ -153,8 +158,21 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
             end
             
             %% Se calcula An
-            % Ecuacion 22b
-            phi_k = (2/((5/6)*(1 - nu))) .* (h./Lk).^2;
+            % Ecuacion 22b          
+            switch EFtype
+                case DKMQ
+                    phi_k = (2/((5/6)*(1 - nu))) .* (h./Lk).^2;
+                case DKQ
+                    phi_k = zeros(1,4);
+                    % Esto de acuerdo con el articulo
+                    % Katili, et. al. (2018) - A comparative formulation of 
+                    % DKMQ, DSQ and MITC4 quadrilateral plate elements with 
+                    % new numerical results based on s-norm tests. 
+                    % Computers & Structures, Volume 204, Pages 48-64,
+                    % https://doi.org/10.1016/j.compstruc.2018.04.001.
+                otherwise
+                    error('Tipo de EF de losa no soportado');
+            end
             
             % Ecuacion 38
             A_dbeta = diag((2/3) * Lk .* (1+phi_k));
@@ -200,7 +218,7 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
     
     %% se verifica que todos los determinantes sean positivos
     if any(det_Je(:) <= 0)
-        error('Existen elementos con det_JeN negativo o cero en el elemento %d.\n', e);
+        error('Existen elementos con det(Je(xi,eta)) <= 0 %d.\n', e);
     end
     
     %% ensamblaje matricial
@@ -281,11 +299,13 @@ end
 
 %% Se calcula para cada elemento el vector de cortantes en los puntos
 %% de Gauss (ecuacion 50)
-QxQy = cell(nef,n_gl,n_gl);
-for e = 1:nef
-    for pp = 1:n_gl
-        for qq = 1:n_gl
-            QxQy{e,pp,qq} = Hs*Bs{e,pp,qq}*aa(idx{e});
+if EFtype == DKMQ
+    QxQy = cell(nef,n_gl,n_gl);
+    for e = 1:nef
+        for pp = 1:n_gl
+            for qq = 1:n_gl
+                QxQy{e,pp,qq} = Hs*Bs{e,pp,qq}*aa(idx{e});
+            end
         end
     end
 end
@@ -305,40 +325,45 @@ A = [ ...
             -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2 ];
 
 for e = 1:nef                             
-   Mx(LaG(e,:),:) = Mx(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(1)
-											 MxMyMxy{e,1,2}(1)
-											 MxMyMxy{e,2,1}(1)
-											 MxMyMxy{e,2,2}(1) ];
+    Mx(LaG(e,:),:) = Mx(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(1)
+                                              MxMyMxy{e,1,2}(1)
+                                              MxMyMxy{e,2,1}(1)
+                                              MxMyMxy{e,2,2}(1) ];
 
-   My(LaG(e,:),:) = My(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(2)
-											 MxMyMxy{e,1,2}(2)
-											 MxMyMxy{e,2,1}(2)
-											 MxMyMxy{e,2,2}(2) ];
+    My(LaG(e,:),:) = My(LaG(e,:),:)   + A * [ MxMyMxy{e,1,1}(2)
+                                              MxMyMxy{e,1,2}(2)
+                                              MxMyMxy{e,2,1}(2)
+                                              MxMyMxy{e,2,2}(2) ];
                                         
-   Mxy(LaG(e,:),:) = Mxy(LaG(e,:),:) + A * [ MxMyMxy{e,1,1}(3)
-											 MxMyMxy{e,1,2}(3)
-											 MxMyMxy{e,2,1}(3)
-											 MxMyMxy{e,2,2}(3) ];
-
-   Qx(LaG(e,:),:) = Qx(LaG(e,:),:)   + A * [ QxQy{e,1,1}(1)
-											 QxQy{e,1,2}(1)
-											 QxQy{e,2,1}(1)
-											 QxQy{e,2,2}(1) ];
-                                            
-   Qy(LaG(e,:),:) = Qy(LaG(e,:),:)   + A * [ QxQy{e,1,1}(2)
-											 QxQy{e,1,2}(2)
-											 QxQy{e,2,1}(2)
-											 QxQy{e,2,2}(2) ];
+    Mxy(LaG(e,:),:) = Mxy(LaG(e,:),:) + A * [ MxMyMxy{e,1,1}(3)
+                                              MxMyMxy{e,1,2}(3)
+                                              MxMyMxy{e,2,1}(3)
+                                              MxMyMxy{e,2,2}(3) ];
                                           
    num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
 end 
+
+if EFtype == DKMQ
+    for e = 1:nef                             
+
+        Qx(LaG(e,:),:) = Qx(LaG(e,:),:)   + A * [ QxQy{e,1,1}(1)
+                                                  QxQy{e,1,2}(1)
+                                                  QxQy{e,2,1}(1)
+                                                  QxQy{e,2,2}(1) ];
+
+        Qy(LaG(e,:),:) = Qy(LaG(e,:),:)   + A * [ QxQy{e,1,1}(2)
+                                                  QxQy{e,1,2}(2)
+                                                  QxQy{e,2,1}(2)
+                                                  QxQy{e,2,2}(2) ];
+    end
+end  
  
 %% Alisado (promedio de los momentos y cortantes en los nodos)
 Mx  =  Mx./num_elem_ady;  
 My  =  My./num_elem_ady;  
 Mxy = Mxy./num_elem_ady;   
-Qx  =  Qx./num_elem_ady;  
-Qy  =  Qy./num_elem_ady;  
+Qx  =  Qx./num_elem_ady;
+Qy  =  Qy./num_elem_ady;
 
 %% Se grafican los momentos
 figure
@@ -347,10 +372,12 @@ subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, My,  'Momentos My (N-m/m)');
 subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mxy, 'Momentos Mxy (N-m/m)');
 
 %% Se grafican los cortantes
-figure
-subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Qx,  'Cortantes Qx (N/m)');
-subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Qy,  'Cortantes Qy (N/m)');
-
+if EFtype == DKMQ
+    figure
+    subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Qx,  'Cortantes Qx (N/m)');
+    subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Qy,  'Cortantes Qy (N/m)');
+end
+    
 %% Se calculan y grafican para cada elemento los momentos principales y
 %% sus direcciones
 Mt_max = sqrt(((Mx-My)/2).^2 + Mxy.^2); % momento torsion maximo
@@ -365,11 +392,13 @@ subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, Mf2_xy, 'Mf2_{xy} (N-m/m)', { ang+pi
 subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mt_max, 'Mt_{max} (N-m/m)', { ang+pi/4, ang-pi/4 })
 
 %% Se calculan y grafican los cortantes maximos, junto con su angulo de inclinacion
-Q_max = hypot(Qx, Qy);
-ang   = atan2(Qy, Qx);
+if EFtype == DKMQ
+    Q_max = hypot(Qx, Qy);
+    ang   = atan2(Qy, Qx);
 
-figure
-plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
+    figure
+    plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
+end
 
 %% Se calculan los momentos de disenio de Wood y Armer
 [Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
@@ -382,20 +411,18 @@ figure
 subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_sup,  'Momentos M_x^* sup (N-m/m)');
 caxis([0 Mmax]);                                % misma escala de colores
 colorbar('ylim', [0 max(Mxast_sup)]);           % rango de colores a mostrar
-colormap parula
+
 subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_sup,  'Momentos M_y^* sup (N-m/m)');
 caxis([0 Mmax]);                                % misma escala de colores
 colorbar('ylim', [0 max(Myast_sup)]);           % rango de colores a mostrar
-colormap parula
+
 
 figure
 subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_inf,  'Momentos M_x^* inf (N-m/m)');
-colormap parula
 caxis([-Mmax 0]);                               % misma escala de colores
 oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
 colorbar('ylim', [min(Mxast_inf) 0]);           % rango de colores a mostrar
 subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_inf,  'Momentos M_y^* inf (N-m/m)');
-colormap parula
 caxis([-Mmax 0]);                               % misma escala de colores
 oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
 colorbar('ylim', [min(Myast_inf) 0]);           % rango de colores a mostrar
@@ -412,7 +439,7 @@ for i = 1:nno
    err(i) = abs((MEF(i)-analitica(i))/analitica(i));
 end
 disp('Observe que al comparar ambos metodos los errores relativos maximos son')
-max(err, [], 'omitnan') % = 0.0027815 =  0.27%
+max(err, [], 'omitnan') % = 0.002128 =  0.21%
 disp('es decir son extremadamente pequenios!!!')
 
 %%
