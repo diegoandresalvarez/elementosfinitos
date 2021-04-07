@@ -2,22 +2,11 @@
 
 La implementación del EF DKMQ está basada en los artículos:
 
-```
-Katili, I. (1993), A new discrete Kirchhoff-Mindlin element based on 
-Mindlin-Reissner plate theory and assumed shear strain fields-part II: 
-An extended DKQ element for thick-plate bending analysis. Int. J. Numer. 
-Meth. Engng., 36: 1885-1908.
-https://doi.org/10.1002/nme.1620361107
-```
+> Katili, I. (1993), A new discrete Kirchhoff-Mindlin element based on Mindlin-Reissner plate theory and assumed shear strain fields-part II: An extended DKQ element for thick-plate bending analysis. Int. J. Numer. Meth. Engng., 36: 1885-1908. https://doi.org/10.1002/nme.1620361107
 
 y
 
-```
-Katili, et. al. (2018) - A comparative formulation of DKMQ, DSQ and MITC4 
-quadrilateral plate elements with new numerical results based on s-norm tests. 
-Computers & Structures, Volume 204, Pages 48-64, 
-https://doi.org/10.1016/j.compstruc.2018.04.001.
-```
+> Katili, et. al. (2018) - A comparative formulation of DKMQ, DSQ and MITC4 quadrilateral plate elements with new numerical results based on s-norm tests. Computers & Structures, Volume 204, Pages 48-64, https://doi.org/10.1016/j.compstruc.2018.04.001.
 
 Considere la losa mostrada en la figura
 ![](../../ejemplos/losa.png)
