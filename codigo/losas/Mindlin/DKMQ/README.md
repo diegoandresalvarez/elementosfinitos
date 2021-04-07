@@ -1,4 +1,4 @@
-# Cálculo de una losa simplemente apoyada en sus cuatro bordes utilizando el EF de losa MZC
+# Cálculo de una losa simplemente apoyada en sus cuatro bordes utilizando el EF de losa DKMQ (Discrete Kirchhoff Mindlin Quadrilateral)
 
 La implementación del EF DKMQ está basada en los artículos:
 
