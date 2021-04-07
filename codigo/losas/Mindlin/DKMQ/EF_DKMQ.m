@@ -21,7 +21,7 @@ clear, clc, %close all
 %% seleccion del tipo de EF de losa a emplear
 DKMQ = 1;
 DKQ  = 2;
-EFtype = DKQ;
+EFtype = DKMQ;
 
 %% defino las variables/constantes
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
