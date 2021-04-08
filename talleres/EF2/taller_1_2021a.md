@@ -4,7 +4,7 @@ Con el objeto de verificar la validez de las teorías de Euler-Bernoulli, de Tim
 
 Trabajo de elaboración en grupos de máximo dos integrantes. Preferiblemente, pero no obligatoriamente, uno de los estudiantes del grupo tuvo que haber cursado Mecánica de Sólidos 2 y uno de los estudiantes tuvo que haber cursado con Diego, Elementos Finitos 1.
 
-Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada día de retraso se tendrán -0.3 unidades en la nota final.
+Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada ocho horas de retraso se descontará una décima de la nota final.
 
 ## El problema propuesto
 Considere la viga mostrada:
@@ -51,7 +51,7 @@ Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El 
 * Envíe, adicionalmente, los archivos de MAXIMA, EXCEL y del software empleado asociados a este ejercicio.
 
 ## Criterios de calificación
-### Trabajo principal
+### Trabajo principal (NOTA MAXIMA: 6.0)
 * Calcula y grafica reacciones, *V*, *M*, *θ*, *v* con (cada punto es obligatorio, por cada punto no realizado se tendrá -1.0 unidades):
   * 0.3 EB + método matricial
   * 0.3 TE + método matricial
@@ -59,10 +59,10 @@ Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El 
   * 0.3 TE + método funciones de discontinuidad
   * VIDEO: 0.3 EB + software que calcula vigas
   * VIDEO: 0.3 TE + software que calcula vigas
-  * VIDEO: 0.6 EFs de tensión plana. Debe tener en cuenta los consejos para hacer buenas mallas, no simplemente hacer una malla supertupida. Se aconseja refinar sobre la línea de la sección transversal.
-* Estima a partir de *σₓ* y cada *τxz* para cada altura de la viga y para cada sección transversal (cada punto es obligatorio, por cada combinación al altura/sección transversal no realizada se tendrá -0.3 unidades):
+  * VIDEO: 0.6 Calcula reacciones, desplazamientos, deformaciones y esfuerzos usando EFs de tensión plana. Debe tener en cuenta los consejos para hacer buenas mallas, no simplemente hacer una malla supertupida. Se aconseja refinar sobre la línea de la sección transversal.
+* Estima a partir de *σₓ* y cada *τxz* para cada altura de la viga y para cada sección transversal (cada punto es obligatorio, por cada combinación al altura/sección transversal no realizada se descontarán 2 décimas. Tenga en cuenta que son 3 alturas y 8 secciones):
   * VIDEO: 0.6 Estima a partir de *σₓ* el momento flector *M*.
-  * VIDEO: 0.6 Estima a partir de *τxz* y la fuerza cortante *V*.
+  * VIDEO: 0.6 Estima a partir de *τxz* la fuerza cortante *V*.
 
 * INFORME: Análisis de resultados (cada punto es obligatorio, por cada punto no realizado se tendrá -2.0 unidades):
   * 1.0 compara entre sí y analiza los trés métodos de EB y los tres métodos de TE.
