@@ -3,7 +3,7 @@
 % Reissner-Mindlin y el elemento finito de placa MITC4
 %
 % Algoritmo documentado en:
-% Katili, I., Bato, J.-L., Maknun, J. and Lardeur, P. (2018), A comparative 
+% Katili, I., Batoz, J.-L., Maknun, J. and Lardeur, P. (2018), A comparative 
 % formulation of DKMQ, DSQ and MITC4 quadrilateral plate elements with new 
 % numerical results based on s-norm tests. Computers & Structures, 204:
 % 48-64. https://doi.org/10.1016/j.compstruc.2018.04.001

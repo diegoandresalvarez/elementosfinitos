@@ -4,11 +4,11 @@ El EF MITC4 se formuló en el artículo:
 
 > Bathe, K.-J. and Dvorkin, E.N. (1985), A four-node plate bending element based on Mindlin/Reissner plate theory and a mixed interpolation. Int. J. Numer. Meth. Engng., 21: 367-383. https://doi.org/10.1002/nme.1620210213
 
-sin embargo, no entiendo como se dedujeron las ecuaciones allí. Afortunadamente, Katilli y colaboradores publicaron el artículo:
+sin embargo, no entiendo como se dedujeron las ecuaciones allí. Afortunadamente, Katili y colaboradores publicaron el artículo:
 
-> Katili, I., Bato, J.-L., Maknun, J. and Lardeur, P. (2018), A comparative formulation of DKMQ, DSQ and MITC4 quadrilateral plate elements with new numerical results based on s-norm tests. Computers & Structures, 204: 48-64. https://doi.org/10.1016/j.compstruc.2018.04.001
+> Katili, I., Batoz, J.-L., Maknun, J. and Lardeur, P. (2018), A comparative formulation of DKMQ, DSQ and MITC4 quadrilateral plate elements with new numerical results based on s-norm tests. Computers & Structures, 204: 48-64. https://doi.org/10.1016/j.compstruc.2018.04.001
 
-donde se presenta una formulación muy clara de dicho algoritmo, la cual se presenta en el archivo el archivo [EF_MITC4.m](EF_MITC4.m). Para la implementación de dicho algoritmo, se comprobaron las ecuaciones en el archivo [demos/demos_MITC4.m]([demos/demos_MITC4.m]).
+donde se presenta una formulación muy clara de dicho algoritmo, la cual se presenta en el archivo el archivo [EF_MITC4_Katili_et_al.m](EF_MITC4_Katili_et_al.m). Para la implementación de dicho algoritmo, se comprobaron las ecuaciones en el archivo [demos/demos_MITC4.m]([demos/demos_MITC4.m]).
 
 Considere la losa mostrada en la figura
 ![](../../ejemplos/losa.png)
@@ -18,7 +18,7 @@ dicha losa tiene:
 * material: E = 210 GPa y ν = 0.30.
 * soporta una carga p = 10 kN/m^2, con u = 0.5m, v = 1m, ξ = 1.25m, η = 1.5 m.
 
-La losa se calculó con elementos finitos MITC4, implementado en el archivo [EF_MITC4.m](EF_MITC4.m), obteniendo los siguientes diagramas:
+La losa se calculó con elementos finitos MITC4, implementado en el archivo [EF_MITC4_Katili_et_al.m](EF_MITC4_Katili_et_al.m), obteniendo los siguientes diagramas:
 
 ### Deformación vertical w
 
