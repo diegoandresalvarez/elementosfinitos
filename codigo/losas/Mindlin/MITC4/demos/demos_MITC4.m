@@ -7,6 +7,7 @@
 
 %%
 clear, clc
+disp('EQUATIONS Bs KATILI ET. AL.')
 disp('*** Calculation of the inverse Jacobian j = inv(J) ***')
 
 % Jacobian and inverse Jacobian
@@ -87,3 +88,28 @@ Ng_Ag_Au = simplify(expand(Ng*Ag*Au));
 disp('(Ng*Ag*Au)^T = '); Ng_Ag_Au.'
 
 Bs = invJ*Ng_Ag_Au
+
+
+%%
+disp('************************************************************************')
+disp('EQUATIONS Bs BATHE-DVORKIN')
+clear
+syms r s
+syms w1 tx1 ty1 w2 tx2 ty2 w3 tx3 ty3 w4 tx4 ty4 
+syms x14 x21 x32 x43 y14 y21 y32 y43 
+
+%{
+eq_grz = (1+s)*((w1 - w2)/2 + ((x1 - x2)/4)*(ty1 + ty2) - ((y1 - y2)/4)*(tx1 + tx2)) + ...
+         (1-s)*((w4 - w3)/2 + ((x4 - x3)/4)*(ty4 + ty3) - ((y4 - y3)/4)*(tx4 + tx3));
+eq_gsz = (1+r)*((w1 - w4)/2 + ((x1 - x4)/4)*(ty1 + ty4) - ((y1 - y4)/4)*(tx1 + tx4)) + ...
+         (1-r)*((w2 - w3)/2 + ((x2 - x3)/4)*(ty2 + ty3) - ((y2 - y3)/4)*(tx2 + tx3));
+%}
+eq_grz = (1+s)*((w1 - w2)/2 - (x21/4)*(ty1 + ty2) + (y21/4)*(tx1 + tx2)) + ...
+         (1-s)*((w4 - w3)/2 + (x43/4)*(ty4 + ty3) - (y43/4)*(tx4 + tx3));
+eq_gsz = (1+r)*((w1 - w4)/2 + (x14/4)*(ty1 + ty4) - (y14/4)*(tx1 + tx4)) + ...
+         (1-r)*((w2 - w3)/2 - (x32/4)*(ty2 + ty3) + (y32/4)*(tx2 + tx3));
+
+ae = [ w1 tx1 ty1 w2 tx2 ty2 w3 tx3 ty3 w4 tx4 ty4 ].';
+Bgrz = simplify(expand(equationsToMatrix(eq_grz, ae))).'
+Bgsz = simplify(expand(equationsToMatrix(eq_gsz, ae))).'
+

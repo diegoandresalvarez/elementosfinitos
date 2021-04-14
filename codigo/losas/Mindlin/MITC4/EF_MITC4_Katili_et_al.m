@@ -63,7 +63,7 @@ n_gl = 2;                 % orden de la cuadratura de Gauss-Legendre
 [x_gl, w_gl] = gausslegendre_quad(n_gl);
 
 %% Se leen las funciones de forma N y P y sus derivadas dN_dxi, dN_deta
-funciones_de_forma;
+funciones_de_forma_Katili_et_al;
 
 %% matrices constitutivas
 Db = (E*h^3/(12*(1-nu^2)));   % plate rigidity
