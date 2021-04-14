@@ -156,7 +156,7 @@ for e = 1:nef               % ciclo sobre todos los elementos finitos
             %% Se calcula la matriz de deformacion por cortante Bs
             % Ecuaciones Bathe-Dvorkin 9
             % La demo de las siguientes ecuaciones esta en "demos_MITC4.m"
-            Bgrz = hypot(Cx + r_gl*Bx, Cy + r_gl*By)/(8*det_Je(pp,qq)) *...
+            Bgrz = hypot(Cx + r_gl*Bx, Cy + r_gl*By)/(8*det_Je(pp,qq))* ...
                        [        s_gl/2 + 1/2, ...
                           (y21*(s_gl + 1))/4, ...
                          -(x21*(s_gl + 1))/4, ...
@@ -170,7 +170,7 @@ for e = 1:nef               % ciclo sobre todos los elementos finitos
                           (y43*(s_gl - 1))/4, ...
                          -(x43*(s_gl - 1))/4  ];
             
-            Bgsz = hypot(Ax + s_gl*Bx, Ay + s_gl*By)/(8*det_Je(pp,qq)) *...
+            Bgsz = hypot(Ax + s_gl*Bx, Ay + s_gl*By)/(8*det_Je(pp,qq))* ...
                        [        r_gl/2 + 1/2, ...
                          -(y14*(r_gl + 1))/4, ...
                           (x14*(r_gl + 1))/4, ...
@@ -186,8 +186,13 @@ for e = 1:nef               % ciclo sobre todos los elementos finitos
 
             % Ecuaciones Bathe-Dvorkin 8
             Bgxz =  Bgrz*sin(beta) - Bgsz*sin(alpha); % 8a
-            Bgyz = -Bgrz*cos(beta) + Bgsz*cos(alpha); % 8b
+            Bgyz = -Bgrz*cos(beta) + Bgsz*cos(alpha); % 8b            
             Bs{e,pp,qq} = [ Bgxz; Bgyz ];
+
+            %% se ajustan los subindices a la numeracion local usual
+            Bb{e,pp,qq} = Bb{e,pp,qq}(:,[7:12 1:6]);
+            Bs{e,pp,qq} = Bs{e,pp,qq}(:,[7:12 1:6]);
+            % OJO falta ajustar los subindices al vector fe
 
             %% se arma la matriz de rigidez del elemento e por flexion (eq. Katili, 45)
             Kbe = Kbe + Bb{e,pp,qq}'*Hb*Bb{e,pp,qq}*det_Je(pp,qq)*w_gl(pp)*w_gl(qq);
@@ -207,7 +212,7 @@ for e = 1:nef               % ciclo sobre todos los elementos finitos
     
     %% se verifica que todos los determinantes sean positivos
     if any(det_Je(:) <= 0)
-        error('Existen elementos con det(Je(xi,eta)) <= 0 %d.\n', e);
+        error('Existen elementos con det(Je(r,s)) <= 0 %d.\n', e);
     end
     
     %% ensamblaje matricial
