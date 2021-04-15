@@ -102,9 +102,9 @@ xmom  = zeros(1,nef); % posicion donde se calcula momento flector
 mom   = zeros(1,nef); % momento flector
 xib   = [ 0 ];        % raices del polinom de Legendre de grado 1 (vect. col)
 
-xcor  = zeros(1,nef); % posicion donde se calcula fuerza cortante
-cor   = zeros(1,nef); % fuerza cortante
-xis   = [ 0 ];        % raiz del polinomio de Legendre de grado 1 (vect. col)
+xcor  = zeros(3,nef); % posicion donde se calcula fuerza cortante
+cor   = zeros(3,nef); % fuerza cortante
+xis   = [ -1; 0; 1 ]; % voy a graficar la linea recta, pero solo creale al centro del EF
 
 for e = 1:nef
    Le = L(e);    
@@ -123,10 +123,11 @@ for e = 1:nef
    mom(:,e) = E(e)*I(e)*kappa;    % momento flector
    
    % gamma_xz y fuerza cortante
-   Bs = [ -1/Le  (xis-1)/2  1/Le  -(xis+1)/2 ];
+   unos = ones(size(xis));
+   Bs = [ -unos/Le,  (xis-1)/2,  unos/Le,  -(xis+1)/2 ];
    
    gxz = Bs*ae;                   % gamma_xz  
-   cor(e) = -Aast(e)*G(e)*gxz;    % fuerza cortante   
+   cor(:,e) = -Aast(e)*G(e)*gxz;  % fuerza cortante   
 end
 
 %% se calculan los desplazamientos al interior de cada EF
@@ -212,7 +213,6 @@ grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
    h3t = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [mom(e) mom(e)], 'r-'); % grafico solucion por MEF
 end
-plot(xmom(:), mom(:), 'rx');% grafico solucion por MEF
 title({'Solucion con el MEF para el momento flector',...
    '(el momento positivo es aquel que produce traccion en la fibra inferior)'});
 xlabel('Eje X (m)')                % titulo del eje X
@@ -225,17 +225,15 @@ subplot(2,1,2);
 hold on;                           % no borre el lienzo
 grid on;                           % reticula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h4t = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [cor(e) cor(e)], 'r-'); % grafico solucion por MEF
+   h4t = plot(xcor(:,e), cor(:,e), 'r-'); % grafico solucion por MEF
+   h4c = plot(xcor(2,e), cor(2,e), 'r.'); % grafico solucion por MEF   
 end
-%for e = 1:nef % ciclo sobre todos los elementos finitos
-%   h4t = plot(xcor(:), cor(:), 'r--');   % grafico solucion por MEF
-%end
-title('Solucion con el MEF para la fuerza cortante');
+title({'Solucion con el MEF para la fuerza cortante', ...
+       '(observe que la estimacion de la fuerza cortante se hace correctamente solo en el centro del EF)'});
 xlabel('Eje X (m)')                % titulo del eje X
 ylabel('Fuerza cortante (kN)')     % titulo del eje Y
-legend([h4eb h4t], 'Euler-Bernoulli','Timoshenko lineal','Location','Best');
+legend([h4eb h4t h4c], 'Euler-Bernoulli','Timoshenko lineal','Timoshenko lineal centro EF','Location','Best');
 xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
-
 
 %% Comparacion con la solucion exacta (calculada con MAXIMA y el metodo de
 %  las funciones de discontinuidad
@@ -252,22 +250,22 @@ if strcmp(filename, 'viga_con_resortes') % OJO solo para b=0.1m y h=0.3m
    figure(1)
    subplot(2,1,1);
    hold on;
-   h1tEX = plot(x, v, 'r.');
+   h1tEX = plot(x, v, 'g.');
    legend([h1eb, h1t, h1tEX], 'EF Euler-Bernoulli', 'EF Timoshenko', 'Timoshenko solucion teorica')
    subplot(2,1,2);
    hold on;
-   h2tEX = plot(x, t, 'r.');
+   h2tEX = plot(x, t, 'g.');
    legend([h2eb, h2t, h2tEX], 'EF Euler-Bernoulli', 'EF Timoshenko', 'Timoshenko solucion teorica')
 
    figure(2)
    subplot(2,1,1);
    hold on;
-   h3tEX = plot(x, M, 'r.');
+   h3tEX = plot(x, M, 'g.');
    legend([h3eb, h3t, h3tEX], 'EF Euler-Bernoulli', 'EF Timoshenko', 'Timoshenko solucion teorica')
    subplot(2,1,2);
    hold on;
-   h4tEX = plot(x, V, 'r.');
-   legend([h4eb, h4t, h4tEX], 'EF Euler-Bernoulli', 'EF Timoshenko', 'Timoshenko solucion teorica')
+   h4tEX = plot(x, V, 'g.');
+   legend([h4eb, h4t, h4c, h4tEX], 'EF Euler-Bernoulli', 'EF Timoshenko', 'centro EF Timoshenko', 'Timoshenko solucion teorica')
 end
 
 %%

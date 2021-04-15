@@ -274,21 +274,21 @@ if strcmp(filename, 'viga_con_resortes') % OJO solo para b=0.1m y h=0.3m
    figure(1)
    subplot(2,1,1);
    hold on;
-   h1ebEX = plot(x, v, 'r.');
+   h1ebEX = plot(x, v, 'm.');
    legend([h1eb, h1ebEX], 'Elementos finitos', 'Solucion teorica')
    subplot(2,1,2);
    hold on;
-   h2ebEX = plot(x, t, 'r.');
+   h2ebEX = plot(x, t, 'm.');
    legend([h2eb, h2ebEX], 'Elementos finitos', 'Solucion teorica')
 
    figure(2)
    subplot(2,1,1);
    hold on;
-   h3ebEX = plot(x, M, 'r.');
+   h3ebEX = plot(x, M, 'm.');
    legend([h3eb, h3ebEX], 'Elementos finitos', 'Solucion teorica')
    subplot(2,1,2);
    hold on;
-   h4ebEX = plot(x, V, 'r.');
+   h4ebEX = plot(x, V, 'm.');
    legend([h4eb, h4ebEX], 'Elementos finitos', 'Solucion teorica')
 end
 
