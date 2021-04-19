@@ -91,7 +91,7 @@ for i = 1:nno
 end
 
 %% Se reporta la matriz
-fprintf('La matriz de interpolación del %s es:\n', mensaje)
+fprintf('La matriz de interpolacion del %s es:\n', mensaje)
 A = simplify(A2/A1); %= A2*inv(A1)
 disp(A) 
 disp('o en forma numerica:')
