@@ -7,26 +7,77 @@
 clear, clc, close all % borro la memoria, la pantalla y las figuras
 
 %% defino las variables/constantes
+global xnod LaG COLOR_RWB
+COLOR_RWB = true; % true = escala rojo/blanco/azul; false = jet no compensado
+
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
 ww= 1; tx= 2; ty= 3; % lectura del codigo
 
-E  = 210e9;       % modulo de elasticidad del solido (Pa) = 210GPa
-nu = 0.3;         % coeficiente de Poisson
-t  = 0.05;        % espesor de la losa (m)
-q  = -10000;      % carga (N/m^2)
+%% se define la losa a calcular
+filename = 'losa_rectangular_libro_solidos_efQ4';
+%filename = 'uniforme_efQ4';
+archivo_xlsx = fullfile('..', '..', 'ejemplos', [filename '.xlsx']);
 
-% Definimos la geometria de la losa
-losa
-% ya tenemos en la memoria las variables
-% xnod - posicion (x,y) de los nodos
-% LaG  - definicion de elementos finitos con respecto a nodos
-nno  = size(xnod,1); % numero de nodos (numero de filas de xnod)
-ngdl = 3*nno;        % numero de grados de libertad (tres por nodo)
-gdl  = [(1:3:ngdl)' (2:3:ngdl)' (3:3:ngdl)']; % nodos vs grados de libertad
-nef  = size(LaG,1);  % numero de EFs (numero de filas de LaG)
+%% se leen las coordenadas de los nodos
+T       = readtable(archivo_xlsx, 'Sheet', 'xnod');
+idxNODO = T{:,'nodo'};
+xnod    = T{idxNODO,{'x','y'}}; % = [x,y]
+nno     = size(xnod,1); % numero de nodos
 
-%% Relacion de cargas puntuales
+%% se lee la matriz de conectividad (LaG) y la carga distribuida fz
+T       = readtable(archivo_xlsx, 'Sheet', 'LaG_fz');
+idxEF   = T{:,'EF'};
+LaG     = T{idxEF,{'NL1','NL2','NL3','NL4'}};
+nef     = size(LaG,1);  % numero de EFs
+fz      = T{idxEF, 'fz'};
+fz(isnan(fz)) = 0;
+
+%% se definen los apoyos y sus desplazamientos
+T       = readtable(archivo_xlsx, 'Sheet', 'restric');
+idxNODO = T{:,'nodo'};
+dirdesp = T{:,'direccion'};
+ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
+
+%% grados de libertad del desplazamiento conocidos y desconocidos
+ngdl    = 3*nno;        % numero de grados de libertad (tres por nodo)
+gdl     = [(1:3:ngdl)' (2:3:ngdl)' (3:3:ngdl)']; % nodos vs grados de libertad
+
+n_apoyos = length(idxNODO);
+c = zeros(n_apoyos, 1);      % GDL conocidos, correspondientes a los apoyos
+for i = 1:n_apoyos
+   c(i) = gdl(idxNODO(i), dirdesp(i));
+end
+if n_apoyos ~= length(unique(c))
+    error('Asignaciones de las restricciones en los apoyos repetidas');
+end
+d = setdiff((1:ngdl)',c);    % GDL desconocidos y libres
+
+%% relacion de cargas puntuales
+T = readtable(archivo_xlsx, 'Sheet', 'carga_punt');
+idxNODO = T{:,'nodo'};
+dirfp   = T{:,'direccion'};
+fp      = T{:,'fuerza_puntual'};
+
+%% se colocan las fuerzas/momentos nodales en el vector de fuerzas nodales 
+%  equivalentes global "f"
 f = zeros(ngdl,1);   % vector de fuerzas nodales equivalentes global
+for i = 1:length(idxNODO)
+   f(gdl(idxNODO(i), dirfp(i))) = fp(i);
+end
+
+%% se leen algunas variables
+T          = readcell(archivo_xlsx, 'Sheet','varios','Range','B1:B9');
+E          = T{1}; % modulo de elasticidad E
+nu         = T{2}; % coeficiente de Poisson
+rho        = T{3}; % densidad del material
+g          = T{4}; % aceleracion de la gravedad
+t          = T{5}; % espesor de la losa
+U_LONG     = T{6}; % unidades de longitud
+U_FUERZA   = T{7}; % unidades de fuerza
+U_ESFUERZO = T{8}; % unidades de esfuerzo
+ESC_W      = T{9}; % factor de escala para los desplazamientos verticales
+
+peso_propio = rho*g*t;             % peso propio por unidad de area
 
 %% Se dibuja la malla de elementos finitos
 figure;
@@ -87,14 +138,10 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
      
    % Calculo del vector de fuerzas nodales equivalentes del elemento e
    % Fuerzas superficiales
-   if (x1 >= 0.9999 && x2 <= 1.501) && (y2 >= 0.9999 && y3 <= 2.001)
-      fe = 4*q*a*b*[1/4;  a/12;  b/12;
-                    1/4; -a/12;  b/12; 
-                    1/4; -a/12; -b/12;
-                    1/4;  a/12; -b/12];
-   else
-      fe = zeros(12,1);
-   end
+   fe = 4*(fz(e) + peso_propio)*a*b*[ 1/4;  a/12;  b/12
+                                      1/4; -a/12;  b/12 
+                                      1/4; -a/12; -b/12
+                                      1/4;  a/12; -b/12 ];
   
    % Ensamblo las contribuciones a las matrices globales
    idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:)];
@@ -107,17 +154,7 @@ figure
 spy(K);
 title('Los puntos representan los elementos diferentes de cero')
 
-%% grados de libertad del desplazamiento conocidos y desconocidos
-% determino los grados de libertad correspondientes a los bordes
-lado_x0 = find(xnod(:,X) == 0);     lado_y0 = find(xnod(:,Y) == 0);
-lado_x2 = find(xnod(:,X) == 2);     lado_y4 = find(xnod(:,Y) == 4);
-
-c = [ gdl(lado_x0,ww); gdl(lado_x0,ty); 
-      gdl(lado_x2,ww); gdl(lado_x2,ty);
-      gdl(lado_y0,ww); gdl(lado_y0,tx);
-      gdl(lado_y4,ww); gdl(lado_y4,tx) ];
-d = setdiff(1:ngdl,c)';
-
+%% se extraen las submatrices y especifico las cantidades conocidas
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
@@ -126,16 +163,10 @@ d = setdiff(1:ngdl,c)';
 %|      | = |         ||    | - |    |
 %| qc=0 |   | Kdc Kdd || ad |   | fc | 
 
-%% extraigo las submatrices y especifico las cantidades conocidas
 Kcc = K(c,c); Kcd = K(c,d); fd = f(c);
 Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 
-% f = vector de fuerzas nodales equivalentes
-% q = vector de fuerzas nodales de equilibrio del elemento
-% a = desplazamientos
-ac = zeros(length(c),1); % desplazamientos conocidos en contorno
-
-%% resuelvo el sistema de ecuaciones
+%% se resuelve el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 aa = zeros(ngdl,1); aa(c) = ac;  aa(d) = ad; % desplazamientos
@@ -144,9 +175,14 @@ qq = zeros(ngdl,1); qq(c) = qd;              % fuerzas nodales equivalentes
 vect_mov = reshape(aa,3,nno)'; % vector de movimientos
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
-escala = 5000; % factor de escalamiento de la deformada
-xdef = escala*vect_mov; % posicion de la deformada
+xdef = ESC_W*vect_mov; % posicion de la deformada
 figure; 
+if COLOR_RWB
+    [min_xdef, max_xdef] = bounds(xdef(:,ww));
+    colormap(redwhiteblue(min_xdef, max_xdef));
+else
+    colormap(jet);
+end
 hold on; 
 grid on;
 for e = 1:nef
@@ -157,22 +193,14 @@ for e = 1:nef
 end
 daspect([1 1 1]); % similar a axis equal, pero en 3D
 axis tight
-colormap jet
-title(sprintf('Deformada escalada %d veces',escala),'FontSize',20)
+title(sprintf('Deformada escalada %d veces', ESC_W),'FontSize',20)
 view(3)
-
-%% Parametros de la cuadratura de Gauss-Legendre
-% se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
-% xi como en la direccion de eta
-n_gl = 2;                 % orden de la cuadratura de Gauss-Legendre
-
-% El comando:
-[x_gl, w_gl]  = gausslegendre_quad(n_gl);
-% calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
 
 %% Se calcula para cada elemento el vector de momentos en los puntos
 %% de Gauss
-sigma_b = cell(nef,n_gl,n_gl);  % momentos
+n_gl = 2;                          % orden de la cuadratura
+x_gl = [ -sqrt(1/3); +sqrt(1/3) ]; % raices del polinomio de Legendre
+sigma_b = cell(nef,n_gl,n_gl);     % momentos
 for e = 1:nef
     a = a_e(e); b = b_e(e);
     
@@ -193,28 +221,19 @@ for e = 1:nef
     end
 end
 
-%% Se calcula para cada elemento el vector de cortantes en los puntos
-%% de Gauss. Nota: de todos modos algo me dice (Diego) que se debe calcular 
-%% es en el centro del EF
-QxQy = cell(nef,n_gl,n_gl);  % cortantes
+%% Se calcula para cada elemento el vector de cortantes en el centro del EF
+QxQy = cell(nef,1);  % cortantes
+xi = 0; eta = 0;
 for e = 1:nef
     a = a_e(e); b = b_e(e);
     
+    % QQ se calculo con el programa func_forma_MZC.m
+    QQ = [ ...
+          -((3*eta)/4 - 3/4)/a^3 - (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), -(3*eta - 1)/(4*a*b^2), ((3*eta)/4 - 3/4)/a^3 + (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), (3*eta - 1)/(4*a*b^2), - ((3*eta)/4 + 3/4)/a^3 - (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), (3*eta + 1)/(4*a*b^2), ((3*eta)/4 + 3/4)/a^3 + (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), -(3*eta + 1)/(4*a*b^2)
+            -((3*xi)/4 - 3/4)/b^3 - (3*xi)/(4*a^2*b), -(3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3),   ((3*xi)/4 + 3/4)/b^3 + (3*xi)/(4*a^2*b), -(3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   - ((3*xi)/4 + 3/4)/b^3 - (3*xi)/(4*a^2*b), (3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   ((3*xi)/4 - 3/4)/b^3 + (3*xi)/(4*a^2*b), (3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3) ];
+
     idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:) ];
-    
-    for pp = 1:n_gl
-        for qq = 1:n_gl
-            xi = x_gl(pp);		eta = x_gl(qq);
-            
-            % Se calcula matriz QQ en los puntos de Gauss
-            % QQ se calculo con el programa func_forma_MZC.m
-            QQ = [ ...
-             -((3*eta)/4 - 3/4)/a^3 - (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), -(3*eta - 1)/(4*a*b^2), ((3*eta)/4 - 3/4)/a^3 + (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), (3*eta - 1)/(4*a*b^2), - ((3*eta)/4 + 3/4)/a^3 - (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), (3*eta + 1)/(4*a*b^2), ((3*eta)/4 + 3/4)/a^3 + (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), -(3*eta + 1)/(4*a*b^2)
-               -((3*xi)/4 - 3/4)/b^3 - (3*xi)/(4*a^2*b), -(3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3),   ((3*xi)/4 + 3/4)/b^3 + (3*xi)/(4*a^2*b), -(3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   - ((3*xi)/4 + 3/4)/b^3 - (3*xi)/(4*a^2*b), (3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   ((3*xi)/4 - 3/4)/b^3 + (3*xi)/(4*a^2*b), (3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3) ];
- 
-            QxQy{e,pp,qq} = -D*QQ*aa(idx);     % Calculo el vector de cortantes del elem e
-        end
-    end
+    QxQy{e} = -D*QQ*aa(idx);
 end
 
 %% Se extrapolan los momentos y cortantes a los nodos
@@ -230,7 +249,7 @@ A = [ ...
             -1/2,   1 - 3^(1/2)/2,   3^(1/2)/2 + 1,            -1/2
    1 - 3^(1/2)/2,            -1/2,            -1/2,   3^(1/2)/2 + 1
             -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2 ];
-
+       
 for e = 1:nef                             
    Mx(LaG(e,:),:) = Mx(LaG(e,:),:)   + A * [ sigma_b{e,1,1}(1)
 											 sigma_b{e,1,2}(1)
@@ -247,19 +266,12 @@ for e = 1:nef
 											 sigma_b{e,2,1}(3)
 											 sigma_b{e,2,2}(3) ];
 
-   Qx(LaG(e,:),:) = Qx(LaG(e,:),:)   + A * [ QxQy{e,1,1}(1)
-											 QxQy{e,1,2}(1)
-											 QxQy{e,2,1}(1)
-											 QxQy{e,2,2}(1) ];
-                                            
-   Qy(LaG(e,:),:) = Qy(LaG(e,:),:)   + A * [ QxQy{e,1,1}(2)
-											 QxQy{e,1,2}(2)
-											 QxQy{e,2,1}(2)
-											 QxQy{e,2,2}(2) ];
+   Qx(LaG(e,:),:) = Qx(LaG(e,:),:)   +       QxQy{e}(1);   
+   Qy(LaG(e,:),:) = Qy(LaG(e,:),:)   +       QxQy{e}(2);
                                           
    num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
 end 
- 
+
 %% Alisado (promedio de los momentos y cortantes en los nodos)
 Mx  =  Mx./num_elem_ady;  
 My  =  My./num_elem_ady;  
@@ -267,16 +279,11 @@ Mxy = Mxy./num_elem_ady;
 Qx  =  Qx./num_elem_ady;  
 Qy  =  Qy./num_elem_ady;  
 
-%% Se grafican los momentos
-figure
-subplot(1,3,1); plot_M_or_Q(nef, xnod, LaG, Mx,  'Momentos Mx (N-m/m)');
-subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, My,  'Momentos My (N-m/m)');
-subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mxy, 'Momentos Mxy (N-m/m)');
-
-%% Se grafican los cortantes
-figure
-subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Qx,  'Cortantes Qx (N/m)');
-subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Qy,  'Cortantes Qy (N/m)');
+%% Se grafican los momentos Mx, My, Mxy
+unitsM = [U_FUERZA '-' U_LONG '/' U_LONG];
+plot_M_or_Q({ Mx,  ['Momentos Mx (' unitsM ')']
+              My,  ['Momentos My (' unitsM ')']
+              Mxy, ['Momentos Mxy (' unitsM ')'] })
 
 %% Se calculan y grafican para cada elemento los momentos principales y
 %% sus direcciones
@@ -285,95 +292,100 @@ Mf1_xy = (Mx+My)/2 + Mt_max;            % momento flector maximo
 Mf2_xy = (Mx+My)/2 - Mt_max;            % momento flector minimo
 ang  = 0.5*atan2(2*Mxy, Mx-My);         % angulo de inclinacion de Mf1_xy
 
-%% Mf1_xy, Mf2_xy, Mt_max
-figure
-subplot(1,3,1); plot_M_or_Q(nef, xnod, LaG, Mf1_xy, 'Mf1_{xy} (N-m/m)', { ang })
-subplot(1,3,2); plot_M_or_Q(nef, xnod, LaG, Mf2_xy, 'Mf2_{xy} (N-m/m)', { ang+pi/2 })
-subplot(1,3,3); plot_M_or_Q(nef, xnod, LaG, Mt_max, 'Mt_{max} (N-m/m)', { ang+pi/4, ang-pi/4 })
-
-%% Se calculan y grafican los cortantes maximos, junto con su angulo de inclinacion
+plot_M_or_Q({ Mf1_xy, ['Mf1_{xy} (' unitsM ')'], { ang }
+              Mf2_xy, ['Mf2_{xy} (' unitsM ')'], { ang+pi/2 }
+              Mt_max, ['Mt_{max} (' unitsM ')'], { ang+pi/4, ang-pi/4 } })
+                     
+%% Se calculan y grafican los cortantes Qx, Qy y los Qmaximos, junto con 
+%% su angulo de inclinacion
 Q_max = hypot(Qx, Qy);
 ang   = atan2(Qy, Qx);
-
-figure
-plot_M_or_Q(nef, xnod, LaG, Q_max, 'Q_{max} (N/m)', { ang })
+unitsQ = [U_FUERZA '/' U_LONG];
+plot_M_or_Q({ Qx,    ['Cortantes Qx (' unitsQ ')'],      { }
+              Qy,    ['Cortantes Qy (' unitsQ ')'],      { }
+              Q_max, ['Cortantes Q_{max} (' unitsQ ')'], { ang } })
 
 %% Se calculan los momentos de disenio de Wood y Armer
 [Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
-Mmax = max(abs([Mxast_sup; Myast_sup; Mxast_inf; Myast_inf]));
-
-% se graficaran los momentos de disenio utilizando la misma escala de
-% colores en valor absoluto, de este modo Mxast_sup=+100 y Mxast_inf=-100 
-% tendran el mismo color
-figure
-subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_sup,  'Momentos M_x^* sup (N-m/m)');
-caxis([0 Mmax]);                                % misma escala de colores
-colorbar('ylim', [0 max(Mxast_sup)]);           % rango de colores a mostrar
-colormap parula
-subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_sup,  'Momentos M_y^* sup (N-m/m)');
-caxis([0 Mmax]);                                % misma escala de colores
-colorbar('ylim', [0 max(Myast_sup)]);           % rango de colores a mostrar
-colormap parula
-
-figure
-subplot(1,2,1); plot_M_or_Q(nef, xnod, LaG, Mxast_inf,  'Momentos M_x^* inf (N-m/m)');
-colormap parula
-caxis([-Mmax 0]);                               % misma escala de colores
-oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
-colorbar('ylim', [min(Mxast_inf) 0]);           % rango de colores a mostrar
-subplot(1,2,2); plot_M_or_Q(nef, xnod, LaG, Myast_inf,  'Momentos M_y^* inf (N-m/m)');
-colormap parula
-caxis([-Mmax 0]);                               % misma escala de colores
-oldcmap = colormap; colormap(flipud(oldcmap));  % invierto mapa de colores
-colorbar('ylim', [min(Myast_inf) 0]);           % rango de colores a mostrar
+plot_M_or_Q({ Mxast_sup,  ['Momentos M_x^* sup (' unitsM ')']
+              Myast_sup,  ['Momentos M_y^* sup (' unitsM ')']
+              Mxast_inf,  ['Momentos M_x^* inf (' unitsM ')']
+              Myast_inf,  ['Momentos M_y^* inf (' unitsM ')'] } );
 
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
-u = 0.5; v = 1; xi = 1.25; eta = 1.5;
-err = zeros(nno,1);
-MEF = zeros(nno,1);
-analitica = zeros(nno,1);
-for i = 1:nno
-   MEF(i) = vect_mov(i,ww);
-   analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, q, u, v, xi, eta);
-   err(i) = abs((MEF(i)-analitica(i))/analitica(i));
+if strcmp(filename, 'losa_rectangular_libro_solidos')
+    u = 0.5; v = 1; xi = 1.25; eta = 1.5;
+    qdist = -10;
+    err = zeros(nno,1);
+    MEF = zeros(nno,1);
+    analitica = zeros(nno,1);
+    for i = 1:nno
+       MEF(i) = vect_mov(i,ww);
+       analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, qdist, u, v, xi, eta);
+       err(i) = abs((MEF(i)-analitica(i))/analitica(i));
+    end
+    disp('Observe que al comparar ambos metodos los errores relativos maximos son')
+    max(err, [], 'omitnan') % = 0.0027815 =  0.27%
+    disp('es decir son extremadamente pequenios!!!')
 end
-disp('Observe que al comparar ambos metodos los errores relativos maximos son')
-max(err, [], 'omitnan') % = 0.0027815 =  0.27%
-disp('es decir son extremadamente pequenios!!!')
 
 %%
 return; % bye, bye!
 
 %%
-function plot_M_or_Q(nef, xnod, LaG, variable, texto, angulos)
+function plot_M_or_Q(MQ)
+    global xnod LaG COLOR_RWB
     X = 1; Y = 2;
-    hold on; 
-    colorbar;
-    for e = 1:nef  
-       fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), variable(LaG(e,:)));
+    nef = size(LaG, 1);
+
+    [nplots, vars] = size(MQ);
+    
+    figure
+    if COLOR_RWB
+        [min_MQ, max_MQ] = bounds(cell2mat(MQ(:,1)));
+        colormap(redwhiteblue(min_MQ, max_MQ));
+    else
+        colormap(jet)
     end
-    axis equal tight
-    colormap jet
-    title(texto, 'FontSize',20);
-   
-    esc = 0.5;
-    if nargin == 6
-        norma = 1; % = variable % si se quiere proporcional
-        for i = 1:length(angulos)
-            % se indica la flecha de la direccion principal
-            quiver(xnod(:,X),xnod(:,Y),...             
-                norma.*cos(angulos{i}), norma.*sin(angulos{i}),... 
-                esc, ...                  % con una escala esc
-                'k',...                   % de color negro
-                'ShowArrowHead','off',... % una flecha sin cabeza
-                'LineWidth',2, ...        % con un ancho de linea 2
-                'Marker','.');            % y en el punto (x,y) poner un punto '.'
-            
-            % la misma flecha girada 180 grados
-            quiver(xnod(:,X),xnod(:,Y),...             
-                norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
-                esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
-        end            
+    for i = 1:nplots       
+        subplot(1, nplots, i);
+        title(MQ{i,2}, 'FontSize',20);
+        hold on; 
+        for e = 1:nef
+           fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), MQ{i,1}(LaG(e,:)), ...
+               'EdgeAlpha', 0.05);            % transparencia borde del EF
+        end
+        axis equal tight
+        
+        % se ajusta la barra de colores
+        if COLOR_RWB
+            [min_plot, max_plot] = bounds(MQ{i,1});
+            colorbar('ylim', [min_plot, max_plot]); % rango total de colores              
+            caxis([min_MQ max_MQ]);                 % rango colores del dibujo
+        else
+            colorbar
+        end
+
+        esc = 0.5;
+        if vars == 3
+            angulos = MQ{i,3};
+            norma = 1; % = MQ{i,1} % si se quiere proporcional
+            for j = 1:length(angulos)
+                % se indica la flecha de la direccion principal
+                quiver(xnod(:,X),xnod(:,Y),...             
+                    norma.*cos(angulos{j}), norma.*sin(angulos{j}),... 
+                    esc, ...                  % con una escala esc
+                    'k',...                   % de color negro
+                    'ShowArrowHead','off',... % una flecha sin cabeza
+                    'LineWidth',2, ...        % con un ancho de linea 2
+                    'Marker','.');            % y en el punto (x,y) poner un punto '.'
+
+                % la misma flecha girada 180 grados
+                quiver(xnod(:,X),xnod(:,Y),...             
+                    norma.*cos(angulos{j}+pi), norma.*sin(angulos{j}+pi),... 
+                    esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
+            end            
+        end
     end
 end
