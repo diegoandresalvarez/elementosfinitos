@@ -170,7 +170,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 aa = zeros(ngdl,1); aa(c) = ac;  aa(d) = ad; % desplazamientos
-qq = zeros(ngdl,1); qq(c) = qd;              % fuerzas nodales equivalentes
+q  = zeros(ngdl,1);  q(c) = qd;              % fuerzas nodales equivalentes
 
 vect_mov = reshape(aa,3,nno)'; % vector de movimientos
 
@@ -311,6 +311,36 @@ plot_M_or_Q({ Mxast_sup,  ['Momentos M_x^* sup (' unitsM ')']
               Myast_sup,  ['Momentos M_y^* sup (' unitsM ')']
               Mxast_inf,  ['Momentos M_x^* inf (' unitsM ')']
               Myast_inf,  ['Momentos M_y^* inf (' unitsM ')'] } );
+
+%% Se reportan los resultados en un archivo .xlsx
+% Se crea una tabla para reportar los resultados nodales de: 
+% desplazamientos (a), fuerzas nodales equivalentes (f) y fuerzas nodales 
+% de equilibrio (q)
+%% se crea una tabla con los resultados
+% pandas de python para grabar las tablas es mucho mejor :-\
+tabla_aq = array2table([(1:nno)', vect_mov, reshape(q,3,nno)'],  ...
+    'VariableNames', {'nodo', ['w_' U_LONG], 'tx_rad', 'ty_rad', ...
+                      ['q_fz_' U_FUERZA],                        ...
+                      ['q_mx_' U_FUERZA '_' U_LONG],             ...
+                      ['q_my_' U_FUERZA '_' U_LONG]});
+
+tabla_M = array2table([(1:nno)', Mx, My, Mxy, ...
+                           Mxast_sup, Myast_sup, Mxast_inf, Myast_inf], ...
+    'VariableNames', {'nodo', ...
+                      ['Mx_' U_FUERZA '_' U_LONG '_' U_LONG], 'My', 'Mxy', ...
+                      'Mxast_sup', 'Myast_sup', 'Mxast_inf', 'Myast_inf'});
+
+tabla_Q = array2table([(1:nno)', Qx, Qy, Q_max], ...
+    'VariableNames', {'nodo', ['Qx_' U_FUERZA '_' U_LONG], 'Qy', 'Q_max'});
+
+warning off;
+filename_results = ['resultados_' filename '.xlsx'];
+writetable(tabla_aq, filename_results, 'Sheet', 'afq')
+writetable(tabla_M,  filename_results, 'Sheet', 'momentos')
+writetable(tabla_Q,  filename_results, 'Sheet', 'cortantes')
+warning on;
+
+fprintf('Calculo finalizado. En "%s" se guardaron los resultados.\n', filename_results)
 
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
