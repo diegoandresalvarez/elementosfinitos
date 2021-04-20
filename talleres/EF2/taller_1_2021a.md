@@ -23,8 +23,7 @@ Con las teorías de vigas de EB y TE se solicita calcular y graficar, para cada 
 Para tal fin usar los métodos:
 * Matricial que resuelve las ecuaciones diferenciales de EB y TE (la forma más fácil sería usar este [código](https://github.com/diegoandresalvarez/elementosfinitos/tree/master/codigo/repaso_matricial/general_2D), que ya funciona con el método de Euler-Bernoulli, y adaptarlo al caso de Timoshenko-Ehrenfest).
 * El método exacto de las funciones de discontinuidad visto en Sólidos 2 (obligatorio para quienes vieron ese curso); en caso que ambos integrantes no hayan visto Sólidos 2, deben solicitar a algún compañero que les preste esta tarea, de modo que al menos pueda hacer la interpretación de los resultados.
-* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM (no usar como software el FTOOL).
-* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM que modele sólidos utilizando el método de los elementos finitos en tensión plana.
+* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM que modele sólidos utilizando el método de los elementos finitos en tensión plana (no usar como software el FTOOL).
 
 Con el método de los EFs para tensión plana se requiere:
 * Calcular ocho diferentes secciones (en *x* = 0.95 m, 1.05 m, 1.50 m, 1.95 m, 2.85 m, 3.00 m, 3.50 m y 3.95 m) el desplazamiento horizontal *u*, esfuerzo normal *σₓ* y el esfuerzo cortante τxz. Si lo puede hacer en más secciones, aún mejor.
