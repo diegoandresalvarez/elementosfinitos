@@ -100,6 +100,7 @@ title('Malla de elementos finitos');
 %  equivalentes global
 K = sparse(ngdl,ngdl); % matriz de rigidez global como RALA (sparse)
 a_e = zeros(nef,1);  b_e = zeros(nef,1); % a y b de cada elemento (ancho y alto)
+idx = cell(nef,1);     % GDL asociados a cada elemento finito
 
 %% matriz constitutiva
 De = (E/(1-nu^2)) * [ 1  nu 0
@@ -144,9 +145,9 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
                                       1/4;  a/12; -b/12 ];
   
    % Ensamblo las contribuciones a las matrices globales
-   idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:)];
-   K(idx,idx) = K(idx,idx) + Ke;
-   f(idx,:)   = f(idx,:)   + fe;
+   idx{e} = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:)];
+   K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
+   f(idx{e},:)      = f(idx{e})        + fe;
 end
 
 %% Muestro la configuracion de la matriz K (K es rala)
@@ -172,10 +173,10 @@ qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 aa = zeros(ngdl,1); aa(c) = ac;  aa(d) = ad; % desplazamientos
 q  = zeros(ngdl,1);  q(c) = qd;              % fuerzas nodales equivalentes
 
-vect_mov = reshape(aa,3,nno)'; % vector de movimientos
-
+mat_mov = reshape(aa,3,nno)'; % matriz con movimientos
+mat_rea = reshape(q,3,nno)';  % matriz con reacciones
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
-xdef = ESC_W*vect_mov; % posicion de la deformada
+xdef = ESC_W*mat_mov; % posicion de la deformada
 figure; 
 if COLOR_RWB
     [min_xdef, max_xdef] = bounds(xdef(:,ww));
@@ -194,21 +195,40 @@ end
 daspect([1 1 1]); % similar a axis equal, pero en 3D
 axis tight
 title(sprintf('Deformada escalada %d veces', ESC_W),'FontSize',20)
+xlabel(['Eje X [' U_LONG ']']);
+ylabel(['Eje Y [' U_LONG ']']);
 view(3)
+
+%% Dibujo las reacciones
+mat_rea(mat_rea == 0) = NaN;
+figure
+subplot(1,3,1); 
+stem3(xnod(:,X), xnod(:,Y), mat_rea(:,ww), 'filled');
+title(['Reacciones Fz [' U_FUERZA ']']);
+xlabel(['Eje X [' U_LONG ']']);
+ylabel(['Eje Y [' U_LONG ']']);
+
+subplot(1,3,2); stem3(xnod(:,X), xnod(:,Y), mat_rea(:,tx), 'filled');
+title(['Reacciones Mx [' U_FUERZA  ' ' U_LONG ']']);
+xlabel(['Eje X [' U_LONG ']']);
+ylabel(['Eje Y [' U_LONG ']']);
+
+subplot(1,3,3); stem3(xnod(:,X), xnod(:,Y), mat_rea(:,ty), 'filled');
+title(['Reacciones My [' U_FUERZA  ' ' U_LONG ']']);
+xlabel(['Eje X [' U_LONG ']']);
+ylabel(['Eje Y [' U_LONG ']']);
 
 %% Se calcula para cada elemento el vector de momentos en los puntos
 %% de Gauss
 n_gl = 2;                          % orden de la cuadratura
 x_gl = [ -sqrt(1/3); +sqrt(1/3) ]; % raices del polinomio de Legendre
-sigma_b = cell(nef,n_gl,n_gl);     % momentos
+sigma_b = cell(nef,n_gl,n_gl);     % momentos en cada punto de Gauss
 for e = 1:nef
     a = a_e(e); b = b_e(e);
-    
-    idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:) ];
-    
-    for pp = 1:n_gl
-        for qq = 1:n_gl
-            xi = x_gl(pp);		eta = x_gl(qq);
+   
+    for i = 1:n_gl
+        for j = 1:n_gl
+            xi = x_gl(i);		eta = x_gl(j);
             
             % Se calcula matriz Db*B en los puntos de Gauss
             % Db_Bb se calculo con el programa func_forma_MZC.m
@@ -216,14 +236,14 @@ for e = 1:nef
                 (3*eta*nu*(xi - 1))/b^2 - (3*xi - 3*eta*xi)/a^2,              ((3*xi - 1)*(eta - 1))/a^2,             (nu*(3*eta - 1)*(xi - 1))/b^2,    (3*xi - 3*eta*xi)/a^2 - (3*eta*nu*(xi + 1))/b^2,              ((3*xi + 1)*(eta - 1))/a^2,           -(nu*(3*eta - 1)*(xi + 1))/b^2,  (3*xi + 3*eta*xi)/a^2 + (3*eta*nu*(xi + 1))/b^2,            -((3*xi + 1)*(eta + 1))/a^2,           -(nu*(3*eta + 1)*(xi + 1))/b^2, - (3*xi + 3*eta*xi)/a^2 - (3*eta*nu*(xi - 1))/b^2,            -((3*xi - 1)*(eta + 1))/a^2,             (nu*(3*eta + 1)*(xi - 1))/b^2
                 (3*nu*xi*(eta - 1))/a^2 - (3*eta - 3*eta*xi)/b^2,           (nu*(3*xi - 1)*(eta - 1))/a^2,                ((3*eta - 1)*(xi - 1))/b^2, - (3*eta + 3*eta*xi)/b^2 - (3*nu*xi*(eta - 1))/a^2,           (nu*(3*xi + 1)*(eta - 1))/a^2,              -((3*eta - 1)*(xi + 1))/b^2, (3*eta + 3*eta*xi)/b^2 + (3*nu*xi*(eta + 1))/a^2,         -(nu*(3*xi + 1)*(eta + 1))/a^2,              -((3*eta + 1)*(xi + 1))/b^2,  (3*eta - 3*eta*xi)/b^2 - (3*nu*xi*(eta + 1))/a^2,         -(nu*(3*xi - 1)*(eta + 1))/a^2,                ((3*eta + 1)*(xi - 1))/b^2
                 -((nu - 1)*(3*eta^2 + 3*xi^2 - 4))/(2*a*b), -((3*xi + 1)*(nu - 1)*(xi - 1))/(2*a*b), -((3*eta + 1)*(eta - 1)*(nu - 1))/(2*a*b),          ((nu - 1)*(3*eta^2 + 3*xi^2 - 4))/(2*a*b), -((3*xi - 1)*(nu - 1)*(xi + 1))/(2*a*b), ((3*eta + 1)*(eta - 1)*(nu - 1))/(2*a*b),       -((nu - 1)*(3*eta^2 + 3*xi^2 - 4))/(2*a*b), ((3*xi - 1)*(nu - 1)*(xi + 1))/(2*a*b), ((3*eta - 1)*(eta + 1)*(nu - 1))/(2*a*b),         ((nu - 1)*(3*eta^2 + 3*xi^2 - 4))/(2*a*b), ((3*xi + 1)*(nu - 1)*(xi - 1))/(2*a*b), -((3*eta - 1)*(eta + 1)*(nu - 1))/(2*a*b) ];
-            sigma_b{e,pp,qq} = Db_Bb*aa(idx);     % Calculo el vector de momentos del elem e
+            sigma_b{e,i,j} = Db_Bb*aa(idx{e});
         end
     end
 end
 
 %% Se calcula para cada elemento el vector de cortantes en el centro del EF
 QxQy = cell(nef,1);  % cortantes
-xi = 0; eta = 0;
+xi = 0; eta = 0;     % centro del EF (punto de Gauss)
 for e = 1:nef
     a = a_e(e); b = b_e(e);
     
@@ -231,9 +251,7 @@ for e = 1:nef
     QQ = [ ...
           -((3*eta)/4 - 3/4)/a^3 - (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), -(3*eta - 1)/(4*a*b^2), ((3*eta)/4 - 3/4)/a^3 + (3*eta)/(4*a*b^2),  -(3*eta - 3)/(4*a^3), (3*eta - 1)/(4*a*b^2), - ((3*eta)/4 + 3/4)/a^3 - (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), (3*eta + 1)/(4*a*b^2), ((3*eta)/4 + 3/4)/a^3 + (3*eta)/(4*a*b^2),  (3*eta + 3)/(4*a^3), -(3*eta + 1)/(4*a*b^2)
             -((3*xi)/4 - 3/4)/b^3 - (3*xi)/(4*a^2*b), -(3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3),   ((3*xi)/4 + 3/4)/b^3 + (3*xi)/(4*a^2*b), -(3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   - ((3*xi)/4 + 3/4)/b^3 - (3*xi)/(4*a^2*b), (3*xi + 1)/(4*a^2*b),    (3*xi + 3)/(4*b^3),   ((3*xi)/4 - 3/4)/b^3 + (3*xi)/(4*a^2*b), (3*xi - 1)/(4*a^2*b),    -(3*xi - 3)/(4*b^3) ];
-
-    idx = [ gdl(LaG(e,1),:) gdl(LaG(e,2),:) gdl(LaG(e,3),:) gdl(LaG(e,4),:) ];
-    QxQy{e} = -D*QQ*aa(idx);
+    QxQy{e} = -D*QQ*aa(idx{e});
 end
 
 %% Se extrapolan los momentos y cortantes a los nodos
@@ -314,15 +332,15 @@ plot_M_or_Q({ Mxast_sup,  ['Momentos M_x^* sup (' unitsM ')']
 
 %% Se reportan los resultados en un archivo .xlsx
 % pandas de python para grabar las tablas es mucho mejor :-\
-tabla_aq = array2table([(1:nno)', vect_mov, reshape(q,3,nno)'],  ...
+tabla_aq = array2table([(1:nno)', mat_mov, mat_rea],             ...
     'VariableNames', {'nodo', ['w_' U_LONG], 'tx_rad', 'ty_rad', ...
                       ['q_fz_' U_FUERZA],                        ...
                       ['q_mx_' U_FUERZA '_' U_LONG],             ...
                       ['q_my_' U_FUERZA '_' U_LONG]});
 
-tabla_M = array2table([(1:nno)', Mx, My, Mxy, ...
-                           Mxast_sup, Myast_sup, Mxast_inf, Myast_inf], ...
-    'VariableNames', {'nodo', ...
+tabla_M = array2table([(1:nno)', Mx, My, Mxy,                              ...
+                           Mxast_sup, Myast_sup, Mxast_inf, Myast_inf],    ...
+    'VariableNames', {'nodo',                                              ...
                       ['Mx_' U_FUERZA '_' U_LONG '_' U_LONG], 'My', 'Mxy', ...
                       'Mxast_sup', 'Myast_sup', 'Mxast_inf', 'Myast_inf'});
 
@@ -340,14 +358,14 @@ fprintf('Calculo finalizado. En "%s" se guardaron los resultados.\n', filename_r
 
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
-if strcmp(filename, 'losa_rectangular_libro_solidos')
+if strcmp(filename, 'losa_rectangular_libro_solidos_efQ4')
     u = 0.5; v = 1; xi = 1.25; eta = 1.5;
     qdist = -10;
     err = zeros(nno,1);
     MEF = zeros(nno,1);
     analitica = zeros(nno,1);
     for i = 1:nno
-       MEF(i) = vect_mov(i,ww);
+       MEF(i) = mat_mov(i,ww);
        analitica(i) = calc_w(xnod(i,X), xnod(i,Y), E, nu, t, 2, 4, qdist, u, v, xi, eta);
        err(i) = abs((MEF(i)-analitica(i))/analitica(i));
     end
