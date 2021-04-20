@@ -313,10 +313,6 @@ plot_M_or_Q({ Mxast_sup,  ['Momentos M_x^* sup (' unitsM ')']
               Myast_inf,  ['Momentos M_y^* inf (' unitsM ')'] } );
 
 %% Se reportan los resultados en un archivo .xlsx
-% Se crea una tabla para reportar los resultados nodales de: 
-% desplazamientos (a), fuerzas nodales equivalentes (f) y fuerzas nodales 
-% de equilibrio (q)
-%% se crea una tabla con los resultados
 % pandas de python para grabar las tablas es mucho mejor :-\
 tabla_aq = array2table([(1:nno)', vect_mov, reshape(q,3,nno)'],  ...
     'VariableNames', {'nodo', ['w_' U_LONG], 'tx_rad', 'ty_rad', ...
