@@ -11,21 +11,21 @@ syms x y E nu t x1 y1 x2 y2 x3 y3
 
 %% se calculan las matrices PT y A
 pT = [ 1 x y x^2 x*y y^2 x^3 (x^2*y+x*y^2) y^3 ];
-pT_x = diff(pT,x);
-pT_y = diff(pT,y);
+dpT_dx = diff(pT,x);
+dpT_dy = diff(pT,y);
 
 A = [ ...
-   subs(pT,   {x, y}, {x1, y1})
-   subs(pT_x, {x, y}, {x1, y1}) % nodo 1
-   subs(pT_y, {x, y}, {x1, y1})
+   subs(pT,     {x, y}, {x1, y1})
+   subs(dpT_dx, {x, y}, {x1, y1}) % nodo 1
+   subs(dpT_dy, {x, y}, {x1, y1})
 
-   subs(pT,   {x, y}, {x2, y2})
-   subs(pT_x, {x, y}, {x2, y2}) % nodo 2
-   subs(pT_y, {x, y}, {x2, y2})
+   subs(pT,     {x, y}, {x2, y2})
+   subs(dpT_dx, {x, y}, {x2, y2}) % nodo 2
+   subs(dpT_dy, {x, y}, {x2, y2})
 
-   subs(pT,   {x, y}, {x3, y3})
-   subs(pT_x, {x, y}, {x3, y3}) % nodo 3
-   subs(pT_y, {x, y}, {x3, y3})
+   subs(pT,     {x, y}, {x3, y3})
+   subs(dpT_dx, {x, y}, {x3, y3}) % nodo 3
+   subs(dpT_dy, {x, y}, {x3, y3})
    ]
 
 %% se sustituyen las coordenadas del triangulo en A
@@ -37,24 +37,22 @@ N = pT/A;  % N = pT*inv(A);
 Nvec = N;
 
 %% se calcula la matriz L
-L = [ ...
-     diff(pT,x,2)
-     diff(pT,y,2)
-   2*diff(pT_x,y) ]
+L = [   diff(pT,x,2)
+        diff(pT,y,2)
+      2*diff(dpT_dx,y) ]
 
 %% Reorganizo las funciones de forma en una matriz de 3x3
 % donde las filas representan el nodo i
-N = [ ...
-   N(1)  N(2)  N(3)
-   N(4)  N(5)  N(6)
-   N(7)  N(8)  N(9) ];
+N = [ N(1)  N(2)  N(3)
+      N(4)  N(5)  N(6)
+      N(7)  N(8)  N(9) ];
 
 disp('Las funciones de forma son =')
 for i = 1:3
    fprintf('N{%d}   = \n',i); pretty(N(i,1));
    fprintf('Nb{%d}  = \n',i); pretty(N(i,2));
    fprintf('Nbb{%d} = \n',i); pretty(N(i,3));
-end;
+end
 
 %% Grafico las funciones de forma
 LL1 = 0:0.05:1;
@@ -65,21 +63,25 @@ L3 = 1 - L1 - L2;
 L1 = L1(:);
 L2 = L2(:);
 L3 = round(100*L3(:))/100;
-L3(L3<-1e-3) = NaN;
 
-isnanL3 = isnan(L3);
-L1(isnanL3) = [];  
-L2(isnanL3) = [];  
-L3(isnanL3) = [];  
+idx = find(L3 < -1e-3);
+L1(idx) = [];  
+L2(idx) = [];  
+L3(idx) = [];  
 
 % coordenadas del triangulo
 X = L1*cx(1) + L2*cx(2) + L3*cx(3);
 Y = L1*cy(1) + L2*cy(2) + L3*cy(3);
 
+% NOTA: 
+% la funcion delaunay() esta sacando mas triangulos de los necesarios
+% por esto es que se ve un error en la graficacion, ya que por errores
+% de representacion los puntos no quedan perfectamente sobre la misma
+% linea recta
 TRI = delaunay(X,Y);
 
 for i = 1:3    % contador de nodos
-   figure;
+   figure
    for j = 1:3  % contador de grados de libertad
       subplot(1,3,j);        % divido el lienzo en 3x1 dibujos
       grid on                % creo la rejilla

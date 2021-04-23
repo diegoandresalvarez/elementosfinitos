@@ -4,25 +4,25 @@ syms xi eta a b E nu t q
 
 %% Se calculan las funciones de forma del elemento placa MZC
 pT = [ 1 xi eta xi^2 xi*eta eta^2 xi^3 xi^2*eta xi*eta^2 eta^3 xi^3*eta xi*eta^3 ];
-pT_xi  = diff(pT,xi);
-pT_eta = diff(pT,eta);
+dpT_dxi  = diff(pT,xi);
+dpT_deta = diff(pT,eta);
 
 A = [ ...
-      subs(pT,     {xi, eta}, {-1, -1})
-      subs(pT_xi,  {xi, eta}, {-1, -1}) % nodo 1
-      subs(pT_eta, {xi, eta}, {-1, -1})
+      subs(pT,       {xi, eta}, {-1, -1})
+      subs(dpT_dxi,  {xi, eta}, {-1, -1}) % nodo 1
+      subs(dpT_deta, {xi, eta}, {-1, -1})
       
-      subs(pT,     {xi, eta}, { 1, -1})
-      subs(pT_xi,  {xi, eta}, { 1, -1}) % nodo 2
-      subs(pT_eta, {xi, eta}, { 1, -1})
+      subs(pT,       {xi, eta}, { 1, -1})
+      subs(dpT_dxi,  {xi, eta}, { 1, -1}) % nodo 2
+      subs(dpT_deta, {xi, eta}, { 1, -1})
       
-      subs(pT,     {xi, eta}, { 1,  1})
-      subs(pT_xi,  {xi, eta}, { 1,  1}) % nodo 3
-      subs(pT_eta, {xi, eta}, { 1,  1})
+      subs(pT,       {xi, eta}, { 1,  1})
+      subs(dpT_dxi,  {xi, eta}, { 1,  1}) % nodo 3
+      subs(dpT_deta, {xi, eta}, { 1,  1})
       
-      subs(pT,     {xi, eta}, {-1,  1})
-      subs(pT_xi,  {xi, eta}, {-1,  1}) % nodo 4
-      subs(pT_eta, {xi, eta}, {-1,  1}) ];
+      subs(pT,       {xi, eta}, {-1,  1})
+      subs(dpT_dxi,  {xi, eta}, {-1,  1}) % nodo 4
+      subs(dpT_deta, {xi, eta}, {-1,  1}) ];
   
 N = pT/A;  % N = pT*inv(A);
 Nvec = N;
@@ -47,6 +47,7 @@ end
 
 for i = 1:4
    figure                    % Creo un lienzo
+   ii = num2str(i);
    for j = 1:3
       subplot(1,3,j);        % Divido el lienzo en 3x1 dibujos
       grid on                % creo la rejilla
@@ -58,11 +59,14 @@ for i = 1:4
       ylabel('\eta','FontSize',16); % titulo eje Y
       switch j % imprimo el titulo
          case 1
-            title(sprintf('N_{%d}(\\xi,\\eta)',       i),'FontSize',16);
+            title(['$N_' ii '(\xi,\eta)$'], ...
+                                      'FontSize',16, 'interpreter','latex')
          case 2
-            title(sprintf('(N_b)_{%d}(\\xi,\\eta)',   i),'FontSize',16);
+            title(['$\overline{N}_' ii '(\xi,\eta)$'], ...
+                                      'FontSize',16, 'interpreter','latex')
          case 3
-            title(sprintf('(N_{bb})_{%d}(\\xi,\\eta)',i),'FontSize',16);
+            title(['$\overline{\overline{N}}_' ii '(\xi,\eta)$'], ...
+                                      'FontSize',16, 'interpreter','latex')
       end
       mesh(XI, ETA, NN(XI,ETA),'LineWidth',2); % malla de alambre
       surf(XI, ETA, NN(XI,ETA));               % superficie
@@ -78,40 +82,41 @@ end
 drawnow; % vaciar el buffer de graficos de MATLAB antes de continuar
 
 %% Calculo de la matriz de deformacion
-BB = cell(4,1);
+Bb_ = cell(4,1);
 for i = 1:4
-   BB{i} = -[...
+   Bb_{i} = -[...
        diff(N(i,1),xi, 2)/(a^2)    diff(N(i,2),xi, 2)/(a^2)    diff(N(i,3),xi, 2)/(a^2)
        diff(N(i,1),eta,2)/(b^2)    diff(N(i,2),eta,2)/(b^2)    diff(N(i,3),eta,2)/(b^2)      
     2*diff(N(i,1),xi,eta)/(a*b) 2*diff(N(i,2),xi,eta)/(a*b) 2*diff(N(i,3),xi,eta)/(a*b) ];
 end
-Bb = simplify([BB{1} BB{2} BB{3} BB{4}]);
+Bb = simplify([Bb_{1} Bb_{2} Bb_{3} Bb_{4}]);
 
 % matriz constitutiva (es la misma que se tiene en tension plana)
 D = E/(1-nu^2) * [ 1  nu 0
                    nu 1  0
                    0  0  (1-nu)/2 ];
                
-Db = (t^3/12)*D; % matriz constitutiva de flexion generalizada
+Dbg = (t^3/12)*D; % matriz constitutiva de flexion generalizada
 
 %% Calculo la matriz de rigidez
 %{
 Recuerde que 
-    / dx_dxi   dy_dxi \   / a  0 \
-J = |                 | = |      |
-    \ dx_deta  dy_dxi /   \ 0  b /
+    / dx_dxi   dx_deta \   / a  0 \
+J = |                  | = |      |
+    \ dy_dxi   dy_deta /   \ 0  b /
 
 por lo tanto:
 %}
 det_J = a*b;
 
-disp ('Calculando la matriz de rigidez: espere aproximadamente dos minutos (en mi PC de 2010)');
-K = simplify(int(int(Bb.'*Db*Bb*det_J, xi, -1, 1), eta, -1, 1))
+disp('Calculando la matriz de rigidez')
+% este codigo se demoraba dos minutos en mi PC de 2010
+K = simplify(int(int(Bb.'*Dbg*Bb*det_J, xi, -1, 1), eta, -1, 1))
 
-disp ('Calculando la matriz Db*Bb');
-Db_Bb = simplify(Db*Bb)
+disp ('Calculando la matriz Db*Bb')
+Db_Bb = simplify(Dbg*Bb)
 
-disp ('Calculando el vector de fuerzas nodales equivalentes');
+disp ('Calculando el vector de fuerzas nodales equivalentes')
 f = int(int(N*q*det_J, xi,-1,1), eta,-1,1);
 disp('f = 4*q*a*b*')
 disp(simplify(f/(4*q*a*b)))
@@ -134,7 +139,7 @@ QQ = simplify([ d3N_dx3 + d3N_dxdy2
                 d3N_dy3 + d3N_dx2dy ])
             
 %% Condicion de solido rigido
-disp('El EF MZC si cumple la condición de cuerpo rígido con las deflexiones')
+disp('El EF MZC si cumple la condicion de cuerpo rigido con las deflexiones')
 disp('pero no en las rotaciones')
 pretty(simplify(sum(N)))
             
