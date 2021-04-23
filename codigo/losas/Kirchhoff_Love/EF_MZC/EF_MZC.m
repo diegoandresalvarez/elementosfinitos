@@ -4,7 +4,7 @@
 % Diego Andres Alvarez Marin
 % Sebastian Jaramillo Moreno
 
-clear, clc, close all % borro la memoria, la pantalla y las figuras
+clear, clc, %close all % borro la memoria, la pantalla y las figuras
 
 %% defino las variables/constantes
 global xnod LaG COLOR_RWB
@@ -15,6 +15,8 @@ ww= 1; tx= 2; ty= 3; % lectura del codigo
 
 %% se define la losa a calcular
 filename = 'losa_rectangular_libro_solidos_efQ4';
+%filename = 'losa_rectangular_libro_solidos_efQ4_sin_rot';
+%filename = 'losa_rectangular_libro_solidos_efQ4_levantada';
 %filename = 'uniforme_efQ4';
 archivo_xlsx = fullfile('..', '..', 'ejemplos', [filename '.xlsx']);
 
@@ -358,7 +360,9 @@ fprintf('Calculo finalizado. En "%s" se guardaron los resultados.\n', filename_r
 
 %% Finalmente comparamos los desplazamientos calculados con el MEF y la
 %% solucion analitica
-if strcmp(filename, 'losa_rectangular_libro_solidos_efQ4')
+if strcmp(filename, 'losa_rectangular_libro_solidos_efQ4') || ...
+   strcmp(filename, 'losa_rectangular_libro_solidos_efQ4_sin_rot')
+        
     u = 0.5; v = 1; xi = 1.25; eta = 1.5;
     qdist = -10;
     err = zeros(nno,1);
