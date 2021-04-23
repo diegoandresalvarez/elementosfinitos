@@ -7,8 +7,7 @@ pT = [ 1 xi eta xi^2 xi*eta eta^2 xi^3 xi^2*eta xi*eta^2 eta^3 xi^3*eta xi*eta^3
 dpT_dxi  = diff(pT,xi);
 dpT_deta = diff(pT,eta);
 
-A = [ ...
-      subs(pT,       {xi, eta}, {-1, -1})
+A = [ subs(pT,       {xi, eta}, {-1, -1})
       subs(dpT_dxi,  {xi, eta}, {-1, -1}) % nodo 1
       subs(dpT_deta, {xi, eta}, {-1, -1})
       
@@ -29,11 +28,10 @@ Nvec = N;
 
 % Reorganizo las funciones de forma en una matriz de 4x3
 % donde las filas representan el nodo i
-N = simplify([ ...
-      N(1)  N(2)  N(3)
-      N(4)  N(5)  N(6)       % esto es lo mismo que reshape(N,3,4).'
-      N(7)  N(8)  N(9)
-      N(10) N(11) N(12) ]);
+N = simplify([ N(1)  N(2)  N(3)
+               N(4)  N(5)  N(6)       % esto es lo mismo que reshape(N,3,4).'
+               N(7)  N(8)  N(9)
+               N(10) N(11) N(12) ]);
 
 disp('Las funciones de forma son =')
 for i = 1:4

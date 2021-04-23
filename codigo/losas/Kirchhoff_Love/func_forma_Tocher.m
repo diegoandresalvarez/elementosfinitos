@@ -54,7 +54,7 @@ for i = 1:3
    fprintf('Nbb{%d} = \n',i); pretty(N(i,3));
 end
 
-%% Grafico las funciones de forma
+%% Se crean los triangulos de que formaran las funciones de forma
 LL1 = 0:0.05:1;
 LL2 = 0:0.05:1;
 [L1,L2] = meshgrid(LL1,LL2);
@@ -64,6 +64,7 @@ L1 = L1(:);
 L2 = L2(:);
 L3 = round(100*L3(:))/100;
 
+% se buscan aquellos puntos fuera del triangulo y se eliminan
 idx = find(L3 < -1e-3);
 L1(idx) = [];  
 L2(idx) = [];  
@@ -73,13 +74,14 @@ L3(idx) = [];
 X = L1*cx(1) + L2*cx(2) + L3*cx(3);
 Y = L1*cy(1) + L2*cy(2) + L3*cy(3);
 
-% NOTA: 
-% la funcion delaunay() esta sacando mas triangulos de los necesarios
-% por esto es que se ve un error en la graficacion, ya que por errores
-% de representacion los puntos no quedan perfectamente sobre la misma
-% linea recta
 TRI = delaunay(X,Y);
+% la funcion delaunay() genera unos triangulos erroneos, con un area mucho
+% mas peque?a que los triangulos "bien formados". Se buscan dichos 
+% triangulos y se eliminan
+Area = triarea(TRI, X, Y);
+TRI(Area < 1e-8,:) = [];
 
+%% Grafico las funciones de forma
 for i = 1:3    % contador de nodos
    figure
    for j = 1:3  % contador de grados de libertad
@@ -99,19 +101,21 @@ for i = 1:3    % contador de nodos
       shading interp
       colormap winter
       axis tight
-      daspect([1 1 1]);
       view(3);               % vista tridimensional
 
       xlabel('$x$', 'FontSize',26, 'interpreter','latex'); % titulo eje X
       ylabel('$y$', 'FontSize',26, 'interpreter','latex'); % titulo eje Y
       switch j % imprimo el titulo
          case 1
+            daspect([1 1 1]); 
             title(sprintf('$N_{%d}(x,y)$',       i), ...
                 'FontSize',26, 'interpreter','latex');
          case 2
+            daspect([1 1 0.5]);
             title(['$\overline{N}_' num2str(i) '(x,y)$'], ...
                 'FontSize',26, 'interpreter','latex');
          case 3
+            daspect([1 1 0.5]);
             title(['$\overline{\overline N}_' num2str(i) '(x,y)$'], ...
                 'FontSize',26, 'interpreter','latex');
       end
@@ -128,4 +132,14 @@ d3N_dy3   = diff(Nvec,y,3);
 QQ = simplify([ d3N_dx3 + d3N_dxdy2
                 d3N_dy3 + d3N_dx2dy ])
 
+%%
 return %bye, bye!
+
+%%
+function A = triarea(T, X, Y)
+% Area of triangles in a triangulation
+XT = reshape(X(T), size(T)); % X coordinates of vertices in triangulation
+YT = reshape(Y(T), size(T)); % Y coordinates of vertices in triangulation
+A = 0.5 * abs((XT(:,2) - XT(:,1)) .* (YT(:,3) - YT(:,1)) - ...
+              (XT(:,3) - XT(:,1)) .* (YT(:,2) - YT(:,1)));
+end
