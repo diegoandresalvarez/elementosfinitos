@@ -178,7 +178,7 @@ q  = zeros(ngdl,1);  q(c) = qd;              % fuerzas nodales equivalentes
 mat_mov = reshape(aa,3,nno)'; % matriz con movimientos
 mat_rea = reshape(q,3,nno)';  % matriz con reacciones
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
-xdef = ESC_W*mat_mov; % posicion de la deformada
+xdef = mat_mov; % posicion de la deformada
 figure; 
 if COLOR_RWB
     [min_xdef, max_xdef] = bounds(xdef(:,ww));
@@ -194,9 +194,9 @@ for e = 1:nef
          xdef(LaG(e,[1 2 3 4 1]),ww),...
          xdef(LaG(e,[1 2 3 4 1]),ww)); %deformada
 end
-daspect([1 1 1]); % similar a axis equal, pero en 3D
+daspect([1 1 1/ESC_W]);
 axis tight
-title(sprintf('Deformada escalada %d veces', ESC_W),'FontSize',20)
+title('Deformada','FontSize',20)
 xlabel(['Eje X [' U_LONG ']']);
 ylabel(['Eje Y [' U_LONG ']']);
 view(3)
