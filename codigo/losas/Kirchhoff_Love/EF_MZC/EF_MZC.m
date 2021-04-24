@@ -21,12 +21,23 @@ filename = 'losa_rectangular_libro_solidos_efQ4';
 archivo_xlsx = fullfile('..', '..', 'ejemplos', [filename '.xlsx']);
 
 %% se leen las coordenadas de los nodos
-T       = readtable(archivo_xlsx, 'Sheet', 'xnod');
+if verLessThan('matlab', '9.9') % R2019b or older
+    T = readtable(archivo_xlsx, 'Sheet', 'xnod');
+else
+    T = readtable(archivo_xlsx, 'Sheet', 'xnod', 'format', 'auto');    
+end
+    
 idxNODO = T{:,'nodo'};
 xnod    = T{idxNODO,{'x','y'}}; % = [x,y]
 nno     = size(xnod,1); % numero de nodos
 
 %% se lee la matriz de conectividad (LaG) y la carga distribuida fz
+if verLessThan('matlab', '9.9') % R2019b or older
+    T = readtable(archivo_xlsx, 'Sheet', 'LaG_fz');
+else
+    T = readtable(archivo_xlsx, 'Sheet', 'LaG_fz', 'format', 'auto');
+end
+
 T       = readtable(archivo_xlsx, 'Sheet', 'LaG_fz');
 idxEF   = T{:,'EF'};
 LaG     = T{idxEF,{'NL1','NL2','NL3','NL4'}};
@@ -35,7 +46,12 @@ fz      = T{idxEF, 'fz'};
 fz(isnan(fz)) = 0;
 
 %% se definen los apoyos y sus desplazamientos
-T       = readtable(archivo_xlsx, 'Sheet', 'restric');
+if verLessThan('matlab', '9.9') % R2019b or older
+    T = readtable(archivo_xlsx, 'Sheet', 'restric');
+else
+    T = readtable(archivo_xlsx, 'Sheet', 'restric', 'format', 'auto');
+end
+
 idxNODO = T{:,'nodo'};
 dirdesp = T{:,'direccion'};
 ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
@@ -55,7 +71,11 @@ end
 d = setdiff((1:ngdl)',c);    % GDL desconocidos y libres
 
 %% relacion de cargas puntuales
-T = readtable(archivo_xlsx, 'Sheet', 'carga_punt');
+if verLessThan('matlab', '9.9') % R2019b or older
+    T = readtable(archivo_xlsx, 'Sheet', 'carga_punt');
+else
+    T = readtable(archivo_xlsx, 'Sheet', 'carga_punt', 'format', 'auto');
+end
 idxNODO = T{:,'nodo'};
 dirfp   = T{:,'direccion'};
 fp      = T{:,'fuerza_puntual'};
