@@ -26,7 +26,6 @@ if verLessThan('matlab', '9.9') % R2019b or older
 else
     T = readtable(archivo_xlsx, 'Sheet', 'xnod', 'format', 'auto');    
 end
-    
 idxNODO = T{:,'nodo'};
 xnod    = T{idxNODO,{'x','y'}}; % = [x,y]
 nno     = size(xnod,1); % numero de nodos
@@ -37,8 +36,6 @@ if verLessThan('matlab', '9.9') % R2019b or older
 else
     T = readtable(archivo_xlsx, 'Sheet', 'LaG_fz', 'format', 'auto');
 end
-
-T       = readtable(archivo_xlsx, 'Sheet', 'LaG_fz');
 idxEF   = T{:,'EF'};
 LaG     = T{idxEF,{'NL1','NL2','NL3','NL4'}};
 nef     = size(LaG,1);  % numero de EFs
@@ -51,7 +48,6 @@ if verLessThan('matlab', '9.9') % R2019b or older
 else
     T = readtable(archivo_xlsx, 'Sheet', 'restric', 'format', 'auto');
 end
-
 idxNODO = T{:,'nodo'};
 dirdesp = T{:,'direccion'};
 ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
