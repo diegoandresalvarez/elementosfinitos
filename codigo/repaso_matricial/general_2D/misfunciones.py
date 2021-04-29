@@ -137,7 +137,7 @@ def calc_Keloc(tipo, L, A, E, I):
 
 # %%
 def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
-                                    qe, ae, esc_def, esc_faxial, esc_V, esc_M):
+                    qe, ae, esc_def, esc_faxial, esc_V, esc_M, con_lineas=True):
     '''
     Esta función dibuja el elemento de pórtico/cercha deformado junto con sus 
     respectivos diagramas de fuerza axial, fuerza cortante y momento flector.
@@ -174,6 +174,7 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
     esc_faxial = 10     # escalamiento del diagrama de axiales
     esc_V      = 10     # escalamiento del diagrama de cortantes
     esc_M      = 10     # escalamiento del diagrama de momentos
+    con_lineas = {True/False} # graficar lineas verticales en diagramas de M/V/A
     '''
     npuntos = 1001
     L = np.hypot(x2-x1, y2-y1)
@@ -240,7 +241,12 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
     ss = pos[X,:] + x1
     aa = pos[Y,:] + y1
     
-    plt.plot([x1, x2], [y1, y2], 'b-', np.r_[x1, ss, x2], np.r_[y1, aa, y2], 'r-', linewidth=2)
+    plt.plot([x1, x2], [y1, y2], 'b-')
+    if con_lineas:
+        plt.plot(np.r_[x1, ss, x2], np.r_[y1, aa, y2], 'r-', linewidth=2)
+    else:
+        plt.plot(ss, aa, 'r-', linewidth=2)
+
     plt.text(ss[ 0], aa[ 0], f'{-qe[X1]:.4f}')
     plt.text(ss[-1], aa[-1], f'{+qe[X2]:.4f}')
     
@@ -252,7 +258,12 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
     ss = pos[X,:] + x1
     vv = pos[Y,:] + y1
     
-    plt.plot([x1, x2], [y1, y2], 'b-', np.r_[x1, ss, x2], np.r_[y1, vv, y2], 'r-', linewidth=2)
+    plt.plot([x1, x2], [y1, y2], 'b-')
+    if con_lineas:
+        plt.plot(np.r_[x1, ss, x2], np.r_[y1, vv, y2], 'r-', linewidth=2)
+    else:
+        plt.plot(ss, vv, 'r-', linewidth=2)
+
     plt.text(ss[ 0], vv[ 0], f'{+qe[Y1]:.4f}')
     plt.text(ss[-1], vv[-1], f'{-qe[Y2]:.4f}')
     
@@ -264,7 +275,11 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
     ss = pos[X,:] + x1
     mm = pos[Y,:] + y1
     
-    plt.plot([x1, x2], [y1, y2], 'b-', np.r_[x1, ss, x2], np.r_[y1, mm, y2], 'r-', linewidth=2)
+    plt.plot([x1, x2], [y1, y2], 'b-')
+    if con_lineas:
+        plt.plot(np.r_[x1, ss, x2], np.r_[y1, mm, y2], 'r-', linewidth=2)
+    else:
+        plt.plot(ss, mm, 'r-', linewidth=2)
     plt.text(ss[ 0], mm[ 0], f'{-qe[M1]:.4f}')
     plt.text(ss[-1], mm[-1], f'{+qe[M2]:.4f}')
 

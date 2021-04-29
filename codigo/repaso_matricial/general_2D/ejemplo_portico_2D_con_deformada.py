@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 from misfunciones import dibujar_deformada, calc_Te, calc_feloc, calc_Keloc
 
 #%% constantes que ayudarán a la lectura del código
-NL1, NL2 = 0, 1
-X, Y, TH = 0, 1, 2
-g        = -9.81    # [m/s²] aceleración de la gravedad
+NL1, NL2   = 0, 1
+X, Y, TH   = 0, 1, 2
+g          = -9.81    # [m/s²] aceleración de la gravedad
+CON_LINEAS = False  # graficar líneas verticales en diagramas de M/V/A
 
 # %% seleccione la malla a emplear:
 #nombre_archivo = 'fink'
@@ -17,8 +18,8 @@ g        = -9.81    # [m/s²] aceleración de la gravedad
 #nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3_apoyo_inclinado'
-#nombre_archivo = 'portico_UribeEscamilla_11_23'
-nombre_archivo = 'taller_1_2021a'
+nombre_archivo = 'portico_UribeEscamilla_11_23'
+#nombre_archivo = 'taller_1_2021a'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
@@ -241,7 +242,7 @@ for e in range(nbar):
       A[mat[e]], E[mat[e]], I[mat[e]],
       x1,y1, x2,y2, b1[e],b2[e], q1[e],q2[e], 
       qe_loca[e], ae_loca,
-      esc_def, esc_faxial, esc_V, esc_M)
+      esc_def, esc_faxial, esc_V, esc_M, CON_LINEAS)
 
 plt.show()
 
