@@ -7,7 +7,7 @@ Se implementan los elementos finitos
 * [QL9](QL9_integracion_reducida) (Oñate)
 * [Heterosis QHET](QHET_elemento_heterosis)
 * [MITC4](MITC4)
-* [DKQ y DKMQ](DKMQ) (ambos algoritmos comparten el código)*
+* [DKQ y DKMQ](DKMQ) (ambos algoritmos comparten el mismo código)
 
 Adicionalmente se muestran los modos de energía nula del elemento QL9.
 
