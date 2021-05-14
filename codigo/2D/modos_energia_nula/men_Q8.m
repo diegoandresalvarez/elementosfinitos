@@ -1,21 +1,20 @@
 clear, clc%, close all
 
-%% Programa para calcular los modos de energía nula del sólido del
-%% rectángulo serendípito de 8 nodos
-
-X = 1;
-Y = 2;
-E  = 200;     % modulo de elasticidad del elemento (GPa)
-nu = 0.33;    % coeficiente de Poisson
-t  = 0.10;    % espesor del elemento (m)
+%% Programa para calcular los modos de energia nula del EF rectangular
+%% serendipito de 8 nodos
+X  = 1;
+Y  = 2;
+E  = 200;     % [GPa] modulo de elasticidad del elemento
+nu = 0.33;    %       coeficiente de Poisson
+t  = 0.10;    % [m]   espesor del elemento
 
 %% Derivadas de N con respecto a xi
 dN_dxi = @(xi,eta) [ ...
    -((eta + 2*xi)*(eta - 1))/4                  % dN1_dxi
    eta*xi - xi                                  % dN2_dxi
-   ((eta - 2*xi)*(eta - 1))/4                   % dN3_dxi
+    ((eta - 2*xi)*(eta - 1))/4                  % dN3_dxi
    1/2 - eta^2/2                                % dN4_dxi
-   ((eta + 2*xi)*(eta + 1))/4                   % dN5_dxi
+    ((eta + 2*xi)*(eta + 1))/4                  % dN5_dxi
    -xi*(eta + 1)                                % dN6_dxi
    -((eta - 2*xi)*(eta + 1))/4                  % dN7_dxi
    eta^2/2 - 1/2                            ];  % dN8_dxi
@@ -24,9 +23,9 @@ dN_dxi = @(xi,eta) [ ...
 dN_deta = @(xi,eta) [ ...
    -((2*eta + xi)*(xi - 1))/4                   % dN1_deta
    xi^2/2 - 1/2                                 % dN2_deta
-   ((xi + 1)*(2*eta - xi))/4                    % dN3_deta
+    ((xi + 1)*(2*eta - xi))/4                   % dN3_deta
    -eta*(xi + 1)                                % dN4_deta
-   ((2*eta + xi)*(xi + 1))/4                    % dN5_deta
+    ((2*eta + xi)*(xi + 1))/4                   % dN5_deta
    1/2 - xi^2/2                                 % dN6_deta
    -((xi - 1)*(2*eta - xi))/4                   % dN7_deta
    eta*(xi - 1)                             ];  % dN8_deta
@@ -87,34 +86,29 @@ for p = 1:n_gl
          B{p,q}(:,[2*i-1 2*i]) = [ dNi_dx 0          % aqui se ensambla
                                    0      dNi_dy     % y asigna la matriz
                                    dNi_dy dNi_dx ];  % B_i
-      end;
+      end
       
       % se arma la matriz de rigidez del elemento e
       K = K + B{p,q}'*D*B{p,q}*det_J(p,q)*t*w_gl(p)*w_gl(q);     
-   end;
-end;
+   end
+end
 
 %% Se calculan los valores y vectores propios de la matriz K
 [evec,eval] = eig(K);
 [eval,idx]  = sort(diag(eval));
-evec = evec(:,idx);
+evec        = evec(:,idx);
 
-%% Se imprimen los vectores propios (recuerde que los modos de energía nula
+%% Se imprimen los vectores propios (recuerde que los modos de energia nula
 %% son aquellos para los cuales los valores propios son cero
 figure
-modo = cell(16,1);
 for i = 1:16
-   modo{i} = reshape(evec(:,i),2,8)' + xnod;
+   xmen = xnod + reshape(evec(:,i),2,8)';
    subplot(4,4,i)
-   plot(xnod([1:8 1],X),xnod([1:8 1],Y),'b');
    hold on
-   plot(modo{i}([1:8 1],X), modo{i}([1:8 1],Y),'r');
+   plot(xnod([1:8 1],X), xnod([1:8 1],Y), 'b');   
+   plot(xmen([1:8 1],X), xmen([1:8 1],Y), 'r');
    axis equal
    axis([-2 2 -2 2]);
-   title(sprintf('\\lambda_%d = %d',i,eval(i)),'FontSize',16);
+   title(sprintf('\\lambda_{%d} = %d',i,eval(i)));
 end
-
-ax = axes('Position', [0,0,1,1], 'Visible', 'off');
-tx = text(0.4, 0.95, sprintf('Puntos de integración = %d', n_gl));
-set(tx, 'FontWeight', 'Bold', 'FontSize', 20);
-
+sgtitle(sprintf('Puntos de integracion = %d', n_gl));
