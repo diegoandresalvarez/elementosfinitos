@@ -53,4 +53,4 @@ Tomado de:
 --->
 ## Talleres de EFs 2
 - [Taller 1: vigas](talleres/EF2/taller_1_2021a.md)
-- [Taller 2: cascarones](talleres/EF2/taller_2_2020a.md)
+- [Taller 2: cascarones](talleres/EF2/taller_2_2021a.md)
