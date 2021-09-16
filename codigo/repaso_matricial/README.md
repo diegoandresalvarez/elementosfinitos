@@ -24,6 +24,7 @@ Los programas de esta carpeta, resuelven la estructura mostrada. El material es 
 ### Deducción de la matriz de rigidez de un pórtico en 2D
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbólica**
+
 $$
 \begin{bmatrix}
 X_i\\
