@@ -24,10 +24,7 @@ Los programas de esta carpeta, resuelven la estructura mostrada. El material es 
 ### Deducción de la matriz de rigidez de un pórtico en 2D
 
 * [c1_deduccion_K_portico2D.m](portico_2d/c1_deduccion_K_portico2D.m) **usa el toolbox de álgebra simbólica**
-<!---
-Compile en: https://tex.s2cms.com
-
-\renewcommand\arraystretch{1.4}
+$$
 \begin{bmatrix}
 X_i\\
 Y_i\\
@@ -53,10 +50,7 @@ u_j\\
 v_j\\
 \theta_j
 \end{bmatrix}
---->
-
-![](https://tex.s2cms.ru/svg/%5Crenewcommand%5Carraystretch%7B1.4%7D%0A%5Cbegin%7Bbmatrix%7D%0AX_i%5C%5C%0AY_i%5C%5C%0AM_i%5C%5C%0AX_j%5C%5C%0AY_j%5C%5C%0AM_j%0A%5Cend%7Bbmatrix%7D%0A%3D%0A%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%5C%5C%0A%20%20-%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%26%20%5Cfrac%7BEA%7D%7BL%7D%20%26%200%20%26%200%20%5C%5C%0A%20%200%20%26%20-%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%200%20%26%20%5Cfrac%7B12EI%7D%7BL%5E3%7D%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%5C%5C%0A%20%200%20%26%20%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B2EI%7D%7BL%7D%20%26%200%20%26%20-%5Cfrac%7B6EI%7D%7BL%5E2%7D%20%26%20%5Cfrac%7B4EI%7D%7BL%7D%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Au_i%5C%5C%0Av_i%5C%5C%0A%5Ctheta_i%5C%5C%0Au_j%5C%5C%0Av_j%5C%5C%0A%5Ctheta_j%0A%5Cend%7Bbmatrix%7D)
-
+$$
 
 ## Ejemplo 11.23 del libro: Uribe Escamilla, Jairo. Análisis de Estructuras. Colombia:Ediciones Uniandes, 1993
 
