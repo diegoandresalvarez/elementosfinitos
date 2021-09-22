@@ -8,7 +8,7 @@ Curso creado según la resolución: http://www.legal.unal.edu.co/rlunal/home/doc
 
 El curso se evaluará mediante exámenes, evaluación de los apuntes y talleres.
 
-Los exámenes serán orales e individuales. Se realizarán siguiendo [este](protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
+Los exámenes serán orales e individuales. Se realizarán siguiendo [este](https://github.com/diegoandresalvarez/solidos/blob/master/docs/protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
 
 La fecha del examen se definirá dos semanas antes de su realización.
 <!---

@@ -19,12 +19,11 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
     * Dr. R. Krishnakumar. Advanced Finite Elements Analysis. Department of Engineering Design. IIT Madras. INDIA
   * Prof. C.S. Upadhyay. Finite Element Method. Department of Aerospace Engineering. IIT Kanpur. INDIA
 
+* MIT: buscar en https://ocw.mit.edu/ (no pongo en enlace, porque esos links están variando constantemente)
 * Prof. J. Bathe
-  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/index.htm)
-
-  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (LINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/linear/)
-
-  * [Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.](http://ocw.mit.edu/resources/res-2-002-finite-element-procedures-for-solids-and-structures-spring-2010/nonlinear/)
+  * Prof. J. Bathe. Finite Element Procedures for Solids and Structures. MIT. USA.
+  * Prof. J. Bathe. Finite Element Procedures for Solids and Structures (LINEAR ANALYSIS). MIT. USA.
+  * Prof. J. Bathe. Finite Element Procedures for Solids and Structures (NONLINEAR ANALYSIS). MIT. USA.
 
 
 ## Otros
