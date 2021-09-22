@@ -58,7 +58,7 @@
 * [D3 - Diseño de vigas de gran altura y muros de cortante utilizando el MEF](D3_vigas_altas.pdf)
 * [D4 - Diseño de estructuras de concreto utilizando análisis lineal del esfuerzo](D4_disenio_con_analisis_elastico_lineal.pdf)
 * [D5 - Uso del método de los elementos finitos en los modelo puntal-tensor](D5_metodo_puntal_tensor.pdf)
-* D6 - Diseño de losas con EFs
+* [D6 - Diseño de losas con EFs](D6_losas.pdf)
 * D7 - Diseño de cascarones con EFs
 
 ### Otros documentos
