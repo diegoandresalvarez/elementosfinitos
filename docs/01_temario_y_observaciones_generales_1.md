@@ -127,8 +127,7 @@ La versión en inglés (más moderna) se puede descargar así:
 - [Eugenio Oñate (2013). Structural Analysis with the Finite Element Method - Beams, Plates and Shells, Volume 2](https://link.springer.com/book/10.1007%2F978-1-4020-8743-1)
 
 Estos libros se pueden descargar de: 
-
-https://bibliotecas.unal.edu.co/ `->` Recursos electrónicos `->` Springer Books `->` buscar "Oñate"
+http://bases.unal.edu.co/ `->` Springer Books `->` buscar "Oñate"
 
 ## Observaciones que se quieren dejar por escrito:
 <!--- 
