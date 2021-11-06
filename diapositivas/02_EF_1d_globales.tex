@@ -146,9 +146,9 @@ $\ve{a} = [u_1,\ u_2,\ \ldots, \ u_n]^T$ es el \emph{vector de desplazamientos n
 \newpage
 \section{Se reemplaza en el principio de los trabajos virtuales}
 \begin{align}
-\iiint_{V} \delta\varepsilon(x) \sigma(x) \dd V = \int_{0}^{L} \delta u(x) b(x) \dd x + \sum_{i=1}^n \delta u_i R_i
+\iiint_{V} \delta\varepsilon(x) \sigma(x) \dd V = \int_{0}^{L} \delta u(x) b(x) \dd x + \sum_{i=1}^n \delta u_i q_i
 \end{align}
-Aquí $\ve{q} = [R_1,\ \ldots,\ R_n]^T$ es el \emph{vector de fuerzas nodales de equilibrio}. Teniendo en cuenta que para un escalar $c$ se tiene que $c = c^T$ tenemos que:
+Aquí $\ve{q} = [q_1,\ \ldots,\ q_n]^T$ es el \emph{vector de fuerzas nodales de equilibrio}. Teniendo en cuenta que para un escalar $c$ se tiene que $c = c^T$ tenemos que:
 \begin{equation}
 \iiint_{V} \underbrace{\delta \ve{a}^T \ma{B}_{(g)}^T(x)}_{\delta\varepsilon^T(x)} \underbrace{E(x) \ma{B}^{(g)}(x) \ve{a}}_{\sigma(x)} \dd V = \int_{0}^{L} \underbrace{\delta \ve{a}^T \ma{N}_{(g)}^T(x)}_{\delta u^T(x)} b(x) \dd x +
 \delta \ma{a}^T \ma{q}
