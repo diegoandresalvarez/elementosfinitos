@@ -16,8 +16,8 @@ fprintf('\n\nN2(xi) = \n'), pretty(N2)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
-h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);
 title('Funciones de Forma Lagrangianas de DOS nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
@@ -29,9 +29,25 @@ legend([h1, h2], 'N1(\xi)','N2(\xi)','Location','Best');
 
 % Calculo las funciones de forma
 syms xi
-N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi); % = xi*(xi-1)/2
-N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi); % = (1+xi)*(1-xi)
-N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi); % = xi*(xi+1)/2
+%N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi); % = xi*(xi-1)/2
+%N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi); % = (1+xi)*(1-xi)
+%N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi); % = xi*(xi+1)/2
+
+% Se calculan los coeficientes de los polinomios
+c1 = polyfit([-1 0 1],[1 0 0],2);
+c2 = polyfit([-1 0 1],[0 1 0],2);
+c3 = polyfit([-1 0 1],[0 0 1],2);
+
+% Se eliminan los errores en la aproximacion numerica, haciendo los
+% coeficientes demasiado pequenios igual a cero
+c1(abs(c1) < 1e-10) = 0;
+c2(abs(c2) < 1e-10) = 0;
+c3(abs(c3) < 1e-10) = 0;
+
+% con los coeficientes corregidos se calculan las funciones de forma
+N1 = poly2sym(c1, xi);
+N2 = poly2sym(c2, xi);
+N3 = poly2sym(c3, xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de TRES nodos:\n')
@@ -43,9 +59,9 @@ fprintf('\n\nN3(xi) = \n'), pretty(N3)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
-h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
-h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);    
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);
+h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);
 title('Funciones de Forma Lagrangianas de TRES nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
@@ -71,10 +87,10 @@ fprintf('\n\nN3(xi) = \n'), pretty(N3);  fprintf('\n\nN4(xi) = \n'), pretty(N4)
 figure                 % Creo un lienzo
 grid on                % creo la rejilla
 hold on;               % Para que no se sobreescriban los graficos
-h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);   
-h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);   
-h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);    
-h4 = fplot(N4, [-1 1], 'Color', 'm', 'LineWidth', 2);    
+h1 = fplot(N1, [-1 1], 'Color', 'r', 'LineWidth', 2);
+h2 = fplot(N2, [-1 1], 'Color', 'b', 'LineWidth', 2);
+h3 = fplot(N3, [-1 1], 'Color', 'c', 'LineWidth', 2);
+h4 = fplot(N4, [-1 1], 'Color', 'm', 'LineWidth', 2);
 title('Funciones de Forma Lagrangianas de CUATRO nodos')
 xlabel('\xi'); 
 ylabel('N_i(\xi)');
@@ -91,8 +107,8 @@ N = cell(5,1);
 for i = 1:5
     coef = polyfit([-1 -1/2 0 1/2 1], [i==1 i==2 i==3 i==4 i==5], 4);
     coef(abs(coef) < 1e-10) = 0; % remueva los coeficientes demasiado pequenos
-    N{i} = poly2sym(coef, xi);     
-end                                  
+    N{i} = poly2sym(coef, xi);
+end
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de CINCO nodos:\n')
