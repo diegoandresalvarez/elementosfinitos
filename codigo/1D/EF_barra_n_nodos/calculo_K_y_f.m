@@ -9,9 +9,25 @@ x3 = x1+L;
 x2 = (x1+x3)/2;
 
 %% Funciones de forma lagrangianas
-N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);   % = xi*(xi-1)/2;
-N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi);   % = (1+xi)*(1-xi);
-N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);   % = xi*(xi+1)/2;
+%N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);   % = xi*(xi-1)/2;
+%N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi);   % = (1+xi)*(1-xi);
+%N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);   % = xi*(xi+1)/2;
+
+% Se calculan los coeficientes de los polinomios
+c1 = polyfit([-1 0 1],[1 0 0],2);
+c2 = polyfit([-1 0 1],[0 1 0],2);
+c3 = polyfit([-1 0 1],[0 0 1],2);
+
+% Se eliminan los errores en la aproximacion numerica, haciendo los
+% coeficientes demasiado pequenios igual a cero
+c1(abs(c1) < 1e-10) = 0;
+c2(abs(c2) < 1e-10) = 0;
+c3(abs(c3) < 1e-10) = 0;
+
+% con los coeficientes corregidos se calculan las funciones de forma
+N1 = poly2sym(c1, xi);
+N2 = poly2sym(c2, xi);
+N3 = poly2sym(c3, xi);
 
 %% Interpolacion de la geometria y sus derivadas
 x   = simplify(N1*x1 + N2*x2 + N3*x3);       

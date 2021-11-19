@@ -71,7 +71,7 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
-ac = 0;               % desplazamientos conocidos
+ac = 0;                 % desplazamientos conocidos
 
 %% resuelvo el sistema de ecuaciones
 ad = Kdd\(fc-Kdc*ac);   % calculo desplazamientos desconocidos
