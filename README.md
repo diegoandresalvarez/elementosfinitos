@@ -10,7 +10,7 @@
 </p>
 
 Tomado de:
-* [Omar Darío Cardona. Vulnerabilidad sísmica estructural y diseño del refuerzo sismorresistente de la Catedral Basílica de Manizales, Colombia. Revista Internacional de Ingeniería de Estructuras. Vol 7. No. 1 2002. págs 47-66](http://idea.manizales.unal.edu.co/gestion_riesgos/descargas/gestion/Catedralm1.pdf)
+* [Omar Darío Cardona. Vulnerabilidad sísmica estructural y diseño del refuerzo sismorresistente de la Catedral Basílica de Manizales, Colombia. Revista Internacional de Ingeniería de Estructuras. Vol 7. No. 1 2002. págs 47-66](http://idea.manizales.unal.edu.co/sitios/gestion_riesgos/descargas/gestion/Catedralm1.pdf)
 * [WIKIMEDIA Fotografía de la Catedral Basílica de Manizales por Pablo Andrés Toro Arias](https://commons.wikimedia.org/wiki/File:2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg)
 
 ## Detalles del curso
@@ -18,14 +18,14 @@ Tomado de:
 - Semanas: 16
 - Créditos: 3
 - Intensidad horaria semanal: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
-<!---
 - Elementos finitos 1:
-  - Viernes 7:00-9:00 en ZOOM
-  - Viernes 14:00-16:00 en ZOOM
---->
+  - Viernes 7:00-9:00 por ZOOM
+  - Viernes 14:00-16:00 por ZOOM
+<!---
 - Elementos finitos 2:
-  - Viernes 7:00-9:00 en ZOOM
-  - Viernes 14:00-16:00 en ZOOM
+  - Viernes 7:00-9:00 por ZOOM
+  - Viernes 14:00-16:00 por ZOOM
+--->  
   
 - Tiempo de actividad autónoma por semana: 8 horas
 
@@ -42,10 +42,14 @@ Tomado de:
 - [Video tutoriales de COMSOL Multiphysics v. 3.5](docs/COMSOL.md)
 
 ## Examenes y talleres de EFs 1
+POR DEFINIR
+<!---
 - [Tema de los exámenes](docs/tema_examenes_EF1.md)
-- [Taller 1: barras ](talleres/EF1/taller_1_2019b.md)
+
+- [Taller 1: barras](talleres/EF1/taller_1_2019b.md)
 - [Taller 2: estructuras en tensión y deformación plana](talleres/EF1/taller_2_2019b.md)
 - [Taller 3: estructuras 3D y con simetría axial](talleres/EF1/taller_3_2019b.md)
+--->
 
 <!---
 ## Examenes y talleres de EFs 2

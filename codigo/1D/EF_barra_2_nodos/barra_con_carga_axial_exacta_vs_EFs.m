@@ -61,7 +61,7 @@ ac = 0;               % desplazamientos conocidos (en el gdl 1)
 ad = Kdd\(fc-Kdc*ac);        % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
-q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
+q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales de equilibrio
 
 %% calculo las cargas axiales en cada elemento finito
 faxial = zeros(nef,1);

@@ -46,28 +46,3 @@ Analice como si fuera:
 # punto opcional (+1.0 punto): analice la estructura como una cercha y reemplace el apoyo izquierdo por un resorte (kresorte = 110 MN/m) con la misma inclinación.
 # punto opcional: (+0.5 puntos) compare las respuesta obtenidas en MATLAB con el software de análisis estructural de su predilección (de todos los puntos analizados). Hacer el [[https://es.wikipedia.org/wiki/Screencast|screencasting]] respectivo de la modelación (únicamente para el punto opcional 3)  y subirla a youtube. Se recomienda el software http://camstudio.org/
 **Recuerde en todos los puntos anteriores incluir el peso propio de la estructura en el análisis**
-
-----
-----
-
-=CAPITULO 3. ELEMENTOS FINITOS DE BARRA (Trabajo en grupos de máximo dos personas. Fecha máxima de entrega: Octubre 25, 2015 a las 23:59)=
-
-Considere la barra doblemente empotrada, de módulo de elasticidad E constante, mostrada en la figura:
-[[image:c2_barra_sec_variable.png]]
-
-Suponga que esta barra tiene una sección transversal circular, módulo de elasticidad E=200 GPa, y que la carga distribuida que actúa sobre esta (no mostrada) está dada por la parábola:
-[[math]]
-b(x) = \frac{1}{5} \frac{kN}{m^3} x^2 \quad \text{ para } x\in[0 \text{ m}, 3\text{ m}]
-[[math]]
-
-* a) Haga un programa en MATLAB para calcular la matriz de rigidez **//K//** y el vector de fuerzas nodales equivalentes **//f//** para elementos finitos con sección transversal [[http://es.wikipedia.org/wiki/Tronco_de_cono|cónica truncada]] y bases de radio izquierdo r1 (en x=x1) y radio derecho r2 (en x=x2). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito. El elemento finito tendrá 4 nodos igualmente espaciados.
-
-* b) Haga un programa en MATLAB para resolver el ejemplo mostrado usando 6 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra.
-
-* c) Resuelva el punto anterior utilizando integración numérica con cuadraturas de Gauss-Legendre, en vez de la matriz K deducida.
-
-* d) PUNTO EXTRA OPCIONAL +2 UNIDADES: Utilizando la ecuación diferencial con sus correspondientes condiciones de frontera y la función bvp5c de MATLAB, calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra) y compararla con la solución por elementos finitos. Compare la solución con aquella dada por el método de los elementos finitos (cual es el error del método de los EFs?). 
-
-----
-
-

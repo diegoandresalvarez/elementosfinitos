@@ -53,29 +53,6 @@ font-size: 200%;">en formato PDF</span> (si lo entregan impreso que sea por ambo
 
 Ver páginas: Oñate, Ejemplo 2.1 + Gráfica 2.6 : [[file:02_ejemplo_2_1.pdf]]
 
-2. Considere la barra doblemente empotrada, de módulo de elasticidad E constante, mostrada en la figura:
-[[image:c2_barra_sec_variable.png]]
-
-Suponga que esta barra tiene una sección transversal circular, módulo de elasticidad E=200 GPa, y que la carga distribuída que actúa sobre esta (no mostrada) está dada por la parábola:
-[[math]]
-b(x) = \frac{1}{5} \frac{kN}{m^3} x^2 \quad \text{ para } x\in[0 \text{ m}, 3\text{ m}]
-[[math]]
-
-* a) Haga un programa en MATLAB para calcular la matriz de rigidez **//K//** y el vector de fuerzas nodales equivalentes **//f//** para elementos finitos con sección transversal [[http://es.wikipedia.org/wiki/Tronco_de_cono|cónica truncada]] y bases de radio izquierdo r1 (en x=x1) y radio derecho r2 (en x=x2). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito.
-
-* b) Haga un programa en MATLAB para resolver el ejemplo mostrado usando 12 elementos finitos de igual longitud y la formulación deducida en el punto anterior. Resolver implica: calcular fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra.
-
-* c) Deduzca manualmente cual es la ecuación diferencial con sus correspondientes condiciones de frontera que describen el desplazamiento de la barra. 
-
-* d) PUNTO EXTRA OPCIONAL +1 UNIDAD: calcular la solución exacta (fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra)  utilizando la función bvp4c de MATLAB y compararla con la solución por elementos finitos. Compare la solución con aquella dada por el método de los elementos finitos (cual es el error del método de los EFs?). Pista: estudiar el código: [[file:c2_ejemplo_barra_con_carga_axial_exacta_vs_bvp4c.m]] (ver la Sección Código 1, Capítulo 2).
-
-<span style="color: #ffffff;">* e). Repita el punto b) y c) pero esta vez suponiendo que el área de la sección transversal varía en la región 0m < x < 1m de acuerdo con
-%[[math]]
-%A(x) = \frac{3}{25} x^2 -\frac{1 \text{ m}}{50} x + \frac{\text{m}^2}{10} \quad \text{ para } x\in[0 \text{ m}, 1\text{ m}]
-%[[math]]
-y suponiendo que el borde derecho está libre.</span>
-
-----
 
 =CAPITULO 3. ELEMENTOS FINITOS DE BARRA LAGRANGIANOS DE VARIOS NODOS (Trabajo individual. Fecha máxima de entrega: Octubre 18, 2013 a las 23:59. Enviar los códigos por email. Los programas deben estar super comentados)=
 <span style="color: #ff0000;">

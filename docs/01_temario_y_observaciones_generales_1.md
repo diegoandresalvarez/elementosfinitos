@@ -16,14 +16,16 @@
 NOTA FINAL = 0.17*Examen1 + 0.17*Examen2 + 0.17*Examen3 + 0.17*Examen4 + 0.16*Trabajo1 + 0.16*Trabajo2 + 0.10*TallerFinal
 ```
 --->
-Por motivo de la contingencia con el COVID-19, es necesario cambiar las condiciones usuales de evaluación del curso. El curso, por lo tanto, se evaluará mediante exámenes orales, evaluación de los apuntes y talleres.
 
-* **Ejercicios de programación:** 25%, se seleccionarán al azar 3 ejercicios y se evaluarán. Se calificarán qué tan completos están y si incluyen todo lo .
-* **Examen oral 1:** 25%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
-* **Examen oral 2:** 25%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
-* **Trabajo:** 25%, uso de un software profesional de elementos finitos.
+El curso se evaluará mediante exámenes orales y talleres, así:
 
-<!--- 
+* **Examen oral 1:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Examen oral 2:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Examen oral 3:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
+* **Ejercicios de programación:** 20%, se seleccionarán al azar dos ejercicios y se evaluarán. Se calificarán qué tan completos están y si incluyen todo lo solicitado.
+* **Trabajo final:** 20%, uso de un software profesional de elementos finitos.
+
+<!---
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 --->
 
@@ -125,8 +127,7 @@ La versión en inglés (más moderna) se puede descargar así:
 - [Eugenio Oñate (2013). Structural Analysis with the Finite Element Method - Beams, Plates and Shells, Volume 2](https://link.springer.com/book/10.1007%2F978-1-4020-8743-1)
 
 Estos libros se pueden descargar de: 
-
-https://bibliotecas.unal.edu.co/ `->` Recursos electrónicos `->` Springer Books `->` buscar "Oñate"
+http://bases.unal.edu.co/ `->` Springer Books `->` buscar "Oñate"
 
 ## Observaciones que se quieren dejar por escrito:
 <!--- 
