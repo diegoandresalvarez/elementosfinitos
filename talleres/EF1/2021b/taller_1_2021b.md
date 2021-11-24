@@ -1,7 +1,4 @@
 # Taller 1: modelado de una barra doblemente empotrada sometida a cargas axiales
-
-NOTA MAXIMA = 5.0
-
 Con el objeto de aplicar la teoría aprendida se requiere hacer el análisis de los desplazamientos, deformaciones y esfuerzos de una barra sometida a fuerzas axiales utilizando la teoría vista en clase y  un software profesional de análisis y diseño estructural. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que propongan soluciones a los problemas propuestos.
 
 Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada hora de retraso se descontarán 0.3 unidades de la nota final.
@@ -56,6 +53,8 @@ Se solicita calcular las fuerzas axiales, esfuerzos, deformaciones y desplazamie
   - 0.5 Compara adecuadamente todos los métodos empleados contra la solución exacta.
   - 0.9 Hace un adecuado análisis de resultados?
 
+* 0.5 unidades por programar algo novedoso que mejore notablemente algún aspecto del código.
+
 # Otros criterios y notas
 * Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El video se debe subir a GOOGLE CLASSROOM, no a YouTube u otra plataforma de videos. El video debe contener un recuadrito en el cual se vea a usted exponiendo el tema.
 
@@ -85,4 +84,4 @@ Se solicita calcular las fuerzas axiales, esfuerzos, deformaciones y desplazamie
 
 * Si tienen dudas, por favor hágalas en el grupo de WhatsApp del curso, no a al WhatsApp personal del profesor.
 
-* NOTA MAXIMA FINAL = 5.0
+* NOTA MAXIMA FINAL = 5.5
