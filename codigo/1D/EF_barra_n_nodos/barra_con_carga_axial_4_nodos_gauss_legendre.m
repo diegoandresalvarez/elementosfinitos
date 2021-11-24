@@ -150,7 +150,7 @@ end
 %% imprimo los resultados
 format short g
 disp('Desplazamientos (m) = ');                   a
-disp('Fuerzas nodales equivalentes (N) OJO! = '); f
+disp('Fuerzas nodales equivalentes (N) = ');      f
 disp('Fuerzas nodales de equilibrio (N) = ');     q
 
 %% Grafico la solucion analitica y la solucion por el MEF
