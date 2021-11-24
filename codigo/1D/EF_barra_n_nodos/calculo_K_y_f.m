@@ -48,11 +48,11 @@ B = diff(N,xi)*dxi_dx;
 D = E*A;
 
 %% Calculo la matriz de rigidez del elemento
-K = int(B.'*D*B*dx_dxi,xi,-1,1);
+K = int(B.'*D*B*dx_dxi, xi, -1, +1);
 disp('K = ((A*E)/(3*L))*')
 pretty(K/((A*E)/(3*L)))
 
 %% Calculo la matriz de fuerzas nodales equivalentes del elemento
-f = int(N.'*b*dx_dxi,xi,-1,1);
+f = int(N.'*b*dx_dxi, xi, -1, +1);
 disp('f = ((b*L)/6)*')
 pretty(f/((b*L)/6))
