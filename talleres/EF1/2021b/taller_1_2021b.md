@@ -14,9 +14,9 @@ Suponga que esta barra tiene una sección transversal circular, módulo de elast
 
 Se solicita calcular las fuerzas axiales, esfuerzos, deformaciones y desplazamientos en todos los puntos de la barra. Adicionalmente, calcular la reacción en los apoyos. Resuelva usando MATLAB o PYTHON.
 
-1. Haga un programa para calcular la matriz de rigidez ***K*** y el vector de fuerzas nodales equivalentes ***f*** para elementos finitos de cuatro nodos con sección transversal [cónica truncada](http://es.wikipedia.org/wiki/Tronco_de_cono) y bases de radio izquierdo *r*₁ (en *x* = *x*₁) y radio derecho *r*₂ (en *x* = *x*₂). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito.
+1. Haga un programa para calcular la matriz de rigidez ***K*** y el vector de fuerzas nodales equivalentes ***f*** para elementos finitos de cuatro nodos con sección transversal [cónica truncada](http://es.wikipedia.org/wiki/Tronco_de_cono) y bases de radio izquierdo *r*₁ (en *x* = *x*₁) y radio derecho *r*₄ (en *x* = *x*₄). Aquí se deben deducir las fórmulas para este tipo especial de elemento finito.
 
-2. Haga un programa para resolver el ejemplo mostrado usando *n* elementos finitos de igual longitud y la formulación deducida en el punto anterior. Aquí *n* es un número divisible entre 3. Resuelva para *n* = 6 EFs.
+2. Haga un programa para resolver el ejemplo mostrado usando *n* elementos finitos de igual longitud y la formulación deducida en el punto anterior. Aquí *n* es un número divisible entre 3. Resuelva para *n* = 3, 6 y 9 EFs.
 
 3. Vuelva a calcular, pero esta vez usando los EFs de área transversal constante y de 2 nodos (los vistos en clase en las diapositivas 2); use 12 EFs.
 
