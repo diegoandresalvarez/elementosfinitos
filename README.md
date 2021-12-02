@@ -41,8 +41,8 @@ Tomado de:
 - [Video tutoriales de PARAVIEW](docs/Paraview.md)
 - [Video tutoriales de COMSOL Multiphysics v. 3.5](docs/COMSOL.md)
 
-## Examenes y talleres de EFs 1
-POR DEFINIR
+## Talleres de EFs 1
+- [Taller 1: EFs en 1D](talleres/EF1/2021b/taller_1_2021b.md)
 <!---
 - [Tema de los exámenes](docs/tema_examenes_EF1.md)
 
@@ -56,5 +56,5 @@ POR DEFINIR
 - [Tema de los exámenes](docs/tema_examenes_EF2.md)
 --->
 ## Talleres de EFs 2
-- [Taller 1: vigas](talleres/EF2/taller_1_2021a.md)
-- [Taller 2: cascarones](talleres/EF2/taller_2_2021a.md)
+- [Taller 1: vigas](talleres/EF2/2021a/taller_1_2021a.md)
+- [Taller 2: cascarones](talleres/EF2/2021a/taller_2_2021a.md)
