@@ -24,7 +24,7 @@ g             = 9.81  # [m/s²]  aceleración de la gravedad
 
 # %% Seleccione la malla a emplear
 # 1) Malla del ejemplo de la clase
-# nombre_archivo = 'malla1'            
+nombre_archivo = 'malla_ejemplo'            
 # 2) Malla refinada (malla elaborada por David Felipe Cano Perdomo)
 nombre_archivo = 'malla_refinada_v1' 
 # 3) Malla extremadamente refinada cerca a las cargas puntuales y los apoyos
@@ -273,43 +273,40 @@ plot_esf_def(sv,   r'$\sigma_{VM}$ [Pa]')
 
 # %%Se escriben los resultados a una hoja de MS EXCEL
 archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
-writer = pd.ExcelWriter(archivo_resultados, engine='xlsxwriter')
 
 # se escribe cada DataFrame a una hoja diferente
-tabla_afq.to_excel(       writer, sheet_name='afq')
-tabla_exeyezgxy.to_excel( writer, sheet_name='exeyezgxy')
-tabla_sxsytxy.to_excel(   writer, sheet_name='sxsytxy')
-tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
+with pd.ExcelWriter(archivo_resultados, engine='xlsxwriter') as writer:
+    tabla_afq.to_excel(       writer, sheet_name='afq')
+    tabla_exeyezgxy.to_excel( writer, sheet_name='exeyezgxy')
+    tabla_sxsytxy.to_excel(   writer, sheet_name='sxsytxy')
+    tabla_s1s2tmaxsv.to_excel(writer, sheet_name='s1s2tmaxsv')
 
-# Se cierra y graba el archivo de MS EXCEL
-writer.save()
 print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
-# pip install meshio==3.3.1
+# pip install meshio[all]==5.0.5
+
+# meshio requiere que las coordenadas de los puntos y los vectores sean 3D; por
+# dicha razón se agrega una columna de ceros
 
 import meshio
-meshio.write_points_cells(
-    f"resultados_{nombre_archivo}.vtk",
-    points=xnod,
-    cells={"triangle": LaG },
+mesh = meshio.Mesh(
+    points = np.c_[xnod, np.zeros(nno)],
+    cells  = [ ("triangle", LaG) ],
     point_data = {
-        'uv'         : a.reshape((nno,2)),
-        'reacciones' : q.reshape((nno,2))
+        'uv'         : np.c_[a.reshape((nno,2)), np.zeros(nno)],
+        'reacciones' : np.c_[q.reshape((nno,2)), np.zeros(nno)]
         },
     cell_data = {
-        "triangle" : 
-        {
-            'ex':ex, 'ey':ey, 'ez':ez,     'gxy':gxy,
-            'sx':sx, 'sy':sy, 'txy':txy,
-            's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
-            'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
-            'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)],
-            "material" : mat
-        }
-    }
-    # field_data=field_data
-)
+            'ex':[ex], 'ey':[ey], 'ez'  :[ez],   'gxy':[gxy],
+            'sx':[sx], 'sy':[sy], 'txy' :[txy],
+            's1':[s1], 's2':[s2], 'tmax':[tmax], 'sv' :[sv],
+            'n1':[np.c_[np.cos(ang),           np.sin(ang),           np.zeros(nef)]],
+            'n2':[np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2), np.zeros(nef)]],
+            "material" : [mat]
+    })
+
+mesh.write(f"resultados_{nombre_archivo}.vtk")
 
 # %% bye, bye!
