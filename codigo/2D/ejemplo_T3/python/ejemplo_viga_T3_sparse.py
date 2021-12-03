@@ -199,9 +199,9 @@ xdef   = xnod + escala*delta    # posición de la deformada
 plt.figure()
 for e in range(nef):
    nod_ef = LaG[e, [NL1, NL2, NL3, NL1]]
-   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'r', 
+   plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], 'b', 
                         label='Posición original'  if e == 0 else "", lw=0.5)
-   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'b', 
+   plt.plot(xdef[nod_ef, X], xdef[nod_ef, Y], 'r', 
                         label='Posición deformada' if e == 0 else "")
 plt.gca().set_aspect('equal', adjustable='box')
 plt.legend()
