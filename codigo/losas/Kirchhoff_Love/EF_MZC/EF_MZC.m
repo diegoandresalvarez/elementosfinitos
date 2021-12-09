@@ -4,11 +4,12 @@
 % Diego Andres Alvarez Marin
 % Sebastian Jaramillo Moreno
 
-clear, clc, %close all % borro la memoria, la pantalla y las figuras
+clear, clc, close all % borro la memoria, la pantalla y las figuras
 
 %% defino las variables/constantes
-global xnod LaG COLOR_RWB
-COLOR_RWB = true; % true = escala rojo/blanco/azul; false = jet no compensado
+global xnod LaG COLOR_RWB U_LONG
+%COLOR_RWB = true; % true = escala rojo/blanco/azul; false = jet no compensado
+COLOR_RWB = false; % true = escala rojo/blanco/azul; false = jet no compensado
 
 X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la 
 ww= 1; tx= 2; ty= 3; % lectura del codigo
@@ -236,6 +237,9 @@ title(['Reacciones My [' U_FUERZA  ' ' U_LONG ']']);
 xlabel(['Eje X [' U_LONG ']']);
 ylabel(['Eje Y [' U_LONG ']']);
 
+% Generar la grafica para el libro:
+% exportgraphics(gcf,'reacciones.eps','ContentType','vector')
+
 %% Se calcula para cada elemento el vector de momentos en los puntos
 %% de Gauss
 n_gl = 2;                          % orden de la cuadratura
@@ -317,9 +321,9 @@ Qy  =  Qy./num_elem_ady;
 
 %% Se grafican los momentos Mx, My, Mxy
 unitsM = [U_FUERZA '-' U_LONG '/' U_LONG];
-plot_M_or_Q({ Mx,  ['Momentos Mx (' unitsM ')']
-              My,  ['Momentos My (' unitsM ')']
-              Mxy, ['Momentos Mxy (' unitsM ')'] })
+plot_M_or_Q({ Mx,  ['Momentos Mx [' unitsM ']']
+              My,  ['Momentos My [' unitsM ']']
+              Mxy, ['Momentos Mxy [' unitsM ']'] })
 
 %% Se calculan y grafican para cada elemento los momentos principales y
 %% sus direcciones
@@ -328,25 +332,44 @@ Mf1_xy = (Mx+My)/2 + Mt_max;            % momento flector maximo
 Mf2_xy = (Mx+My)/2 - Mt_max;            % momento flector minimo
 ang  = 0.5*atan2(2*Mxy, Mx-My);         % angulo de inclinacion de Mf1_xy
 
-plot_M_or_Q({ Mf1_xy, ['Mf1_{xy} (' unitsM ')'], { ang }
-              Mf2_xy, ['Mf2_{xy} (' unitsM ')'], { ang+pi/2 }
-              Mt_max, ['Mt_{max} (' unitsM ')'], { ang+pi/4, ang-pi/4 } })
+plot_M_or_Q({ Mf1_xy, ['Mf1_{xy} [' unitsM ']'], { ang }
+              Mf2_xy, ['Mf2_{xy} [' unitsM ']'], { ang+pi/2 }
+              Mt_max, ['Mt_{max} [' unitsM ']'], { ang+pi/4, ang-pi/4 } })
                      
 %% Se calculan y grafican los cortantes Qx, Qy y los Qmaximos, junto con 
 %% su angulo de inclinacion
 Q_max = hypot(Qx, Qy);
 ang   = atan2(Qy, Qx);
 unitsQ = [U_FUERZA '/' U_LONG];
-plot_M_or_Q({ Qx,    ['Cortantes Qx (' unitsQ ')'],      { }
-              Qy,    ['Cortantes Qy (' unitsQ ')'],      { }
-              Q_max, ['Cortantes Q_{max} (' unitsQ ')'], { ang } })
+plot_M_or_Q({ Qx,    ['Cortantes Qx [' unitsQ ']'],      { }
+              Qy,    ['Cortantes Qy [' unitsQ ']'],      { }
+              Q_max, ['Cortantes Q_{max} [' unitsQ ']'], { ang } })
 
 %% Se calculan los momentos de disenio de Wood y Armer
 [Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
-plot_M_or_Q({ Mxast_sup,  ['Momentos M_x^* sup (' unitsM ')']
-              Myast_sup,  ['Momentos M_y^* sup (' unitsM ')']
-              Mxast_inf,  ['Momentos M_x^* inf (' unitsM ')']
-              Myast_inf,  ['Momentos M_y^* inf (' unitsM ')'] } );
+
+plot_M_or_Q({ Mxast_sup,  {'Momentos M_x^* sup', ['[' unitsM ']']}
+              Myast_sup,  {'Momentos M_y^* sup', ['[' unitsM ']']}
+              Mxast_inf,  {'Momentos M_x^* inf', ['[' unitsM ']']}
+              Myast_inf,  {'Momentos M_y^* inf', ['[' unitsM ']']} } );
+
+%{
+% Dibujos libro:
+unitsM = 'N-m/m'
+plot_M_or_Q({ 1000*Mxast_sup,  {'Momentos M_x^* sup', ['[' unitsM ']']} } );
+print(['WA_Mxast_sup.png'],'-dpng','-r200');
+
+plot_M_or_Q({ 1000*Myast_sup,  {'Momentos M_y^* sup', ['[' unitsM ']']} } );
+print(['WA_Myast_sup.png'],'-dpng','-r200');
+
+plot_M_or_Q({ 1000*Mxast_inf,  {'Momentos M_x^* inf', ['[' unitsM ']']} } );
+colormap(flipud(jet))
+print(['WA_Mxast_inf.png'],'-dpng','-r200');
+
+plot_M_or_Q({ 1000*Myast_inf,  {'Momentos M_y^* inf', ['[' unitsM ']']} } );
+colormap(flipud(jet))
+print(['WA_Myast_inf.png'],'-dpng','-r200');
+%}
 
 %% Se reportan los resultados en un archivo .xlsx
 % pandas de python para grabar las tablas es mucho mejor :-\
@@ -399,7 +422,7 @@ return; % bye, bye!
 
 %%
 function plot_M_or_Q(MQ)
-    global xnod LaG COLOR_RWB
+    global xnod LaG COLOR_RWB U_LONG
     X = 1; Y = 2;
     nef = size(LaG, 1);
 
@@ -414,7 +437,7 @@ function plot_M_or_Q(MQ)
     end
     for i = 1:nplots       
         subplot(1, nplots, i);
-        title(MQ{i,2}, 'FontSize',20);
+        title(MQ{i,2}, 'FontSize',14);
         hold on; 
         for e = 1:nef
            fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), MQ{i,1}(LaG(e,:)), ...
@@ -449,7 +472,9 @@ function plot_M_or_Q(MQ)
                 quiver(xnod(:,X),xnod(:,Y),...             
                     norma.*cos(angulos{j}+pi), norma.*sin(angulos{j}+pi),... 
                     esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
-            end            
+            end
         end
+        xlabel(['Eje X [' U_LONG ']']);
+        ylabel(['Eje Y [' U_LONG ']']);
     end
 end
