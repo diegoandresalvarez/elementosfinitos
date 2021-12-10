@@ -83,26 +83,26 @@ N = [ N1 0   N2 0   N3 0
  
 t = [ t1x t1y t2x t2y t3x t3y ].';
 
-res = N.'*N*t;
+NNt = N.'*N*t;
  
-res12 = res;
-res12 = subs(res12, N1, (1-xi)/2);
-res12 = subs(res12, N2, (1+xi)/2);
-res12 = subs(res12, N3, 0);
+NNt12 = NNt;
+NNt12 = subs(NNt12, N1, (1-xi)/2);
+NNt12 = subs(NNt12, N2, (1+xi)/2);
+NNt12 = subs(NNt12, N3, 0);
 ds_dxi = L12/2;
-f12 = int(res12*ds_dxi, xi, -1 ,1)
+f12 = int(NNt12*ds_dxi, xi, -1 ,1)
 
-res23 = res;
-res23 = subs(res23, N2, (1-xi)/2);
-res23 = subs(res23, N3, (1+xi)/2);
-res23 = subs(res23, N1, 0);
+NNt23 = NNt;
+NNt23 = subs(NNt23, N2, (1-xi)/2);
+NNt23 = subs(NNt23, N3, (1+xi)/2);
+NNt23 = subs(NNt23, N1, 0);
 ds_dxi = L23/2;
-f23 = int(res23*ds_dxi, xi, -1 ,1)
+f23 = int(NNt23*ds_dxi, xi, -1 ,1)
 
-res31 = res;
-res31 = subs(res31, N3, (1-xi)/2);
-res31 = subs(res31, N1, (1+xi)/2);
-res31 = subs(res31, N2, 0);
+NNt31 = NNt;
+NNt31 = subs(NNt31, N3, (1-xi)/2);
+NNt31 = subs(NNt31, N1, (1+xi)/2);
+NNt31 = subs(NNt31, N2, 0);
 ds_dxi = L31/2;
-f31 = int(res31*ds_dxi, xi, -1 ,1)
+f31 = int(NNt31*ds_dxi, xi, -1 ,1)
 %}
