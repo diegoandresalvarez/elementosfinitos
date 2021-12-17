@@ -259,6 +259,15 @@ ang  = 0.5*np.arctan2(2*txy, sx-sy)                 # ángulo asociado a s1
 s3 = np.zeros(nef)
 sv = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
 
+# %% Calculo del criterio de falla de Mohr-Coulomb
+ss1 = np.maximum.reduce([s1, s2, s3])
+ss3 = np.minimum.reduce([s1, s2, s3])
+
+# Resistencia del concreto
+f_c = 8                 # MPa
+f_t = 0.33*np.sqrt(f_c) # MPa
+fMC = ss1/(1e6*f_t) - ss3/(1e6*f_c) - 1 
+
 # %% imprimo y grafico los esfuerzos s1, s2, tmax y sv
 tabla_s1s2tmaxsv = pd.DataFrame(
    data=np.c_[s1, s2, tmax, sv, ang],
@@ -270,6 +279,7 @@ plot_esf_def(s1,   r'$\sigma_1$ [Pa]',   [ ang ])
 plot_esf_def(s2,   r'$\sigma_2$ [Pa]',   [ ang+np.pi/2 ] )
 plot_esf_def(tmax, r'$\tau_{max}$ [Pa]', [ ang-np.pi/4, ang+np.pi/4 ])
 plot_esf_def(sv,   r'$\sigma_{VM}$ [Pa]')
+plot_esf_def(fMC,  r'$f_{MC}(\sigma_1,\sigma_2,\sigma_3)$')
 
 # %%Se escriben los resultados a una hoja de MS EXCEL
 archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
