@@ -1,12 +1,11 @@
-clear, clc, close all
-
 %% Funciones de forma del elemento rectangular serendipito de 4 y 8 nodos 
+clear, clc, close all
 
 nno = 8; %  escoja entre {4, 8}.
 
 X = 1; Y = 2;
 
-% coordenadas de los nodos y numeracion local
+%% Coordenadas de los nodos y numeracion local
 switch nno
    case 4
       %      ^ eta
@@ -46,7 +45,7 @@ switch nno
          -1    0  ];  %  8
 end      
 
-% se calculan las funciones de forma bidimensionales
+%% Se calculan las funciones de forma bidimensionales
 xxi  = nod(:, X); 
 eeta = nod(:, Y);
 switch nno
@@ -70,22 +69,22 @@ for i = 1:nno
    end
 end
 
-%% imprimo las funciones de forma
+%% Se imprimen las funciones de forma
 fprintf('Funciones de forma serendipitas del elemento rectangular de %d nodos:\n', nno)
 for i = 1:nno
-   fprintf('N%d = %s\n', i, char(N{i}))
+   fprintf('N%d = ', i); disp(N{i})
 end
 
-% se calculan las derivadas de las funciones de forma con respecto a xi y
-% con respecto a eta y se imprimen (para referencias posteriores):
+%% Se calculan las derivadas de las funciones de forma con respecto a xi y
+%% con respecto a eta y se imprimen (para referencias posteriores):
 fprintf('\nDerivadas con respecto a xi:\n')
 for i = 1:nno
-   fprintf('dN%d_dxi = %s\n',  i, char(simplify(diff(N{i}, xi))))
+   fprintf('dN%d_dxi = ',  i); disp(simplify(diff(N{i}, xi)))
 end
 
 fprintf('\nDerivadas con respecto a eta:\n')
 for i = 1:nno
-   fprintf('dN%d_deta = %s\n', i, char(simplify(diff(N{i}, eta))))
+   fprintf('dN%d_deta = ', i); disp(simplify(diff(N{i}, eta)))
 end
 
 %% Se verifica la condicion de cuerpo rigido: sum(N) == 1
@@ -97,7 +96,7 @@ fprintf('\nSe verifica la condicion de cuerpo rigido: sum(N) == ');
 disp(simplify(suma));
 
  
-%% grafico las funciones de forma
+%% Se grafican las funciones de forma
 XXI  = linspace(-1, 1, 50);
 EETA = linspace(-1, 1, 50);
 [XI,ETA] = meshgrid(XXI,EETA);
@@ -131,5 +130,5 @@ for i = 1:nno
    view(3)                % vista tridimensional
 end
 
-%% bye, bye!
-return
+%% Bye, bye!
+return;
