@@ -98,7 +98,7 @@ zsp = 0.025*np.cos(v)
 
 for i in range(nno):
    fig = plt.figure()     # creo un lienzo
-   ax = fig.gca(projection='3d')
+   ax = fig.add_subplot(projection='3d')
    ax.set_xlabel(r'$\xi$', fontsize=16)   # titulo eje X
    ax.set_ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
    ax.set_title(f'$N_{i+1}(\\xi,\\eta)$', fontsize=20)

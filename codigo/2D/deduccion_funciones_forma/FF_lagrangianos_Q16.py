@@ -38,7 +38,7 @@ L4_eta[3] = sp.nsimplify(interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], eta))
 #  |   |   |   |
 #  1---2---3---4
 
-#                  xi   eta       # nodo
+#                  xi   eta        # nodo
 nod = np.array([[ -1  , -1   ],    #  1
                 [ -1/3, -1   ],    #  2
                 [  1/3, -1   ],    #  3
@@ -73,7 +73,7 @@ for i in range(nno):
 # Imprimo las funciones de forma
 print(f'Funciones de forma lagrangianas del elemento rectangular de {nno} nodos:')
 for i in range(nno):
-   print(f'N{i+1}(xi,eta) = {N[i]}')
+   print(f'N{i+1}(xi,eta) = {N[i]}')   
 
 # se calculan las derivadas de las funciones de forma con respecto a xi y
 # con respecto a eta y se imprimen (para referencias posteriores):
@@ -100,7 +100,7 @@ zsp = 0.025*np.cos(v)
 
 for i in range(nno):
    fig = plt.figure()     # creo un lienzo
-   ax = fig.gca(projection='3d')
+   ax = fig.add_subplot(projection='3d')
    ax.set_xlabel(r'$\xi$', fontsize=16)   # titulo eje X
    ax.set_ylabel(r'$\eta$', fontsize=16)  # titulo eje Y
    ax.set_title(f'$N_{{{i+1}}}(\\xi,\\eta)$', fontsize=20)
