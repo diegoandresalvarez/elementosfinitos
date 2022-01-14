@@ -2,6 +2,7 @@
 
 # Recuerde escribir primero en la consola %matplotlib qt
 
+# %% El papel del jacobiano en el elemento finito isoparamétrico
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
@@ -67,9 +68,12 @@ N[10] = Ni1*Nj3;      N[15]=Ni2*Nj3;      N[14] = Ni3*Nj3;      N[5] = Ni4*Nj3
 N[11] = Ni1*Nj2;      N[12]=Ni2*Nj2;      N[13] = Ni3*Nj2;      N[4] = Ni4*Nj2
 N[ 0] = Ni1*Nj1;      N[ 1]=Ni2*Nj1;      N[ 2] = Ni3*Nj1;      N[3] = Ni4*Nj1
 
+# %% Se calcula y grafica el EF en el espacio de geometría real
+# se calcula la geometria del EF
 x = np.sum(N*xnod[:,np.newaxis,np.newaxis], axis=0) # broadcasting en acción
 y = np.sum(N*ynod[:,np.newaxis,np.newaxis], axis=0)
 
+# se grafica el EF en el espacio de geometría real
 ax3 = fig.add_subplot(gs[:, 1])
 for i in range(n):
     h1 = ax3.plot(x[:, i], y[:, i], 'b')

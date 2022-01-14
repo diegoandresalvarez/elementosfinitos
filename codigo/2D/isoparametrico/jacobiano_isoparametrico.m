@@ -1,9 +1,11 @@
+%% El papel del jacobiano en el elemento finito isoparamétrico
 clear,clc,close all
 
+%% Se crea un espacio para hacer clic y definir los nodos del EF
 xnod = zeros(16,1);
 ynod = zeros(16,1);
 figure(1)
-title('De clic con el mouse 16 veces')
+title('Haciendo clic con el ratón, defina los 16 nodos del EF')
 axis([-5 5 -5 5]);
 hold on;
 for i = 1:16
@@ -13,18 +15,21 @@ for i = 1:16
 end
 close(1)
 
+%% Espacio normalizado: 
+% Se "discretiza" el espacio cada 0.05
 delta = 0.05;
 xxi  = -1:delta:1;
 eeta = -1:delta:1;
 n = length(xxi);
 [xi,eta] = meshgrid(xxi,eeta);
 
+% Se grafica el EF en el espacio normalizado
 figure
 subplot(2,2,1);
 hold on;
 for i = 1:n
-   h1 = plot(xi(:,i),eta(:,i));
-   h2 = plot(xi(i,:),eta(i,:));
+   h1 = plot(xi(:,i),eta(:,i), 'b');
+   h2 = plot(xi(i,:),eta(i,:), 'b');
    if i==1 || i==n
       set(h1, 'LineWidth', 4);
       set(h2, 'LineWidth', 4);
@@ -32,8 +37,16 @@ for i = 1:n
 end
 axis equal; axis([-1.1 1.1 -1.1 1.1])
 
-% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadratico)
-%
+% Se grafican los nodos en el espacio normalizado
+xinod  = [-1 -1/3 1/3 1   1   1   1 1/3 -1/3 -1 -1  -1   -1/3  1/3 1/3 -1/3];
+etanod = [-1 -1   -1  -1 -1/3 1/3 1 1    1    1 1/3 -1/3 -1/3 -1/3 1/3  1/3];
+for i = 1:16
+   plot(xinod(i), etanod(i), 'r.','MarkerSize',40, 'LineWidth', 4);  
+end
+
+
+%% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadratico)
+
 % Numeracion local:
 %        ^ eta
 %        |
@@ -62,34 +75,32 @@ N{11} = Ni1.*Nj3;   N{16} = Ni2.*Nj3;   N{15} = Ni3.*Nj3;   N{6}  = Ni4.*Nj3;
 N{12} = Ni1.*Nj2;   N{13} = Ni2.*Nj2;   N{14} = Ni3.*Nj2;   N{5}  = Ni4.*Nj2;
 N{1}  = Ni1.*Nj1;   N{2}  = Ni2.*Nj1;   N{3}  = Ni3.*Nj1;   N{4}  = Ni4.*Nj1;
 
+%% Se calcula y grafica el EF en el espacio de geometría real
+% Se calcula la geometria del EF
 x = zeros(n);
 y = zeros(n);
 for i = 1:16
    x = x + N{i}*xnod(i);
    y = y + N{i}*ynod(i);
 end
-xinod  = [-1 -1/3 1/3 1   1   1   1 1/3 -1/3 -1 -1  -1   -1/3  1/3 1/3 -1/3];
-etanod = [-1 -1   -1  -1 -1/3 1/3 1 1    1    1 1/3 -1/3 -1/3 -1/3 1/3  1/3];
-for i = 1:16
-   plot(xinod(i), etanod(i), 'r*','MarkerSize',12, 'LineWidth', 4);  
-end
 
-
+% Se grafica el EF en el espacio de geometria real
 subplot(2,2,[2 4]);
 hold on;
 for i = 1:n
-   h1 = plot(x(:,i),y(:,i));
-   h2 = plot(x(i,:),y(i,:));
+   h1 = plot(x(:,i),y(:,i), 'b');
+   h2 = plot(x(i,:),y(i,:), 'b');
    if i==1 || i==n
       set(h1, 'LineWidth', 4);
       set(h2, 'LineWidth', 4);
    end
 end
 for i = 1:16
-   plot(xnod(i), ynod(i), 'r*','MarkerSize',12, 'LineWidth', 4);  
+   plot(xnod(i), ynod(i), 'r.','MarkerSize',40, 'LineWidth', 4);  
 end
 axis equal tight
 
+%% Derivadas de las funciones de forma
 dN_dxi{1} = ((- 27.*xi.^2 + 18.*xi + 1).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
 dN_dxi{2} = -(9.*(- 9.*xi.^2 + 2.*xi + 3).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
 dN_dxi{3} = -(9.*(9.*xi.^2 + 2.*xi - 3).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
@@ -156,6 +167,7 @@ for i=1:16
 end 
 %}
 
+%% Calculo el determinante del Jacobiano
 dx_dxi  = zeros(n);
 dy_dxi  = zeros(n);
 dx_deta = zeros(n);
@@ -173,15 +185,32 @@ detJ = [dx_dxi.*dy_deta - dx_deta.*dy_dxi];
 
 % Se calcula el Jacobian ratio
 JR = max(detJ(:))/min(detJ(:));
-fprintf('JR = %f\n', JR);
+fprintf('Jacobian ratio (JR) = %f\n', JR);
+fprintf('min(detJ) = %f\n', min(detJ(:)))
+fprintf('max(detJ) = %f\n', max(detJ(:)))
+
+if max(detJ(:)) < 0
+    print('El EF está numerado en sentido contrario al especificado')
+end
+
 if JR < 0 || JR > 40
     warning('Esta forma no es adecuada para un EF')
 end
 
+%% Se grafica el jacobiano
 subplot(2,2,3);
 pcolor(xi,eta,detJ)
+colormap jet
 colorbar
-title(sprintf('Determinante de J. JR = %f', JR));
+title('Determinante de J');
 hold on
 contour(xi,eta,detJ,[0 0], 'LineWidth',4, 'Color',[0 0 0]);
 axis equal tight
+
+subplot(2,2,[2 4])
+if JR < 0 || JR > 40
+    title({'Esta forma no es adecuada para un EF', ...
+            sprintf('Jacobian ratio = %f', JR)})
+else
+    title(sprintf('Jacobian ratio = %f', JR))
+end
