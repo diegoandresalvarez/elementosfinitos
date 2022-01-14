@@ -3,6 +3,7 @@
 clear, clc, close all
 
 syms xi L1 L2 L3
+I = 1; J = 2; K = 3;
 
 %% Funciones de forma del EF triangular de 3 nodos
 disp('Funciones de forma de triangulos de 3 nodos')
@@ -11,22 +12,23 @@ T3.coord = [1 0 0
             0 1 0
             0 0 1];
 
-IJK = round(1*T3.coord);
+M = 1;
+IJK = round(M*T3.coord);
 %       [1 0 0
 %        0 1 0
 %        0 0 1];
     
 T3.N = cell(3,1);
 for i = 1:3
-   switch IJK(i,1)
+   switch IJK(i,I)
       case 0, lI = 1;
       case 1, lI = calc_N([0 1], [0 1], L1);
    end
-   switch IJK(i,2)
+   switch IJK(i,J)
       case 0, lJ = 1;
       case 1, lJ = calc_N([0 1], [0 1], L2);
    end
-   switch IJK(i,3)
+   switch IJK(i,K)
       case 0, lK = 1;
       case 1, lK = calc_N([0 1], [0 1], L3);
    end
@@ -46,7 +48,8 @@ T6.coord = [1    0    0
             0    1/2  1/2
             1/2  0    1/2];
 
-IJK = round(2*T6.coord);
+M = 2;
+IJK = round(M*T6.coord);
 %       [2 0 0
 %        0 2 0
 %        0 0 2
@@ -56,17 +59,17 @@ IJK = round(2*T6.coord);
     
 T6.N = cell(6,1);
 for i = 1:6  
-   switch IJK(i,1)
+   switch IJK(i,I)
       case 0, lI = 1;
       case 1, lI = calc_N([0  1/2   ], [0 1  ], L1);
       case 2, lI = calc_N([0  1/2  1], [0 0 1], L1);
    end
-   switch IJK(i,2)
+   switch IJK(i,J)
       case 0, lJ = 1;
       case 1, lJ = calc_N([0  1/2   ], [0 1  ], L2);
       case 2, lJ = calc_N([0  1/2  1], [0 0 1], L2);
    end
-   switch IJK(i,3)
+   switch IJK(i,K)
       case 0, lK = 1;
       case 1, lK = calc_N([0  1/2   ], [0 1  ], L3);
       case 2, lK = calc_N([0  1/2  1], [0 0 1], L3);
@@ -91,7 +94,8 @@ T10.coord = [1    0    0
              2/3  0    1/3             
              1/3  1/3  1/3];
 
-IJK = round(3*T10.coord);
+M = 3;
+IJK = round(M*T10.coord);
 %       [3 0 0
 %        0 3 0
 %        0 0 3
@@ -105,19 +109,19 @@ IJK = round(3*T10.coord);
     
 T10.N = cell(10,1);
 for i = 1:10  
-   switch IJK(i,1)
+   switch IJK(i,I)
       case 0, lI = 1;
       case 1, lI = calc_N([0  1/3        ], [0 1    ], L1);
       case 2, lI = calc_N([0  1/3  2/3   ], [0 0 1  ], L1);
       case 3, lI = calc_N([0  1/3  2/3  1], [0 0 0 1], L1);
    end
-   switch IJK(i,2)
+   switch IJK(i,J)
       case 0, lJ = 1;
       case 1, lJ = calc_N([0  1/3        ], [0 1    ], L2);
       case 2, lJ = calc_N([0  1/3  2/3   ], [0 0 1  ], L2);
       case 3, lJ = calc_N([0  1/3  2/3  1], [0 0 0 1], L2);
    end
-   switch IJK(i,3)
+   switch IJK(i,K)
       case 0, lK = 1;
       case 1, lK = calc_N([0  1/3        ], [0 1    ], L3);
       case 2, lK = calc_N([0  1/3  2/3   ], [0 0 1  ], L3);
@@ -125,7 +129,7 @@ for i = 1:10
    end
      
    T10.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
-   fprintf('N{%d} = ',i); disp(T10.N{i});
+   fprintf('N{%d} = %s\n',i); disp(T10.N{i});
 end
 EF = T10;
 
