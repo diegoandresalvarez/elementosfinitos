@@ -37,6 +37,8 @@ etanod = [-1,   -1,  -1, -1, -1/3, 1/3, 1,   1,    1,  1, 1/3, -1/3, -1/3, -1/3,
 ax1.plot(xinod, etanod, 'ro', markersize=12, linewidth=4)
 ax1.axis([-1.1, 1.1, -1.1, 1.1])
 ax1.set_aspect('equal', 'box')
+ax1.set_xlabel(r'$\xi$')
+ax1.set_ylabel(r'$\eta$')
 
 # %% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadrático)
 #
@@ -83,6 +85,8 @@ for i in range(n):
         plt.setp(h2, linewidth=4)
 ax3.plot(xnod, ynod, 'ro', markersize=12, linewidth=4)
 ax3.set_aspect('equal', 'box')
+ax3.set_xlabel(r'$x$')
+ax3.set_ylabel(r'$y$')
 
 # %% derivadas de las funciones de forma
 dN_dxi = np.zeros((16, n, n))
@@ -189,6 +193,9 @@ h = ax2.pcolor(xi, eta, detJ, cmap='jet',shading='auto')
 tickscb = np.linspace(detJ.min(), detJ.max(), 10)
 fig.colorbar(h, ax=ax2, ticks=tickscb), 
 ax2.set_title('Determinante de J')
+ax2.set_xlabel(r'$\xi$')
+ax2.set_ylabel(r'$\eta$')
+
 if JR < 0 or JR > 40:
     ax3.set_title(f'Esta forma no es adecuada para un EF.\nJacobian ratio = {JR:.3}')
 else:

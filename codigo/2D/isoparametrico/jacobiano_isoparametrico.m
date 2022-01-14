@@ -43,7 +43,8 @@ etanod = [-1 -1   -1  -1 -1/3 1/3 1 1    1    1 1/3 -1/3 -1/3 -1/3 1/3  1/3];
 for i = 1:16
    plot(xinod(i), etanod(i), 'r.','MarkerSize',40, 'LineWidth', 4);  
 end
-
+xlabel('\xi')
+ylabel('\eta')
 
 %% Funciones de forma del elemento lagrangiano plano de 16 nodos (cuadratico)
 
@@ -99,6 +100,8 @@ for i = 1:16
    plot(xnod(i), ynod(i), 'r.','MarkerSize',40, 'LineWidth', 4);  
 end
 axis equal tight
+xlabel('x')
+ylabel('y')
 
 %% Derivadas de las funciones de forma
 dN_dxi{1} = ((- 27.*xi.^2 + 18.*xi + 1).*(- 9.*eta.^3 + 9.*eta.^2 + eta - 1))/256;
@@ -203,6 +206,8 @@ pcolor(xi,eta,detJ)
 colormap jet
 colorbar
 title('Determinante de J');
+xlabel('\xi')
+ylabel('\eta')
 hold on
 contour(xi,eta,detJ,[0 0], 'LineWidth',4, 'Color',[0 0 0]);
 axis equal tight
