@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Recuerde escribir primero en la consola %matplotlib qt5
+# Recuerde escribir primero en la consola %matplotlib qt
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -82,52 +82,56 @@ ax3.set_aspect('equal', 'box')
 
 # %% derivadas de las funciones de forma
 dN_dxi = np.zeros((16, n, n))
-dN_dxi[0] =      ((-27*xi**2 + 18*xi + 1)*(-9*eta**3 + 9*eta**2 + eta - 1))/256
-dN_dxi[1] =     -(9*(-9*xi**2 + 2*xi + 3)*(-9*eta**3 + 9*eta**2 + eta - 1))/256
-dN_dxi[2] =      -(9*(9*xi**2 + 2*xi - 3)*(-9*eta**3 + 9*eta**2 + eta - 1))/256
-dN_dxi[3] =       ((27*xi**2 + 18*xi - 1)*(-9*eta**3 + 9*eta**2 + eta - 1))/256
-dN_dxi[4] =      (9*(3*eta - 1)*(eta - 1)*(eta + 1)*(27*xi**2 + 18*xi - 1))/256
-dN_dxi[5] =   (9*(27*xi**2 + 18*xi - 1)*(-3*eta**3 - eta ** 2 + 3*eta + 1))/256
-dN_dxi[6] =      -((27*xi**2 + 18*xi - 1)*(-9*eta**3 - 9*eta**2 + eta + 1))/256
-dN_dxi[7] =       (9*(9*xi**2 + 2*xi - 3)*(-9*eta**3 - 9*eta**2 + eta + 1))/256
-dN_dxi[8] =      (9*(-9*xi**2 + 2*xi + 3)*(-9*eta**3 - 9*eta**2 + eta + 1))/256
-dN_dxi[9] =     -((-27*xi**2 + 18*xi + 1)*(-9*eta**3 - 9*eta**2 + eta + 1))/256
-dN_dxi[10] =     (9*(eta - 1)*(3*eta + 1)*(eta + 1)*(27*xi**2 - 18*xi - 1))/256
-dN_dxi[11] =    -(9*(eta - 1)*(3*eta - 1)*(eta + 1)*(27*xi**2 - 18*xi - 1))/256
-dN_dxi[12] =      (81*(eta - 1)*(3*eta - 1)*(eta + 1)*(9*xi**2 - 2*xi - 3))/256
-dN_dxi[13] =   (81*(9*xi**2 + 2*xi - 3)*(-3*eta**3 + eta ** 2 + 3*eta - 1))/256
-dN_dxi[14] =      (81*(3*eta + 1)*(eta - 1)*(eta + 1)*(9*xi**2 + 2*xi - 3))/256
-dN_dxi[15] =     -(81*(eta - 1)*(3*eta + 1)*(eta + 1)*(9*xi**2 - 2*xi - 3))/256
+dN_dxi[ 0] =      -(-27*xi**2 + 18*xi + 1)*(9*eta**3 - 9*eta**2 - eta + 1)/256
+dN_dxi[ 1] =       9*(-9*xi**2 + 2*xi + 3)*(9*eta**3 - 9*eta**2 - eta + 1)/256
+dN_dxi[ 2] =        9*(9*xi**2 + 2*xi - 3)*(9*eta**3 - 9*eta**2 - eta + 1)/256
+dN_dxi[ 3] =       -(27*xi**2 + 18*xi - 1)*(9*eta**3 - 9*eta**2 - eta + 1)/256
+dN_dxi[ 4] =      9*(27*xi**2 + 18*xi - 1)*(3*eta**3 - eta**2 - 3*eta + 1)/256
+dN_dxi[ 5] =     -9*(27*xi**2 + 18*xi - 1)*(3*eta**3 + eta**2 - 3*eta - 1)/256
+dN_dxi[ 6] =        (27*xi**2 + 18*xi - 1)*(9*eta**3 + 9*eta**2 - eta - 1)/256
+dN_dxi[ 7] =       -9*(9*xi**2 + 2*xi - 3)*(9*eta**3 + 9*eta**2 - eta - 1)/256
+dN_dxi[ 8] =      -9*(-9*xi**2 + 2*xi + 3)*(9*eta**3 + 9*eta**2 - eta - 1)/256
+dN_dxi[ 9] =       (-27*xi**2 + 18*xi + 1)*(9*eta**3 + 9*eta**2 - eta - 1)/256
+dN_dxi[10] =    -9*(-27*xi**2 + 18*xi + 1)*(3*eta**3 + eta**2 - 3*eta - 1)/256
+dN_dxi[11] =     9*(-27*xi**2 + 18*xi + 1)*(3*eta**3 - eta**2 - 3*eta + 1)/256
+dN_dxi[12] =     -81*(-9*xi**2 + 2*xi + 3)*(3*eta**3 - eta**2 - 3*eta + 1)/256
+dN_dxi[13] =      -81*(9*xi**2 + 2*xi - 3)*(3*eta**3 - eta**2 - 3*eta + 1)/256
+dN_dxi[14] =       81*(9*xi**2 + 2*xi - 3)*(3*eta**3 + eta**2 - 3*eta - 1)/256
+dN_dxi[15] =      81*(-9*xi**2 + 2*xi + 3)*(3*eta**3 + eta**2 - 3*eta - 1)/256
 
 dN_deta = np.zeros((16, n, n))
-dN_deta[0]  =     ((-27*eta**2 + 18*eta + 1)*(-9*xi**3 + 9*xi**2 + xi - 1))/256
-dN_deta[1]  =    -(9*(xi - 1)*(3*xi - 1)*(xi + 1)*(27*eta**2 - 18*eta - 1))/256
-dN_deta[2]  =     (9*(xi - 1)*(3*xi + 1)*(xi + 1)*(27*eta**2 - 18*eta - 1))/256
-dN_deta[3]  =    -((-27*eta**2 + 18*eta + 1)*(-9*xi**3 - 9*xi**2 + xi + 1))/256
-dN_deta[4]  =     (9*(-9*eta**2 + 2*eta + 3)*(-9*xi**3 - 9*xi**2 + xi + 1))/256
-dN_deta[5]  =      (9*(9*eta**2 + 2*eta - 3)*(-9*xi**3 - 9*xi**2 + xi + 1))/256
-dN_deta[6]  =     -((27*eta**2 + 18*eta - 1)*(-9*xi**3 - 9*xi**2 + xi + 1))/256
-dN_deta[7]  =    (9*(27*eta**2 + 18*eta - 1)*(-3*xi**3 - xi**2 + 3*xi + 1))/256
-dN_deta[8]  =     (9*(3*xi - 1)*(xi - 1)*(xi + 1)*(27*eta**2 + 18*eta - 1))/256
-dN_deta[9]  =      ((27*eta**2 + 18*eta - 1)*(-9*xi**3 + 9*xi**2 + xi - 1))/256
-dN_deta[10] =     -(9*(9*eta**2 + 2*eta - 3)*(-9*xi**3 + 9*xi**2 + xi - 1))/256
-dN_deta[11] =    -(9*(-9*eta**2 + 2*eta + 3)*(-9*xi**3 + 9*xi**2 + xi - 1))/256
-dN_deta[12] =      (81*(xi - 1)*(3*xi - 1)*(xi + 1)*(9*eta**2 - 2*eta - 3))/256
-dN_deta[13] =     -(81*(xi - 1)*(3*xi + 1)*(xi + 1)*(9*eta**2 - 2*eta - 3))/256
-dN_deta[14] =      (81*(3*xi + 1)*(xi - 1)*(xi + 1)*(9*eta**2 + 2*eta - 3))/256
-dN_deta[15] =     (81*(9*eta**2 + 2*eta - 3)*(-3*xi**3 + xi**2 + 3*xi - 1))/256
+dN_deta[ 0] =      -(-27*eta**2 + 18*eta + 1)*(9*xi**3 - 9*xi**2 - xi + 1)/256
+dN_deta[ 1] =     9*(-27*eta**2 + 18*eta + 1)*(3*xi**3 - xi**2 - 3*xi + 1)/256
+dN_deta[ 2] =    -9*(-27*eta**2 + 18*eta + 1)*(3*xi**3 + xi**2 - 3*xi - 1)/256
+dN_deta[ 3] =       (-27*eta**2 + 18*eta + 1)*(9*xi**3 + 9*xi**2 - xi - 1)/256
+dN_deta[ 4] =      -9*(-9*eta**2 + 2*eta + 3)*(9*xi**3 + 9*xi**2 - xi - 1)/256
+dN_deta[ 5] =       -9*(9*eta**2 + 2*eta - 3)*(9*xi**3 + 9*xi**2 - xi - 1)/256
+dN_deta[ 6] =        (27*eta**2 + 18*eta - 1)*(9*xi**3 + 9*xi**2 - xi - 1)/256
+dN_deta[ 7] =     -9*(27*eta**2 + 18*eta - 1)*(3*xi**3 + xi**2 - 3*xi - 1)/256
+dN_deta[ 8] =      9*(27*eta**2 + 18*eta - 1)*(3*xi**3 - xi**2 - 3*xi + 1)/256
+dN_deta[ 9] =       -(27*eta**2 + 18*eta - 1)*(9*xi**3 - 9*xi**2 - xi + 1)/256
+dN_deta[10] =        9*(9*eta**2 + 2*eta - 3)*(9*xi**3 - 9*xi**2 - xi + 1)/256
+dN_deta[11] =       9*(-9*eta**2 + 2*eta + 3)*(9*xi**3 - 9*xi**2 - xi + 1)/256
+dN_deta[12] =     -81*(-9*eta**2 + 2*eta + 3)*(3*xi**3 - xi**2 - 3*xi + 1)/256
+dN_deta[13] =      81*(-9*eta**2 + 2*eta + 3)*(3*xi**3 + xi**2 - 3*xi - 1)/256
+dN_deta[14] =       81*(9*eta**2 + 2*eta - 3)*(3*xi**3 + xi**2 - 3*xi - 1)/256
+dN_deta[15] =      -81*(9*eta**2 + 2*eta - 3)*(3*xi**3 - xi**2 - 3*xi + 1)/256
 
 # %%Estas derivadas se calcularon con el siguiente código de MATLAB:
 '''
-Ni1 = (1/16)*(xi - 1)*(1 - 9*xi**2)
-Ni2 = (9/16)*(1 - xi**2)*(1 - 3*xi)
-Ni3 = (9/16)*(1 - xi**2)*(1 + 3*xi)
-Ni4 = (1/16)*(xi + 1)*(9*xi**2 - 1)
+import sympy as sp
 
-Nj1 = (1/16)*(eta - 1)*(1 - 9*eta**2)
-Nj2 = (9/16)*(1 - eta ** 2)*(1 - 3*eta)
-Nj3 = (9/16)*(1 - eta ** 2)*(1 + 3*eta)
-Nj4 = (1/16)*(eta + 1)*(9*eta**2 - 1)
+xi, eta = sp.symbols('xi eta')
+
+Ni1 = sp.nsimplify(sp.interpolate([(-1,1), (-1/3,0), (1/3,0), (1,0)], xi))
+Ni2 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,1), (1/3,0), (1,0)], xi))
+Ni3 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,0), (1/3,1), (1,0)], xi))
+Ni4 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], xi))
+
+Nj1 = sp.nsimplify(sp.interpolate([(-1,1), (-1/3,0), (1/3,0), (1,0)], eta))
+Nj2 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,1), (1/3,0), (1,0)], eta))
+Nj3 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,0), (1/3,1), (1,0)], eta))
+Nj4 = sp.nsimplify(sp.interpolate([(-1,0), (-1/3,0), (1/3,0), (1,1)], eta))
 
 N = 16 * [None]
 
@@ -140,12 +144,12 @@ dN_dxi  = 16 * [None]
 dN_deta = 16 * [None]
 
 for i in range(16):
-    dN_dxi[i] = simplify(sp.diff(N[i], xi))
-    print(f'dN_dxi{i} = {char(dN_dxi[i])}')
+    dN_dxi[i] = sp.simplify(sp.diff(N[i], xi))
+    print(f'dN_dxi[{i:2}] = {str(dN_dxi[i]):>65}')
 
 for i in range(16):
-    dN_deta[i] = simplify(sp.diff(N[i], eta))
-    print(f'dN_dxi{i} = {char(dN_deta[i])}')
+    dN_deta[i] = sp.simplify(sp.diff(N[i], eta))
+    print(f'dN_deta[{i:2}] = {str(dN_deta[i]):>64}')
 '''
 #%% Calculo el determinante del Jacobiano
 dx_dxi  = np.sum(dN_dxi *xnod[:,np.newaxis,np.newaxis], axis=0) # broadcasting en acción
@@ -177,12 +181,12 @@ if JR < 0 or JR > 40:
 
 # %% se grafica el jacobiano
 ax2 = fig.add_subplot(gs[1,0])
-h = ax2.pcolor(xi, eta, detJ, cmap='jet')
+h = ax2.pcolor(xi, eta, detJ, cmap='jet',shading='auto')
 tickscb = np.linspace(detJ.min(), detJ.max(), 10)
 fig.colorbar(h, ax=ax2, ticks=tickscb), 
-ax2.set_title(f'Determinante de J')
+ax2.set_title('Determinante de J')
 if JR < 0 or JR > 40:
-    ax3.set_title('Esta forma no es adecuada para un EF.')
+    ax3.set_title(f'Esta forma no es adecuada para un EF.\nJacobian ratio = {JR:.3}')
 else:
     ax3.set_title(f'Jacobian ratio = {JR:.3}')     
 ax2.set_aspect('equal', 'box')
