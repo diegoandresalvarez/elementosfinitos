@@ -106,7 +106,7 @@ title('Malla de elementos finitos','FontSize',26);
 
 %% Funciones de forma serendipitas del elemento rectangular de 8 nodos:
 % NOTA estas funciones de forma y sus derivadas se encontraron con el
-% programa c5_funciones_forma_lagrangianos_rect_2D_8_nodos.m
+% programa deduccion_funciones_forma/FF_serendipitos_Q4_Q8.m
 
 Nforma = @(xi,eta) [ ...
 -((eta - 1)*(xi - 1)*(eta + xi + 1))/4       % N1
