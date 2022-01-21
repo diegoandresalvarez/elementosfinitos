@@ -405,40 +405,41 @@ tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
 archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
-writer = pd.ExcelWriter(archivo_resultados, engine = 'xlsxwriter')
 
-# cada tabla hecha previamente es guardada en una hoja del archivo de Excel
-tabla_afq.to_excel(writer, sheet_name = 'afq')
-tabla_def.to_excel(writer, sheet_name = 'exeyezgxy')
-tabla_esf.to_excel(writer, sheet_name = 'sxsytxy')
-tabla_epv.to_excel(writer, sheet_name = 's1s2tmaxsv')
-writer.save()
+# se escribe cada DataFrame a una hoja diferente
+with pd.ExcelWriter(archivo_resultados, engine='xlsxwriter') as writer:
+    tabla_afq.to_excel(writer, sheet_name='afq')
+    tabla_def.to_excel(writer, sheet_name='exeyezgxy')
+    tabla_esf.to_excel(writer, sheet_name='sxsytxy')
+    tabla_epv.to_excel(writer, sheet_name='s1s2tmaxsv')
 
 print(f'Cálculo finalizado. En "{archivo_resultados}" se guardaron los resultados.')
 
 # %% Se genera un archivo .VTK para visualizar en Paraview
 # Instale meshio (https://github.com/nschloe/meshio) con:
-# pip install meshio[all] --user
+# pip install meshio[all]==5.0.5
+
+# meshio requiere que las coordenadas de los puntos y los vectores sean 3D; por
+# dicha razón se agrega una columna de ceros
 
 import meshio
-meshio.write_points_cells(
-    f"resultados_{nombre_archivo}.vtk",
-    points=xnod,
-    cells={"quad8": LaG[:,[0,2,4,6,1,3,5,7]] },
+mesh = meshio.Mesh(
+    points = np.c_[xnod, np.zeros(nno)],
+    cells  = [ ('quad8', LaG[:,[0,2,4,6,1,3,5,7]]) ],
     point_data = {
-        'ex':ex, 'ey':ey, 'ez':ez,     'gxy':gxy,
-        'sx':sx, 'sy':sy, 'txy':txy,
-        's1':s1, 's2':s2, 'tmax':tmax, 'sv':sv,
-        'uv'  :a.reshape((nno,2)),
-        'reacciones' : q.reshape((nno,2)),
-        'n1':np.c_[np.cos(ang),           np.sin(ang)          ],
-        'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2)]
-        },
-    cell_data = {
-        "quad8" : {"material" : mat}
+        'uv'         : np.c_[a.reshape((nno,2)), np.zeros(nno)],
+        'reacciones' : np.c_[q.reshape((nno,2)), np.zeros(nno)],
+        'ex':ex, 'ey':ey, 'ez'  :ez,   'gxy':gxy,
+        'sx':sx, 'sy':sy, 'txy' :txy,
+        's1':s1, 's2':s2, 'tmax':tmax, 'sv' :sv,
+        'n1':np.c_[np.cos(ang),           np.sin(ang),           np.zeros(nno)],
+        'n2':np.c_[np.cos(ang + np.pi/2), np.sin(ang + np.pi/2), np.zeros(nno)],        
     },
-    # field_data=field_data
-)
+    cell_data = {
+        'material' : [mat]
+    })
+
+mesh.write(f"resultados_{nombre_archivo}.vtk")
 
 # %% Pasando los resultados a GiD
 # Pasando los esfuerzos ya promediados:
