@@ -35,7 +35,7 @@ NOTA:
 * **TRABAJO INDIVIDUAL**: cada integrante del grupo debe hacer los dos videos:
   * VIDEO 1 (máximo 20 minutos): en este video se debe explicar en detalle el modelado de la estructura escogida. Se deben mostrar los resultados sin interpretarlos. Se recomienda que el estudiante explore muy bien todas las funcionalidades del programa para la presentación de resultados (posprocesado). En el mismo video mostrar la comparación de los resultados obtenidos con MATLAB/PYTHON y con el programa escogido. No hay que hacer el análisis de resultados en el video. Esto lo hará en el trabajo escrito.
 
-  * VIDEO 2 (máximo 30 minutos): en este video se debe hacer una reseña crítica de las capacidades, limitaciones y las hipótesis fundamentales que hace el programa en cuanto al análisis por tensión plana (es decir, en cuanto a la matemática interna para el cálculo: algoritmos para la solución de los sistemas de ecuaciones, tipos de elementos finitos usados, métodos para el refinamiento de la malla, métodos para verificar la calidad de la malla de EFs, etc.). OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido y que se utilizaron para calcular la estructura. Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video. Se sugiere para la presentación tomar capturas de pantalla de los manuales de referencia del programa en cuestión. OJO: no confunda esto con la información comercial. Lo que se está solicitando está dentro de los manuales de referencia.
+  * VIDEO 2 (máximo 30 minutos): en este video se debe hacer una reseña crítica de las capacidades, limitaciones y las hipótesis fundamentales que hace el programa en cuanto al análisis por tensión plana (es decir, en cuanto a la matemática interna para el cálculo: algoritmos para la solución de los sistemas de ecuaciones, tipos de elementos finitos que tiene disponibles el programa, métodos para el refinamiento de la malla, métodos para verificar la calidad de la malla de EFs, métodos H y P para el refinamiento de la malla, estudios de convergencia de los resultados, y otras opciones chéveres que vale la pena nombrar, etc.). OJO: no es mostrar como se utiliza el software, sino más mirar los manuales de referencia y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido y que se utilizaron para calcular la estructura. Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video. Se sugiere para la presentación tomar capturas de pantalla de los manuales de referencia del programa en cuestión. OJO: no confunda esto con la información comercial. Lo que se está solicitando está dentro de los manuales de referencia.
 
   Algunos ejemplos de buenos análisis son:
      * STRUSOFT FEM-DESIGN (análisis de losas): https://www.youtube.com/watch?v=xxPzgIl-mEg    
@@ -75,7 +75,6 @@ NOTA:
 * Si no se incluye en el video un recuadro donde se donde se vea usted hablando sobre el software se tendrá menos 3.0 unidades.
 
 
-
 ## Criterios de evaluación
 * NOTA MAXIMA 6.0. Tenga en cuenta que la nota tiene un componente individual (los videos) y otro grupal (el informe escrito).
 
@@ -89,7 +88,7 @@ NOTA:
   * 0.2 Calculó el diagrama de esfuerzos σ1, σ2 *y* sus respectivas inclinaciones (los diagramas de σ1 y σ2 sin sus respectivas inclinaciones no otorgarán puntos)
   * 0.1 Calculó el diagrama de esfuerzos de von Mises y/o Tresca y/o τₘₐₓ 
   * 0.2 Usa el consejo de como hacer buenas mallas
-  * 0.7 Expone adecuadamente las capacidades del software en cuanto a la presentación de resultados (postprocesado). Se requiere para este punto que usted explore las opciones que le de el software para la presentación de resultados y gráficos: por curvas de nivel, rangos de colores, diferentes diagramas, cortes en las secciones que muestren como varían las cantidades, opciones para integrar los esfuerzos y obtener las fuerzas cortantes y los momentos flectores equivalentes, etc.
+  * 0.7 Expone adecuadamente las capacidades del software en cuanto a la presentación de resultados (postprocesado) y para la creación de una buena malla. Se requiere para este punto que usted explore las opciones que le de el software para la presentación de resultados y gráficos: por curvas de nivel, rangos de colores, diferentes diagramas, cortes en las secciones que muestren como varían las cantidades, opciones para integrar los esfuerzos y obtener las fuerzas cortantes y los momentos flectores equivalentes, etc.
   NOTA: si usted usa un software que no calcula las cantidades anteriormente solicitadas, podría perder puntos. En tal caso, se sugiere cambiar de programa.
 
 * **VIDEO 2 + PDF PRESENTACION**: Reseña de las capacidades/hipótesis/suposiciones/limitaciones del software (35% = 2.1)
@@ -106,9 +105,9 @@ NOTA:
   * 0.4 Se calculan los momentos flectores y las fuerzas cortantes (en coordenadas locales) en los cortes A y B.
 
 * **COMPONENTE DE PROGRAMACION** (punto obligatorio, si no se realiza alguno de los puntos, se tendrán menos 3.0 unidades): 
-  * Resolver el problema usando EFs triangulares isoparamétricos de 10 nodos.
-  * La malla se debe generar con el programa GMSH.
-  * Preferiblemente, mostrar los resultados en PARAVIEW.
+  * Resolver el problema usando EFs triangulares isoparamétricos de 10 nodos. Si el programa genera resultados erróneos se tendrán -2.0 unidades.
+  * La malla se debe generar con el programa GMSH. 
+  * Si se muestran, adicionalmente, los resultados en PARAVIEW se tendrán +0.5 unidades (con las opciones que se enseñan en los videos de Michael Heredia)
 
 * Por mala calidad en el sonido se rebajarán 0.5 unidades. Por favor use un micrófono auxiliar (por ejemplo, un manos libres) y evite usar el micrófono del portátil para hacer el video.
 
