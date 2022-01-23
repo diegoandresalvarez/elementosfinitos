@@ -61,7 +61,7 @@ for p = 1:n_gl
    
    dx_dxi = dN_dxi*xnod(:,X);
    dy_dxi = dN_dxi*xnod(:,Y);
-   ds_dxi = sqrt(dx_dxi^2 + dy_dxi^2);
+   ds_dxi = hypot(dx_dxi, dy_dxi);
 
    suma = suma + matN'*matN*ds_dxi*w_gl(p);
 end;

@@ -185,6 +185,10 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
    fe = zeros(16,1);
    det_Je = zeros(n_gl,n_gl); % en esta matriz se almacenaran los Jacobianos
 
+   % Se determinan las coordenadas de los nodos el EF e
+   xe = xnod(LaG(e,:),X);
+   ye = xnod(LaG(e,:),Y);
+
    for p = 1:n_gl
       for q = 1:n_gl
          xi_gl  = x_gl(p);
@@ -196,8 +200,8 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
          
          % Se evaluan las derivadas de las funciones de forma en los puntos
          % de integracion de Gauss-Legendre
-         ddN_dxi  = dN_dxi (xi_gl, eta_gl);       xe = xnod(LaG(e,:),X);
-         ddN_deta = dN_deta(xi_gl, eta_gl);       ye = xnod(LaG(e,:),Y);
+         ddN_dxi  = dN_dxi (xi_gl, eta_gl);
+         ddN_deta = dN_deta(xi_gl, eta_gl);
          
          dx_dxi  = sum(ddN_dxi  .* xe);   dy_dxi  = sum(ddN_dxi  .* ye);
          dx_deta = sum(ddN_deta .* xe);   dy_deta = sum(ddN_deta .* ye);
@@ -240,6 +244,12 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
    f(idx{e},:)      = f(idx{e},:)      + fe;
 end
 
+%% Muestro la configuracion de la matriz K (K es rala)
+figure
+spy(K);
+title('Los puntos representan los elementos diferentes de cero', ...
+   'FontSize', 26);
+
 %% Relacion de las cargas superficiales (vector ft)
 ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
 for i = 1:nlcd
@@ -254,11 +264,6 @@ end
 % superficiales calculadas
 f = f + ft;
 
-%% Muestro la configuracion de la matriz K (K es rala)
-figure
-spy(K);
-title('Los puntos representan los elementos diferentes de cero', ...
-   'FontSize', 26);
 
 %% grados de libertad del desplazamiento conocidos y desconocidos  
 c = restric(:,1);   d = setdiff(1:ngdl,c)';
