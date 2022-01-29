@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from funciones import t2ft_R89, compartir_variables, plot_esf_def
+import os.path
 
 # %% constantes que ayudarán en la lectura del código
 X, Y = 0, 1
@@ -23,10 +24,11 @@ NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
 g = 9.81 # [m/s²]   aceleración de la gravedad
 
 # %% seleccione la malla a emplear:
-nombre_archivo = 'malla1'    # EJEMPLO CLASE
-# nombre_archivo = 'malla2'  # EJEMPLO CLASE MALLA FINA
-# nombre_archivo = 'malla3'  # GANCHO
-df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
+# nombre_archivo = ['malla_1','malla1']  # EJEMPLO CLASE
+# nombre_archivo = ['malla_2','malla2']  # EJEMPLO CLASE MALLA FINA
+nombre_archivo = ['malla_3','malla3']    # GANCHO
+filename = os.path.join('..', nombre_archivo[0], f'{nombre_archivo[1]}.xlsx')
+df = pd.read_excel(filename, sheet_name=None)
 
 # %% posición de los nodos:
 # xnod: fila=número del nodo, columna=coordenada X=0 o Y=1
@@ -55,7 +57,7 @@ cp  = df['carga_punt']
 ncp = cp.shape[0]       # número de cargas puntuales
 f   = np.zeros(ngdl)    # vector de fuerzas nodales equivalentes global
 for i in range(ncp):
-   f[gdl[cp['nodo'][i]-1, cp['dirección'][i]-1]] = cp['fuerza puntual'][i]
+   f[gdl[cp['nodo'][i]-1, cp['direccion'][i]-1]] = cp['fuerza_puntual'][i]
 
 # %% Se dibuja la malla de elementos finitos
 cg = np.zeros((nef,2))  # almacena el centro de gravedad de los EF
@@ -232,7 +234,7 @@ restric = df['restric']
 nres = restric.shape[0]
 c    = np.empty(nres, dtype=int)
 for i in range(nres):
-   c[i] = gdl[restric['nodo'][i]-1, restric['dirección'][i]-1]
+   c[i] = gdl[restric['nodo'][i]-1, restric['direccion'][i]-1]
 
 # desplazamientos conocidos
 ac = restric['desplazamiento'].to_numpy()
@@ -404,7 +406,7 @@ tabla_epv = pd.DataFrame(
 tabla_epv.index.name = '# nodo'
 
 # se crea un archivo de MS EXCEL
-archivo_resultados = f"resultados_{nombre_archivo}.xlsx"
+archivo_resultados = f"resultados_{nombre_archivo[1]}.xlsx"
 
 # se escribe cada DataFrame a una hoja diferente
 with pd.ExcelWriter(archivo_resultados, engine='xlsxwriter') as writer:
@@ -439,7 +441,7 @@ mesh = meshio.Mesh(
         'material' : [mat]
     })
 
-mesh.write(f"resultados_{nombre_archivo}.vtk")
+mesh.write(f"resultados_{nombre_archivo[1]}.vtk")
 
 # %% Pasando los resultados a GiD
 # Pasando los esfuerzos ya promediados:
