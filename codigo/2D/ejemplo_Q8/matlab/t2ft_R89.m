@@ -20,7 +20,7 @@ function ft = t2ft_R89(xnod, lado, carga, espesor)
 X = 1; Y = 2;
 
 %% Parametros de la cuadratura de Gauss-Legendre
-n_gl = 5;                        % orden de la cuadratura de Gauss-Legendre
+n_gl = 3;                        % orden de la cuadratura de Gauss-Legendre
 [x_gl, w_gl] = gausslegendre_quad(n_gl);
 
 %% Se definen las funciones de forma unidimensionales y sus derivadas
@@ -54,7 +54,7 @@ dN_dxi = zeros(1,8);
 for p = 1:n_gl
    N(idx)      = NN(x_gl(p));
    
-   matN = [ N(1) 0    N(2) 0    N(3) 0    N(4) 0    N(5) 0    N(6) 0    N(7) 0    N(8) 0
+   Nijk = [ N(1) 0    N(2) 0    N(3) 0    N(4) 0    N(5) 0    N(6) 0    N(7) 0    N(8) 0
             0    N(1) 0    N(2) 0    N(3) 0    N(4) 0    N(5) 0    N(6) 0    N(7) 0    N(8) ];
  
    dN_dxi(idx) = dNN_dxi(x_gl(p));
@@ -63,8 +63,8 @@ for p = 1:n_gl
    dy_dxi = dN_dxi*xnod(:,Y);
    ds_dxi = hypot(dx_dxi, dy_dxi);
 
-   suma = suma + matN'*matN*ds_dxi*w_gl(p);
-end;
+   suma = suma + Nijk'*Nijk*ds_dxi*w_gl(p);
+end
 
 ft = espesor*suma*te;
 
