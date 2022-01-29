@@ -1,14 +1,13 @@
 clear, clc, close all   % borro la memoria, la pantalla y las figuras
 
 %% ------------------------------------------------------------------------
-%% NOTA: este codigo SOLO es apropiado para TENSION PLANA usando elementos
+%% NOTA: este codigo SOLO es apropiado para TENSION PLANA usando EFs
 %% rectangulares serendipitos de 8 nodos
 %% ------------------------------------------------------------------------
 
 %% DEFINICIÓN DEL PROBLEMA:
 % Calcule los desplazamientos y las reacciones en los empotramiento, las
-% deformaciones y los esfuerzos de la estructura en TENSION PLANA mostrada 
-% en la figura adjunta
+% deformaciones y los esfuerzos de una estructura en TENSION PLANA
 
 %% defino las variables/constantes
 X    = 1;           % un par de constantes que ayudaran en la
@@ -19,44 +18,37 @@ te   = 0.01;        % espesor del solido (m)
 rhoe = 7850;        % densidad (kg/m^3)
 g    = 9.81;        % aceleracion de la gravedad (m/s^2)
 be = [0; -rhoe*g];  % vector de fuerzas masicas del elemento
+U_LONG   =  'm';
+U_FUERZA =  'N';
+U_ESFUER =  'Pa';
 
 %% se define la estructura a calcular
 %filename = {'malla_1', 'malla1'};
 %filename = {'malla_2', 'malla2'};
-%filename = {'malla_3', 'malla3'};
-filename = {'malla_4', 'malla4'};
+filename = {'malla_3', 'malla3'};
+%filename = {'malla_4', 'malla4'};
 archivo_xlsx = fullfile('..', filename{1}, [filename{2} '.xlsx']);
 
 %% se leen las coordenadas de los nodos
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'xnod');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'xnod', 'format', 'auto');    
-end
+T = leer_excel(archivo_xlsx, 'xnod');
 idxNODO = T{:,'nodo'};
-xnod(idxNODO,:) = T{idxNODO,{'x','y'}}; % = [x,y]
-nno     = size(xnod,1); % numero de nodos (numero de filas de xnod)
-ngdl    = 2*nno;        % numero de grados de libertad (dos por nodo)
-gdl     = [(1:2:ngdl)' (2:2:ngdl)']; % nodos vs grados de libertad
+xnod(idxNODO,:) = T{:,{'x','y'}}; % = [x,y]
 
 %% se lee la matriz de conectividad (LaG) y el tipo de material
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'LaG_mat');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'LaG_mat', 'format', 'auto');
-end
-idxEF = T{:,'EF'};
-LaG   = T{idxEF,{'NL1','NL2','NL3','NL4','NL5','NL6','NL7','NL8'}};
-nef   = size(LaG,1);  % numero de EFs (numero de filas de LaG)
-mat   = T{idxEF, 'material'};
+T = leer_excel(archivo_xlsx, 'LaG_mat');
+idxEF        = T{:,'EF'};
+LaG(idxEF,:) = T{:,{'NL1','NL2','NL3','NL4','NL5','NL6','NL7','NL8'}};
+mat(idxEF,:) = T{:, 'material'};
 %mat(isnan(mat)) = 0;    FALTA FALTA  FALTA FALTA  FALTA FALTA  FALTA FALTA
 
+%% Se define el numero de nodos, los gdl y su numero y el numero de EFs
+nno  = size(xnod,1); % numero de nodos (numero de filas de xnod)
+ngdl = 2*nno;        % numero de grados de libertad (dos por nodo)
+gdl  = [(1:2:ngdl)' (2:2:ngdl)']; % nodos vs grados de libertad
+nef  = size(LaG,1);  % numero de EFs (numero de filas de LaG)
+
 %% se definen los apoyos y sus desplazamientos
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'restric');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'restric', 'format', 'auto');
-end
+T = leer_excel(archivo_xlsx, 'restric');
 idxNODO = T{:,'nodo'};
 dirdesp = T{:,'direccion'};
 ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
@@ -73,11 +65,7 @@ end
 restric = [ gdl(sub2ind([nno 2], idxNODO, dirdesp)) ac ];
 
 %% se definen las cargas puntuales
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'carga_punt');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'carga_punt', 'format', 'auto');
-end
+T = leer_excel(archivo_xlsx, 'carga_punt');
 idxNODO = T{:,'nodo'};
 dirfuer = T{:,'direccion'};
 f_punt  = T{:,'fuerza_puntual'}; % desplazamientos conocidos en los apoyos
@@ -102,14 +90,12 @@ for e = 1:nef
    cgx(e) = mean(xnod(LaG(e,[1 3 5 7]),X));
    cgy(e) = mean(xnod(LaG(e,[1 3 5 7]),Y));
    h = text(cgx(e), cgy(e), num2str(e)); 
-   set(h,'Color', [1 0 0], 'FontSize',16);
+   set(h,'Color', [1 0 0]);
 end
 plot(xnod(:,X), xnod(:,Y), 'r*');
-text(xnod(:,X), xnod(:,Y), num2str((1:nno)'), 'FontSize',16);
+text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
 axis equal tight
-title('Malla de elementos finitos','FontSize',26);
-
-return
+title('Malla de elementos finitos');
 
 %% Funciones de forma serendipitas del elemento rectangular de 8 nodos:
 % NOTA estas funciones de forma y sus derivadas se encontraron con el
@@ -148,26 +134,9 @@ xi^2/2 - 1/2                                 % dN2_deta
 eta*(xi - 1)                             ];  % dN8_deta
 
 %% Parametros de la cuadratura de Gauss-Legendre
-% se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
-% xi como en la direccion de eta
-n_gl = 2;                 % orden de la cuadratura de Gauss-Legendre
-
-% El comando:
-[x_gl, w_gl]  = gausslegendre_quad(n_gl);
-% calcula las raices (x_gl) y los pesos (w_gl) de polinomios de Legendre
-% >> [x_gl,w_gl] = gausslegendre_quad(1)
-% x_gl = 0;
-% w_gl = 2;
-% >> [x_gl,w_gl] = gausslegendre_quad(2)
-% x_gl = [  -0.577350269189626;  0.577350269189626 ];
-% w_gl = [   1.000000000000000;  1.000000000000000 ];
-% >> [x_gl,w_gl] = gausslegendre_quad(3)
-% x_gl = [  -0.774596669241483;                  0; 0.774596669241483 ];
-% w_gl = [   0.555555555555556;  0.888888888888889; 0.555555555555556 ];
-% >> [x_gl,w_gl] = gausslegendre_quad(4)
-% x_gl = [  -0.861136311594054; -0.339981043584857; 0.339981043584856; 0.861136311594053 ];
-% w_gl = [   0.347854845137453;  0.652145154862547; 0.652145154862547;
-% 0.347854845137453 ];
+% se calculan las raices x_gl y los pesos w_gl de polinomios de Legendre
+n_gl         = 2;                        % orden de la cuadratura
+[x_gl, w_gl] = gausslegendre_quad(n_gl);
 
 %% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
@@ -254,15 +223,10 @@ end
 %% Muestro la configuracion de la matriz K (K es rala)
 figure
 spy(K);
-title('Los puntos representan los elementos diferentes de cero', ...
-   'FontSize', 26);
+title('Los puntos representan los elementos diferentes de cero');
 
 %% se leen las cargas distribuidas
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'carga_distr');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'carga_distr', 'format', 'auto');
-end
+T       = leer_excel(archivo_xlsx, 'carga_distr');
 idxELEM = T{:,'elemento'};
 lado    = T{:,'lado'};
 carga   = T{:,{'tix','tiy','tjx','tjy','tkx','tky'}};
@@ -281,11 +245,7 @@ end
 f = f + ft;
 
 %% se leen las constantes de balastro k (cimentacion elastica)
-if verLessThan('matlab', '9.9') % R2019b or older
-    T = readtable(archivo_xlsx, 'Sheet', 'kWinkler');
-else
-    T = readtable(archivo_xlsx, 'Sheet', 'kWinkler', 'format', 'auto');
-end
+T       = leer_excel(archivo_xlsx, 'kWinkler');
 idxELEM = T{:,'elemento'};
 lado    = T{:,'lado'};
 kwinkl  = T{:,{'kix','kiy','kjx','kjy','kkx','kky'}};
@@ -317,19 +277,12 @@ Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
 ac = restric(:,2);   % desplazamientos conocidos
-qc = zeros(size(d)); % cargas de equilibrio en nodos libres ( = 0 siempre)
 
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\((fc+qc)-Kdc*ac);   % calculo desplazamientos desconocidos
+ad = Kdd\(fc - Kdc*ac);      % calculo desplazamientos desconocidos
 qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos
-q = zeros(ngdl,1);  q(c) = qd;  q(d) = qc; % fuerzas nodales equivalentes
-
-%% imprimo los resultados
-format short g
-disp('Nodo   Despl_x (m)   Despl_y (m) = ');     [1:nno; reshape(a,2,nno)]'
-disp('Nodo Fuerzas nodales equiv. X, Y (N) = '); [1:nno; reshape(f,2,nno)]'
-disp('Nodo Fuerzas nodales equil. X, Y (N) = '); [1:nno; reshape(q,2,nno)]'
+q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 delta = reshape(a,2,nno)';
@@ -345,7 +298,7 @@ for e = 1:nef
 end
 axis equal tight;
 legend('Posicion original','Posicion deformada','Location', 'SouthOutside');
-title(sprintf('Deformada escalada %d veces',escala), 'FontSize', 26);
+title(sprintf('Deformada escalada %d veces',escala));
 
 %% Se calcula para cada elemento las deformaciones y los esfuerzos
 def = cell(nef,n_gl,n_gl);
@@ -361,222 +314,176 @@ for e = 1:nef
    end
 end
 
-%% Se extrapolan los esfuerzos y las deformaciones a los nodos
-num_elem_ady = zeros(nno,1);  % numero de elementos adyacentes
-sx  = zeros(nno,1);
-sy  = zeros(nno,1);
-sz  = zeros(nno,1);
-txy = zeros(nno,1);
-txz = zeros(nno,1);
-tyz = zeros(nno,1);
+%% Se extrapolan los esfuerzos y las deformaciones a los nodos y se alisan
+% adicionalmente se calcula el error en el alisado
+[sx,  error_sx ] = extrapolar_esf_def(xnod, LaG, esf, 'sx');
+[sy,  error_sy ] = extrapolar_esf_def(xnod, LaG, esf, 'sy');
+[txy, error_txy] = extrapolar_esf_def(xnod, LaG, esf, 'txy');
+[ex,  error_ex ] = extrapolar_esf_def(xnod, LaG, def, 'ex');
+[ey,  error_ey ] = extrapolar_esf_def(xnod, LaG, def, 'ey');
+[gxy, error_gxy] = extrapolar_esf_def(xnod, LaG, def, 'gxy');
 
-ex  = zeros(nno,1);
-ey  = zeros(nno,1);
-gxy = zeros(nno,1);
+%% en tension plana ...
+sz   = zeros(nno,1);
+txz  = zeros(nno,1);
+tyz  = zeros(nno,1);
 
-A = [ ... 
-   3^(1/2)/2 + 1,            -1/2,            -1/2,   1 - 3^(1/2)/2
- 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4
-            -1/2,   1 - 3^(1/2)/2,   3^(1/2)/2 + 1,            -1/2
- 1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4
-   1 - 3^(1/2)/2,            -1/2,            -1/2,   3^(1/2)/2 + 1
- 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4
-            -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2
- 3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4 ];
+ez   = -(nue/Ee)*(sx+sy);            % deformaciones ez
+tmax = sqrt(((sx-sy)/2).^2+txy.^2);  % esfuerzo cortante maximo
+s1   = (sx+sy)/2 + tmax;             % esfuerzo normal maximo
+s2   = (sx+sy)/2 - tmax;             % esfuerzo normal minimo
+ang  = 0.5*atan2(2*txy, sx-sy);      % angulo de inclinacion de s1
 
-for e = 1:nef
-   sx(LaG(e,:),:) = sx(LaG(e,:),:)   + A * [ esf{e,1,1}(1)
-                                             esf{e,1,2}(1)
-                                             esf{e,2,1}(1)
-                                             esf{e,2,2}(1) ];
+s3   = zeros(nno,1);
+sv   = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2); % von Mises
 
-   sy(LaG(e,:),:) = sy(LaG(e,:),:)   + A * [ esf{e,1,1}(2)
-                                             esf{e,1,2}(2)
-                                             esf{e,2,1}(2)
-                                             esf{e,2,2}(2) ];
-                                        
-   txy(LaG(e,:),:) = txy(LaG(e,:),:) + A * [ esf{e,1,1}(3)
-                                             esf{e,1,2}(3)
-                                             esf{e,2,1}(3)
-                                             esf{e,2,2}(3) ];                       
-                                          
-   ex(LaG(e,:),:) = ex(LaG(e,:),:)   + A * [ def{e,1,1}(1)
-                                             def{e,1,2}(1)
-                                             def{e,2,1}(1)
-                                             def{e,2,2}(1) ];
+%% Se reportan los resultados en un archivo .xlsx
+tabla_aq = array2table([(1:nno)', reshape(a,2,nno)', reshape(q,2,nno)'], ...
+    'VariableNames', {'nodo', ['u_' U_LONG], 'v', ['qx_' U_FUERZA], 'qy'});
 
-   ey(LaG(e,:),:) = ey(LaG(e,:),:)   + A * [ def{e,1,1}(2)
-                                             def{e,1,2}(2)
-                                             def{e,2,1}(2)
-                                             def{e,2,2}(2) ];
-                                        
-   gxy(LaG(e,:),:) = gxy(LaG(e,:),:) + A * [ def{e,1,1}(3)
-                                             def{e,1,2}(3)
-                                             def{e,2,1}(3)
-                                             def{e,2,2}(3) ];                                                                 
-                                          
-   num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
-end
+tabla_def = array2table([(1:nno)', ex, ey, ez, gxy], ...
+    'VariableNames', {'nodo', 'ex', 'ey', 'ez', 'gxy_rad'});
 
-%% Alisado (promedio de los esfuerzos en los nodos)
-sx  =  sx./num_elem_ady;  ex  =  ex./num_elem_ady;
-sy  =  sy./num_elem_ady;  ey  =  ey./num_elem_ady;
-txy = txy./num_elem_ady;  gxy = gxy./num_elem_ady;
+tabla_esf = array2table([(1:nno)', sx, sy, txy, s1, s2, ang, tmax, sv], ...
+    'VariableNames', {'nodo', ['sx_' U_ESFUER], 'sy', 'txy', 's1', 's2', 'ang_rad', 'tmax', 'sv'});
 
-%% Se calculan las deformacion ez en tension plana
-ez  = -(nue/Ee)*(sx+sy);
+filename_results = ['resultados_' filename{2} '.xlsx'];
+writetable(tabla_aq,  filename_results, 'Sheet', 'aq')
+writetable(tabla_def, filename_results, 'Sheet', 'deformaciones')
+writetable(tabla_esf, filename_results, 'Sheet', 'esfuerzos')
 
-%% Se imprimen y grafican las deformaciones en los nodos
-disp('Deformaciones: (Nodo,ex,ey,ez,gxy) = '); 
-disp([(1:nno)'  ex  ey  ez  gxy])
+fprintf('Calculo finalizado. Resultados en "%s".\n', filename_results);
+
+%% se grafican las deformaciones
 figure
-subplot(2,2,1); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ex(LaG(e,:)))
-end
-ylabel('\epsilon_x','FontSize',26); axis equal tight; colorbar; 
+subplot(1,4,1); plot_def_esf(xnod, LaG, ex,  '\epsilon_x')
+subplot(1,4,2); plot_def_esf(xnod, LaG, ey,  '\epsilon_y')
+subplot(1,4,3); plot_def_esf(xnod, LaG, ez,  '\epsilon_z')
+subplot(1,4,4); plot_def_esf(xnod, LaG, gxy, '\gamma_{xy} [rad]')
 
-subplot(2,2,2); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ey(LaG(e,:)))
-end
-ylabel('\epsilon_y','FontSize',26); axis equal tight; colorbar;
-
-subplot(2,2,3); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),ez(LaG(e,:)))
-end
-ylabel('\epsilon_z','FontSize',26); axis equal tight; colorbar;
-
-subplot(2,2,4); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),gxy(LaG(e,:)))
-end
-ylabel('\gamma_{xy}','FontSize',26); axis equal tight; colorbar;
-
-%% Se imprimen y grafican los esfuerzos en los nodos
-disp('Esfuerzos (Pa):  (Nodo,sx,sy,txy) = '); 
-disp([(1:nno)'  sx  sy  txy])
+%% se grafican los esfuerzos
 figure
-subplot(2,2,1); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sx(LaG(e,:)))
-end
-ylabel('\sigma_x (Pa)','FontSize',26); axis equal tight; colorbar;
+subplot(1,3,1); plot_def_esf(xnod, LaG, sx,  '\sigma_x [Pa]')
+subplot(1,3,2); plot_def_esf(xnod, LaG, sy,  '\sigma_y [Pa]')
+subplot(1,3,3); plot_def_esf(xnod, LaG, txy, '\tau_{xy} [Pa]')
 
-subplot(2,2,2); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sy(LaG(e,:)))
-end
-ylabel('\sigma_y (Pa)','FontSize',26); axis equal tight; colorbar;
-
-subplot(2,2,3); hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),txy(LaG(e,:)))
-end
-ylabel('\tau_{xy} (Pa)','FontSize',26); axis equal tight; colorbar;
-
-%% Se calculan y grafican para cada elemento los esfuerzos principales y
-%% sus direcciones
-% NOTA: esto solo es valido para el caso de TENSION PLANA).
-% En caso de DEFORMACION PLANA se deben calcular los valores y vectores 
-% propios de la matriz de tensiones de Cauchy
-%   [dirppales{e}, esfppales{e}] = eig([sx  txy 0    % matriz de esfuerzos
-%                                       txy sy  0    % de Cauchy
-%                                       0   0   0]);
-
-s1   = (sx+sy)/2 + sqrt(((sx-sy)/2).^2+txy.^2); % esfuerzo normal maximo
-s2   = (sx+sy)/2 - sqrt(((sx-sy)/2).^2+txy.^2); % esfuerzo normal minimo
-tmax = (s1-s2)/2;                               % esfuerzo cortante maximo
-ang  = 0.5*atan2(2*txy, sx-sy); % angulo de inclinacion de s1
-
-%% Calculo de los esfuerzos de von Mises
-s3 = zeros(size(s1));
-sv = sqrt(((s1-s2).^2 + (s2-s3).^2 + (s1-s3).^2)/2);
-
-%% imprimo los resultados
-disp('Nodo,s1(Pa),s2(Pa),tmax(Pa),angulo(rad) = '); 
-disp([(1:nno)'  s1  s2  tmax  ang])
-disp('Nodo,Esfuerzos de von Mises (Pa) = ');
-disp([(1:nno)'  sv]);
-
-%% s1, s2, taumax
-esc = 0.5; % escala para graficar las flechas
-
+%% se grafican los errores en los esfuerzos
 figure
-hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s1(LaG(e,:)))
-end
+subplot(1,3,1); plot_def_esf(xnod, LaG, error_sx,  'Error \sigma_x [Pa]')
+subplot(1,3,2); plot_def_esf(xnod, LaG, error_sy,  'Error \sigma_y [Pa]')
+subplot(1,3,3); plot_def_esf(xnod, LaG, error_txy, 'Error \tau_{xy} [Pa]')
 
-% Grafique lineas que indican las direcciones principales de sigma_1
-norma = 1; % = s1 si quiere proporcional
-quiver(xnod(:,X),xnod(:,Y),...   % En el nodo grafique una flecha (linea)
-   norma.*cos(ang),norma.*sin(ang),... % indicando la direccion principal de sigma_1
-   esc,...                       % con una escala esc
-   'k', ...                      % de color negro
-  'ShowArrowHead','off',...      % una flecha sin cabeza
-  'LineWidth',2,...              % con un ancho de linea 2
-  'Marker','.');                 % y en el punto (x,y) poner un punto '.'
-quiver(xnod(:,X),xnod(:,Y),...   % la misma flecha ahora en la otra direccion,
-   norma.*cos(ang+pi),norma.*sin(ang+pi),...  % es decir girando 180 grados
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal tight;
-title('\sigma_1 (Pa)','FontSize',26); colorbar
-
+%% se grafican los esfuerzos principales y el esfuerzo cortante maximo
 figure
-hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),s2(LaG(e,:)))
-end
-% Grafique lineas que indiquen direcciones principales de sigma_2
-norma = 1; % = s2 si quiere proporcional
-quiver(xnod(:,X),xnod(:,Y),...             % flecha indicando la direccion
-   norma.*cos(ang+pi/2),norma.*sin(ang+pi/2),... % principal de sigma_2
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(xnod(:,X),xnod(:,Y),...
-   norma.*cos(ang-pi/2),norma.*sin(ang-pi/2),...
-   esc,'k',...
-   'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal tight;
-title('\sigma_2 (Pa)','FontSize',26); colorbar
+subplot(1,3,1); plot_def_esf(xnod, LaG, s1,   '(\sigma_1)_{xy} [Pa]', { ang })
+subplot(1,3,2); plot_def_esf(xnod, LaG, s2,   '(\sigma_2)_{xy} [Pa]', { ang+pi/2 })
+subplot(1,3,3); plot_def_esf(xnod, LaG, tmax, '\tau_{max} [Pa]',      { ang+pi/4, ang-pi/4 })
 
-figure;
-hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),tmax(LaG(e,:)))
-end
-% Grafique lineas que indiquen direcciones principales de tau_max,
-norma = 1; % = tmax si quiere proporcional
-quiver(xnod(:,X),xnod(:,Y), ...
-       norma.*cos(ang+pi/4),norma.*sin(ang+pi/4),'k',...
-       'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(xnod(:,X),xnod(:,Y),...
-       norma.*cos(ang-pi/4),norma.*sin(ang-pi/4),'k',...
-       'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(xnod(:,X),xnod(:,Y),...
-       norma.*cos(ang+3*pi/4),norma.*sin(ang+3*pi/4),'k',...
-       'ShowArrowHead','off','LineWidth',2,'Marker','.');
-quiver(xnod(:,X),xnod(:,Y),...
-       norma.*cos(ang-3*pi/4),norma.*sin(ang-3*pi/4),'k',...
-       'ShowArrowHead','off','LineWidth',2,'Marker','.');
-axis equal tight;
-title('\tau_{max} (Pa)','FontSize',26); colorbar
+%% se grafican los esfuerzos de von Mises
+figure
+plot_def_esf(xnod, LaG, sv, 'Esfuerzos de von Mises [Pa]');
 
-figure; hold on;
-for e = 1:nef
-   fill(xnod(LaG(e,:),X),xnod(LaG(e,:),Y),sv(LaG(e,:)))
-end
-ylabel('\sigma_v (Pa)','FontSize',26); axis equal tight; colorbar;
-title('Esfuerzos de von Mises (Pa)','FontSize',26);
-
+%% se exportan los resultados a GiD/Paraview
 % Pasando los esfuerzos ya promediados:
-export_to_GiD('c5_ejemplo_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
+%export_to_GiD('c5_ejemplo_a',xnod,LaG,a,q,[sx sy sz txy txz tyz]);
 
 % Pasando los puntos de Gauss [RECOMENDADO] !!!
 % export_to_GiD('c5_ejemplo_b',xnod,LaG,a,q,esf);                    
 
 %%
 return; % bye, bye!
+
+%% Lee del archivo "nombre_archivo" de EXCEL la hoja "hoja"
+function H = leer_excel(archivo_xlsx, hoja)
+
+    if verLessThan('matlab', '9.9') % R2019b or older
+        H = readtable(archivo_xlsx, 'Sheet', hoja);
+    else
+        H = readtable(archivo_xlsx, 'Sheet', hoja, 'format', 'auto');
+    end
+end
+
+%% Grafica los esfuerzos y las deformaciones
+function plot_def_esf(xnod, LaG, variable, texto, angulos)
+    X = 1; Y = 2;
+    hold on; 
+    colorbar;
+    
+    nef = size(LaG, 1);    
+    for e = 1:nef  
+       fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), variable(LaG(e,:)));
+    end
+    axis equal tight
+    colormap jet
+    title(texto);
+   
+    esc = 0.5;
+    if nargin == 5
+        norma = 1; % = variable % si se quiere proporcional
+        for i = 1:length(angulos)
+            % se indica la flecha de la direccion principal
+            quiver(xnod(:,X),xnod(:,Y),...             
+                norma.*cos(angulos{i}), norma.*sin(angulos{i}),... 
+                esc, ...                  % con una escala esc
+                'k',...                   % de color negro
+                'ShowArrowHead','off',... % una flecha sin cabeza
+                'LineWidth',2, ...        % con un ancho de linea 2
+                'Marker','.');            % y en el punto (x,y) poner un punto '.'
+            
+            % la misma flecha girada 180 grados
+            quiver(xnod(:,X),xnod(:,Y),...             
+                norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
+                esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
+        end      
+    end
+end
+
+%% Extrapola/alisa esfuerzos y deformaciones de puntos de Gauss a los nodos
+function [esf, error_esf] = extrapolar_esf_def(xnod, LaG, esfuerzo, tipo_esf)
+    nno = size(xnod, 1);
+    nef = size(LaG, 1);
+
+    num_elem_ady = zeros(nno,1);  % numero de elementos adyacentes
+    esf.sum      = zeros(nno,1);
+    esf.max      =  -inf(nno,1);
+    esf.min      =   inf(nno,1);
+
+    A = [ ... 
+      3^(1/2)/2 + 1,            -1/2,            -1/2,   1 - 3^(1/2)/2
+    3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4
+               -1/2,   1 - 3^(1/2)/2,   3^(1/2)/2 + 1,            -1/2
+    1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4
+      1 - 3^(1/2)/2,            -1/2,            -1/2,   3^(1/2)/2 + 1
+    1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4
+               -1/2,   3^(1/2)/2 + 1,   1 - 3^(1/2)/2,            -1/2
+    3^(1/2)/4 + 1/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 1/4 - 3^(1/2)/4 ];
+
+    switch tipo_esf
+        case {'sx',  'ex'},  num_esf = 1;
+        case {'sy',  'ey'},  num_esf = 2;
+        case {'txy', 'gxy'}, num_esf = 3;
+        otherwise,           error('Opcion no soportada');
+    end
+
+    for e = 1:nef
+        esf_EF_e = A * [ esfuerzo{e,1,1}(num_esf)
+                         esfuerzo{e,1,2}(num_esf)
+                         esfuerzo{e,2,1}(num_esf)
+                         esfuerzo{e,2,2}(num_esf) ];        
+        
+        esf.sum(LaG(e,:),:) = esf.sum(LaG(e,:),:)    + esf_EF_e;
+        esf.max(LaG(e,:),:) = max(esf.max(LaG(e,:),:), esf_EF_e);
+        esf.min(LaG(e,:),:) = min(esf.max(LaG(e,:),:), esf_EF_e);     
+                                                
+        num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
+    end
+
+    %% alisado (promedio de los esfuerzos en los nodos)
+    esf.prom = esf.sum./num_elem_ady;    
+    
+    %% variables a retornar
+    error_esf = (esf.max - esf.min)./esf.prom; % error en el alisado
+    error_esf = log10(abs(error_esf));
+    error_esf(error_esf < log10(0.1)) = -3;
+    esf       = esf.prom;                      % esfuerzo promedio
+end
