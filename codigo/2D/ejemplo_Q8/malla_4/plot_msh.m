@@ -43,3 +43,12 @@ for b = 1:nbordes
         end
     end
 end
+
+empotra = borde(:,[1 2])'
+empotra(:)
+
+syms xl xr m b x Ry Rm
+x0 = (xl+xr)/2;
+eq1 = int(m*x+b, x, xl, xr) == Ry;
+eq2 = int((m*x+b)*(x-x0), x, xl, xr) == Rm;
+sol = solve([eq1,eq2],[m,b])

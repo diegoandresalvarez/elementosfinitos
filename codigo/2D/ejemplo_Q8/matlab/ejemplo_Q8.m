@@ -1,51 +1,37 @@
+%% Calculo de los desplazamientos y las reacciones en los empotramiento, 
+%% las deformaciones y los esfuerzos de una estructura en TENSION PLANA
+% NOTA: este codigo SOLO es apropiado para TENSION PLANA usando EFs
+% rectangulares serendipitos de 8 nodos
+
 clear, clc, close all   % borro la memoria, la pantalla y las figuras
 
-%% ------------------------------------------------------------------------
-%% NOTA: este codigo SOLO es apropiado para TENSION PLANA usando EFs
-%% rectangulares serendipitos de 8 nodos
-%% ------------------------------------------------------------------------
-
-%% DEFINICIÓN DEL PROBLEMA:
-% Calcule los desplazamientos y las reacciones en los empotramiento, las
-% deformaciones y los esfuerzos de una estructura en TENSION PLANA
-
 %% defino las variables/constantes
-X    = 1;           % un par de constantes que ayudaran en la
-Y    = 2;           % lectura del codigo
-Ee   = 200e9;       % modulo de elasticidad del solido (Pa) = 200 GPa
-nue  = 0.30;        % coeficiente de Poisson
-te   = 0.01;        % espesor del solido (m)
-rhoe = 7850;        % densidad (kg/m^3)
-g    = 9.81;        % aceleracion de la gravedad (m/s^2)
-be = [0; -rhoe*g];  % vector de fuerzas masicas del elemento
-U_LONG   =  'm';
-U_FUERZA =  'N';
-U_ESFUER =  'Pa';
+X = 1; Y = 2; % un par de constantes que ayudaran en la lectura del codigo
 
 %% se define la estructura a calcular
 %filename = {'malla_1', 'malla1'};
 %filename = {'malla_2', 'malla2'};
-filename = {'malla_3', 'malla3'};
-%filename = {'malla_4', 'malla4'};
+%filename = {'malla_3', 'malla3'};
+filename = {'malla_4', 'malla4'};
 archivo_xlsx = fullfile('..', filename{1}, [filename{2} '.xlsx']);
 
 %% se leen las coordenadas de los nodos
 T = leer_excel(archivo_xlsx, 'xnod');
-idxNODO = T{:,'nodo'};
+idxNODO         = T{:,'nodo'};
 xnod(idxNODO,:) = T{:,{'x','y'}}; % = [x,y]
+nno             = size(xnod,1);   % numero de nodos
 
 %% se lee la matriz de conectividad (LaG) y el tipo de material
 T = leer_excel(archivo_xlsx, 'LaG_mat');
 idxEF        = T{:,'EF'};
 LaG(idxEF,:) = T{:,{'NL1','NL2','NL3','NL4','NL5','NL6','NL7','NL8'}};
-mat(idxEF,:) = T{:, 'material'};
+nef  = size(LaG,1);  % numero de EFs (numero de filas de LaG)
+%mat(idxEF,:) = T{:, 'material'};
 %mat(isnan(mat)) = 0;    FALTA FALTA  FALTA FALTA  FALTA FALTA  FALTA FALTA
 
-%% Se define el numero de nodos, los gdl y su numero y el numero de EFs
-nno  = size(xnod,1); % numero de nodos (numero de filas de xnod)
+%% Se definen los grados de libertad
 ngdl = 2*nno;        % numero de grados de libertad (dos por nodo)
 gdl  = [(1:2:ngdl)' (2:2:ngdl)']; % nodos vs grados de libertad
-nef  = size(LaG,1);  % numero de EFs (numero de filas de LaG)
 
 %% se definen los apoyos y sus desplazamientos
 T = leer_excel(archivo_xlsx, 'restric');
@@ -54,8 +40,8 @@ dirdesp = T{:,'direccion'};
 ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
 
 %% Se definen las restricciones 
-ngdl_res = size(ac,1); % numero de grados de libertad restringidos
 %{
+ngdl_res = size(ac,1); % numero de grados de libertad restringidos
 restric = zeros(ngdl_res,2);
 for i = 1:ngdl_res
 %                       nodo        direccion   desplazamiento    
@@ -80,8 +66,22 @@ end
 %}
 f(gdl(sub2ind([nno 2], idxNODO, dirfuer))) = f_punt;
 
+%% se leen algunas variables
+T        = readcell(archivo_xlsx, 'Sheet','varios','Range','B1:B9');
+E        = T{1}; % modulo de elasticidad E
+nu       = T{2}; % coeficiente de Poisson
+rho      = T{3}; % densidad del material
+g        = T{4}; % aceleracion de la gravedad
+t        = T{5}; % espesor de la estructura
+U_LONG   = T{6}; % unidades de longitud
+U_FUERZA = T{7}; % unidades de fuerza
+U_ESFUER = T{8}; % unidades de esfuerzo
+ESC_UV   = T{9}; % factor de escala para los desplazamientos
+be = [0; -rho*g];  % vector de fuerzas masicas del elemento
+
 %% Se dibuja la malla de elementos finitos
-figure; hold on;
+figure;
+hold on;
 cgx = zeros(1,nef); cgy = zeros(1,nef); % almacena el centro de gravedad
 for e = 1:nef
    line(xnod(LaG(e,[1:8 1]),X), xnod(LaG(e,[1:8 1]),Y));
@@ -89,8 +89,7 @@ for e = 1:nef
    % Calculo la posicion del centro de gravedad del triangulo
    cgx(e) = mean(xnod(LaG(e,[1 3 5 7]),X));
    cgy(e) = mean(xnod(LaG(e,[1 3 5 7]),Y));
-   h = text(cgx(e), cgy(e), num2str(e)); 
-   set(h,'Color', [1 0 0]);
+   text(cgx(e), cgy(e), num2str(e), 'Color', [1 0 0]);
 end
 plot(xnod(:,X), xnod(:,Y), 'r*');
 text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
@@ -145,9 +144,9 @@ N = cell(nef,n_gl,n_gl); % contenedor para las matrices de forma
 B = cell(nef,n_gl,n_gl); % contenedor para las matrices de deformacion
 
 % matriz constitutiva del elemento para TENSION PLANA
-De = [ Ee/(1-nue^2)     Ee*nue/(1-nue^2)  0
-       Ee*nue/(1-nue^2) Ee/(1-nue^2)      0
-       0                0                 Ee/(2*(1+nue)) ];
+De = (E/(1-nu^2)) * [ 1  nu 0
+                      nu 1  0
+                      0  0  (1-nu)/2 ];
 idx = cell(nef,1);
 for e = 1:nef          % ciclo sobre todos los elementos finitos
    idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:) ...
@@ -205,10 +204,10 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
          end
 
          % se arma la matriz de rigidez del elemento e
-         Ke = Ke + B{e,p,q}'*De*B{e,p,q}*det_Je(p,q)*te*w_gl(p)*w_gl(q);
+         Ke = Ke + B{e,p,q}'*De*B{e,p,q}*det_Je(p,q)*t*w_gl(p)*w_gl(q);
 
          % vector de fuerzas nodales equivalentes
-         fe = fe + N{e,p,q}'*be*det_Je(p,q)*te*w_gl(p)*w_gl(q);
+         fe = fe + N{e,p,q}'*be*det_Je(p,q)*t*w_gl(p)*w_gl(q);
       end
    end
    
@@ -236,7 +235,7 @@ nlcd    = size(carga,1); % numero de lados con carga distribuida
 ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
 for i = 1:nlcd
    e   = idxELEM(i);
-   fte = t2ft_R89(xnod(LaG(e,1:8),[X Y]), lado(i), carga(i,:), te);
+   fte = t2ft_R89(xnod(LaG(e,1:8),[X Y]), lado(i), carga(i,:), t);
    ft(idx{e},:) = ft(idx{e},:) + fte;
 end
 
@@ -254,7 +253,7 @@ nlk     = size(carga,1); % numero de lados con cimentacion elastica
 %% Relacion de los EFs sobre cimentacion elastica
 for i = 1:length(idxELEM)
    e = idxELEM(i);
-   He = Hwinkler_8(xnod(LaG(e,1:8),[X Y]), lado(i), kwinkl(i,:), te);
+   He = Hwinkler_8(xnod(LaG(e,1:8),[X Y]), lado(i), kwinkl(i,:), t);
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + He;
 end
 
@@ -286,8 +285,7 @@ q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
 %% Dibujo la malla de elementos finitos y las deformaciones de esta
 delta = reshape(a,2,nno)';
-escala = 50000;             % factor de escalamiento de la deformada
-xdef = xnod + escala*delta; % posicion de la deformada
+xdef = xnod + ESC_UV*delta; % posicion de la deformada
 figure
 hold on
 for e = 1:nef
@@ -296,9 +294,11 @@ for e = 1:nef
    h2 = line(xdef(LaG(e,[1:8 1]),X), xdef(LaG(e,[1:8 1]),Y)); % deformada
    set(h2, 'Color', [1 0 0]);
 end
+xlabel(['Eje X [' U_LONG ']']);
+ylabel(['Eje Y [' U_LONG ']']);
 axis equal tight;
 legend('Posicion original','Posicion deformada','Location', 'SouthOutside');
-title(sprintf('Deformada escalada %d veces',escala));
+title(sprintf('Deformada escalada %d veces', ESC_UV));
 
 %% Se calcula para cada elemento las deformaciones y los esfuerzos
 def = cell(nef,n_gl,n_gl);
@@ -328,7 +328,7 @@ sz   = zeros(nno,1);
 txz  = zeros(nno,1);
 tyz  = zeros(nno,1);
 
-ez   = -(nue/Ee)*(sx+sy);            % deformaciones ez
+ez   = -(nu/E)*(sx+sy);              % deformaciones ez
 tmax = sqrt(((sx-sy)/2).^2+txy.^2);  % esfuerzo cortante maximo
 s1   = (sx+sy)/2 + tmax;             % esfuerzo normal maximo
 s2   = (sx+sy)/2 - tmax;             % esfuerzo normal minimo
@@ -363,25 +363,25 @@ subplot(1,4,4); plot_def_esf(xnod, LaG, gxy, '\gamma_{xy} [rad]')
 
 %% se grafican los esfuerzos
 figure
-subplot(1,3,1); plot_def_esf(xnod, LaG, sx,  '\sigma_x [Pa]')
-subplot(1,3,2); plot_def_esf(xnod, LaG, sy,  '\sigma_y [Pa]')
-subplot(1,3,3); plot_def_esf(xnod, LaG, txy, '\tau_{xy} [Pa]')
+subplot(1,3,1); plot_def_esf(xnod, LaG, sx,  ['\sigma_x [' U_ESFUER ']'])
+subplot(1,3,2); plot_def_esf(xnod, LaG, sy,  ['\sigma_y [' U_ESFUER ']'])
+subplot(1,3,3); plot_def_esf(xnod, LaG, txy, ['\tau_{xy} [' U_ESFUER ']'])
 
 %% se grafican los errores en los esfuerzos
 figure
-subplot(1,3,1); plot_def_esf(xnod, LaG, error_sx,  'Error \sigma_x [Pa]')
-subplot(1,3,2); plot_def_esf(xnod, LaG, error_sy,  'Error \sigma_y [Pa]')
-subplot(1,3,3); plot_def_esf(xnod, LaG, error_txy, 'Error \tau_{xy} [Pa]')
+subplot(1,3,1); plot_def_esf(xnod, LaG, error_sx,  ['Error \sigma_x [' U_ESFUER ']'])
+subplot(1,3,2); plot_def_esf(xnod, LaG, error_sy,  ['Error \sigma_y [' U_ESFUER ']'])
+subplot(1,3,3); plot_def_esf(xnod, LaG, error_txy, ['Error \tau_{xy} [' U_ESFUER ']'])
 
 %% se grafican los esfuerzos principales y el esfuerzo cortante maximo
 figure
-subplot(1,3,1); plot_def_esf(xnod, LaG, s1,   '(\sigma_1)_{xy} [Pa]', { ang })
-subplot(1,3,2); plot_def_esf(xnod, LaG, s2,   '(\sigma_2)_{xy} [Pa]', { ang+pi/2 })
-subplot(1,3,3); plot_def_esf(xnod, LaG, tmax, '\tau_{max} [Pa]',      { ang+pi/4, ang-pi/4 })
+subplot(1,3,1); plot_def_esf(xnod, LaG, s1,   ['(\sigma_1)_{xy} [' U_ESFUER ']'], { ang })
+subplot(1,3,2); plot_def_esf(xnod, LaG, s2,   ['(\sigma_2)_{xy} [' U_ESFUER ']'], { ang+pi/2 })
+subplot(1,3,3); plot_def_esf(xnod, LaG, tmax, ['\tau_{max} [' U_ESFUER ']'],      { ang+pi/4, ang-pi/4 })
 
 %% se grafican los esfuerzos de von Mises
 figure
-plot_def_esf(xnod, LaG, sv, 'Esfuerzos de von Mises [Pa]');
+plot_def_esf(xnod, LaG, sv, ['Esfuerzos de von Mises [' U_ESFUER ']']);
 
 %% se exportan los resultados a GiD/Paraview
 % Pasando los esfuerzos ya promediados:
