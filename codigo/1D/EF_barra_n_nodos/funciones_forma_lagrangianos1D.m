@@ -4,8 +4,8 @@ clear, clc, close all
 
 % Calculo las funciones de forma
 syms xi
-N1 = poly2sym(polyfit([-1 1],[1 0],1),xi);
-N2 = poly2sym(polyfit([-1 1],[0 1],1),xi);
+N1 = calc_N([-1 1], [1 0], xi);
+N2 = calc_N([-1 1], [0 1], xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de DOS nodos:\n')
@@ -29,25 +29,9 @@ legend([h1, h2], 'N1(\xi)','N2(\xi)','Location','Best');
 
 % Calculo las funciones de forma
 syms xi
-%N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi); % = xi*(xi-1)/2
-%N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi); % = (1+xi)*(1-xi)
-%N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi); % = xi*(xi+1)/2
-
-% Se calculan los coeficientes de los polinomios
-c1 = polyfit([-1 0 1],[1 0 0],2);
-c2 = polyfit([-1 0 1],[0 1 0],2);
-c3 = polyfit([-1 0 1],[0 0 1],2);
-
-% Se eliminan los errores en la aproximacion numerica, haciendo los
-% coeficientes demasiado pequenios igual a cero
-c1(abs(c1) < 1e-10) = 0;
-c2(abs(c2) < 1e-10) = 0;
-c3(abs(c3) < 1e-10) = 0;
-
-% con los coeficientes corregidos se calculan las funciones de forma
-N1 = poly2sym(c1, xi);
-N2 = poly2sym(c2, xi);
-N3 = poly2sym(c3, xi);
+N1 = calc_N([-1 0 1], [1 0 0], xi); % = xi*(xi-1)/2
+N2 = calc_N([-1 0 1], [0 1 0], xi); % = (1+xi)*(1-xi)
+N3 = calc_N([-1 0 1], [0 0 1], xi); % = xi*(xi+1)/2
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de TRES nodos:\n')
@@ -73,10 +57,10 @@ legend([h1, h2, h3], 'N1(\xi)','N2(\xi)','N3(\xi)','Location','Best');
 
 % Calculo las funciones de forma
 syms xi
-N1 = poly2sym(polyfit([-1 -1/3 1/3 1],[1 0 0 0],3),xi);
-N2 = poly2sym(polyfit([-1 -1/3 1/3 1],[0 1 0 0],3),xi);
-N3 = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 1 0],3),xi);
-N4 = poly2sym(polyfit([-1 -1/3 1/3 1],[0 0 0 1],3),xi);
+N1 = calc_N([-1 -1/3 1/3 1], [1 0 0 0], xi);
+N2 = calc_N([-1 -1/3 1/3 1], [0 1 0 0], xi);
+N3 = calc_N([-1 -1/3 1/3 1], [0 0 1 0], xi);
+N4 = calc_N([-1 -1/3 1/3 1], [0 0 0 1], xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de CUATRO nodos:\n')
@@ -104,11 +88,11 @@ legend([h1 h2 h3 h4], 'N1(\xi)','N2(\xi)','N3(\xi)','N4(\xi)','Location','Best')
 % Calculo las funciones de forma
 syms xi
 N = cell(5,1);
-for i = 1:5
-    coef = polyfit([-1 -1/2 0 1/2 1], [i==1 i==2 i==3 i==4 i==5], 4);
-    coef(abs(coef) < 1e-10) = 0; % remueva los coeficientes demasiado pequenos
-    N{i} = poly2sym(coef, xi);
-end
+N{1} = calc_N([-1 -1/2 0 1/2 1], [1 0 0 0 0], xi);
+N{2} = calc_N([-1 -1/2 0 1/2 1], [0 1 0 0 0], xi);
+N{3} = calc_N([-1 -1/2 0 1/2 1], [0 0 1 0 0], xi);
+N{4} = calc_N([-1 -1/2 0 1/2 1], [0 0 0 1 0], xi);
+N{5} = calc_N([-1 -1/2 0 1/2 1], [0 0 0 0 1], xi);
 
 % Imprimo las funciones de forma
 fprintf('\n\nFunciones de Forma Lagrangianas de CINCO nodos:\n')
@@ -131,3 +115,22 @@ ylabel('N_i(\xi)');
 plot([-1 -1/2 0 1/2 1],[0 0 0 0 0], 'ko', [-1 -1/2 0 1/2 1],[1 1 1 1 1], 'ko')
 axis([-1 1 -0.6 1.2])
 legend(h, 'N1(\xi)','N2(\xi)','N3(\xi)','N4(\xi)','N5(\xi)', 'Location','Best');
+
+%% -------------------------------------------------------------------------
+%% Calcular correctamente los polinomios de las funciones de forma 1D
+function N = calc_N(xp, yp, var)
+    % se ve verifican los tamanios de los vectores xp y yp
+    nx = length(xp);
+    ny = length(yp);
+    assert(nx == ny, 'Los vectores xp y yp deben tener el mismo tamanio');
+
+    % se calculan los coeficientes de los polinomios
+    c = polyfit(xp, yp, nx-1);
+    
+    % se eliminan los errores en la aproximacion numerica, haciendo los
+    % coeficientes demasiado pequenios igual a cero
+    c(abs(c) < 1e-10) = 0;
+    
+    % con los coeficientes corregidos se calculan las funciones de forma
+    N = poly2sym(c, var);
+end

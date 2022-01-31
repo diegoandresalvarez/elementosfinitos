@@ -21,13 +21,13 @@ for i = 1:n
 end
 
 xi = -10:0.1:10;
-yi = interp1(x,y,xi,'nearest','extrap'); h1  = plot(xi,yi,'b.', 'LineWidth',2);
-yi = interp1(x,y,xi,'linear', 'extrap'); h2  = plot(xi,yi,'r-', 'LineWidth',2);
+yi = interp1(x,y,xi,'nearest','extrap'); h1 = plot(xi,yi,'b.', 'LineWidth',2);
+yi = interp1(x,y,xi,'linear', 'extrap'); h2 = plot(xi,yi,'r-', 'LineWidth',2);
 yi = interp1(x,y,xi,'spline', 'extrap'); h3 = plot(xi,yi,'m-', 'LineWidth',2);
 yi = interp1(x,y,xi,'makima', 'extrap'); h4 = plot(xi,yi,'r--','LineWidth',2);
-yi = interp1(x,y,xi,'pchip',  'extrap'); h5  = plot(xi,yi,'g-', 'LineWidth',2);
+yi = interp1(x,y,xi,'pchip',  'extrap'); h5 = plot(xi,yi,'g-', 'LineWidth',2);
 % The 'cubic' method does not support extrapolation.
-yi = interp1(x,y,xi,'cubic'           ); h6  = plot(xi,yi,'c-', 'LineWidth',2);
+yi = interp1(x,y,xi,'cubic'           ); h6 = plot(xi,yi,'c-', 'LineWidth',2);
 
 % Polynomial curve fitting (LAGRANGE POLYNOMIAL)
 % Calculate the coefficients in the approximating polynomial of degree n-1
