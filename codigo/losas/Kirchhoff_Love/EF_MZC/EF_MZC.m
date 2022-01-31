@@ -15,8 +15,8 @@ X = 1; Y = 2; Z = 3; % un par de constantes que ayudaran en la
 ww= 1; tx= 2; ty= 3; % lectura del codigo
 
 %% se define la losa a calcular
-filename = 'losa_rectangular_libro_solidos_efQ4';
-%filename = 'losa_rectangular_libro_solidos_efQ4_sin_rot';
+%filename = 'losa_rectangular_libro_solidos_efQ4';
+filename = 'losa_rectangular_libro_solidos_efQ4_sin_rot';
 %filename = 'losa_rectangular_libro_solidos_efQ4_levantada';
 %filename = 'uniforme_efQ4';
 archivo_xlsx = fullfile('..', '..', 'ejemplos', [filename '.xlsx']);
@@ -454,6 +454,21 @@ function plot_M_or_Q(MQ)
             colorbar
         end
 
+        % se dibujan las curvas de nivel
+        iidx = zeros(41,21);
+        for idc = 1:21
+            for idf = 1:41
+                x = 0.1*(idc - 1);
+                y = 0.1*(idf - 1);
+        
+                iidx(idf, idc) = find(abs(xnod(:,X) - x) < 0.001 & ...
+                                      abs(xnod(:,Y) - y) < 0.001);
+            end
+        end
+        [x, y] = meshgrid(0:0.1:2, 0:0.1:4);
+        contour(x, y, MQ{i,1}(iidx), 20, 'k');
+
+        % se grafican las lineas con inclinacion
         esc = 0.5;
         if vars == 3
             angulos = MQ{i,3};
