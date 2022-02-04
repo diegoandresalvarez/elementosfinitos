@@ -206,7 +206,8 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
          % se arma la matriz de rigidez del elemento e
          Ke = Ke + B{e,p,q}'*De*B{e,p,q}*det_Je(p,q)*t*w_gl(p)*w_gl(q);
 
-         % vector de fuerzas nodales equivalentes
+         % vector de fuerzas nodales equivalentes asociado a la fuerza
+         % masica
          fe = fe + N{e,p,q}'*be*det_Je(p,q)*t*w_gl(p)*w_gl(q);
       end
    end
@@ -410,13 +411,16 @@ function plot_def_esf(xnod, LaG, variable, texto, angulos)
     colorbar;
     
     nef = size(LaG, 1);    
-    for e = 1:nef  
-       fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), variable(LaG(e,:)));
+    for e = 1:nef
+       data.numEF = e; 
+       data.LaG_e = LaG(e,:);
+       fill(xnod(LaG(e,:),X), xnod(LaG(e,:),Y), variable(LaG(e,:)), ...
+           'UserData', data);
     end
     axis equal tight
     colormap jet
     title(texto);
-   
+
     esc = 0.5;
     if nargin == 5
         norma = 1; % = variable % si se quiere proporcional
@@ -435,6 +439,33 @@ function plot_def_esf(xnod, LaG, variable, texto, angulos)
                 norma.*cos(angulos{i}+pi), norma.*sin(angulos{i}+pi),... 
                 esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
         end      
+    end
+
+    % para mostrar el tooltip
+    dcm = datacursormode;
+    dcm.Enable = 'on';
+    dcm.SnapToDataVertex = 'on';
+    dcm.UpdateFcn = @mostrar_info_nodo;    
+end
+
+function txt = mostrar_info_nodo(~,info)
+    if strcmp(info.Target.Type, 'patch')
+        x      = info.Position(1);
+        y      = info.Position(2);
+        numEF  = info.Target.UserData.numEF;
+        xnod_e = info.Target.Vertices;
+    
+        % se busca el punto más cercano
+        [~, idx_e] = min(hypot(xnod_e(:,1) - x, xnod_e(:,2) - y));
+        numNOD  = info.Target.UserData.LaG_e(idx_e);
+        val_esf = info.Target.CData(idx_e);
+
+        txt = ['(x,y) = (' num2str(x) ',' num2str(y) '), ' ...
+               'nodo = '     num2str(numNOD)          ', ' ...
+               'EF = '       num2str(numEF)           ', ' ...
+               'variable = ' num2str(val_esf)];
+    else
+        txt = 'Haga zoom y evite seleccionar el quiver()';
     end
 end
 
