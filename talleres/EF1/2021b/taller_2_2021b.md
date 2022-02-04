@@ -97,7 +97,7 @@ NOTA:
   * 0.7 Explica las ventajas/capacidades y limitaciones/suposiciones que hace el programa en cuanto al análisis estructural?
 
 * **INFORME ESCRITO**: Análisis de resultados (35% = 2.1): interpreta gráficos, analiza como varían las cantidades en el espacio? Ubica máximos y mínimos? Relaciona gráficos entre si?
-  * 0.4 Diagramas de los desplazamientos del sólido y las deformaciones ɛx, ɛy, ɛz, γxy, dilatación cúbica, rotación. 
+  * 0.4 Diagramas de los desplazamientos del sólido y las deformaciones ɛx, ɛy, γxy, γxy, dilatación cúbica, rotación. 
   * 0.4 Diagramas de esfuerzos σx, σy, τxy. 
   * 0.2 Diagramas de esfuerzos σ1, σ2 con sus inclinaciones (si no tiene las inclinaciones θ₁ y θ₂, se tendrá un 0.0 en este punto). 
   * 0.3 Diagramas de esfuerzos de von Mises, de Tresca y/o τₘₐₓ
