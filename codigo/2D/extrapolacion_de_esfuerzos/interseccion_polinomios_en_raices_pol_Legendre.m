@@ -21,6 +21,7 @@ figure; hold on; grid on     % grafico la respuesta
 fplot([f, g], [-1 1]);
 gg = matlabFunction(g, 'Vars', x);
 plot(inter,gg(inter),'r.','MarkerSize',40);
+legend('f(x)', 'g(x)', 'intersección','Location','best')
 title('Interseccion en las raices del polinomio de Legendre de grado 2')
 
 %%
@@ -43,4 +44,5 @@ figure; hold on; grid on     % grafico la respuesta
 fplot([f, g], [-1 1]);
 gg = matlabFunction(g, 'Vars', x);
 plot(inter,gg(inter),'r.','MarkerSize',40);
+legend('f(x)', 'g(x)', 'intersección','Location','best')
 title('Interseccion en las raices del polinomio de Legendre de grado 3')
