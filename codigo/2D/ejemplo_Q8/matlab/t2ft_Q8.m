@@ -1,13 +1,13 @@
-function ft = t2ft_R89(xnod, lado, carga, espesor)
+function ft = t2ft_Q8(xnod, LaG, nodos_ijk, carga, espesor)
 % Esta función convierte las fuerzas superficiales aplicadas a un elemento
-% finito rectangular de 8 (serendipito) o 9 (lagrangiano) nodos a sus 
-% correspondientes cargas nodales equivalentes ft
+% finito rectangular de 8 (serendipito) nodos a sus correspondientes cargas 
+% nodales equivalentes ft
 %
-% SERENDIPITO 8          LAGRANGIANO 9
-% xnod = [ x1e y1e       xnod = [ x1e y1e
-%          x2e y2e                x2e y2e
-%          ... ...                ... ...
-%          x8e y8e ];             x9e y9e ];
+% SERENDIPITO 8          
+% xnod = [ x1e y1e       
+%          x2e y2e       
+%          ... ...       
+%          x8e y8e ];
 %
 % lado = 123, 345, 567, 781
 %
@@ -34,13 +34,17 @@ dNN_dxi = @(xi) [ ...
    -2*xi            % dN2_dxi
    xi + 1/2 ];      % dN3_dxi
 
-%% Se definen los indices de los lados
-switch lado
-   case 123,  idx = [ 1 2 3 ];
-   case 345,  idx = [ 3 4 5 ];
-   case 567,  idx = [ 5 6 7 ];
-   case 781,  idx = [ 7 8 1 ];      
-   otherwise, error('Unicamente se permiten los lados 123, 345, 567 o 781');
+%% Se definen las coordenadas locales de los lados
+if     isequal(nodos_ijk, LaG([1 2 3]))
+    idx = [ 1 2 3 ];
+elseif isequal(nodos_ijk, LaG([3 4 5]))
+    idx = [ 3 4 5 ];
+elseif isequal(nodos_ijk, LaG([5 6 7]))
+    idx = [ 5 6 7 ];
+elseif isequal(nodos_ijk, LaG([7 8 1]))
+    idx = [ 7 8 1 ];
+else 
+    error('Lado para la carga incorrectamente especificado.')
 end
 
 %% Se calcula el vector de fuerzas distribuidas en los nodos

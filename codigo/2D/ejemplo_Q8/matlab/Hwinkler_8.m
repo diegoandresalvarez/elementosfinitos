@@ -1,15 +1,17 @@
-function He = Hwinkler_8(xnod, lado, kbalastro, espesor)
+function He = Hwinkler_8(xnod, LaG, nodos_ijk, kbalastro, espesor)
 % Calcula la matriz de rigidez asociada a los apoyos del EF sobre una 
 % cimentacion elastica. Sirve para un EF rectangular de 8 (serendipito) o 
 % 9 (lagrangiano) nodos 
 %
-% SERENDIPITO 8          LAGRANGIANO 9
-% xnod = [ x1e y1e       xnod = [ x1e y1e
-%          x2e y2e                x2e y2e
-%          ... ...                ... ...
-%          x8e y8e ];             x9e y9e ];
+% SERENDIPITO 8          
+% xnod = [ x1e y1e       
+%          x2e y2e       
+%          ... ...       
+%          x8e y8e ];    
 %
-% lado = 123, 345, 567, 781
+% LaG = LaG(e,:) = vector 1x8
+%
+% nodos_ijk = [ num_nodo_i, num_nodo_j, num_nodo_k ] en sentido antihorario
 %
 % kbalastro = [ k1x k1y k2x k2y k3x k3y ]; % si apoya sobre el lado 123
 %             [ k3x k3y k4x k4y k5x k5y ]; % si apoya sobre el lado 345
@@ -20,7 +22,7 @@ function He = Hwinkler_8(xnod, lado, kbalastro, espesor)
 X = 1; Y = 2;
 
 %% Parametros de la cuadratura de Gauss-Legendre
-n_gl = 5;                        % orden de la cuadratura de Gauss-Legendre
+n_gl = 3;                        % orden de la cuadratura de Gauss-Legendre
 [x_gl, w_gl] = gausslegendre_quad(n_gl);
 
 %% Se definen las funciones de forma unidimensionales y sus derivadas
@@ -34,13 +36,17 @@ dNN_dxi = @(xi) [ ...
    -2*xi            % dN2_dxi
    xi + 1/2 ];      % dN3_dxi
 
-%% Se definen los indices de los lados
-switch lado
-   case 123,  idx = [ 1 2 3 ];
-   case 345,  idx = [ 3 4 5 ];
-   case 567,  idx = [ 5 6 7 ];
-   case 781,  idx = [ 7 8 1 ];      
-   otherwise, error('Unicamente se permiten los lados 123, 345, 567 o 781');
+%% Se definen las coordenadas locales de los lados
+if     isequal(nodos_ijk, LaG([1 2 3]))
+    idx = [ 1 2 3 ];
+elseif isequal(nodos_ijk, LaG([3 4 5]))
+    idx = [ 3 4 5 ];
+elseif isequal(nodos_ijk, LaG([5 6 7]))
+    idx = [ 5 6 7 ];
+elseif isequal(nodos_ijk, LaG([7 8 1]))
+    idx = [ 7 8 1 ];
+else 
+    error('Lado para la carga incorrectamente especificado.')
 end
 
 %% Se calcula la integral
