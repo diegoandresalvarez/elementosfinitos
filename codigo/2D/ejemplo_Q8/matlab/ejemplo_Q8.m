@@ -1,25 +1,33 @@
-%% Calculo de los desplazamientos y las reacciones en los empotramiento, 
-%% las deformaciones y los esfuerzos de una estructura en TENSION PLANA
-% NOTA: este codigo SOLO es apropiado para TENSION PLANA usando EFs
-% rectangulares serendipitos de 8 nodos
+%%------------------------------------------------------------------------------
+% NOTA: este código SOLO es apropiado para TENSION PLANA usando elementos
+%       rectangulares serendípitos de 8 nodos
+%-------------------------------------------------------------------------------
+%
+% Programa para el cálculo de los desplazamientos y las reacciones en los 
+% apoyos, las deformaciones y los esfuerzos de la un sólido mediante el método 
+% de los elementos finitos
 
 clear, clc, close all   % borro la memoria, la pantalla y las figuras
 
-%% defino las variables/constantes
-X = 1; Y = 2; % un par de constantes que ayudaran en la lectura del codigo
+%% constantes que ayudarán en la lectura del código
+X = 1; Y = 2;
 
 %% se define la estructura a calcular
-%filename = {'malla_1', 'malla1'};
-%filename = {'malla_2', 'malla2'};
-%filename = {'malla_3', 'malla3'};
-filename = {'malla_4', 'malla4'};
-archivo_xlsx = fullfile('..', filename{1}, [filename{2} '.xlsx']);
+%nombre_archivo = {'malla_1', 'malla1'};
+%nombre_archivo = {'malla_2', 'malla2'};
+%nombre_archivo = {'malla_3', 'malla3'};
+nombre_archivo = {'malla_4', 'malla4'};
+archivo_xlsx = fullfile('..', nombre_archivo{1}, [nombre_archivo{2} '.xlsx']);
 
 %% se leen las coordenadas de los nodos
 T = leer_excel(archivo_xlsx, 'xnod');
 idxNODO         = T{:,'nodo'};
-xnod(idxNODO,:) = T{:,{'x','y'}}; % = [x, y]
-nno             = size(xnod,1);   % numero de nodos
+xnod(idxNODO,:) = T{:,{'x','y'}};
+nno             = size(xnod,1);   % número de nodos
+
+%% Se definen los grados de libertad
+ngdl = 2*nno;        % numero de grados de libertad (dos por nodo)
+gdl  = [(1:2:ngdl)' (2:2:ngdl)']; % nodos vs grados de libertad
 
 %% se lee la matriz de conectividad (LaG) y el tipo de material del EF e
 T = leer_excel(archivo_xlsx, 'LaG_mat');
@@ -28,58 +36,33 @@ LaG(idxEF,:) = T{:,{'NL1','NL2','NL3','NL4','NL5','NL6','NL7','NL8'}};
 mat          = T{:,'material'};% tipo de material para cada EF
 nef          = size(LaG,1);    % numero de EFs (numero de filas de LaG)
 
-%% Se definen los grados de libertad
-ngdl = 2*nno;        % numero de grados de libertad (dos por nodo)
-gdl  = [(1:2:ngdl)' (2:2:ngdl)']; % nodos vs grados de libertad
-
-%% definición de los materiales
+%% se leen los materiales
 T = leer_excel(archivo_xlsx, 'prop_mat');
-E    = T{:,'E'};       % modulo de elasticidad del solido
+E    = T{:,'E'};       % modulo de elasticidad
 nu   = T{:,'nu'};      % coeficiente de Poisson
 rho  = T{:,'rho'};     % densidad
 t    = T{:,'espesor'}; % espesor
 nmat = size(E,1);      % numero de materiales
 
-%% se definen los apoyos y sus desplazamientos
-T = leer_excel(archivo_xlsx, 'restric');
-idxNODO = T{:,'nodo'};
-dirdesp = T{:,'direccion'};
-ac      = T{:,'desplazamiento'}; % desplazamientos conocidos en los apoyos
-
-%% Se definen las restricciones 
-%{
-ngdl_res = size(ac,1); % numero de grados de libertad restringidos
-restric = zeros(ngdl_res,2);
-for i = 1:ngdl_res
-%                       nodo        direccion   desplazamiento    
-   restric(i,:) = [ gdl(idxNODO(i), dirdesp(i)) ac(i) ];
-end
-%}
-restric = [ gdl(sub2ind([nno 2], idxNODO, dirdesp)) ac ];
-
-%% se definen las cargas puntuales
+%% se leen las cargas puntuales
 T = leer_excel(archivo_xlsx, 'carga_punt');
 idxNODO = T{:,'nodo'};
-dirfuer = T{:,'direccion'};
-f_punt  = T{:,'fuerza_puntual'}; % desplazamientos conocidos en los apoyos
+dir_cp  = T{:,'direccion'};
+cp      = T{:,'fuerza_puntual'}; % desplazamientos conocidos en los apoyos
 
 f = zeros(ngdl,1);     % vector de fuerzas nodales equivalentes global
 %{
-nf_punt = size(f_punt,1); % numero de fuerzas puntuales
-for i = 1:nf_punt
+ncp = size(cp,1); % numero de fuerzas puntuales
+for i = 1:ncp
 %        nodo        direccion      fuerza puntual
-   f(gdl(idxNODO(i), dirfuer(i))) = f_punt(i);
+   f(gdl(idxNODO(i), dir_cp(i))) = cp(i);
 end
 %}
-f(gdl(sub2ind([nno 2], idxNODO, dirfuer))) = f_punt;
+f(gdl(sub2ind([nno 2], idxNODO, dir_cp))) = cp;
 
 %% se leen algunas variables
 T        = readcell(archivo_xlsx, 'Sheet','varios','Range','B1:B9');
-%E        = T{1}; % modulo de elasticidad E
-%nu       = T{2}; % coeficiente de Poisson
-%rho      = T{3}; % densidad del material
 g        = T{4}; % aceleracion de la gravedad
-%t        = T{5}; % espesor de la estructura
 U_LONG   = T{6}; % unidades de longitud
 U_FUERZA = T{7}; % unidades de fuerza
 U_ESFUER = T{8}; % unidades de esfuerzo
@@ -88,24 +71,28 @@ ESC_UV   = T{9}; % factor de escala para los desplazamientos
 %% Se dibuja la malla de elementos finitos
 figure;
 hold on;
-cgx = zeros(1,nef); cgy = zeros(1,nef); % almacena el centro de gravedad
+cg = zeros(nef,2); % almacena el centro de gravedad de los EFs
 for e = 1:nef
-   line(xnod(LaG(e,[1:8 1]),X), xnod(LaG(e,[1:8 1]),Y));
+   % se dibuja el EF e
+   nod_ef = LaG(e,[1:8 1]);
+   plot(xnod(nod_ef,X), xnod(nod_ef,Y), 'b');
    
-   % Calculo la posicion del centro de gravedad del triangulo
-   cgx(e) = mean(xnod(LaG(e,[1 3 5 7]),X));
-   cgy(e) = mean(xnod(LaG(e,[1 3 5 7]),Y));
-   text(cgx(e), cgy(e), num2str(e), 'Color', 'r');
+   % se calcula la posición del centro de gravedad del EF e
+   cg(e,:) = mean(xnod(LaG(e,:),:));
+
+   % se escribe el número del EF e
+   text(cg(e,X), cg(e,Y), num2str(e), 'Color', 'b');
 end
+
+% en todos los nodos se dibuja un marcador y se reporta su numeración
 plot(xnod(:,X), xnod(:,Y), 'ro');
 text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
 axis equal tight
 title('Malla de elementos finitos');
 
-%% Funciones de forma serendipitas del elemento rectangular de 8 nodos:
+%% Func. de forma y sus derivadas del EF rectangular serendípito de 8 nodos
 % NOTA estas funciones de forma y sus derivadas se encontraron con el
 % programa deduccion_funciones_forma/FF_serendipitos_Q4_Q8.m
-
 Nforma = @(xi,eta) [ ...
 -((eta - 1)*(xi - 1)*(eta + xi + 1))/4       % N1
 ((xi^2 - 1)*(eta - 1))/2                     % N2
@@ -140,39 +127,38 @@ eta*(xi - 1)                             ];  % dN8_deta
 
 %% Parametros de la cuadratura de Gauss-Legendre
 % se calculan las raices x_gl y los pesos w_gl de polinomios de Legendre
-n_gl         = 2;                        % orden de la cuadratura
+n_gl         = 2; % orden de la cuadratura de Gauss-Legendre
 [x_gl, w_gl] = gausslegendre_quad(n_gl);
 
-%% ensamblo la matriz de rigidez global y el vector de fuerzas nodales
+%% se ensambla la matriz de rigidez global y el vector de fuerzas nodales
 %  equivalentes global
-K = sparse(ngdl,ngdl);   % matriz de rigidez global como RALA (sparse)
-N = cell(nef,n_gl,n_gl); % contenedor para las matrices de forma
-B = cell(nef,n_gl,n_gl); % contenedor para las matrices de deformacion
+K   = sparse(ngdl,ngdl);   % matriz de rigidez global como RALA (sparse)
+N   = cell(nef,n_gl,n_gl); % contenedor para las matrices de forma
+B   = cell(nef,n_gl,n_gl); % contenedor para las matrices de deformacion
+idx = cell(nef,1);         % indices asociados a los gdl del EF e
 
+% se calcula la matriz constitutiva y el vector de fuerzas másicas para cada material
 De = cell(nmat,1);
 be = cell(nmat,1);
 for i = 1:nmat
-    % matriz constitutiva del elemento para TENSION PLANA
-    De{i} = (E(i)/(1-nu(i)^2)) * [ 1     nu(i)  0
-                                  nu(i)  1      0
-                                  0      0      (1-nu(i))/2 ];
-    be{i} = [0; -rho(i)*g];  % vector de fuerzas masicas del elemento
+    % matriz constitutiva para TENSION PLANA
+    De{i} = (E(i)/(1-nu(i)^2)) * [ 1      nu(i)  0
+                                   nu(i)  1      0
+                                   0      0      (1-nu(i))/2 ];
+
+    % vector de fuerzas másicas
+    be{i} = [0; -rho(i)*g];
 end
 
-idx = cell(nef,1);
-for e = 1:nef          % ciclo sobre todos los elementos finitos
-   idx{e} = [ gdl(LaG(e,1),:)  gdl(LaG(e,2),:) ...
-              gdl(LaG(e,3),:)  gdl(LaG(e,4),:) ...
-              gdl(LaG(e,5),:)  gdl(LaG(e,6),:) ...
-              gdl(LaG(e,7),:)  gdl(LaG(e,8),:) ];
-   
-   % Calculo las matrices de rigidez y el vector de fuerzas nodales
-   % equivalentes del elemento
+% para cada elemento finito en la malla:
+for e = 1:nef
+   % se calculan con el siguiente ciclo las matrices de rigidez y el vector de
+   % fuerzas nodales equivalentes del elemento usando las cuadraturas de GL
    Ke = zeros(16);
    fe = zeros(16,1);
-   det_Je = zeros(n_gl,n_gl); % en esta matriz se almacenaran los Jacobianos
+   det_Je = zeros(n_gl,n_gl); % matriz para almacenar los jacobianos
 
-   % Se determinan las coordenadas de los nodos el EF e
+   % se determinan las coordenadas de los nodos el EF e
    xe = xnod(LaG(e,:),X);
    ye = xnod(LaG(e,:),Y);
 
@@ -181,12 +167,9 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
          xi_gl  = x_gl(p);
          eta_gl = x_gl(q);
          
-         % Se evaluan las funciones de forma en los puntos de integracion
-         % de Gauss-Legendre
-         NNforma = Nforma(xi_gl, eta_gl);
-         
-         % Se evaluan las derivadas de las funciones de forma en los puntos
-         % de integracion de Gauss-Legendre
+         % Se evaluan las funciones de forma y sus derivadas 
+         % en los puntos de integracion de Gauss-Legendre
+         NNforma  = Nforma (xi_gl, eta_gl);
          ddN_dxi  = dN_dxi (xi_gl, eta_gl);
          ddN_deta = dN_deta(xi_gl, eta_gl);
          
@@ -200,8 +183,10 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
          % Se calcula el determinante del Jacobiano
          det_Je(p,q) = det(Je);
          
-         N{e,p,q} = zeros(2,2*8);
-         B{e,p,q} = zeros(3,2*8);
+         % las matrices de forma y de deformación se evalúan y se ensamblan
+         % en el punto de Gauss         
+         N{e,p,q} = zeros(2, 2*8);
+         B{e,p,q} = zeros(3, 2*8);
          for i = 1:8
             % Se ensambla la matriz de funciones de forma N
             N{e,p,q}(:,[2*i-1 2*i]) = [ NNforma(i)  0         
@@ -210,24 +195,27 @@ for e = 1:nef          % ciclo sobre todos los elementos finitos
             % Se ensambla la matriz de deformacion del elemento B
             dNi_dx = (+dy_deta*ddN_dxi(i) - dy_dxi*ddN_deta(i))/det_Je(p,q);
             dNi_dy = (-dx_deta*ddN_dxi(i) + dx_dxi*ddN_deta(i))/det_Je(p,q);
-            B{e,p,q}(:,[2*i-1 2*i]) = [ dNi_dx 0          % aqui se ensambla
-                                        0      dNi_dy     % y asigna la matriz
-                                        dNi_dy dNi_dx ];  % B_i
+            B{e,p,q}(:,[2*i-1 2*i]) = [ dNi_dx       0        
+                                             0  dNi_dy   
+                                        dNi_dy  dNi_dx ];
          end
 
-         % se arma la matriz de rigidez del elemento e
-         Ke = Ke + B{e,p,q}'*De{mat(e)}*B{e,p,q}*det_Je(p,q)*t(mat(e))*w_gl(p)*w_gl(q);
-
-         % vector de fuerzas nodales equivalentes asociado a la fuerza
-         % masica
-         fe = fe + N{e,p,q}'*be{mat(e)}*det_Je(p,q)*t(mat(e))*w_gl(p)*w_gl(q);
+         % se ensamblan la matriz de rigidez del EF e y el vector de fuerzas
+         % nodales equivalentes del EF e asociado a la fuerza másica         
+         Ke = Ke + B{e,p,q}'*De{mat(e)}*B{e,p,q} * det_Je(p,q)*t(mat(e))*w_gl(p)*w_gl(q);
+         fe = fe + N{e,p,q}'*be{mat(e)}          * det_Je(p,q)*t(mat(e))*w_gl(p)*w_gl(q);
       end
    end
    
+   % se determina si hay puntos con jacobiano negativo, en caso tal se termina
+   % el programa y se reporta   
    if any(any(det_Je <= 0))
-      error('Existen elementos con det_Je negativo en el elemento %d.\n', e);
+      error('Hay puntos con det_Je negativo en el EF %d.\n', e);
    end
 
+   % y se ensambla la matriz de rigidez del elemento y el vector de fuerzas
+   % nodales del elemento en sus correspondientes GDL 
+   idx{e}           = reshape(gdl(LaG(e,:),:)', 1, 16);
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + Ke;
    f(idx{e},:)      = f(idx{e},:)      + fe;
 end
@@ -241,15 +229,15 @@ title('Los puntos representan los elementos diferentes de cero');
 T       = leer_excel(archivo_xlsx, 'carga_distr');
 idxELEM = T{:,'elemento'};
 nodoijk = T{:,{'nodo_i','nodo_j','nodo_k'}};
-carga   = T{:,{'tix','tiy','tjx','tjy','tkx','tky'}};
+carga   = T{:,{'tix','tiy', 'tjx','tjy', 'tkx','tky'}};
 nlcd    = size(carga,1); % numero de lados con carga distribuida
 
 %% Relacion de las cargas superficiales (vector ft)
 ft = sparse(ngdl,1); % fuerzas nodales equivalentes de cargas superficiales
 for i = 1:nlcd
-   e   = idxELEM(i);
-   LaG_e = LaG(e,1:8);
-   fte = t2ft_Q8(xnod(LaG_e,[X Y]), LaG_e, nodoijk(i,:), carga(i,:), t(mat(e)));
+   e     = idxELEM(i);
+   LaG_e = LaG(e,:);
+   fte   = t2ft_Q8(xnod(LaG_e,[X Y]), LaG_e, nodoijk(i,:), carga(i,:), t(mat(e)));
    ft(idx{e},:) = ft(idx{e},:) + fte;
 end
 
@@ -257,48 +245,62 @@ end
 % superficiales calculadas
 f = f + ft;
 
-%% se leen las constantes de balastro k (cimentacion elastica)
+%% se leen las constantes de balastro k (cimentacion elastica de Winkler)
 T       = leer_excel(archivo_xlsx, 'kWinkler');
 idxELEM = T{:,'elemento'};
 nodoijk = T{:,{'nodo_i','nodo_j','nodo_k'}};
-kwinkl  = T{:,{'kix','kiy','kjx','kjy','kkx','kky'}};
-nlk     = size(carga,1); % numero de lados con cimentacion elastica
+kwinkl  = T{:,{'kix','kiy', 'kjx','kjy', 'kkx','kky'}};
+nlkW    = size(kwinkl,1); % numero de lados con cimentacion elastica
 
-%% Relacion de los EFs sobre cimentacion elastica
-for i = 1:length(idxELEM)
+%% Cálculo de las rigideces asociadas a la cimentación elástica
+for i = 1:nlkW
    e = idxELEM(i);
    LaG_e = LaG(e,1:8);
    He = Hwinkler_8(xnod(LaG_e,[X Y]), LaG_e, nodoijk(i,:), kwinkl(i,:), t(mat(e)));
    K(idx{e},idx{e}) = K(idx{e},idx{e}) + He;
 end
 
-%% grados de libertad del desplazamiento conocidos y desconocidos  
-c = restric(:,1);   d = setdiff(1:ngdl,c)';
+%% se definen los apoyos y sus desplazamientos
+T = leer_excel(archivo_xlsx, 'restric');
+idxNODO  = T{:,'nodo'};
+dir_desp = T{:,'direccion'};
 
+% grados de libertad del desplazamiento conocidos  
+%{
+ngdl_res = size(ac,1); % numero de grados de libertad restringidos
+for i = 1:ngdl_res
+%             nodo        direccion
+   c(i) = gdl(idxNODO(i), dir_desp(i));
+end
+%}
+c = gdl(sub2ind([nno 2], idxNODO, dir_desp));
+
+% desplazamientos conocidos en los apoyos
+ac = T{:,'desplazamiento'};
+
+% grados de libertad del desplazamiento desconocidos  
+d = setdiff(1:ngdl,c)';
+
+%% extraigo las submatrices y especifico las cantidades conocidas
 % f = vector de fuerzas nodales equivalentes
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
 
-%| qd |   | Kcc Kcd || ac |   | fd |
+%| qd |   | Kcc Kcd || ac |   | fd |  % recuerde que qc=0 (siempre)
 %|    | = |         ||    | - |    |
 %| qc |   | Kdc Kdd || ad |   | fc |
-
-%% extraigo las submatrices y especifico las cantidades conocidas
 Kcc = K(c,c); Kcd = K(c,d); fd = f(c);
 Kdc = K(d,c); Kdd = K(d,d); fc = f(d);
 
-% f = vector de fuerzas nodales equivalentes
-% q = vector de fuerzas nodales de equilibrio del elemento
-% a = desplazamientos
-ac = restric(:,2);   % desplazamientos conocidos
-
 %% resuelvo el sistema de ecuaciones
-ad = Kdd\(fc - Kdc*ac);      % calculo desplazamientos desconocidos
-qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
+ad = Kdd\(fc - Kdc*ac);      % desplazamientos desconocidos
+qd = Kcc*ac + Kcd*ad - fd;   % fuerzas de equilibrio desconocidas
+
+% armo los vectores de desplazamientos (a) y fuerzas (q)
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos
 q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
-%% Dibujo la malla de elementos finitos y las deformaciones de esta
+%% Dibujo la estructura original y la deformada
 delta = reshape(a,2,nno)';
 xdef = xnod + ESC_UV*delta; % posicion de la deformada
 figure
@@ -316,8 +318,10 @@ title(sprintf('Deformada escalada %d veces', ESC_UV));
 %% Se calcula para cada elemento las deformaciones y los esfuerzos
 def = cell(nef,n_gl,n_gl);
 esf = cell(nef,n_gl,n_gl);
+
 for e = 1:nef
-   ae = a(idx{e});            % desplazamientos de los gdl del elemento e
+   % desplazamientos de los gdl del elemento e
+   ae = a(idx{e});
    
    for pp = 1:n_gl
       for qq = 1:n_gl
@@ -360,12 +364,12 @@ tabla_def = array2table([(1:nno)', ex, ey, ez, gxy], ...
 tabla_esf = array2table([(1:nno)', sx, sy, txy, s1, s2, ang, tmax, sv], ...
     'VariableNames', {'nodo', ['sx_' U_ESFUER], 'sy', 'txy', 's1', 's2', 'ang_rad', 'tmax', 'sv'});
 
-filename_results = ['resultados_' filename{2} '.xlsx'];
-writetable(tabla_aq,  filename_results, 'Sheet', 'aq')
-writetable(tabla_def, filename_results, 'Sheet', 'deformaciones')
-writetable(tabla_esf, filename_results, 'Sheet', 'esfuerzos')
+nombre_archivo_results = ['resultados_' nombre_archivo{2} '.xlsx'];
+writetable(tabla_aq,  nombre_archivo_results, 'Sheet', 'aq')
+writetable(tabla_def, nombre_archivo_results, 'Sheet', 'deformaciones')
+writetable(tabla_esf, nombre_archivo_results, 'Sheet', 'esfuerzos')
 
-fprintf('Calculo finalizado. Resultados en "%s".\n', filename_results);
+fprintf('Calculo finalizado. Resultados en "%s".\n', nombre_archivo_results);
 
 %% se grafican las deformaciones
 figure
