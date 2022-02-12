@@ -44,10 +44,10 @@ u = num/(6*Vol);
 u = collect(u,[u1, u2, u3, u4]);
 
 %% Se verifican finalmente las formulas
-a1 =   det([x2 y2 z2; x3 y3 z3; x4 y4 z4]);
-a2 =  -det([x3 y3 z3; x4 y4 z4; x1 y1 z1]);
-a3 =   det([x4 y4 z4; x1 y1 z1; x2 y2 z2]);
-a4 =  -det([x1 y1 z1; x2 y2 z2; x3 y3 z3]);
+a1 =  det([x2 y2 z2; x3 y3 z3; x4 y4 z4]);
+a2 = -det([x3 y3 z3; x4 y4 z4; x1 y1 z1]);
+a3 =  det([x4 y4 z4; x1 y1 z1; x2 y2 z2]);
+a4 = -det([x1 y1 z1; x2 y2 z2; x3 y3 z3]);
 
 b1 = -det([ 1 y2 z2;  1 y3 z3;  1 y4 z4]); % OJO CON LOS SIGNOS
 b2 =  det([ 1 y3 z3;  1 y4 z4;  1 y1 z1]); % NO DAN LO MISMO QUE LA 
@@ -66,10 +66,10 @@ d4 =  det([x1 y1  1; x2 y2  1; x3 y3  1]);
 
 %{
 % Formulas incorrectas que aparecen en los libros
-a1 =   det([x2 y2 z2; x3 y3 z3; x4 y4 z4]);
-a2 =   det([x3 y3 z3; x4 y4 z4; x1 y1 z1]);
-a3 =   det([x4 y4 z4; x1 y1 z1; x2 y2 z2]);
-a4 =   det([x1 y1 z1; x2 y2 z2; x3 y3 z3]);
+a1 =  det([x2 y2 z2; x3 y3 z3; x4 y4 z4]);
+a2 =  det([x3 y3 z3; x4 y4 z4; x1 y1 z1]);
+a3 =  det([x4 y4 z4; x1 y1 z1; x2 y2 z2]);
+a4 =  det([x1 y1 z1; x2 y2 z2; x3 y3 z3]);
 
 b1 = -det([ 1 y2 z2;  1 y3 z3;  1 y4 z4]); % OJO CON LOS SIGNOS
 b2 = -det([ 1 y3 z3;  1 y4 z4;  1 y1 z1]); % NO DAN LO MISMO QUE LA 
