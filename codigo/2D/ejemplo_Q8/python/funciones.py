@@ -186,3 +186,56 @@ def plot_esf_def(variable, titulo, angulo = None):
     ax.autoscale(tight=True)    
     plt.tight_layout()
     plt.show()
+
+#%% Extrapola/alisa esfuerzos y deformaciones de puntos de Gauss a los nodos
+def extrapolar_esf_def(esfuerzo, tipo_esf):
+    nno = xnod.shape[0]
+    nef = LaG.shape[0]
+
+    num_elem_ady = np.zeros(nno)      # numero de elementos adyacentes
+    esf_sum      = np.zeros(nno)
+    esf_max      = np.full(nno, -np.inf)
+    esf_min      = np.full(nno, +np.inf)
+
+    # matriz de extrapolación
+    A = np.array([
+        [  3**(1/2)/2 + 1,             -1/2,             -1/2,   1 - 3**(1/2)/2],
+        [3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4],
+        [            -1/2,   1 - 3**(1/2)/2,   3**(1/2)/2 + 1,             -1/2],
+        [1/4 - 3**(1/2)/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 3**(1/2)/4 + 1/4],
+        [  1 - 3**(1/2)/2,             -1/2,             -1/2,   3**(1/2)/2 + 1],
+        [1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4],
+        [            -1/2,   3**(1/2)/2 + 1,   1 - 3**(1/2)/2,             -1/2],
+        [3**(1/2)/4 + 1/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 1/4 - 3**(1/2)/4]])
+    
+    if   tipo_esf in ['sx',  'ex']:  num_esf = 0
+    elif tipo_esf in ['sy',  'ey']:  num_esf = 1
+    elif tipo_esf in ['txy', 'gxy']: num_esf = 2
+    else:
+        raise Exception('Opción no soportada')
+
+    # se hace la extrapolación de los esfuerzos en cada EF a partir de las 
+    # lecturas en los puntos de Gauss
+    for e in range(nef):
+        #esf_EF_e = A @ np.array([esfuerzo[e,0,0,num_esf],   # I   = (p=0, q=0)
+        #                         esfuerzo[e,0,1,num_esf],   # II  = (p=0, q=1)
+        #                         esfuerzo[e,1,0,num_esf],   # III = (p=1, q=0)
+        #                         esfuerzo[e,1,1,num_esf]])  # IV  = (p=1, q=1)
+        esf_EF_e = A @ esfuerzo[e,:,:,num_esf].ravel()
+      
+        esf_sum[LaG[e]] += esf_EF_e
+        esf_max[LaG[e]] = np.maximum(esf_max[LaG[e]], esf_EF_e)
+        esf_min[LaG[e]] = np.minimum(esf_max[LaG[e]], esf_EF_e)
+
+        # se lleva un conteo de los elementos adyacentes a un nodo
+        num_elem_ady[LaG[e]] += 1
+
+    # alisado (promedio de los esfuerzos en los nodos)
+    esf_prom = esf_sum/num_elem_ady
+    
+    #%% variables a retornar
+    error_esf = (esf_max - esf_min)/esf_prom # error en el alisado
+    #error_esf = np.log10(np.abs(error_esf))
+    #error_esf[error_esf < np.log10(0.1)] = -3
+
+    return esf_prom, error_esf

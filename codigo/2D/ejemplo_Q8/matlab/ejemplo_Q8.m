@@ -495,6 +495,7 @@ function [esf, error_esf] = extrapolar_esf_def(xnod, LaG, esfuerzo, tipo_esf)
     esf.max      =  -inf(nno,1);
     esf.min      =   inf(nno,1);
 
+    % matriz de extrapolación
     A = [ ... 
       3^(1/2)/2 + 1,            -1/2,            -1/2,   1 - 3^(1/2)/2
     3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4, 3^(1/2)/4 + 1/4, 1/4 - 3^(1/2)/4
@@ -511,7 +512,9 @@ function [esf, error_esf] = extrapolar_esf_def(xnod, LaG, esfuerzo, tipo_esf)
         case {'txy', 'gxy'}, num_esf = 3;
         otherwise,           error('Opcion no soportada');
     end
-
+    
+    % se hace la extrapolación de los esfuerzos en cada EF a partir de las 
+    % lecturas en los puntos de Gauss
     for e = 1:nef
         esf_EF_e = A * [ esfuerzo{e,1,1}(num_esf)
                          esfuerzo{e,1,2}(num_esf)
@@ -521,7 +524,8 @@ function [esf, error_esf] = extrapolar_esf_def(xnod, LaG, esfuerzo, tipo_esf)
         esf.sum(LaG(e,:),:) = esf.sum(LaG(e,:),:)    + esf_EF_e;
         esf.max(LaG(e,:),:) = max(esf.max(LaG(e,:),:), esf_EF_e);
         esf.min(LaG(e,:),:) = min(esf.max(LaG(e,:),:), esf_EF_e);     
-                                                
+          
+        % se lleva un conteo de los elementos adyacentes a un nodo
         num_elem_ady(LaG(e,:),:) = num_elem_ady(LaG(e,:),:) + 1;
     end
 

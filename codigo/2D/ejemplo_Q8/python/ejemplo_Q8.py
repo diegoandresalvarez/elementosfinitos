@@ -15,7 +15,7 @@ deformaciones y los esfuerzos de la estructura mostrada en la figura adjunta
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from funciones import t2ft_R89, compartir_variables, plot_esf_def
+from funciones import t2ft_R89, compartir_variables, plot_esf_def, extrapolar_esf_def
 import os.path
 
 # %% constantes que ayudarán en la lectura del código
@@ -293,45 +293,21 @@ for e in range(nef):
             deform[e,pp,qq] = B[e,pp,qq] @ ae              # calculo las deformaciones
             esfuer[e,pp,qq] = De[mat[e]] @ deform[e,pp,qq] # calculo los esfuerzos
 
-#%% Esfuerzos y deformaciones en los nodos:
-num_elem_ady = np.zeros(nno)
-sx  = np.zeros(nno);    txy = np.zeros(nno);    ex  = np.zeros(nno)
-sy  = np.zeros(nno);    txz = np.zeros(nno);    ey  = np.zeros(nno)
-sz  = np.zeros(nno);    tyz = np.zeros(nno);    gxy = np.zeros(nno)
+# las matrices xnod y LaG se vuelven variables globales por facilidad
+compartir_variables(xnod, LaG)
 
-# matriz de extrapolación
-A = np.array([
-    [  3**(1/2)/2 + 1,             -1/2,             -1/2,   1 - 3**(1/2)/2],
-    [3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4],
-    [            -1/2,   1 - 3**(1/2)/2,   3**(1/2)/2 + 1,             -1/2],
-    [1/4 - 3**(1/2)/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 3**(1/2)/4 + 1/4],
-    [  1 - 3**(1/2)/2,             -1/2,             -1/2,   3**(1/2)/2 + 1],
-    [1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 3**(1/2)/4 + 1/4],
-    [            -1/2,   3**(1/2)/2 + 1,   1 - 3**(1/2)/2,             -1/2],
-    [3**(1/2)/4 + 1/4, 3**(1/2)/4 + 1/4, 1/4 - 3**(1/2)/4, 1/4 - 3**(1/2)/4]])
+#%% Se extrapolan los esfuerzos y las deformaciones a los nodos y se alisan
+# adicionalmente se calcula el error en el alisado
+sx,  error_sx  = extrapolar_esf_def(esfuer, 'sx')
+sy,  error_sy  = extrapolar_esf_def(esfuer, 'sy')
+txy, error_txy = extrapolar_esf_def(esfuer, 'txy')
+ex,  error_ex  = extrapolar_esf_def(deform, 'ex')
+ey,  error_ey  = extrapolar_esf_def(deform, 'ey')
+gxy, error_gxy = extrapolar_esf_def(deform, 'gxy')
 
-# se hace la extrapolación de los esfuerzos y las deformaciones en cada elemento
-# a partir de las lecturas en los puntos de Gauss
-for e in range(nef):
-    #sx[LaG[e]]  += A @ np.array([esfuer[e,0,0,0],   # I   = (p=0, q=0)
-    #                             esfuer[e,0,1,0],   # II  = (p=0, q=1)
-    #                             esfuer[e,1,0,0],   # III = (p=1, q=0)
-    #                             esfuer[e,1,1,0]])  # IV  = (p=1, q=1)
-    sx [LaG[e]] += A @ esfuer[e,:,:,0].ravel()
-    sy [LaG[e]] += A @ esfuer[e,:,:,1].ravel()
-    txy[LaG[e]] += A @ esfuer[e,:,:,2].ravel()
-    ex [LaG[e]] += A @ deform[e,:,:,0].ravel()
-    ey [LaG[e]] += A @ deform[e,:,:,1].ravel()
-    gxy[LaG[e]] += A @ deform[e,:,:,2].ravel()
-
-    # se lleva un conteo de los elementos adyacentes a un nodo
-    num_elem_ady[LaG[e]] += 1
-
-# en todos los nodos se promedia los esfuerzos y las deformaciones de los
-# elementos, se alisa la malla de resultados
-sx  /= num_elem_ady;   ex  /= num_elem_ady
-sy  /= num_elem_ady;   ey  /= num_elem_ady
-txy /= num_elem_ady;   gxy /= num_elem_ady
+sz  = np.zeros(nno)
+txz = np.zeros(nno)
+tyz = np.zeros(nno)
 
 # se calculan las deformaciones ez en tension plana
 ez = -(nue/Ee)*(sx + sy)
@@ -354,9 +330,6 @@ s3   = np.zeros(nno)
 sv   = np.sqrt(((s1-s2)**2 + (s2-s3)**2 + (s1-s3)**2)/2)
 
 # %% Gráfica del post-proceso:
-# las matrices xnod y LaG se vuelven variables globales por facilidad
-compartir_variables(xnod, LaG)
-
 # deformaciones
 plot_esf_def(ex,   r'$\epsilon_x$')
 plot_esf_def(ey,   r'$\epsilon_y$')
