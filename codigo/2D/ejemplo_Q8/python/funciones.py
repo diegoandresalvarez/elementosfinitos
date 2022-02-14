@@ -155,6 +155,8 @@ def plot_esf_def(variable, titulo, angulo = None):
         # se dibujan las aristas
         nod_ef = LaG[e, [NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8, NL1]]
         plt.plot(xnod[nod_ef, X], xnod[nod_ef, Y], lw = 0.5, color = 'gray')
+        
+    line, = plt.plot(xnod[:, X], xnod[:, Y], '.', markersize = 3, color = 'gray')        
 
     im = ax.tripcolor(xnod[:, X], xnod[:, Y], LaG_t, variable, cmap = 'bwr',
                       shading = 'gouraud', vmin = -val_max, vmax = val_max)
@@ -185,7 +187,37 @@ def plot_esf_def(variable, titulo, angulo = None):
     ax.set_aspect('equal')
     ax.autoscale(tight=True)    
     plt.tight_layout()
+    
+    annot = ax.annotate("", xy=(0,0), xytext=(-120,20),
+                        textcoords="offset points",
+                        bbox=dict(boxstyle="round", fc="w"),
+                        arrowprops=dict(arrowstyle="->"))
+
+    annot.set_visible(False)
+
+    def update_annot(ind):        
+        num_nodo = ind["ind"][0]
+        annot.xy = (xnod[num_nodo, X], xnod[num_nodo, Y])
+        annot.set_text(f"Nodo {num_nodo+1}\n"
+                       f"(x, y) = ({xnod[num_nodo, X]}, {xnod[num_nodo, Y]})\n"
+                       f"valor = {variable[num_nodo]}")
+
+    def hover(event):
+        visible_annot = annot.get_visible()
+        if event.inaxes == ax:
+            contains_mouse_event, ind = line.contains(event)
+            if contains_mouse_event:
+                update_annot(ind)
+                annot.set_visible(True)
+                fig.canvas.draw_idle()
+            else:
+                if visible_annot:
+                    annot.set_visible(False)
+                    fig.canvas.draw_idle()
+
+    fig.canvas.mpl_connect('button_release_event', hover)
     plt.show()
+    
 
 #%% Extrapola/alisa esfuerzos y deformaciones de puntos de Gauss a los nodos
 def extrapolar_esf_def(esfuerzo, tipo_esf):
