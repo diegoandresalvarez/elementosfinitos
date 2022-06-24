@@ -1,4 +1,4 @@
-% !TeX spellcheck = en_US
+% !TeX spellcheck = es_ES
 % !TeX document-id = {cf032f19-4427-4a50-b0ba-ddee651fb980}
 % TeX program = txs:///dvi-ps-pdf-chain
 % TeX program = txs:///dvi-chain
@@ -26,6 +26,7 @@
 \usepackage{url}
 \usepackage{natbib}
 \usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{url}
 
 % FOR USE WITH THE TODONOTES PACKAGE:
 \usepackage{xcolor}
@@ -122,7 +123,7 @@ u^\e(x,y) &= \sum_{i=1}^n N_i^\e(x,y) u_i^\e
 v^\e(x,y) &= \sum_{i=1}^n N_i^\e(x,y) v_i^\e 
 &&= N_1^\e(x,y) v_1^\e + N_2^\e(x,y) v_2^\e + \cdots + N_n(x,y) v_n.
 \end{alignat}
-Observe que se están empleando las mismas funciones de forma para interpolar los deplazamientos $u$ y $v$. De hecho, no existe razón alguna para utilizar funciones de forma diferentes para la interpolación de $u$ y de $v$. 
+Observe que se están empleando las mismas funciones de forma para interpolar los desplazamientos $u$ y $v$. De hecho, no existe razón alguna para utilizar funciones de forma diferentes para la interpolación de $u$ y de $v$. 
 
 %\subsection{Funciones de forma para el EF triangular de 3 nodos}
 %Dichas funciones de forma están dadas por:
@@ -434,7 +435,7 @@ Hay que destacar que estas expresiones son totalmente generales y, por consiguie
 
 Finalmente, tenga en cuenta que las ecuaciones anteriores solo involucran hasta las derivadas primeras del desplazamiento; por lo tanto, es posible utilizar elementos finitos continuos de clase $C_0$. Este requisito aplicará también para el caso tridimensional, pero no para el caso de vigas, placas y cascarones.
 
-NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semi-positiva definida. Tiene tres valores propios nulo asociados con las dos translaciones rígidas y con la rotación. El rango de $\ma{K}^{(e)}$ es $2n-3$; este rango puede disminuir si se integra la matriz numéricamente con integración reducida.
+NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semipositiva definida. Tiene tres valores propios nulo asociados con las dos traslaciones rígidas y con la rotación. El rango de $\ma{K}^{(e)}$ es $2n-3$; este rango puede disminuir si se integra la matriz numéricamente con integración reducida.
 
 
 %En las páginas anteriores se calculó $\ma{N}^\e$, $\ma{B}^\e$ y $\ma{D}^\e$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
@@ -455,4 +456,59 @@ NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semi-positiva definida. Tiene tre
 %\ma{f}^\e_p &\approx \sum_{m=1}^M  N_p^\e(\xi_m) b^\e(\xi_m) J^\e(\xi_m) w_m
 %\end{align}
 %donde $p, q = 1,\ 2, \ \ldots,\ n$.
+
+\section{Deducción alternativa utilizando el principio de la energía potencial mínima}
+La energía potencial total de un sólido está dada por:
+\begin{equation}
+    \Pi(\ve{u}) = \underbrace{\vphantom{\sum_{i=1}^n}\frac{t}{2}\iint_\Omega \ve{\varepsilon}(\ve{x})^T\ve{\sigma}(\ve{x}) \dd A}_{W_{\text{elást}}} - \underbrace{\left(t\iint_\Omega \ve{u}(\ve{x})^T \ve{b}(\ve{x}) \dd A + t\oint_{\partial\Omega} \ve{u}(\ve{x}(s))^T\ve{t}(\ve{x}(s)) \dd s + \sum_{i=1}^n \ve{u}(\ve{x}_i)^T\ve{p}_i + \sum_{i=1}^n \ve{u}(\ve{x}_i)^T\ve{q}_i \right)}_{W_{\text{ext}}};
+\end{equation}
+aquí la primera integral corresponde a la energía potencial elástica $W_{\text{elást}}$, mientras que las integrales restantes representan la energía externa ejercida respectivamente por las cargas másicas, superficiales y puntuales que están actuando sobre el sólido.
+
+Al reemplazar en la ecuación anterior los desplazamientos $\ve{u}(\ve{x}) = \ve{N}(\ve{x}) \ve{a}$ y las deformaciones $\ve{\varepsilon}(\ve{x}) = \ve{B}(\ve{x}) \ve{a}$, y siguiendo pasos análogos a los empleados en la deducción con el principio de los trabajos virtuales, se tiene que:
+\begin{equation}
+    \Pi(\ve{a}) = \frac{t}{2}\iint_\Omega \ve{a}^T\ve{B}(\ve{x})^T\ve{\sigma}(\ve{x}) \dd A - \left(t\iint_\Omega \ve{a}^T\ve{N}(\ve{x})^T \ve{b}(\ve{x}) \dd A + t\oint_{\partial\Omega} \ve{a}^T\ve{N}(\ve{x}(s))^T \ve{t}(\ve{x}(s)) \dd s + \ve{a}^T\ve{p} + \ve{a}^T\ve{q}\right)
+\end{equation}
+observe que como $\ve{u}(\ve{x}) = \ve{N}(\ve{x}) \ve{a}$, el funcional $\Pi(\ve{u})$ se convierte en la función $\Pi(\ve{a})$, es decir, en una función del vector de desplazamientos nodales $\ve{a}$; al reemplazar~\eqref{eq:constitutiva} en la ecuación anterior, sin tener en cuenta los efectos de las deformaciones y de los esfuerzos iniciales, resulta
+\begin{equation}
+    \Pi(\ve{a}) = \frac{t}{2}\iint_\Omega \ve{a}^T\ve{B}(\ve{x})^T %\big(
+    \ma{D}(\ve{x})\ma{B}(\ve{x})\ve{a}^\e 
+    % - \ma{D}(\ve{x})\ve{\varepsilon}_0(\ve{x}) + \ve{\sigma}_0(\ve{x}) \big)
+    \dd A \\- \ve{a}^T t\iint_\Omega \ve{N}(\ve{x})^T \ve{b}(\ve{x})
+    \dd A - \ve{a}^T t\oint_{\partial\Omega} \ve{N}(\ve{x}(s))^T \ve{t}(\ve{x}(s)) \dd s - \ve{a}^T \ve{p} - \ve{a}^T \ve{q},
+\end{equation}
+es decir,
+\begin{equation}
+    \Pi(\ve{a}) = \frac{1}{2}\ve{a}^T \underbrace{t \iint_\Omega \ve{B}(\ve{x})^T \ma{D}(\ve{x})\ma{B}(\ve{x}) \dd A}_{\ma{K}} \ve{a}^\e %
+    %
+    %- \ve{a}^T \underbrace{t \iint_\Omega \ve{B}(\ve{x})^T \ma{D}(\ve{x})\ve{\varepsilon}_0(\ve{x}) \dd A}_{\ve{f}_{\ve{\varepsilon}_0}} 
+    %
+    %- \ve{a}^T \underbrace{t \iint_\Omega \ve{B}(\ve{x})^T \ve{\sigma}_0(\ve{x}) \dd A}_{-\ve{f}_{\ve{\sigma}_0}} \\
+    %
+    - \ve{a}^T \underbrace{t \iint_\Omega \ve{N}(\ve{x})^T \ve{b}(\ve{x}) \dd A}_{\ve{f}_\ve{b}} 
+    %
+    - \ve{a}^T \underbrace{t \oint_{\partial\Omega} \ve{N}(\ve{x}(s))^T \ve{t}(\ve{x}(s)) \dd s}_{\ve{f}_\ve{t}} 
+    %
+    - \ve{a}^T\ve{p} - \ve{a}^T\ve{q},
+\end{equation}
+lo que se puede escribir de forma compacta como:
+\begin{equation}
+    \Pi(\ve{a}) = \frac{1}{2}\ve{a}^T \ma{K} \ve{a}^\e - \ve{a}^T \underbrace{\left( %\ve{f}_{\ve{\varepsilon}_0} + \ve{f}_{\ve{\sigma}_0} + 
+    \ve{f}_\ve{b} + \ve{f}_\ve{t} + \ve{p}\right)}_{\ve{f}} - \ve{a}^T\ve{q},
+\end{equation}
+o incluso de forma más compacta, así:
+\begin{equation}
+    \Pi(\ve{a}) = \frac{1}{2}\ve{a}^T \ma{K} \ve{a}^\e - \ve{a}^T \ve{f} - \ve{a}^T\ve{q}.
+\end{equation}
+Observe que $\Pi(\ve{a})$ es una función cuadrática que tiene la forma de un paraboloide elíptico con un único mínimo\footnote{Para entender esto se sugiere consultar J. R. Shewchuk (1994) - \emph{An introduction to the conjugate gradient method without the agonizing pain}. Edición $1 \tfrac{1}{4}$. Disponible en: \url{https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf}} por el hecho de que la matriz $\ve{K}$ es definida positiva\footnote{Se dice que una matriz $\ma{K}$ es \emph{definida positiva} cuando $\ve{a}^T \ma{K} \ve{a}^\e > 0$ para todo vector $\ve{a}\neq\ve{0}$. Ver: \url{https://en.wikipedia.org/wiki/Definite_matrix}; observe que $W_\text{elást} = \frac{1}{2}\ve{a}^T \ma{K} \ve{a}^\e > 0$ cuando el sólido está sometido a deformaciones, es decir cuando $\ve{a}\neq\ve{0}$; de aquí se sigue que la matriz de rigidez $\ve{K}$ es definida positiva.} cuando el sólido está apropiadamente restringido, es decir, satisface las condiciones de apoyo.
+
+Aplicando el principio de la energía potencial mínima, debemos minimizar $\Pi(\ve{a})$; para ello se deriva $\Pi(\ve{a})$ con respecto al vector $\ve{a}$ y se iguala a cero, resultando:
+\begin{equation}
+    \frac{\partial \Pi(\ve{a})}{\partial \ve{a}} = \ma{K} \ve{a}^\e - \ve{f} - \ve{q} = \ve{0},
+\end{equation}
+y de aquí la ecuación de equilibrio
+\begin{equation}
+    \ma{K}^{(e)} \ve{a}^{(e)} - \ma{f}^{(e)} = \ma{q}^{(e)}.
+\end{equation}
+
+En la deducción anterior no se tuvo en cuenta el efecto de las de las deformaciones y de los esfuerzos iniciales, ya que estos no hacen parte de la energía potencial elástica $W_{\text{elást}}$; en caso de que estos se quisieran tener en cuenta, se deberían incluir en el término de la energía externa $W_{\text{ext}}$.
 \end{document}
