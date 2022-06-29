@@ -1,7 +1,7 @@
 # Taller 1: modelado de una barra doblemente empotrada sometida a cargas axiales
 Con el objeto de aplicar la teoría aprendida se requiere hacer el análisis de los desplazamientos, deformaciones y esfuerzos de una barra sometida a fuerzas axiales utilizando la teoría vista en clase y  un software profesional de análisis y diseño estructural. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que propongan soluciones a los problemas propuestos.
 
-Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada hora de retraso se descontarán 0.3 unidades de la nota final.
+Fecha de entrega: se especificará en GOOGLE CLASSROOM. Por cada hora de 8 horas de retraso se descontará 1 décima de la nota final.
 
 Trabajo a presentar en grupos de máximo dos personas.
 
@@ -56,6 +56,8 @@ Se solicita calcular las fuerzas axiales, esfuerzos, deformaciones y desplazamie
 * 0.5 unidades por programar algo novedoso que mejore notablemente algún aspecto del código.
 
 # Otros criterios y notas
+* Se solicita subir todos los archivos asociados al trabajo (.XLSX, .PDF, .MP4, .MKV, etc) directamente a GOOGLE CLASSROOM. Por favor no los empaquete en un archivo .ZIP o .RAR.
+
 * Lo solicitado se debe subir a la plataforma GOOGLE CLASSROOM en formato PDF. El video se debe subir a GOOGLE CLASSROOM, no a YouTube u otra plataforma de videos. El video debe contener un recuadrito en el cual se vea a usted exponiendo el tema.
 
 * Se deben entregar las presentaciones utilizadas en los videos en formato PDF.
@@ -78,7 +80,7 @@ Se solicita calcular las fuerzas axiales, esfuerzos, deformaciones y desplazamie
 
 * Si se usa un software diferente al registrado, se tendrá menos 3.0 unidades.
 
-* Si se modela una estructura diferente a la registrada, se tendrá menos 3.0 unidades.
+* Si se modela una estructura diferente a la registrada, o si se modela usando EFs 3D, se tendrá menos 3.0 unidades.
 
 * Si no se incluye en el video un recuadro donde se donde se vea usted hablando sobre el software se tendrá menos 3.0 unidades.
 
