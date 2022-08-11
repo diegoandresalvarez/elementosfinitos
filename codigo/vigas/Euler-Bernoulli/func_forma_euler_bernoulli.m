@@ -73,10 +73,14 @@ fplot(N1b, [-1,1], 'LineWidth', 2);
 fplot(N2,  [-1,1], 'LineWidth', 2);
 fplot(N2b, [-1,1], 'LineWidth', 2);
 xlabel('\xi', 'FontSize', 20)
-legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
-                           'Interpreter', 'Latex', 'FontSize', 20)
+legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', ...
+       '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
+       'Location', 'Best',     ...
+       'Interpreter', 'Latex', ...
+       'FontSize', 20);
 title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
 axis equal
+grid on
 
 %%     %%%%%%%%%%%%%%%%%%%%%%%%%% METODO 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf('\n\n*** Metodo 2 para encontrar las funciones de forma *** \n\n')
@@ -143,7 +147,7 @@ disp('f = q*L*'); pretty(f/(q*L));
 
 %% Calculo de la matriz de masa consistente
 syms rho A
-M = simplify(int(rho*A*NN.'*NN*L/2,xi,-1,1));
+M = simplify(int(rho*A*(NN.')*NN*L/2,xi,-1,1));
 disp('M = rho*A*L/420*'); pretty(M/(rho*A*L/420));
 
 return % bye, bye!
