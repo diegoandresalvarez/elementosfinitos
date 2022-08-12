@@ -76,7 +76,7 @@ Considere la siguiente viga, la cual se tomó del libro [J. Uribe Escamilla (200
 Dicha viga se resolvió utilizando la teoría de **Euler-Bernoulli**:
 
 * Solución resolviendo directamente la ecuación diferencial (usando la funcion bvp5c): 
-  * MATLAB: [c4_escamilla_ej_5_5_EB_eq_diff.m]
+  * MATLAB: [c4_escamilla_ej_5_5_EB_eq_diff.m](resolviendo_la_ecuacion_diferencial/c4_escamilla_ej_5_5_EB_eq_diff.m)
 
 * Solución por el método de los elementos finitos:
   * MATLAB: [c4_ejemplo_EB.m](c4_ejemplo_EB.m)
