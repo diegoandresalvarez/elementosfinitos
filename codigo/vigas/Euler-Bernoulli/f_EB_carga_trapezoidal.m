@@ -3,22 +3,27 @@
 %
 %   /|                                      ^  q(x)
 %   /|                             ^  |  |  |                   
-%   /|                    ^  |  |  |  |  |  |  |\
-%   /|           ^  |  |  |  |  |  |  |  |  |  |\
-%   /|  ^  |  |  |  |  |  |  |  |  |  |  |  |  |\
-%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\  
-%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\
-%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |\
-%   /|#########################################|\
-%   /|                                         |\
+%   /|                    ^  |  |  |  |  |  |  |/
+%   /|           ^  |  |  |  |  |  |  |  |  |  |/
+%   /|  ^  |  |  |  |  |  |  |  |  |  |  |  |  |/
+%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |/  
+%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |/
+%   /|  |  |  |  |  |  |  |  |  |  |  |  |  |  |/
+%   /|#########################################|/
+%   /|                                         |/
 %
 %    |--------------------L--------------------|
 % 
 % para una viga de Euler-Bernoulli, asumiendo E, I, A constante 
 
+% FECHA         QUIEN  QUE 
+% Ago 12, 2022  DAAM   El código es igual que el de PYTHON
+%
+% DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 clear, clc
 
-syms syms w x L w1 w2 V(x) M(x) t(x) v(x) EI
+syms syms w(x) x L w1 w2 V(x) M(x) t(x) EI
 
 q = (w2-w1)*x/L + w1;       % carga trapezoidal
 
@@ -26,23 +31,24 @@ sol = dsolve(...
        diff(V) == q,    ... % se definen las ecuaciones diferenciales
        diff(M) == V,    ...
        diff(t) == M/EI, ... 
-       diff(v) == t,    ...
-       v(0) == 0,       ... % con sus respectivas condiciones de frontera
-       v(L) == 0,       ...
+       diff(w) == t,    ...
+       w(0) == 0,       ... % con sus respectivas condiciones de frontera
+       w(L) == 0,       ...
        t(0) == 0,       ...   
        t(L) == 0);
-      
-disp('q = '); disp(simplify(q));
-disp('V = '); disp(simplify(sol.V));
-disp('M = '); disp(simplify(sol.M));
-disp('t = '); disp(simplify(sol.t));
-disp('v = '); disp(simplify(sol.v));
+
+% se imprimen los resultados
+disp('q = '); pretty(simplify(q));
+disp('V = '); pretty(simplify(sol.V));
+disp('M = '); pretty(simplify(sol.M));
+disp('t = '); pretty(simplify(sol.t));
+disp('w = '); pretty(simplify(sol.w));
 
 % Se evaluan las cargas nodales equivalentes
-disp('Y1 = '); disp(simplify(-subs(sol.V, x, 0)));
-disp('Y2 = '); disp(simplify(+subs(sol.V, x, L)));
+disp('Y1 = '); pretty(simplify(-subs(sol.V, x, 0)));
+disp('Y2 = '); pretty(simplify(+subs(sol.V, x, L)));
 
 % Y los momentos nodales equivalentes
-disp('M1 = '); disp(simplify(+subs(sol.M, x, 0)));
-disp('M2 = '); disp(simplify(-subs(sol.M, x, L)));
+disp('M1 = '); pretty(simplify(+subs(sol.M, x, 0)));
+disp('M2 = '); pretty(simplify(-subs(sol.M, x, L)));
       

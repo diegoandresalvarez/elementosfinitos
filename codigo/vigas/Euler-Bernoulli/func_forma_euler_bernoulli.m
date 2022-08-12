@@ -77,6 +77,7 @@ legend('$N_1(\xi)$', '$\bar{N}_1(\xi)$', '$N_2(\xi)$', '$\bar{N}_2(\xi)$', ...
                            'Interpreter', 'Latex', 'FontSize', 20)
 title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
 axis equal
+grid on
 
 %%     %%%%%%%%%%%%%%%%%%%%%%%%%% METODO 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fprintf('\n\n*** Metodo 2 para encontrar las funciones de forma *** \n\n')
@@ -145,5 +146,10 @@ disp('f = q*L*'); pretty(f/(q*L));
 syms rho A
 M = simplify(int(rho*A*NN.'*NN*L/2,xi,-1,1));
 disp('M = rho*A*L/420*'); pretty(M/(rho*A*L/420));
+
+
+syms b k
+H = b*k*simplify(int(NN.'*NN*L/2,xi,-1,1));
+disp('H = '); pretty(H);
 
 return % bye, bye!
