@@ -9,7 +9,7 @@ filename = 'viga_con_resortes';
 archivo_xlsx = fullfile('..', 'ejemplos', [filename '.xlsx']);
 
 %% se lee la posicion de los nodos
-T       = readtable(archivo_xlsx, 'Sheet', 'xnod');
+T       = readtable(archivo_xlsx, 'Sheet', 'xnod', 'Range', 'A:B');
 idxNODO = T{:,'nodo'};
 xnod    = T{idxNODO,'x'};           % posicion de los nodos
 L       = diff(xnod);               % longitud de cada EF
@@ -21,7 +21,7 @@ gdl  = [ (1:2:ngdl)' (2:2:ngdl)' ]; % grados de libertad
 
 %% se leen la matriz de conectividad (LaG), el modulo de elasticidad, las 
 %  propiedades del material y las cargas
-T     = readtable(archivo_xlsx, 'Sheet', 'LaG_EI_q');
+T     = readtable(archivo_xlsx, 'Sheet', 'LaG_EI_q', 'Range', 'A:I');
 idxEF = T{:,'EF'};
 LaG   = T{idxEF,{'NL1','NL2'}};  % definicion de EFs con respecto a nodos
 E     = T{idxEF,'E'};            % modulo de elasticidad E del EF

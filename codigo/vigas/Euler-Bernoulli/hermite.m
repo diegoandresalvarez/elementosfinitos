@@ -1,4 +1,10 @@
 %% Interpolacion polinomica de Hermite
+
+% FECHA         QUIEN  QUE 
+% Ago 11, 2022  DAAM   El código es igual que el de PYTHON
+%
+% DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 clear, clc
 
 %% Definicion de variables
@@ -46,4 +52,4 @@ title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
 axis equal
 grid on
 
-%% bye bye
+%% Bye, bye!!!

@@ -1,23 +1,24 @@
 function c4_escamilla_ej_5_5_EB_eq_diff
-% Este programa calcula los diagramas de cortante, momento, angulo de giro 
-% y deflexion vertical de la viga Ej 5.5 (analisis de estructuras - J. Uribe)
-% a partir de la solucion de la ecuacion diferencial:
+% Este programa calcula los diagramas de cortante, momento, ángulo de giro 
+% y deflexión vertical de la viga Ej 5.5 (análisis de estructuras - J. Uribe)
+% a partir de la solución de la ecuacion diferencial:
 %
 %  d^2  /            d^2v(x)  \
 % ------| E(x) I(x) --------- | = q(x)
 %  dx^2 \             dx^2    /
 %
-% utilizando el comando de MATLAB bvp5c
+% utilizando el comando de MATLAB bvp5c()
 
+%% se cierran las figuras y se borra la pantalla
 close all; clc;
 
-%% Datos:
-b = 0.30;         % Ancho de la viga, m
-h = 1.50;         % Altura de la viga, m
-E = 200e6;        % Modulo de elasticidad de la viga, GPa
-I = (b*h^3)/12;   % Momento de inercia y, m^4
+%% datos:
+b = 0.30;         % [m]   Ancho de la viga
+h = 1.50;         % [m]   Altura de la viga
+E = 200e6;        % [kPa] Módulo de elasticidad de la viga
+I = (b*h^3)/12;   % [m^4] Momento de inercia y
 
-%% resolver la ecuacion diferencial
+%% resolver la ecuación diferencial
 % Nota: observe que al correr este programa sale el error:
 % Warning: Unable to meet the tolerance without using more than 2500 mesh points.
 %  The last mesh of 1903 points and the solution are available in the output argument.
@@ -31,15 +32,15 @@ I = (b*h^3)/12;   % Momento de inercia y, m^4
 % sin embargo con este valor, no converge aun a la exacta, que es la que da
 % el MEF.
 
-xinit = [0:0.01:10  10:0.01:16 16:0.01:19];
+xinit = [0:0.01:10  10:0.01:16  16:0.01:19];
 sol   = bvpinit(xinit, zeros(4,1));
-sol   = bvp5c(@f,@bc,sol);
+sol   = bvp5c(@f, @bc, sol);
 
-%% Calculos intermedios
-V     = sol.y(4,:);          % Fuerza cortante [kN]
-M     = sol.y(3,:);          % Momento flector [kN*m]
-theta = atan(sol.y(2,:));    % Angulo de giro  [rad]
-v     = sol.y(1,:);          % Desplazamiento vertical de la viga [m]
+%% Cálculos intermedios
+V     = sol.y(4,:);       % [kN]   fuerza cortante
+M     = sol.y(3,:);       % [kN*m] momento flector
+theta = atan(sol.y(2,:)); % [rad]  ángulo de giro
+v     = sol.y(1,:);       % [m]    desplazamiento vertical de la viga
 x     = sol.x;
 
 % Se imprimen los resultados
@@ -51,51 +52,53 @@ apoyo1 = 1;
 apoyo2 = find(xinit == 10); apoyo2 = apoyo2(1);
 apoyo3 = find(xinit == 16); apoyo3 = apoyo3(1);
 
-fprintf('Reaccion en el apoyo 1 = %g kN\n',    V(apoyo1));
+fprintf('Reacción en el apoyo 1 = %g kN\n',    V(apoyo1));
 fprintf('Momento  en el apoyo 1 = %g kN m\n', -M(apoyo1));
-fprintf('Reaccion en el apoyo 2 = %g kN\n',    V(apoyo2+1)-V(apoyo2));   
-fprintf('Reaccion en el apoyo 3 = %g kN\n',    V(apoyo3+1)-V(apoyo3));     
+fprintf('Reacción en el apoyo 2 = %g kN\n',    V(apoyo2+1)-V(apoyo2));
+fprintf('Reacción en el apoyo 3 = %g kN\n',    V(apoyo3+1)-V(apoyo3));
 
 %% Hacer los dibujos
 z = zeros(1,length(x));
 figure(1);
 subplot(2,1,1);   
-title('Diagramas de angulo de giro y deflexion vertical')
+title('Diagramas de ángulo de giro y deflexión vertical')
 hold on
 plot(x, z, '-k', x, v,'-r','LineWidth',2);
 ylabel('desplazamiento v(x) [m]');
 grid minor
 xlabel('eje x [m]')
 
-subplot(2,1,2);   
+subplot(2,1,2);
 plot(x, z, '-k', x, theta,'-r','LineWidth',2);
-ylabel('angulo de giro theta(x) [rad]');
+ylabel('ángulo de giro theta(x) [rad]');
 grid minor
 
 figure(2);
-subplot(2,1,1);   
-title('Diagramas de cortante y de momento')
+subplot(2,1,1);
+title('Diagramas de fuerza cortante y de momento flector')
 hold on
 plot(x, z, '-k', x, 1000*M,'-r','LineWidth',2);
-ylabel('momento M(x) [N/m]');
+ylabel('momento flector M(x) [N/m]');
 grid minor
 xlabel('eje x [m]')
 
-subplot(2,1,2);   
+subplot(2,1,2);
 plot(x, z, '-k', x, 1000*V,'-r','LineWidth',2);
 ylabel('fuerza cortante V(x) [N]');
 grid minor
 
 %% -----------------------------------------------------------------------
    function dydx = f(x,y,region)
-      % aqui se implementa la ecuacion diferencial para vigas de material
-      % homogeneo y seccion transversal constante (E e I las provee la
-      % funcion exterior)
-      %  d^2  /            d^2v(x)  \
-      % ------| E(x) I(x) --------- | = q(x)
-      %  dx^2 \             dx^2    /      
+      % aquí se implementa la ecuación diferencial para vigas de material
+      % homogeneo y sección transversal constante (E e I las provee la
+      % función exterior)
+      %
+      %     d4v(x)
+      % EI ------- = q(x)      E e I las provee la función exterior
+      %      dx4
       %
       dydx = zeros(4,1);
+
       %         y(1)          = v
       dydx(1) = y(2);       % = theta
       dydx(2) = y(3)/(E*I); % = M/(EI)
@@ -105,7 +108,7 @@ grid minor
 
 %% ------------------------------------------------------------------------
    function res = bc(YL,YR)
-      vv = 1; tt = 2; MM = 3; VV = 4;       
+      vv = 1; tt = 2; MM = 3; VV = 4;
       % condiciones de frontera (externas e internas)
       res = [ % tramo 1:   YL: empotramiento, YR: rodillo
               YL(vv,1)               % v(0)     = 0
@@ -140,5 +143,4 @@ grid minor
       end
    end
 
-end
-%%End
+end   % c4_escamilla_ej_5_5_EB_eq_diff

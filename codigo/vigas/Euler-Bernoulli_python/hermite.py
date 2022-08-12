@@ -2,6 +2,11 @@
 
 # Interpolacion polinomica de Hermite
 
+# FECHA         QUIEN  QUE 
+# Ago 11, 2022  DAAM   El código es igual que el de MATLAB
+#
+# DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 # %%Importación de librerías
 import sympy as sp
 from sympy.plotting import plot
@@ -15,10 +20,10 @@ L1 = sp.interpolate([(-1, 1), (1, 0)], xi)
 L2 = sp.interpolate([(-1, 0), (1, 1)], xi)
 
 # %%Se calculan los polinomios Pi y Qi
-P1 = (1 - 2*(sp.diff(L1, xi)).subs(xi, x1)*(xi-x1))*L1**2
-P2 = (1 - 2*(sp.diff(L2, xi)).subs(xi, x2)*(xi-x2))*L2**2
-Q1 = (xi-x1)*L1**2
-Q2 = (xi-x2)*L2**2
+P1 = (1 - 2*(sp.diff(L1, xi)).subs(xi, x1)*(xi - x1))*L1**2
+P2 = (1 - 2*(sp.diff(L2, xi)).subs(xi, x2)*(xi - x2))*L2**2
+Q1 = (xi - x1)*L1**2
+Q2 = (xi - x2)*L2**2
 
 # %%Se calcula el polinomio interpolador
 u = sp.simplify(P1*u1 + P2*u2 + Q1*u1p + Q2*u2p)
@@ -48,3 +53,5 @@ p[1].line_color = 'b'; p[1].label=r'$\bar{N}_1(\xi)$'
 p[2].line_color = 'g'; p[2].label=r'$N_2(\xi)$'
 p[3].line_color = 'c'; p[3].label=r'$\bar{N}_2(\xi)$'
 p.show()
+
+# %% Bye, bye!!!
