@@ -112,15 +112,15 @@ xlabel('eje x [m]')
               YR(vv,1)               % v(10)    = 0
               % tramo 2:   YL: rodillo, YR: rodillo
               YL(vv,2)               % v(10) = 0
-              YR(tt,1) - YL(tt,2)    % continuidad de theta(x) en x=10
-              YR(MM,1) - YL(MM,2)    % continuidad de M(x)     en x=10
+              YR(tt,1) - YL(tt,2)    % continuidad de theta(x)   en x=10 m
+              YR(MM,1) - YL(MM,2)    % continuidad de M(x)
               YR(vv,2)               % v(16)    = 0
               % tramo 3:   YL: rodillo, YR: voladizo
               YL(vv,3)               % v(16) = 0
-              YR(tt,2) - YL(tt,3)    % continuidad de theta(x) en x=16
-              YR(MM,2) - YL(MM,3)    % continuidad de M(x)     en x=16
-              YR(VV,3) - 15          % V(L) = -15 kN (cortante)
-              YR(MM,3)       ];      % M(L) = 0
+              YR(tt,2) - YL(tt,3)    % continuidad de theta(x)   en x=16 m
+              YR(MM,2) - YL(MM,3)    % continuidad de M(x)       
+              YR(VV,3) - 15          % V(L) = -15 kN (cortante)  en x=19 m
+              YR(MM,3)       ];      % M(L) = 0                  
    end
 
 %% ------------------------------------------------------------------------
