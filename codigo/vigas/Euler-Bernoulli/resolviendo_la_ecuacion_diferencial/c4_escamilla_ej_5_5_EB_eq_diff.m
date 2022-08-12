@@ -3,14 +3,14 @@ function c4_escamilla_ej_5_5_EB_eq_diff
 % y deflexión vertical de la viga Ej 5.5 (análisis de estructuras - J. Uribe)
 % a partir de la solución de la ecuacion diferencial:
 %
-%  d^2  /            d^2v(x)  \
-% ------| E(x) I(x) --------- | = q(x)
-%  dx^2 \             dx^2    /
+%     d4v(x)
+% EI ------- = q(x)      E e I las provee la función exterior
+%      dx4
 %
 % utilizando el comando de MATLAB bvp5c()
 
 %% se cierran las figuras y se borra la pantalla
-close all; clc;
+%close all; clc;
 
 %% datos:
 b = 0.30;         % [m]   Ancho de la viga
@@ -19,22 +19,16 @@ E = 200e6;        % [kPa] Módulo de elasticidad de la viga
 I = (b*h^3)/12;   % [m^4] Momento de inercia y
 
 %% resolver la ecuación diferencial
-% Nota: observe que al correr este programa sale el error:
+xinit = [0:0.01:10  10:0.01:16  16:0.01:19];  % [m]
+sol   = bvpinit(xinit, zeros(4,1));
+opts  = bvpset('NMax', 5000);
+sol   = bvp5c(@f, @bc, sol, opts);
+
+% NOTA: opts  = bvpset('NMax', 5000); se utiliza para evitar que salga el
+% mensaje:
 % Warning: Unable to meet the tolerance without using more than 2500 mesh points.
 %  The last mesh of 1903 points and the solution are available in the output argument.
 %  The maximum error is 0.253843, while requested accuracy is 0.001. 
-% > In bvp5c at 341
-%  In c4_escamilla_ej_5_5_EB_eq_diff_ver2 at 26
-%
-% La solución para este es hacer una malla inicial más fina:
-% Por ejemplo: 
-% xinit = [0:0.0001:10  10:0.0001:16 16:0.0001:19];
-% sin embargo con este valor, no converge aun a la exacta, que es la que da
-% el MEF.
-
-xinit = [0:0.01:10  10:0.01:16  16:0.01:19];
-sol   = bvpinit(xinit, zeros(4,1));
-sol   = bvp5c(@f, @bc, sol);
 
 %% Cálculos intermedios
 V     = sol.y(4,:);       % [kN]   fuerza cortante
@@ -49,8 +43,8 @@ disp('      [m]      [kN]     [kN*m]   [rad/1000]  [mm]');
 disp([x' V' M' 1e3*theta' 1e3*v']);
 
 apoyo1 = 1;
-apoyo2 = find(xinit == 10); apoyo2 = apoyo2(1);
-apoyo3 = find(xinit == 16); apoyo3 = apoyo3(1);
+apoyo2 = find(x == 10); apoyo2 = apoyo2(1);
+apoyo3 = find(x == 16); apoyo3 = apoyo3(1);
 
 fprintf('Reacción en el apoyo 1 = %g kN\n',    V(apoyo1));
 fprintf('Momento  en el apoyo 1 = %g kN m\n', -M(apoyo1));
@@ -58,34 +52,36 @@ fprintf('Reacción en el apoyo 2 = %g kN\n',    V(apoyo2+1)-V(apoyo2));
 fprintf('Reacción en el apoyo 3 = %g kN\n',    V(apoyo3+1)-V(apoyo3));
 
 %% Hacer los dibujos
-z = zeros(1,length(x));
+z = zeros(1, length(x));
 figure(1);
 subplot(2,1,1);   
 title('Diagramas de ángulo de giro y deflexión vertical')
 hold on
-plot(x, z, '-k', x, v,'-r','LineWidth',2);
+plot(x, z, '-k', x, v, '-r','LineWidth',2);
 ylabel('desplazamiento v(x) [m]');
 grid minor
 xlabel('eje x [m]')
 
 subplot(2,1,2);
-plot(x, z, '-k', x, theta,'-r','LineWidth',2);
+plot(x, z, '-k', x, theta, '-r','LineWidth',2);
 ylabel('ángulo de giro theta(x) [rad]');
 grid minor
+xlabel('eje x [m]')
 
 figure(2);
 subplot(2,1,1);
 title('Diagramas de fuerza cortante y de momento flector')
 hold on
-plot(x, z, '-k', x, 1000*M,'-r','LineWidth',2);
-ylabel('momento flector M(x) [N/m]');
+plot(x, z, '-k', x, M,'-r','LineWidth',2);
+ylabel('momento flector M(x) [kN/m]');
 grid minor
 xlabel('eje x [m]')
 
 subplot(2,1,2);
-plot(x, z, '-k', x, 1000*V,'-r','LineWidth',2);
-ylabel('fuerza cortante V(x) [N]');
+plot(x, z, '-k', x, V,'-r','LineWidth',2);
+ylabel('fuerza cortante V(x) [kN]');
 grid minor
+xlabel('eje x [m]')
 
 %% -----------------------------------------------------------------------
    function dydx = f(x,y,region)
@@ -123,7 +119,7 @@ grid minor
               YL(vv,3)               % v(16) = 0
               YR(tt,2) - YL(tt,3)    % continuidad de theta(x) en x=16
               YR(MM,2) - YL(MM,3)    % continuidad de M(x)     en x=16
-              YR(VV,3) - 1.5         % V(L) = -1.5 (cortante)
+              YR(VV,3) - 15          % V(L) = -15 kN (cortante)
               YR(MM,3)       ];      % M(L) = 0
    end
 
@@ -131,13 +127,13 @@ grid minor
    function qq = q(x)
       % carga aplicada a la viga
       if x <= 4.99
-         qq = 0;
+         qq = 0;        % x = [ 0.00,  4.99]
       elseif x < 5.01
-         qq = -3/0.02;       % carga puntual en tramo 1, kN
+         qq = -30/0.02; % x = [ 4.99,  5.01]  carga puntual en tramo 1, kN
       elseif x < 10
-         qq = 0;
+         qq = 0;        % x = [ 5.01, 10.00]
       elseif x < 16
-         qq = -1.2;          % carga distribuida en tramo 2, kN/m
+         qq = -12;      % x = [10.00, 16.00]  carga distribuida en tramo 2, kN/m
       else % if x < 19
          qq = 0;
       end
