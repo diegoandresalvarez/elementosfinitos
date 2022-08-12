@@ -3,7 +3,7 @@
 # Interpolacion polinomica de Hermite
 
 # FECHA         QUIEN  QUE 
-# Ago 11, 2022  DAAM   El código es igual que el de MATLAB
+# Ago 12, 2022  DAAM   El código es igual que el de MATLAB
 #
 # DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
 
@@ -13,17 +13,17 @@ from sympy.plotting import plot
 
 # %%Definición de variables
 xi, u1, u2, u1p, u2p = sp.symbols('xi u1 u2 u1p u2p')
-x1, x2 = -1, +1
+xi1, xi2 = -1, +1
 
 # %%Funciones de forma lagrangianas
 L1 = sp.interpolate([(-1, 1), (1, 0)], xi)
 L2 = sp.interpolate([(-1, 0), (1, 1)], xi)
 
 # %%Se calculan los polinomios Pi y Qi
-P1 = (1 - 2*(sp.diff(L1, xi)).subs(xi, x1)*(xi - x1))*L1**2
-P2 = (1 - 2*(sp.diff(L2, xi)).subs(xi, x2)*(xi - x2))*L2**2
-Q1 = (xi - x1)*L1**2
-Q2 = (xi - x2)*L2**2
+P1 = (1 - 2*(sp.diff(L1, xi)).subs(xi, xi1)*(xi - xi1))*L1**2
+P2 = (1 - 2*(sp.diff(L2, xi)).subs(xi, xi2)*(xi - xi2))*L2**2
+Q1 = (xi - xi1)*L1**2
+Q2 = (xi - xi2)*L2**2
 
 # %%Se calcula el polinomio interpolador
 u = sp.simplify(P1*u1 + P2*u2 + Q1*u1p + Q2*u2p)

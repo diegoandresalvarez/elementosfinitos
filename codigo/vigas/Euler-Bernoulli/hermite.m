@@ -1,7 +1,7 @@
 %% Interpolacion polinomica de Hermite
 
 % FECHA         QUIEN  QUE 
-% Ago 11, 2022  DAAM   El código es igual que el de PYTHON
+% Ago 12, 2022  DAAM   El código es igual que el de PYTHON
 %
 % DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
 
