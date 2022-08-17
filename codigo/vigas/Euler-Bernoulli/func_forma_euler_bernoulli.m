@@ -150,4 +150,9 @@ syms rho A
 M = simplify(int(rho*A*(NN.')*NN*L/2,xi,-1,1));
 disp('M = rho*A*L/420*'); pretty(M/(rho*A*L/420));
 
+
+syms b k
+H = b*k*simplify(int(NN.'*NN*L/2,xi,-1,1));
+disp('H = '); pretty(H);
+
 return % bye, bye!

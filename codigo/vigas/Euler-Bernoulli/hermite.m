@@ -1,19 +1,25 @@
 %% Interpolacion polinomica de Hermite
+
+% FECHA         QUIEN  QUE 
+% Ago 12, 2022  DAAM   El código es igual que el de PYTHON
+%
+% DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 clear, clc
 
 %% Definicion de variables
 syms xi u1 u2 u1p u2p
-x1 = -1; x2 =  1;
+xi1 = -1; xi2 =  1;
 
 %% Funciones de forma Lagrangianas
 L1 = poly2sym(polyfit([-1 1], [1 0], 1), xi);
 L2 = poly2sym(polyfit([-1 1], [0 1], 1), xi);
 
 %% Se calculan los polinomios Pi y Qi
-P1 = (1 - 2*subs(diff(L1, xi), xi, x1)*(xi - x1))*L1^2;
-P2 = (1 - 2*subs(diff(L2, xi), xi, x2)*(xi - x2))*L2^2;
-Q1 = (xi - x1)*L1^2; 
-Q2 = (xi - x2)*L2^2;
+P1 = (1 - 2*subs(diff(L1, xi), xi, xi1)*(xi - xi1))*L1^2;
+P2 = (1 - 2*subs(diff(L2, xi), xi, xi2)*(xi - xi2))*L2^2;
+Q1 = (xi - xi1)*L1^2; 
+Q2 = (xi - xi2)*L2^2;
 
 %% Se calcula el polinomio interpolador
 u = simplify(P1*u1 + P2*u2 + Q1*u1p + Q2*u2p);
@@ -47,4 +53,4 @@ title('Funciones de forma de la viga de Euler-Bernoulli de dos nodos')
 axis equal
 grid on
 
-%% bye bye
+%% Bye, bye!!!

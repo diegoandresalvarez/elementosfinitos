@@ -1,6 +1,6 @@
-function viga_tres_apoyos
-% Este programa calcula los diagramas de cortante, momento, angulo de giro 
-% y deflexion vertical de la siguiente viga:
+function c4_viga_tres_apoyos_eq_diff
+% Este programa calcula los diagramas de cortante, momento, ángulo de giro 
+% y deflexión vertical de la siguiente viga:
 %   _________________________________________________
 %   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | -q
 %   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
@@ -11,33 +11,33 @@ function viga_tres_apoyos
 % /////                   ooooo                   ooooo
 %   |----------L/2----------|----------L/2----------|
 %
-% a partir de la solucion de la ecuacion diferencial
+% a partir de la solución de la ecuacion diferencial
 %     d4v(x)
 % EI ------- = q(x)
 %      dx4
 %
-% utilizando el comando de MATLAB bvp4c
+% utilizando el comando de MATLAB bvp4c()
 
-%%
+%% se cierran las figuras y se borra la pantalla
 close all; clc;
 
 %% datos:
-b = 0.20;       % Ancho de la viga, m
-h = 0.40;       % Altura de la viga, m
-E =  2e6;       % Modulo de elasticidad de la viga, kPa
-L =    6;       % Longitud de la viga, m
-I = (b*h^3)/12; % Momento de inercia y, m^4
+b = 0.20;       % [m]   Ancho de la viga
+h = 0.40;       % [m]   Altura de la viga
+E =  2e6;       % [kPa] Módulo de elasticidad de la viga
+L =    6;       % [m]   Longitud de la viga
+I = (b*h^3)/12; % [m^4] Momento de inercia y
 
-%% resolver la ecuacion diferencial
+%% resolver la ecuación diferencial
 xinit = [0:0.01:L/2  L/2:0.01:L];
 sol = bvpinit(xinit, zeros(4,1));
-sol = bvp4c(@f,@bc,sol);
+sol = bvp4c(@f, @bc, sol);
 
-%% Calculos intermedios
-V     = sol.y(4,:);       % fuerza cortante [kN]
-M     = sol.y(3,:);       % momento flector [kN*m]
-theta = atan(sol.y(2,:)); % angulo de giro  [rad]
-v     = sol.y(1,:);       % desplazamiento vertical de la viga [m]
+%% Cálculos intermedios
+V     = sol.y(4,:);       % [kN]   fuerza cortante
+M     = sol.y(3,:);       % [kN*m] momento flector
+theta = atan(sol.y(2,:)); % [rad]  ángulo de giro
+v     = sol.y(1,:);       % [m]    desplazamiento vertical de la viga
 x     = sol.x;
 
 % Se imprimen los resultados
@@ -46,9 +46,9 @@ disp('      [m]      [kN]     [kN*m]    [rad]       [m]');
 disp([x' V' M' theta' v']);
 
 n = length(xinit);
-fprintf('Reaccion en el apoyo 1 = %g kN\n',V(1));
-fprintf('Reaccion en el apoyo 2 = %g kN\n',V(n/2+1)-V(n/2));
-fprintf('Reaccion en el apoyo 3 = %g kN\n',-V(end));
+fprintf('Reacción en el apoyo 1 = %g kN\n', V(1));
+fprintf('Reacción en el apoyo 2 = %g kN\n', V(n/2+1)-V(n/2));
+fprintf('Reacción en el apoyo 3 = %g kN\n',-V(end));
 
 %% Hacer los dibujos
 figure
@@ -59,12 +59,12 @@ grid minor
 
 subplot(4,1,2)
 plot(x,M)
-ylabel('momento M(x) [kN/m]');
+ylabel('momento flector M(x) [kN/m]');
 grid minor
 
 subplot(4,1,3)
 plot(x,theta)
-ylabel('angulo de giro theta(x) [rad]');
+ylabel('ángulo de giro theta(x) [rad]');
 grid minor
 
 subplot(4,1,4)
@@ -74,14 +74,14 @@ grid minor
 xlabel('eje x [m]')
 
 %% -----------------------------------------------------------------------
-% funciones anidadas -- E e I las provee la funcion exterior
+% funciones anidadas -- E e I las provee la función exterior
 %
 
    function dydx = f(x,y,region)
-      % aqui se implementa la ecuacion diferencial
+      % aquí se implementa la ecuación diferencial
       %
       %     d4v(x)
-      % EI ------- = q(x)      E e I las provee la funcion exterior
+      % EI ------- = q(x)      E e I las provee la función exterior
       %      dx4
       
       dydx = zeros(4,1);
@@ -112,7 +112,7 @@ xlabel('eje x [m]')
 
    function qq = q(x)
       % carga aplicada a la viga
-      qq = -5; % kN/m
+      qq = -5; % [kN/m]
    end
 
-end  % viga_tres_apoyos
+end   % c4_viga_tres_apoyos_eq_diff

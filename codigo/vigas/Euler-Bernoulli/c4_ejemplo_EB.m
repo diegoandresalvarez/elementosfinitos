@@ -1,38 +1,44 @@
-%% Programa para el calculo de vigas de Euler-Bernoulli.
+%% Programa para el cálculo de vigas de Euler-Bernoulli
 
-clear, clc, close all               % borrar memoria y pantalla
+% FECHA         QUIEN  QUE 
+% Ago 12, 2022  DAAM   El código es igual que el de PYTHON
+%
+% DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
 
-%% defino las constantes y variables
-Y = 1; TH = 2;
+%% borrar memoria y pantalla
+clear, clc, close all         
+
+%% se definen las constantes y variables
+Y = 1; TH = 2;  % Y: GDL vertical, TH: GDL rotacional
 %filename = 'viga_Uribe_Escamilla_ej_5_5';
 filename = 'viga_con_resortes';
 archivo_xlsx = fullfile('..', 'ejemplos', [filename '.xlsx']);
 
-%% se lee la posicion de los nodos
+%% se lee la posición de los nodos (columnas nodo, x)
 T       = readtable(archivo_xlsx, 'Sheet', 'xnod', 'Range', 'A:B');
 idxNODO = T{:,'nodo'};
-xnod    = T{idxNODO,'x'};           % posicion de los nodos
+xnod    = T{idxNODO,'x'};           % posición de los nodos
 L       = diff(xnod);               % longitud de cada EF
 
-nno  = length(xnod);                % numero de nodos
-nef  = nno - 1;                     % numero de elementos finitos (EF)
-ngdl = 2*nno;                       % numero de grados de libertad
+nno  = length(xnod);                % número de nodos
+nef  = nno - 1;                     % número de elementos finitos (EF)
+ngdl = 2*nno;                       % número de grados de libertad
 gdl  = [ (1:2:ngdl)' (2:2:ngdl)' ]; % grados de libertad
 
-%% se leen la matriz de conectividad (LaG), el modulo de elasticidad, las 
+%% se leen la matriz de conectividad (LaG), el módulo de elasticidad, las 
 %  propiedades del material y las cargas
 T     = readtable(archivo_xlsx, 'Sheet', 'LaG_EI_q', 'Range', 'A:I');
 idxEF = T{:,'EF'};
-LaG   = T{idxEF,{'NL1','NL2'}};  % definicion de EFs con respecto a nodos
-E     = T{idxEF,'E'};            % modulo de elasticidad E del EF
+LaG   = T{idxEF,{'NL1','NL2'}};  % definición de EFs con respecto a nodos
+E     = T{idxEF,'E'};            % módulo de elasticidad E del EF
 I     = T{idxEF,'I'};            % momento de inercia Iz del EF
-G     = T{idxEF,'G'};            % modulo de rigidez (para viga de Timoshenko)
-Aast  = T{idxEF,'Aast'};         % area de cortante (para viga de Timoshenko)
-fz    = T{idxEF,{'q1e','q2e'}};  % relacion de las cargas distribuidas
+G     = T{idxEF,'G'};            % módulo de rigidez (para viga de Timoshenko)
+Aast  = T{idxEF,'Aast'};         % área de cortante (para viga de Timoshenko)
+fz    = T{idxEF,{'q1e','q2e'}};  % relación de las cargas distribuidas
 fz(isnan(fz)) = 0;               % reemplace los NaNs con ceros
 
-%% relacion de los apoyos
-T       = readtable(archivo_xlsx, 'Sheet', 'restric');
+%% relación de los apoyos (restricciones)
+T       = readtable(archivo_xlsx, 'Sheet', 'restric', 'Range', 'A:C');
 idxNODO = T{:,'nodo'};
 dirdesp = T{:,'direccion'};
 ac      = T{:,'desplazamiento'}; % desplazamientos conocidos
@@ -45,8 +51,8 @@ for i = 1:n_apoyos
 end
 d =  setdiff((1:ngdl)',c);       % GDL desconocidos
 
-%% relacion de cargas puntuales
-T = readtable(archivo_xlsx, 'Sheet', 'carga_punt');
+%% relación de cargas puntuales
+T = readtable(archivo_xlsx, 'Sheet', 'carga_punt', 'Range', 'A:C');
 idxNODO = T{:,'nodo'};
 dirfp   = T{:,'direccion'};
 fp      = T{:,'fuerza_puntual'};
@@ -58,10 +64,10 @@ for i = 1:length(idxNODO)
    f_ini(gdl(idxNODO(i), dirfp(i))) = fp(i);
 end
 
-%% relacion de los resortes
-T       = readtable(archivo_xlsx, 'Sheet', 'resortes');
+%% relación de los resortes
+T       = readtable(archivo_xlsx, 'Sheet', 'resortes', 'Range', 'A:C');
 idxNODO = T{:,'nodo'};
-tipores = T{:,'tipo'}; % Y=1 (vertical), TH=2 (rotacional)
+tipores = T{:,'tipo'}; % 0=resorte vertical, 1=resorte espiral
 kres    = T{:,'k'};    % constante del resorte
 
 %% grados de libertad del desplazamiento conocidos y desconocidos
@@ -74,9 +80,9 @@ end
 
 %% VIGA DE EULER-BERNOULLI:
 % Con el programa "func_forma_euler_bernoulli.m" se calcularon:
-%   Ke     = la matriz de rigidez de flexion del elemento e
+%   Ke     = la matriz de rigidez de flexión del elemento e
 %   fe     = el vector de fuerzas nodales equivalentes
-%   Bb     = la matriz de deformaciones de flexion
+%   Bb     = la matriz de deformaciones de flexión
 %   N      = matriz de funciones de forma
 %   dN_dxi = derivada de la matriz de funciones de forma con respecto a xi
 
@@ -85,6 +91,7 @@ end
 idx = cell(nef);  % grados de libertad del elemento e
 K = K_ini;
 f = f_ini;
+
 for e = 1:nef     % ciclo sobre todos los elementos finitos
    idx{e} = [ gdl(LaG(e,1),Y) gdl(LaG(e,1),TH) gdl(LaG(e,2),Y) gdl(LaG(e,2),TH) ];
    Le = L(e);
@@ -112,7 +119,7 @@ end
 % q = vector de fuerzas nodales de equilibrio del elemento
 % a = desplazamientos
 
-%|   qd   |   | Kcc Kcd || ac |   | fd | 
+%|   qd   |   | Kcc Kcd || ac |   | fd |
 %|        | = |         ||    | - |    |
 %| qc = 0 |   | Kdc Kdd || ad |   | fc |
 
@@ -125,24 +132,25 @@ qd = Kcc*ac + Kcd*ad - fd;   % calculo fuerzas de equilibrio desconocidas
 a = zeros(ngdl,1);  a(c) = ac;  a(d) = ad; % desplazamientos 
 q = zeros(ngdl,1);  q(c) = qd;             % fuerzas nodales equivalentes
 
-%% calculo de los momentos flectores y las fuerzas cortantes
-% M = se calcula en las raices del polinomio de GL de orden 2
+%% cálculo de los momentos flectores y las fuerzas cortantes
+% M = se calcula en las raíces del polinomio de GL de orden 2
 % V = se calcula en el centro del EF (raiz del polinomio de GL de orden 1)
 % se reserva la memoria
-xmom = zeros(2,nef); % posicion donde se calcula
-mom  = zeros(2,nef); % momento flector
-cor  = zeros(1,nef); % fuerza cortante
-%xi = linspace(-1,1,10)'; 
-xi = [ -sqrt(1/3); sqrt(1/3) ]; % raices del polinom de Legendre de grado 2
+xmom = zeros(2,nef); % posición donde se calcula
+mom  = zeros(2,nef); % momento flector  (se calcula en los dos puntos de GL)
+cor  = zeros(1,nef); % fuerza cortante  (se calcula en el centro del EF)
+
+% raices del polinomio de Legendre de grado 2
+xi = [ -sqrt(1/3); sqrt(1/3) ]; 
 
 for e = 1:nef
    % longitud del elemento finito e
    Le = L(e);
    
-   % matriz de deformaciones de flexion
+   % matriz de deformaciones de flexión
    Bbe = [ (6*xi)/Le^2, (3*xi - 1)/Le, -(6*xi)/Le^2, (3*xi + 1)/Le ];
    
-   % lugar donde se calcula el momento (centro del EF)
+   % lugar donde se calcula el momento (los dos puntos de Gauss del EF)
    xmom(:,e) = Le*xi'/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
      
    % vector de desplazamientos nodales del elemento a^{(e)}
@@ -150,21 +158,24 @@ for e = 1:nef
    
    mom(:,e) = E(e)*I(e)*Bbe*ae;                 % momento flector   
    dN3_dxi3 = [ 3/2, (3*Le)/4, -3/2, (3*Le)/4 ];
+
+   % las fuerzas cortantes son constantes dentro del EF (su lectura es más 
+   % precisa si se se hace en el centro del EF)
    cor(e)   = E(e)*I(e)*dN3_dxi3*(8/(Le^3))*ae; % fuerza cortante   
 end
 
 %% se calculan los desplazamientos al interior de cada EF
-nint = 10;           % numero de puntos donde se interpolara dentro del EF
+nint = 10;           % número de puntos donde se interpolará dentro del EF
 xi = linspace(-1,1,nint)'; % coordenadas naturales
 
-xx    = cell(nef,1); % interpol de posiciones (geometria) en el elemento
-ww    = cell(nef,1); % interpol desplazamientos en el elemento
-tt    = cell(nef,1); % interpol angulo en el elemento
-for e = 1:nef        % ciclo sobre todas los elementos finitos
+xx    = cell(nef,1); % interpolar posiciones (geometría) en el elemento
+ww    = cell(nef,1); % interpolar desplazamientos en el elemento
+tt    = cell(nef,1); % interpolar ángulo en el elemento
+for e = 1:nef        % ciclo sobre todos los elementos finitos
    % longitud del elemento finito e
    Le = L(e);
    
-   % Matriz de funciones de forma y su derivada
+   % Matriz de funciones de forma y sus derivada
    N = [ ...
          xi.^3/4 - (3*xi)/4 + 1/2,                   ...
          -(Le*(- xi.^3/4 + xi.^2/4 + xi/4 - 1/4))/2, ...
@@ -181,20 +192,20 @@ for e = 1:nef        % ciclo sobre todas los elementos finitos
    % vector de desplazamientos nodales del elemento a^{(e)}
    ae = a(idx{e});
 
-   % interpola sobre la geometria (coord naturales a geometricas)
+   % interpola sobre la geometría (coord naturales a geométricas)
    xx{e} = Le*xi/2 + (xnod(LaG(e,1)) + xnod(LaG(e,2)))/2;
    
    % se calcula el desplazamiento al interior del elemento finito
    ww{e} = N*ae;
    
-   % se calcula el angulo al interior del elemento finito
+   % se calcula el ángulo al interior del elemento finito
    tt{e} = atan((dN_dxi*2/Le)*ae);
 end
 
 %% imprimo los resultados
 format short g
-disp('Desplazamientos nodales                      ');
-disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+disp('Desplazamientos nodales                               ');
+disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
 vect_mov = reshape(a,2,nno)'; % vector de movimientos
 for i = 1:nno
    fprintf('Nodo %3d: w = %12.4g m, theta = %12.4g rad \n', ...
@@ -211,58 +222,59 @@ for i = 1:nno
    end
 end
 
-%% Grafico la solucion analitica y la solucion por el MEF
+%% Grafico la solución analítica y la solución por el MEF
 %% 1) grafico los desplazamientos de la barra
 figure(1)                          % cree un nuevo lienzo
 subplot(2,1,1);
 hold on;                           % no borre el lienzo 
-grid on;                           % reticula
+grid on;                           % retícula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h1eb = plot(xx{e}, ww{e}, 'b-');       % grafico solucion por MEF
+   h1eb = plot(xx{e}, ww{e}, 'b-');       % grafico solución por el MEF
 end
-title('Solucion con el MEF para el desplazamiento')
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Desplazamiento (m)')       % titulo del eje Y
-xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
+title('Solución con el MEF para el desplazamiento')
+xlabel('Eje X (m)')                % título del eje X
+ylabel('Desplazamiento (m)')       % título del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del gráfico
 
-%% 2) grafico los angulos de giro
+%% 2) grafico los ángulos de giro
 subplot(2,1,2);
 hold on;                           % no borre el lienzo 
-grid on;                           % reticula
+grid on;                           % retícula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h2eb = plot(xx{e}, tt{e}, 'b-');% grafico solucion por MEF
+   h2eb = plot(xx{e}, tt{e}, 'b-');% grafico solución por MEF
 end
-title('Solucion con el MEF para el giro')
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Giro (rad)')               % titulo del eje Y
+title('Solución con el MEF para el giro')
+xlabel('Eje X (m)')                % título del eje X
+ylabel('Giro (rad)')               % título del eje Y
 xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
 
 %% 3) grafico los momentos
 figure(2)                          % cree un nuevo lienzo
 subplot(2,1,1);
 hold on;                           % no borre el lienzo
-grid on;                           % reticula
-h3eb = plot(xmom(:), mom(:), 'b-');% grafico solucion por MEF
-title({'Solucion con el MEF para el momento flector',...
-   '(el momento positivo es aquel que produce traccion en la fibra inferior)'});
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Momento flector (kN-m)')   % titulo del eje Y
-xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
+grid on;                           % retícula
+h3eb = plot(xmom(:), mom(:), 'b-');% grafico solución por MEF
+title({'Solución con el MEF para el momento flector',...
+   '(el momento positivo es aquel que produce tracción en la fibra inferior)'});
+xlabel('Eje X (m)')                % título del eje X
+ylabel('Momento flector (kN-m)')   % título del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del gráfico
 
 %% 4) grafico la fuerza cortante
 subplot(2,1,2);
 hold on;                           % no borre el lienzo
-grid on;                           % reticula
+grid on;                           % retícula
 for e = 1:nef % ciclo sobre todos los elementos finitos
-   h4eb = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [cor(e) cor(e)], 'b-'); % grafico solucion por MEF
+   % grafico solución por MEF
+   h4eb = plot([xnod(LaG(e,1)) xnod(LaG(e,2))], [cor(e) cor(e)], 'b-'); 
 end
-title('Solucion con el MEF para la fuerza cortante');
-xlabel('Eje X (m)')                % titulo del eje X
-ylabel('Fuerza cortante (kN)')     % titulo del eje Y
-xlim([xnod(1) xnod(end)])          % rango en el eje X del grafico
+title('Solución con el MEF para la fuerza cortante');
+xlabel('Eje X (m)')                % título del eje X
+ylabel('Fuerza cortante (kN)')     % título del eje Y
+xlim([xnod(1) xnod(end)])          % rango en el eje X del gráfico
 
-%% Comparacion con la solucion exacta (calculada con MAXIMA y el metodo de
-%  las funciones de discontinuidad
+%% Comparación con la solución exacta
+%  (calculada con MAXIMA y el método de las funciones de discontinuidad
 if strcmp(filename, 'viga_con_resortes') % OJO solo para b=0.1m y h=0.3m
    dir_txt = fullfile('..', 'ejemplos', 'results_viga_con_resortes_EB');
    fid = fopen(fullfile(dir_txt, 'x.txt'));   x = str2num(fscanf(fid,'%c')); fclose(fid);
@@ -275,21 +287,21 @@ if strcmp(filename, 'viga_con_resortes') % OJO solo para b=0.1m y h=0.3m
    subplot(2,1,1);
    hold on;
    h1ebEX = plot(x, v, 'm.');
-   legend([h1eb, h1ebEX], 'Elementos finitos', 'Solucion teorica')
+   legend([h1eb, h1ebEX], 'Elementos finitos', 'Solución teórica')
    subplot(2,1,2);
    hold on;
    h2ebEX = plot(x, t, 'm.');
-   legend([h2eb, h2ebEX], 'Elementos finitos', 'Solucion teorica')
+   legend([h2eb, h2ebEX], 'Elementos finitos', 'Solución teórica')
 
    figure(2)
    subplot(2,1,1);
    hold on;
    h3ebEX = plot(x, M, 'm.');
-   legend([h3eb, h3ebEX], 'Elementos finitos', 'Solucion teorica')
+   legend([h3eb, h3ebEX], 'Elementos finitos', 'Solución teórica')
    subplot(2,1,2);
    hold on;
    h4ebEX = plot(x, V, 'm.');
-   legend([h4eb, h4ebEX], 'Elementos finitos', 'Solucion teorica')
+   legend([h4eb, h4ebEX], 'Elementos finitos', 'Solución teórica')
 end
 
 %%

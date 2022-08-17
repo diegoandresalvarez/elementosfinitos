@@ -1,7 +1,13 @@
 % Programa para deducir la matriz de rigidez de un elemento de viga de
 % Euler-Bernoulli a partir de la solucion de la ecuacion diferencial
+
+% FECHA         QUIEN  QUE 
+% Ago 11, 2022  DAAM   El código es igual que el de PYTHON
+%
+% DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 clear, clc
-syms x L V(x) M(x) t(x) v(x) EI EA
+syms x L V(x) M(x) t(x) w(x) EI
 
 %% Se calcula la matrix de rigidez
 K = sym(zeros(4));
@@ -10,10 +16,10 @@ for i = 1:4
            diff(V,x) == 0,    ... % se definen las ecuaciones diferenciales
            diff(M,x) == V,    ...
            diff(t,x) == M/EI, ... 
-           diff(v,x) == t,    ...
-           v(0) == (i==1),    ... % con sus respectivas condiciones de 
+           diff(w,x) == t,    ...
+           w(0) == (i==1),    ... % con sus respectivas condiciones de 
            t(0) == (i==2),    ... % frontera  
-           v(L) == (i==3),    ...           
+           w(L) == (i==3),    ...           
            t(L) == (i==4));
 
     K(:,i) = [ +subs(sol.V, x, 0)    % Y1  se evaluan las 
@@ -24,3 +30,5 @@ end
 
 %% Se imprime la solucion
 disp('K_EB = (EI/L^3) *'); pretty(K/(EI/L^3));
+
+%% Bye, bye!

@@ -2,6 +2,11 @@
 
 # Programa para el cálculo de vigas de Euler-Bernoulli.
 
+# FECHA         QUIEN  QUE 
+# Ago 12, 2022  DAAM   El código es igual que el de MATLAB
+#
+# DAAM >>> Diego Andrés Alvarez Marín daalvarez@unal.edu.co
+
 # %%Importación de librerías
 
 import numpy as np
@@ -10,7 +15,7 @@ import matplotlib.pyplot as plt
 from os import path
 
 # %%Defino las constantes y variables
-Y = 0; TH = 1  # Y: vertical, TH: rotacional
+Y = 0; TH = 1  # Y: GDL vertical, TH: GDL rotacional
 
 #filename = 'viga_Uribe_Escamilla_ej_5_5'
 filename = 'viga_con_resortes'
@@ -20,7 +25,7 @@ archivo_xlsx = pd.read_excel(path.join('..', 'ejemplos', f'{filename}.xlsx'),
 # %%Se lee la posición de los nodos
 T       = archivo_xlsx['xnod']
 idxNODO = np.array(T['nodo'])
-xnod    = np.array(T['x'])                      # Posicion de los nodos
+xnod    = np.array(T['x'])                      # Posición de los nodos
 L       = np.diff(xnod)                         # Longitud de cada EF
 
 nno  = len(xnod)                                # Número de nodos
@@ -28,11 +33,11 @@ nef  = nno - 1                                  # Número de element finitos(EF)
 ngdl = 2*nno                                    # Número de grados de libertad
 gdl  = np.array([range(ngdl)]).reshape(nno, 2)  # Grados de libertad
 
-# %%Se leen la matriz de conectividad (LaG), el modulo de elasticidad, las 
+# %%Se leen la matriz de conectividad (LaG), el módulo de elasticidad, las 
 # propiedades del material y las cargas
 T     = archivo_xlsx['LaG_EI_q']
 idxEF = np.array(T['EF']) - 1
-LaG   = np.array(T[['NL1', 'NL2']]) -1  # Definición de EFs respecto a nodos
+LaG   = np.array(T[['NL1', 'NL2']]) - 1 # Definición de EFs respecto a nodos
 E     = np.array(T['E'])                # Módulo de elasticidad E del EF
 I     = np.array(T['I'])                # Momento de inercia Iz del EF
 G     = np.array(T['G'])                # Módulo de rigidez (para viga de Tim)
@@ -42,41 +47,41 @@ fz    = np.array(fz.fillna(0))          # Reemplazo de los NaN con ceros
 
 # %%Relación de los apoyos
 T       = archivo_xlsx['restric']
-idxNODO = np.array(T['nodo'])            # Se quita 1 para el indexado de Py
-dirdesp = np.array(T['direccion'])       # Se quita 1 para el indexado de Py
+idxNODO = np.array(T['nodo']) - 1        # Se quita 1 para el indexado
+dirdesp = np.array(T['direccion']) - 1   # Se quita 1 para el indexado
 ac      = np.array(T['desplazamiento'])  # Desplazamientos conocidos
 
 # %%Grados de libertad del desplazamiento conocidos y desconocidos
 n_apoyos = len(idxNODO)
-c = np.empty(n_apoyos, dtype=int)                 # GDL conocidos
+c = np.empty(n_apoyos, dtype=int) # GDL conocidos
 for i in range(n_apoyos):
-    c[i] = gdl[idxNODO[i] - 1, dirdesp[i] - 1]
+    c[i] = gdl[idxNODO[i], dirdesp[i]]
 
 d = np.setdiff1d(range(ngdl), c)  # GDL desconocidos
 
 # %%Relación de cargas puntuales
 T       = archivo_xlsx['carga_punt']
-idxNODO = np.array(T['nodo'])       # Se quita 1 para el indexado de Py
-dirfp   = np.array(T['direccion'])  # Se quita 1 para el indexado de Py
+idxNODO = np.array(T['nodo']) - 1       # Se quita 1 para el indexado
+dirfp   = np.array(T['direccion']) - 1  # Se quita 1 para el indexado
 fp      = np.array(T['fuerza_puntual'])
 
 # %%Se colocan las fuerzas/momentos nodales en el vector de fuerzas nodales
 # equivalentes global "f"
 f_ini = np.zeros(ngdl)  # Vector de fuerzas nodales equivalentes global
 for i in range(len(idxNODO)):
-    f_ini[gdl[idxNODO[i] - 1, dirfp[i] - 1]] = fp[i]
+    f_ini[gdl[idxNODO[i], dirfp[i]]] = fp[i]
 
 # %%Relacion de los resortes
 T       = archivo_xlsx['resortes']
-idxNODO = np.array(T['nodo'])  # Se quita 1 para el indexado de Py
-tipores = np.array(T['tipo'])  # Y=0 (vertical), TH=1 (rotacional)
-kres    = np.array(T['k'])     # Constante del resorte
+idxNODO = np.array(T['nodo']) - 1  # Se quita 1 para el indexado
+tipores = np.array(T['tipo']) - 1  # 0=resorte vertical, 1=resorte espiral
+kres    = np.array(T['k'])         # Constante del resorte
 
 # %%Grados de libertad del desplazamiento conocidos y desconocidos
 K_ini = np.zeros((ngdl, ngdl))  # Matriz de rigidez global
 n_resortes = len(idxNODO)
 for i in range(n_resortes):
-    idx = gdl[idxNODO[i] - 1, tipores[i] - 1]
+    idx = gdl[idxNODO[i], tipores[i]]
     K_ini[idx, idx] = kres[i]
 
 
@@ -144,10 +149,12 @@ q[c] = qd         # q[d] = qc = 0      # Fuerzas nodales equivalentes
 # M = se calcula en las raices del polinomio de GL de orden 2
 # V = se calcula en el centro del EF (raiz del polinomio de GL de orden 1)
 # se reserva la memoria
-xmom = np.zeros((2, nef))  # Posición donde se calcula
-mom  = np.zeros((2, nef))  # Momento flector
-cor  = np.zeros(nef)  # Fuerza cortante
-xi =np.array([-np.sqrt(1/3), np.sqrt(1/3)]) # Raices del polinom de Legendre de grado 2
+xmom = np.zeros((2, nef)) # Posición donde se calcula
+mom  = np.zeros((2, nef)) # Momento flector (se calcula en los dos puntos de GL)
+cor  = np.zeros(nef)      # Fuerza cortante (se calcula en el centro del EF)
+
+# Raíces del polinomio de Legendre de grado 2
+xi   = np.array([-np.sqrt(1/3), np.sqrt(1/3)]) 
 
 for e in range(nef):
     # Longitud del elemento finito e
@@ -159,24 +166,27 @@ for e in range(nef):
                     -(6*xi)/Le**2,
                      (3*xi + 1)/Le]).T
 
-    # Lugar donde se calcula el momento (centro del EF)
+    # Lugar donde se calcula el momento (los dos puntos de Gauss del EF)
     xmom[:, e] = Le*xi/2 + (xnod[LaG[e, 0]] + xnod[LaG[e, 1]])/2
 
     # Vector de desplazamientos nodales del elemento ae
     ae = a[idx[e]]
     
     mom[:, e] = E[e]*I[e]*Bbe@ae                   # Momento flector
-    dN3_dxi3  = np.array([ 3/2, (3*Le)/4, -3/2, (3*Le)/4 ]).T
+    dN3_dxi3  = np.array([ 3/2, (3*Le)/4, -3/2, (3*Le)/4 ])
+
+    # las fuerzas cortantes son constantes dentro del EF (su lectura es más 
+    # precisa si se se hace en el centro del EF)
     cor[e]    = E[e]*I[e]*(8/(Le**3))*dN3_dxi3@ae  # Fuerza cortante
 
 # %%Se calculan los desplazamientos al interior de cada EF
 nint = 10         # Número de puntos donde se interpolara dentro del EF
 xi = np.linspace(-1,1,nint)  # Coordenadas naturales
 
-xx = np.zeros((nef, nint))    # Interpol de posiciones (geometria) en el elemento
-ww = np.zeros((nef, nint))    # Interpol desplazamientos en el elemento
-tt = np.zeros((nef, nint))    # interpol angulo en el elemento
-for e in range(nef):  # Ciclo sobre todas los elementos finitos
+xx = np.zeros((nef, nint))   # Interpolar posiciones (geometría) en el elemento
+ww = np.zeros((nef, nint))   # Interpolar desplazamientos en el elemento
+tt = np.zeros((nef, nint))   # interpolar ángulo en el elemento
+for e in range(nef):         # Ciclo sobre todas los elementos finitos
     # Longitud del elemento finito e
     Le = L[e]
 
@@ -194,31 +204,31 @@ for e in range(nef):  # Ciclo sobre todas los elementos finitos
     # Vector de desplazamientos nodales del elemento a^{(e)}
     ae = a[idx[e]]
 
-    # Interpola sobre la geometria (coord naturales a geometricas)
+    # Interpola sobre la geometría (coord naturales a geométricas)
     xx[e] = Le*xi/2 + (xnod[LaG[e, 0]] + xnod[LaG[e, 1]])/2
 
     # Se calcula el desplazamiento al interior del elemento finito
     ww[e] = N@ae
 
-    # Se calcula el angulo al interior del elemento finito
+    # Se calcula el ángulo al interior del elemento finito
     tt[e] = np.arctan((dN_dxi*2/Le)@ae)
 
 # %%Imprimo los resultados
-print('Desplazamientos nodales                      ')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('Desplazamientos nodales                                ')
+print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 for n in range(nno):
     print('{3}Nodo{0:4d}:  w ={3} {3}{1:12.4} m, theta ={3} {3}{2:12.4} rad{3}'
           .format(n+1, a[2*n], a[2*n+1], ''))
 
 print('\nFuerzas nodales de equilibrio '
       + '(solo se imprimen los diferentes de cero)')
-print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
 for n in range(nno):
     if not(q[2*n] == 0 and q[2*n+1] == 0):
         print('{3}Nodo{0:4d}:  Ry ={3} {3}{1:12.4} kN, Mz ={3} {3}{2:12.4} kN-m{3}'
               .format(n+1, q[2*n], q[2*n+1], ''))
 
-# %%Gráfico de la solucion analitica y la solución por el MEF
+# %%Gráfico de la solución analítica y la solución por el MEF
 # %%1) grafico los desplazamientos de la viga
 fig, ax1 = plt.subplots(figsize=(8, 2.5))
 for e in range(nef):  # Ciclo sobre todos los elementos finitos
@@ -229,7 +239,7 @@ for e in range(nef):  # Ciclo sobre todos los elementos finitos
 ax1.set_title('Solución con el MEF para el desplazamiento')
 ax1.set_xlabel('Eje X (m)')           # Título del eje X
 ax1.set_ylabel('Desplazamiento (m)')  # Título del eje Y
-ax1.grid()                            # reticula
+ax1.grid()                            # Retícula
 plt.xlim(xnod[1], xnod[-1])           # Rango en el eje X del gráfico
 
 # %%2) Gráfico de los ángulos de giro
@@ -243,7 +253,7 @@ ax2.set_title('Solución con el MEF para el giro')
 ax2.set_xlabel('Eje X (m)')   # Título del eje X
 ax2.set_ylabel('Giro (rad)')  # Título del eje Y
 
-ax2.grid()                    # reticula
+ax2.grid()                    # Retícula
 plt.xlim(xnod[1], xnod[-1])   # Rango en el eje X del gráfico
 
 # %%3) grafico los momentos
@@ -252,12 +262,15 @@ label='Elementos finitos'
 ax3.plot(np.ravel(xmom, order='F'), np.ravel(mom, order='F'),
                 'b-', label=label, linewidth=1.2)
 
-ax3.set_title('Solucion con el MEF para el momento flector')
+fig.suptitle('Solución con el MEF para el momento flector')
+ax3.set_title('(el momento positivo es aquel que produce tracción en la fibra inferior)',
+              fontsize=10)
+
 
 ax3.set_xlabel('Eje X (m)')               # Título del eje X
 ax3.set_ylabel('Momento flector (kN-m)')  # Título del eje Y
 
-ax3.grid()                                # reticula
+ax3.grid()                                # Retícula
 plt.xlim(xnod[1], xnod[-1])               # Rango en el eje X del gráfico
 
 # %%4) Gráfico de la fuerza cortante
@@ -276,10 +289,10 @@ ax4.set_ylabel('Fuerza cortante (kN)')  # Título del eje Y
 ax4.grid()                              # reticula
 plt.xlim(xnod[1], xnod[-1])             # Rango en el eje X del gráfico
 
-# %%Comparación con la solucion exacta (calculada con MAXIMA y el método de
-# las funciones de discontinuidad
+# %%Comparación con la solución exacta 
+# (calculada con MAXIMA y el método de las funciones de discontinuidad
 
-if filename == 'viga_con_resortes':
+if filename == 'viga_con_resortes': # OJO solo para b=0.1m y h=0.3m
     import re
     def leer(fn):
         with open(
@@ -303,4 +316,4 @@ if filename == 'viga_con_resortes':
     ax1.legend(); ax2.legend(); ax3.legend(); ax4.legend()
 
 plt.show()
-# Fin del programa
+# bye, bye!
