@@ -12,24 +12,14 @@ Los exámenes serán orales e individuales. Se realizarán siguiendo [este](http
 
 La fecha del examen se definirá dos semanas antes de su realización.
 <!---
-
-* Exámenes:
-  - 20% - Examen 1: viernes 17 de abril de 2020
-  - 20% - Examen 2: viernes 22 de mayo de 2020
-  - 20% - Examen 3: viernes 26 de junio de 2020
-* Trabajos: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
-  - 13% - Trabajo 1: fecha por definir
-  - 13% - Trabajo 2: fecha por definir
-  - 14% - Trabajo 3: fecha por definir
-
 En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
-
 --->
-* **Examen 1:** 17%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
-* **Examen 2:** 17%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
-* **Examen 3:** 16%, cascarones planos y degenerados.
-* **Trabajo 1:** 25%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
-* **Trabajo 2:** 25%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+* **Examen 1:** 20%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest. 
+* **Examen 2:** 20%, flexión de placas de Kirchhoff-Love y Mindlin.
+* **Examen 3:** 20%, cascarones planos y degenerados.
+* **Trabajo 1:** 13%, flexión de vigas de Euler-Bernoulli y Timoshenko-Ehrenfest.
+* **Trabajo 2:** 13%, flexión de placas de Kirchhoff-Love y Mindlin, cascarones.
+* **Trabajo 3:** 14%, cascarones y dinámica.
 
 <!---
 ## Criterios de calificación de los apuntes
