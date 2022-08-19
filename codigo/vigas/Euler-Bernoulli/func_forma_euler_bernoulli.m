@@ -147,9 +147,11 @@ syms rho A
 M = simplify(int(rho*A*NN.'*NN*L/2,xi,-1,1));
 disp('M = rho*A*L/420*'); pretty(M/(rho*A*L/420));
 
-
-syms b k
-H = b*k*simplify(int(NN.'*NN*L/2,xi,-1,1));
-disp('H = '); pretty(H);
+%% Matriz de rigidez asociada a la cimentación elástica de Winkler
+% b es el ancho de la viga
+% kWinkler es el coeficiente de balasto
+syms b kWinkler
+H = b*kWinkler*simplify(int(NN.'*NN*L/2,xi,-1,1));
+disp('H = b*kWinkler*'); pretty(H/(b*kWinkler));
 
 return % bye, bye!
