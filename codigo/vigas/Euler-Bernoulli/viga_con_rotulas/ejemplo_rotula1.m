@@ -63,7 +63,7 @@ ke{5} = [ ...
 ngdl = 11; nbar = 5;
 K = zeros(ngdl);                    f = zeros(ngdl,1); 
                                     f(3) = -4; %N
-                                    f(4) = +4; %N                                    
+                                    f(4) = +4; %N*m                                    
                                     f(8) = -2; %N                                                                        
                                     
 for e = 1:nbar
