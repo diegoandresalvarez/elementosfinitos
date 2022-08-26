@@ -1,11 +1,13 @@
 % Calculo de las funciones de forma del elemento de viga de Timoshenko
 % lineal
 
-%%
+%% Borro memoria, pantalla y cierro gráficos
 clear, clc, close all
 
+%% Definición de variables
 syms x xi E I G Aast L w1 t1 w2 t2 fz m
 
+%% Vector de movimientos nodales
 a = [w1; t1; w2; t2];
 
 %% Defino las funciones de forma
@@ -71,7 +73,6 @@ f2 = int(N2*[fz; m]*dx_dxi, xi, -1, 1);
 fe = [f1; f2];
 disp('fe = '), pretty(fe)
 
-
 %% Calculo el vector de fuerzas nodales equivalentes correspondientes a una
 %% carga distribuida trapezoidal y sin momentos distribuidos
 syms q1 q2
@@ -82,4 +83,5 @@ f2 = int(N2*[fz; m]*dx_dxi, xi, -1, 1);
 fe = [f1; f2];
 disp('fe = '), pretty(fe)
 
-return %bye, bye!
+%% Bye, bye!!
+return

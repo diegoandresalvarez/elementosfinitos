@@ -125,7 +125,7 @@ return
 clear, clc, close all
 
 lambda = linspace(0, 6, 5000);
-nu = 0;
+nu = 0.25;
 
 rwT1_1 = (15*lambda.^2 + 12*nu + 12)./(20*lambda.^2);
 rwT2_1 = (12*(nu + 1)*(5*lambda.^2 + 3*nu + 3))./(5*lambda.^2.*(5*lambda.^2 + 12*nu + 12));
@@ -135,7 +135,6 @@ rwT1_4 = (315*lambda.^2 + 192*nu + 192)./(320*lambda.^2);
 rwT2_4 = (192*(nu + 1)*(5*lambda.^2 + 3*nu + 3))./(5*lambda.^2.*(5*lambda.^2 + 192*nu + 192));
 rwT1_8 = (1275*lambda.^2 + 768*nu + 768)./(1280*lambda.^2);
 rwT2_8 = (768*(nu + 1)*(5*lambda.^2 + 3*nu + 3))./(5*lambda.^2.*(5*lambda.^2 + 768*nu + 768));
-
 
 figure
 hold on;
@@ -167,11 +166,11 @@ rwT2_4 = (192*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 192*nu
 rwT1_8 = (1275*lambda^2 + 768*nu + 768)/(1280*lambda^2);
 rwT2_8 = (768*(nu + 1)*(5*lambda^2 + 3*nu + 3))/(5*lambda^2*(5*lambda^2 + 768*nu + 768));
 
-limit(rwT1_1, lambda, inf)   % = 3/4 
+limit(rwT1_1, lambda, inf)   % = 3/4     = 0.7500
 limit(rwT2_1, lambda, inf)   % = 0
-limit(rwT1_2, lambda, inf)   % = 15/16
+limit(rwT1_2, lambda, inf)   % = 15/16   = 0.9375
 limit(rwT2_2, lambda, inf)   % = 0
-limit(rwT1_4, lambda, inf)   % = 63/64
+limit(rwT1_4, lambda, inf)   % = 63/64   = 0.9844
 limit(rwT2_4, lambda, inf)   % = 0
-limit(rwT1_8, lambda, inf)   % = 255/256
+limit(rwT1_8, lambda, inf)   % = 255/256 = 0.9961
 limit(rwT2_8, lambda, inf)   % = 0

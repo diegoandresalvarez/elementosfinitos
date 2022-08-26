@@ -4,6 +4,7 @@ clear, clc, close all
 syms xi x1 x2 x3 L E I Aast G
 syms w1 w2 w3 t1 t2 t3
 
+%% Vector de movimientos nodales
 a = [w1; t1; w2; t2; w3; t3];
 
 %% Defino las posiciones de los nodos
@@ -11,9 +12,9 @@ x3 = x1+L;
 x2 = (x1+x3)/2;
 
 %% Funciones de forma Lagrangianas
-N1 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);   % = xi*(xi-1)/2;
-N2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi);   % = (1+xi)*(1-xi);
-N3 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);   % = xi*(xi+1)/2;
+N1 = calc_N([-1 0 1], [1 0 0], xi); % = xi*(xi-1)/2
+N2 = calc_N([-1 0 1], [0 1 0], xi); % = (1+xi)*(1-xi)
+N3 = calc_N([-1 0 1], [0 0 1], xi); % = xi*(xi+1)/2
 
 %% Interpolacion de la geometria, la flecha y el giro
 x = simplify(N1*x1 + N2*x2 + N3*x3);
@@ -82,4 +83,24 @@ Us_3 = simplify(a.'*Ks*a/2);
 disp('Kb = ((E*I)/(3*L)) * '),    pretty(Kb/(E*I/(3*L)))
 disp('Ks = ((G*Aast)/(9*L)) * '), pretty(Ks/(G*Aast/(9*L)))
 
-return %bye, bye!
+%% Bye, bye!!!
+return
+
+%% -------------------------------------------------------------------------
+%% Calcular correctamente los polinomios de las funciones de forma 1D
+function N = calc_N(xp, yp, var)
+    % se ve verifican los tamanios de los vectores xp y yp
+    nx = length(xp);
+    ny = length(yp);
+    assert(nx == ny, 'Los vectores xp y yp deben tener el mismo tamanio');
+
+    % se calculan los coeficientes de los polinomios
+    c = polyfit(xp, yp, nx-1);
+    
+    % se eliminan los errores en la aproximacion numerica, haciendo los
+    % coeficientes demasiado pequenios igual a cero
+    c(abs(c) < 1e-10) = 0;
+    
+    % con los coeficientes corregidos se calculan las funciones de forma
+    N = poly2sym(c, var);
+end

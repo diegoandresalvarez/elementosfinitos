@@ -81,5 +81,10 @@ dNEB_dx1 = expand(diff(N_EB*2/L, xi));
 dNEB_dx2 = expand(subs(Nt, beta, 0));
 dNEB_dx1 - dNEB_dx2
 
+%% Calculo de la matriz de masa consistente "exacta"
+syms rho A
+NN = Nv.';
+M = simplify(int(rho*A*(NN.')*NN*L/2,xi,-1,1))
 
-%% bye, bye!
+%% Bye, bye!
+return;
