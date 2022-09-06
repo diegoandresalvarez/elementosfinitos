@@ -1,4 +1,4 @@
-% Imposicion de las deformaciones angulares gxz
+% Imposición de las deformaciones angulares gxz
 % Se realiza para el elemento finito de Timoshenko de dos nodos
 
 syms G Aast L xi w1 w2 t1 t2
@@ -6,8 +6,8 @@ syms G Aast L xi w1 w2 t1 t2
 % La matriz Bs "normal"
 Bs = @(xi) [ -1/L, xi/2 - 1/2, 1/L, - xi/2 - 1/2];
 
-% Las funciones de interpolacion de las deformaciones gxz                        
-Ng = 1; % se evaluara en el centro
+% Las funciones de interpolación de las deformaciones gxz                        
+Ng = 1; % se evalúa en el centro
 
 % Se calcula la matriz Bs_sustitutiva
 Bs_sustitutiva = Ng*Bs(0);

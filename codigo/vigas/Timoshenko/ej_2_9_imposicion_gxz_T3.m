@@ -1,5 +1,5 @@
-% Ejemplo 4.13 Onate (1995)
-% Ejemplo 2.9 Onate (2013)
+% Ejemplo 4.13 Oñate (1995)
+% Ejemplo 2.9 Oñate (2013)
 
 %% A partir de la interpolacion
 % w = pol grado 2
@@ -21,9 +21,9 @@ dxi_dx = 2/L;
 %  t1                             t2                             t3
 
 %% Funciones de forma Lagrangianas
-N1_2 = poly2sym(polyfit([-1 0 1],[1 0 0],2),xi);   % = xi*(xi-1)/2;
-N2_2 = poly2sym(polyfit([-1 0 1],[0 1 0],2),xi);   % = (1+xi)*(1-xi);
-N3_2 = poly2sym(polyfit([-1 0 1],[0 0 1],2),xi);   % = xi*(xi+1)/2;
+N1_2 = calc_N([-1 0 1], [1 0 0], xi); % = xi*(xi-1)/2
+N2_2 = calc_N([-1 0 1], [0 1 0], xi); % = (1+xi)*(1-xi)
+N3_2 = calc_N([-1 0 1], [0 0 1], xi); % = xi*(xi+1)/2
 
 %% Se definen w y t
 w = N1_2*w1 + N2_2*w2 + N3_2*w3;
@@ -80,3 +80,22 @@ Ks = int(Bs_sustitutiva.'*G*Aast*Bs_sustitutiva*dx_dxi,xi,-1,1);
 
 disp('Kb = (E*I/(3*L)) * ');   disp(Kb/(E*I/(3*L)))
 disp('Ks = (G*Aast)/(9*L) *'); disp(simplify(Ks/((G*Aast)/(9*L))))         
+
+%% -------------------------------------------------------------------------
+%% Calcular correctamente los polinomios de las funciones de forma 1D
+function N = calc_N(xp, yp, var)
+    % se ve verifican los tamaños de los vectores xp y yp
+    nx = length(xp);
+    ny = length(yp);
+    assert(nx == ny, 'Los vectores xp y yp deben tener el mismo tamaño');
+
+    % se calculan los coeficientes de los polinomios
+    c = polyfit(xp, yp, nx-1);
+    
+    % se eliminan los errores en la aproximación numérica, haciendo los
+    % coeficientes demasiado pequeños igual a cero
+    c(abs(c) < 1e-10) = 0;
+    
+    % con los coeficientes corregidos se calculan las funciones de forma
+    N = poly2sym(c, var);
+end
