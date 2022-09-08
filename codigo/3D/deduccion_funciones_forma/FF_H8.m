@@ -151,7 +151,7 @@ for i = 1:8
    NN(:,3*i-[2 1 0]) = diag([N{i} N{i} N{i}]);
 end
 
-%% Calculo de la matriz de masa M
+%% Calculo de la matriz de masa consistente M
 syms rho V
 det_J = V;   % el determinante del Jacobiano es el volumen del hexahedro
 M = simplify(int(int(int(rho*(NN.'*NN)*det_J, xi,-1,1), eta,-1,1), zeta,-1,1));
