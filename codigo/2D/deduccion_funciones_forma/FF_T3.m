@@ -38,3 +38,20 @@ u = collect(u, [u1, u2, u3]);
 
 %% Se muestra % u(x,y) = N1(x,y) u1 + N2(x,y) u2 + N3(x,y) u3
 disp('u = '); pretty(u)
+
+%% Se extraen las funciones de forma
+ae = {u1,u2,u3};
+N1 = simplify(subs(u,ae,{1,0,0}))
+N2 = simplify(subs(u,ae,{0,1,0}))
+N3 = simplify(subs(u,ae,{0,0,1}))
+
+%% Se calcula la matriz de masa consistente
+N = @(r,s) subs([ N1  0 N2  0 N3  0
+                   0 N1  0 N2  0 N3 ], {x,y,Area}, {r,s,A});
+
+NN = @(a,b) N((1-a-b)*x1 + a*x2 + b*x3, (1-a-b)*y1 + a*y2 + b*y3);
+
+syms rho a b t
+M = t*int(int(rho*(NN(a,b).') * NN(a,b) * 2*Area, a,0,1-b), b,0,1);
+disp('M = rho*t*Area/12 * ')
+disp(12*M/(rho*t*Area))

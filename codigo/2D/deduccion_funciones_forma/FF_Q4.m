@@ -89,3 +89,8 @@ fb = int(int(N.'*bb*t, r, -a,a), s,-b,b);
 disp('K = a*b*t*');
 pretty(fb/(a*b*t));
 
+%% Se calcula la matriz de masa consistente
+syms rho
+M = t*rho*int(int(N.'*N, r, -a,a), s,-b,b)
+disp('M = rho*t*Area/36 * ')
+disp(36*M/(rho*t*4*a*b))
