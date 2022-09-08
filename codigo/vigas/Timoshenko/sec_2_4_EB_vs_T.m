@@ -124,7 +124,7 @@ return
 %% A partir de los resultados se hizo el siguiente programa:
 clear, clc, close all
 
-lambda = linspace(0, 6, 5000);
+lambda = linspace(0, 20, 5000);
 nu = 0.25;
 
 rwT1_1 = (15*lambda.^2 + 12*nu + 12)./(20*lambda.^2);
