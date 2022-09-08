@@ -18,3 +18,8 @@ disp('K = '); pretty(K)
 % Vector de fuerzas nodales equivalentes (ecuacion 2.76b)
 f = int(N.'*b, x, x1, x2);
 disp('f = '); pretty(f)
+
+% Se deduce la matriz de masa consistente
+syms rho Area
+M = rho*Area*int((N.')*N, x, x1, x2);
+disp('M = rho*Area*L/6 * '); pretty(6*M/(rho*Area*L))
