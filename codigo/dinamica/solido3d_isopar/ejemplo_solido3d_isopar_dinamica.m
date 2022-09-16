@@ -1,5 +1,5 @@
 clear, clc, close all; % borro la memoria, la pantalla y cierro los graficos
-opengl software;       % para que funcione en Linux (o sino hace un segment fault 
+%opengl software;       % para que funcione en Linux (o sino hace un segment fault 
                        % cuando hace los graficos)
 
 %% defino las constantes
