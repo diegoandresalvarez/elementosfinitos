@@ -48,10 +48,12 @@ Se solicita:
 ## Problema 3:
 Implementar el artículo:
 
-    Adhikari (2021) - Exact transcendental stiffness matrices of general beam-columns embedded in elastic mediums. Computers & Structures, Volume 255, 15 October 2021, 106617. https://doi.org/10.1016/j.compstruc.2021.106617
+>    Adhikari (2021) - Exact transcendental stiffness matrices of general beam-columns embedded in elastic mediums. Computers & Structures, Volume 255, 15 October 2021, 106617. https://doi.org/10.1016/j.compstruc.2021.106617
 
 * Deducir las ecuaciones del paper, ya sea en MATLAB o en PYTHON+JUPYTER (+3 puntos)
 * Implementar el artículo, ya sea en MATLAB o en PYTHON+JUPYTER, ejemplificandolo con la viga del Problema 2 y asumiendo los datos faltantes. (+3 puntos)
+
+NOTA: esos 6 puntos anteriores se agregarán al examen 1, pero sin superar la nota de 6.0 en el examen + estos puntos adicionales del Problema 3.
 
 
 ## Lo solicitado en el informe
