@@ -12,11 +12,12 @@ Considere el pórtico mostrado:
 <img src="figs/portico_dinamica.svg" width="400"/>
 
 Se solicita:
-Utilizando la teoría de Timoshenko-Ehrenfest:
+Utilizando la teoría de Timoshenko-Ehrenfest y matrices de masa consistentes y concentradas (calculada con dos métodos diferentes):
 
 * Calcular las frecuencias de vibración de la estructura.
 * Calcular y graficar los modos de vibración de la estructura. (+1.0 puntos)
 * Comparar la solución anterior con la solución calculada mediante el software de análisis estructural de su elección (+0.5 puntos).
+
 
 ## Problema 2:
 
