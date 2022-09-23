@@ -252,9 +252,9 @@ plot_esf_def(txy, r'$\tau_{xy}$ [Pa]')
 # NOTA: esto solo es válido para el caso de TENSION PLANA.
 # En caso de DEFORMACIÓN PLANA se deben calcular los valores y vectores
 # propios de la matriz de tensiones de Cauchy:
-# [dirppales{e}, esfppales{e}] = eig([sx  txy 0    # matriz de esfuerzos
-#                                     txy sy  0    # de Cauchy
-#                                     0   0   0])
+# [dirppales{e}, esfppales{e}] = eigh([sx  txy 0    # matriz de esfuerzos
+#                                      txy sy  0    # de Cauchy
+#                                      0   0   0])
 
 s1   = (sx+sy)/2 + np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal máximo
 s2   = (sx+sy)/2 - np.sqrt(((sx-sy)/2)**2 + txy**2) # esfuerzo normal mínimo
