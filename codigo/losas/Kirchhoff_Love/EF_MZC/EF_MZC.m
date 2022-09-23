@@ -330,7 +330,7 @@ plot_M_or_Q({ Qx,    ['Cortantes Qx [' unitsQ ']'],      { }
               Q_max, ['Cortantes Q_{max} [' unitsQ ']'], { ang } })
 
 %% Se calculan los momentos de disenio de Wood y Armer
-[Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer, Mx, My, Mxy);
+[Mxast_sup, Myast_sup, Mxast_inf, Myast_inf] = arrayfun(@WoodArmer2, Mx, My, Mxy);
 
 plot_M_or_Q({ Mxast_sup,  {'Momentos M_x^* sup', ['[' unitsM ']']}
               Myast_sup,  {'Momentos M_y^* sup', ['[' unitsM ']']}
