@@ -46,3 +46,27 @@ end
 
 empotra = borde(:,[1 2])'
 empotra(:)
+
+%{
+figure
+esc = 0.5;
+norma = 1; % = variable % si se quiere proporcional
+% se indica la flecha de la direccion principal
+
+angulos = ang + pi/2;
+angulos(s1 <= 100) = NaN;
+
+quiver(xnod(:,X),xnod(:,Y),...             
+    norma.*cos(angulos), norma.*sin(angulos),... 
+    esc, ...                  % con una escala esc
+    'k',...                   % de color negro
+    'ShowArrowHead','off',... % una flecha sin cabeza
+    'LineWidth',2, ...        % con un ancho de linea 2
+    'Marker','.');            % y en el punto (x,y) poner un punto '.'
+
+% la misma flecha girada 180 grados
+quiver(xnod(:,X),xnod(:,Y),...             
+    norma.*cos(angulos+pi), norma.*sin(angulos+pi),... 
+    esc,'k', 'ShowArrowHead','off', 'LineWidth',2, 'Marker','.');                    
+axis([0.7 1.4 0 0.15])
+%}
