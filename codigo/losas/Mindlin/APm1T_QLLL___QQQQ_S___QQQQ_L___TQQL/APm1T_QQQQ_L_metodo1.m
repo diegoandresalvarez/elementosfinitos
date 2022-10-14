@@ -1,5 +1,4 @@
-clear
-clc
+clear, clc, close all
 
 %% Se definen las constantes
 XI = 1; ETA = 2;
@@ -74,3 +73,6 @@ end
 gp_metodo1 = simplify(A_invP_T*gpg.')
 
 A_invP_T_metodo1 = A_invP_T
+
+%% Graficamos las funciones de forma en M=A_invP_T
+graficar_A_invP_T(nod, idx, A_invP_T)

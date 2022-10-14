@@ -1,9 +1,9 @@
-clear, clc
+clear, clc, close all
 
 %% Se definen las constantes
 XI = 1; ETA = 2;
 syms xi eta gxi1 gxi2 gxi3 gxi4 gxi5 geta3 geta6 geta7 geta8 geta9
-a = 1/sym(sqrt(3));
+a = 1/sqrt(sym(3));
 
 %% Se definen los puntos de colocacion
 nod = [ ...
@@ -71,3 +71,6 @@ end
 gp_metodo1 = simplify(A_invP_T*gpg.')
 
 A_invP_T_metodo1 = A_invP_T
+
+%% Graficamos las funciones de forma en M=A_invP_T
+graficar_A_invP_T(nod, idx, A_invP_T)
