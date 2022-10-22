@@ -1,18 +1,18 @@
 function Bbar_s = Bs_QQQQ_L(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta, J_xi_eta)
-%% Calcula la matriz de deformacion sustitutiva por cortante Bs para el EF
+%% Calcula la matriz de deformación sustitutiva por cortante Bs para el EF
 %% de losa de Mindlin QQQQ-L
 %
 % Bbar_s = Bs_QQQQ_L(xi, eta, xe, ye, Nforma, dN_dxi, dN_deta, Je)
 % 
-% (xi, eta)        punto de integracion de GL
+% (xi, eta)        punto de integración de GL
 % (xe, ye)         coordenadas de los nodos del EF
 
-X = 1; Y = 2;
+XI = 1; ETA = 2;
 
-%% se define el numero de nodos del EF
+%% se define el número de nodos del EF
 nno = 9;
 
-%% Se definen los puntos de colocacion
+%% Se definen los puntos de colocación
 a = 1/sqrt(3);
 nod = [ ...
 % xi eta
@@ -28,22 +28,22 @@ nod = [ ...
    0  -a    % 10          
   -1   a    % 11
   -1  -a ]; % 12
-cx = nod(:,X);
-cy = nod(:,Y);
-npc = length(cx);     % numero de puntos de colocacion
+cxi  = nod(:,XI);
+ceta = nod(:,ETA);
+ngamma = length(cxi);     % número de puntos de colocación
  
-Bbar_s = cell(npc,1);
-J      = cell(npc,1);
-for i = 1:npc
-   %% Se evaluan las funciones de forma en los puntos de colocacion   
-   N        = Nforma(cx(i),  cy(i));
+Bbar_s = cell(ngamma,1);
+J      = cell(ngamma,1);
+for i = 1:ngamma
+   %% Se evaluan las funciones de forma en los puntos de colocación
+   N        = Nforma(cxi(i),  ceta(i));
    
-   %% Se evaluan las derivadas de las funciones de forma en los puntos de colocacion   
-   ddN_dxi  = dN_dxi (cx(i), cy(i));
-   ddN_deta = dN_deta(cx(i), cy(i));
+   %% Se evalúan las derivadas de las funciones de forma en los puntos de colocación
+   ddN_dxi  = dN_dxi (cxi(i), ceta(i));
+   ddN_deta = dN_deta(cxi(i), ceta(i));
 
-   %% Se utilizan las funciones de forma de w para el calculo de la 
-   %% transformacion isoparametrica   
+   %% Se utilizan las funciones de forma de w para el cálculo de la 
+   %% transformación isoparamétrica   
    dx_dxi  = sum(ddN_dxi .*xe);   dy_dxi  = sum(ddN_dxi .*ye);
    dx_deta = sum(ddN_deta.*xe);   dy_deta = sum(ddN_deta.*ye);
    
@@ -57,11 +57,11 @@ for i = 1:npc
       error('El det_Je es negativo');
    end
 
-   %% Se ensambla la matriz de deformacion del elemento Bbar_s para el nodo i
+   %% Se ensambla la matriz de deformación del elemento Bbar_s para el nodo i
    Bbar_s{i} = zeros(2,3*nno);
    for j = 1:nno
-      % Se ensambla la matriz de deformacion por cortante Bs
-      % debo recalcular dN_dx y dN_dy para los puntos de colocacion
+      % Se ensambla la matriz de deformación por cortante Bs
+      % debo recalcular dN_dx y dN_dy para los puntos de colocación
       dN_dx_j = (+dy_deta*ddN_dxi(j) - dy_dxi*ddN_deta(j))/det_Je;
       dN_dy_j = (-dx_deta*ddN_dxi(j) + dx_dxi*ddN_deta(j))/det_Je;
       
@@ -100,5 +100,5 @@ A_invP_T = [ ...
                                    0, -(xi*(3^(1/2)*eta - 1)*(xi - 1))/4 ].';
 
 Bbar_s = inv(J_xi_eta) * A_invP_T * C * Bhat_s;  % eq 6.80
-    
+
 return

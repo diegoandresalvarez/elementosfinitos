@@ -47,7 +47,7 @@ title('Malla de una losa con EFs QQQQ-L');
 % junto con sus derivadas con respecto a xi y a eta
 funciones_forma_lagrangiano_9_nodos    % Nforma, dN_dxi, dN_deta
 
-%% parametros de la cuadratura de Gauss-Legendre (INTEGRACION SELECTIVA)
+%% parametros de la cuadratura de Gauss-Legendre (INTEGRACION COMPLETA)
 % se asumira aqui el mismo orden de la cuadratura tanto en la direccion de
 % xi como en la direccion de eta
 
@@ -132,7 +132,7 @@ for e = 1:nef      % ciclo sobre todos los elementos finitos
    xb = xnod(LaG(e,5),X);   yb = xnod(LaG(e,5),Y);
    if (xa >= 0.9999 && xb <= 1.601) && (ya >= 0.9999 && yb <= 2.001)
       ffe = zeros(nnoef, 3); ffe(:,ww) = qdistr;
-      ffe = reshape(ffe', 3*nnoef,1);                                                                                             % REVISAR !!!!!!!!!!!!!
+      ffe = reshape(ffe', 3*nnoef,1);                                                                                   % REVISAR !!!!!!!!!!!!!
    else
       ffe = zeros(3*nnoef,1);
    end  
