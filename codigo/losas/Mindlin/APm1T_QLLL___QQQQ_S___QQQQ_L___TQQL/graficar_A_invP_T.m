@@ -1,4 +1,8 @@
 function graficar_A_invP_T(nod, idx, A_invP_T)
+% La siguiente línea corrige bug en MATLAB 2020b en LINUX que hace que no
+% funcion "surf":
+% En BASH invoque a MATLAB así:
+% $ export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab
 
 syms xi eta
 

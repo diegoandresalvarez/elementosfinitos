@@ -2,7 +2,7 @@ clear, clc, close all
 
 %% Se definen las constantes
 XI = 1; ETA = 2;
-syms xi eta gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4
+syms xi eta
 
 %          ^ eta
 %          |
@@ -28,41 +28,49 @@ nod = [...
 %% Se calculan las funciones de forma bidimensionales
 idx = [ 1 3    % puntos usados por gamma_xi  +
         2 4 ]; % puntos usados por gamma_eta x
-     
-gpg = [ gxi1  gxi3      % Los +
-        geta2 geta4 ];  % Los x   
-     
-n = size(idx,2);  % numero de puntos que definen las funciones de forma
-N = sym(zeros(2,n));
 
-for i = 1:n
-   xxi  = nod(idx(i,:), XI); 
+% se crean las variables gpg
+ngamma_1_dir = size(idx,2);  % numero de puntos de colocación por dirección
+gpg = [ crear_gpg('xi',  idx(XI, :))    % Los + = gxi1  gxi3
+        crear_gpg('eta', idx(ETA,:)) ]; % Los x = geta2 geta4
+
+% se calculan las funciones de forma en cada punto de colocación
+N = sym(zeros(2,ngamma_1_dir));
+for i = [ XI ETA ]
+   xxi  = nod(idx(i,:), XI);
    eeta = nod(idx(i,:), ETA);
-   A         = [ ones(n,1) xxi eeta ];
-   variables = [ 1         xi  eta  ];
-
-   for j = 1:n
-      % se arma el sistema de ecuaciones
-      b = zeros(n,1);   b(j) = 1;
-      coef_alpha = A\b;
-      %fprintf('j = %d (%s):  ', j, char(gpg(i,j))); 
-      N(i,j) = simplify(variables*coef_alpha);
-      %disp(N(i,j))
+   switch i
+      case XI
+         A         = [ ones(ngamma_1_dir,1) eeta ];
+         variables = [ 1 eta ];
+      case ETA
+         A         = [ ones(ngamma_1_dir,1) xxi ];
+         variables = [ 1 xi ];
    end
-   %fprintf('----------------------------------------------------------\n');
+
+   for j = 1:ngamma_1_dir
+      % se arma el sistema de ecuaciones
+      b = zeros(ngamma_1_dir,1);   b(j) = 1;
+      coef_alpha = A\b;
+      N(i,j) = simplify(variables*coef_alpha);
+      fprintf('j = %d (%s): %s\n', j, char(gpg(i,j)), char(N(i,j)));
+   end
+   fprintf('----------------------------------------------------------\n');
 end
 
 %% Se imprime el polinomio de interpolacion
 gp = sum(simplify(N.*gpg), 2)
 
 %% Se calcula la matriz A*inv(P)*T
-gpg = [ gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4 ];
+ngamma = max(max(idx));
+gpg = [ crear_gpg('xi',  1:ngamma)    % Los + = gxi1  .. gxi4
+        crear_gpg('eta', 1:ngamma) ]; % Los x = geta1 .. geta4
+gpg = gpg(:).';  % gxi1 geta1 gxi2 geta2 gxi3 geta3 gxi4 geta4
 
-A_invP_T = sym(zeros(2, 8)); % esta es la matriz M (paso 2, metodo 1)
-
-for i = 1:length(gpg)
-   A_invP_T(1,i) = feval(symengine, 'coeff', gp(1), gpg(i), 1);
-   A_invP_T(2,i) = feval(symengine, 'coeff', gp(2), gpg(i), 1);   
+A_invP_T = sym(zeros(2, 2*ngamma));
+for i = 1:2*ngamma
+   A_invP_T(XI, i) = feval(symengine, 'coeff', gp(1), gpg(i), 1);
+   A_invP_T(ETA,i) = feval(symengine, 'coeff', gp(2), gpg(i), 1);   
 end
 gp_metodo1 = simplify(A_invP_T*gpg.')
 
