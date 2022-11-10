@@ -1,4 +1,5 @@
 % Ejemplo 11.23 Uribe Escamilla
+clear, clc
 
 %% Unidades en toneladas y metros
 

@@ -21,7 +21,7 @@ ang = atan2(y2-y1,x2-x1);
 c = cos(ang); s = sin(ang);
 qxloc = @(x) -2.8*s*c;
 qyloc = @(x) -2.8*c^2;
-qeglob = c1_calc_fuerzas_nodales_equivalentes(A, E, I, x1,y1, x2,y2, qxloc,qyloc)
+qeglob = calc_fuerzas_nodales_equivalentes(A, E, I, x1,y1, x2,y2, qxloc,qyloc)
 %}
 
 %% se definen algunas constantes
