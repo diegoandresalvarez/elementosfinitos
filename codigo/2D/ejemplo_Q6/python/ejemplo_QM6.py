@@ -153,7 +153,8 @@ for e in range(nef):
     # se calcula el área del cuadrilatero (del EF)
     # Ver https://en.wikipedia.org/wiki/Shoelace_formula
     # Ae = 0.5*(x1y2 + x2y3 + x3y4 + x4y1 - x2y1 - x3y2 - x4y3 - x1y4)
-    Ae = 0.5*(xe[0]*ye[1] + xe[1]*ye[2] + xe[2]*ye[3] + xe[3]*ye[0] - xe[1]*ye[0] - xe[2]*ye[1] - xe[3]*ye[2] - xe[0]*ye[3])
+    Ae = 0.5*(xe[0]*ye[1] + xe[1]*ye[2] + xe[2]*ye[3] + xe[3]*ye[0] 
+            - xe[1]*ye[0] - xe[2]*ye[1] - xe[3]*ye[2] - xe[0]*ye[3])
 
 
     for p in range(n_gl):

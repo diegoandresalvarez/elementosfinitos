@@ -10,7 +10,7 @@ NL1, NL2, NL3, NL4, NL5, NL6, NL7, NL8 = range(8)
 
 # %% variables globales que se heredarán del programa principal
 xnod = None
-LaG = None
+LaG  = None
 
 # %%
 def compartir_variables(xnod_, LaG_):
@@ -81,10 +81,12 @@ def t2ft_R4(xnod, lado, carga, espesor):
     for p in range(n_gl):
         # se evalúan las funciones de forma
         N[idx] = NN(x_gl[p])
-        matN = np.empty((2,2*nno))
-        for i in range(nno):
-            matN[:,[2*i, 2*i+1]] = np.array([[N[i], 0   ],
-                                             [0,    N[i]]])
+        #matN = np.empty((2,2*nno))
+        #for i in range(nno):
+        #    matN[:,[2*i, 2*i+1]] = np.array([[N[i], 0   ],
+        #                                     [0,    N[i]]])
+        matN = np.hstack([ np.array([[N[i],    0],
+                                     [    0, N[i]]]) for i in range(nno)])
 
         # se calcula el jacobiano
         dN_dxi[idx] = dNN_dxi(x_gl[p])
