@@ -16,6 +16,7 @@ De otro lado, los programas:
 * MATLAB: [ejemplo_portico_resolv_ec_dif.m](ejemplo_portico_resolv_ec_dif.m)
 * MATLAB: [fe_ec_dif.m](fe_ec_dif.m)
 * MATLAB: [Ke_ec_dif.m](Ke_ec_dif.m)
+
 resuelven el mismo problema pero crean la matriz de rigidez Ke y el vector de fuerzas nodales equivalentes fe mediante la solución de la ecuación diferencial.
 
 
