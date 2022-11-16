@@ -42,7 +42,7 @@ def calc_feloc(tipo, L, b1,b2, q1,q2):
     q1, q2  carga vertical en x1 y x2 (especificada en coordenadas locales)
     '''
     # %% se calculan las fuerzas nodales de equilibrio en coordenadas locales
-    if tipo == 'EE':
+    if tipo in ['EE', 'ER_PH', 'ER_HP']:
         X1 =  (L*(2*b1 + b2))/6
         Y1 =  (L*(7*q1 + 3*q2))/20
         M1 =  (L**2 * (3*q1 + 2*q2))/60
@@ -98,7 +98,7 @@ def calc_Keloc(tipo, L, A, E, I):
     EI = E*I;       L3=L**3
     
     # matriz de rigidez local expresada en el sistema de coordenadas locales
-    if tipo == 'EE':
+    if tipo in ['EE', 'ER_PH', 'ER_HP']:
         Keloc = np.array([
              [ AE/L,   0      ,   0      ,  -AE/L,    0      ,   0      ],  
              [ 0   ,  12*EI/L3,   6*EI/L2,   0   ,  -12*EI/L3,   6*EI/L2],
@@ -134,6 +134,192 @@ def calc_Keloc(tipo, L, A, E, I):
         raise ValueError("Tipo de EF no soportado")
 
     return Keloc
+
+#%%
+def crear_C_g_enlace_rigido(xnod, idx_ER):
+    '''
+    Esta función retorna las matrices C y g asociadas al enlace rígido.
+
+    Para tal fin implementa dentro de C y g las ecuaciones:
+
+    u(h) = u(p) - t(p)*dy
+    v(h) = v(p) + t(p)*dx
+    t(h) = t(p)
+
+    USO:
+    C, g = crear_C_g_enlace_rigido(xnod, idx_ER)    
+
+    PARAMETROS DE ENTRADA:
+    xnod   = matriz de nnod x 2 con las coordenadas x,y de cada nodo
+    idx_ER = matriz de num_ER x 2: columna 1=nodo padre, columna 2=nodo hijo
+
+    PARAMETROS DE SALIDA:
+    C
+    g
+    '''
+
+    # extrae el número de enlaces rígidos:
+    num_ER = idx_ER.shape[0]
+
+    # si no existen enlaces rígidos, sálgase
+    if num_ER == 0: return None, None, None
+    
+    # 
+    nno  = xnod.shape[0] # número de nodos
+    ngdl = 3*nno         # número de grados de libertad por nodo = [X, Y, TH]
+   
+    # matrices que sirven para definir las restricciones
+    C = np.zeros((3*num_ER, ngdl))
+    g = np.zeros((3*num_ER))
+    
+    gdl_hijos = []
+    
+    for i in range(num_ER):
+        nodo_padre, nodo_hijo  = idx_ER[i,:]
+        
+        dx = xnod[nodo_hijo, X] - xnod[nodo_padre, X]
+        dy = xnod[nodo_hijo, Y] - xnod[nodo_padre, Y]
+        
+        # se calculan los idx de los GDL del nodo padre y del nodo hijo
+        gdl_up = 3*nodo_padre;           gdl_uh = 3*nodo_hijo    
+        gdl_vp = 3*nodo_padre + 1;       gdl_vh = 3*nodo_hijo + 1
+        gdl_tp = 3*nodo_padre + 2;       gdl_th = 3*nodo_hijo + 2
+        gdl_hijos.extend([gdl_uh, gdl_vh, gdl_th])
+        
+        # se escriben las ecuaciones asociadas a los enlaces rígidos
+        C[3*i+0, [gdl_uh, gdl_up, gdl_tp]] = [1, -1, +dy] # u(h) - u(p) + t(p)*dy == 0
+        C[3*i+1, [gdl_vh, gdl_vp, gdl_tp]] = [1, -1, -dx] # v(h) - v(p) - t(p)*dx == 0
+        C[3*i+2, [gdl_th, gdl_tp]]         = [1, -1]      # t(h) - t(p)           == 0
+    
+    return C, g, gdl_hijos
+
+# %%
+def resolver_Ka_f_q(K, f, c, ac, C=None, g=None, gdl_hijos=None):
+    '''
+    Esta función resuelve el sistema de ecuaciones Ka - f = q
+
+    PARAMETROS DE ENTRADA:
+    K  = matriz de rigidez global
+    f  = vector de fuerzas nodales equivalentes    
+    c  = GDL del desplazamiento conocidos (GDL de los apoyos)
+    ac = desplazamientos conocidos
+    C  = 
+    g  =
+    gdl_hijos = índices de los GDL de los hijos
+
+
+    PARAMETROS DE SALIDA:
+    a  = desplazamientos
+    q  = vector de fuerzas nodales de equilibrio del elemento
+    '''
+
+    # número de grados de libertad
+    ngdl = f.shape[0]
+
+    #| qd |   | Kcc Kcd || ac |   | fd |    Recuerde que siempre qc=0
+    #|    | = |         ||    | - |    |
+    #| qc |   | Kdc Kdd || ad |   | fc |
+
+    if C is None: 
+        #%% si no hay restricciones/enlaces rígidos:
+
+        # grados de libertad del desplazamiento desconocidos
+        d = np.setdiff1d(np.arange(ngdl), c)
+
+        # extraigo las submatrices y especifico las cantidades conocidas
+        Kcc = K[np.ix_(c,c)];      Kcd = K[np.ix_(c,d)];      fd = f[c]
+        Kdc = K[np.ix_(d,c)];      Kdd = K[np.ix_(d,d)];      fc = f[d]
+    
+        # resuelvo el sistema de ecuaciones
+        ad = np.linalg.solve(Kdd, fc - Kdc@ac) # desplazamientos desconocidos
+        qd = Kcc@ac + Kcd@ad - fd              # fuerzas de equilibrio desconocidas
+    
+        # armo los vectores de desplazamientos (a) y fuerzas (q)
+        a = np.zeros(ngdl);   a[c] = ac;   a[d] = ad # desplazamientos
+        q = np.zeros(ngdl);   q[c] = qd              # fuerzas nodales equivalentes
+    else:
+        # %%si hay restricciones/enlaces rígidos, use el método 1: 
+        # transformacion de K*a-f = q (ver diapositivas 19)
+
+        e = gdl_hijos # idx de los GDL asociados a los nodos hijos
+        
+        # se calculan los idx de los GDL asociados a los nodos a retener
+        # (incluye los nodos maestros)
+        r = np.setdiff1d(np.arange(ngdl), e).tolist()
+        
+        # se verifica que ningún GDL de desplazamiento conocido sea un GDL hijo
+        if np.any(np.intersect1d(c, e)):
+            raise Exception('No pueden haber GDL del empotramiento en los GDL hijos')
+        
+        num_hijos = C.shape[0]         # número de GDL hijos     (c)
+        n_c       = ngdl - num_hijos   # número de GDL a retener (n-c)
+       
+        # se extraen las submatrices Cr y Ce de la matriz de restricciones C
+        Cr = C[:,r];   Ce = C[:,e]
+        
+        # Se verifica que Ce no sea singular
+        if np.abs(np.linalg.det(Ce)) < 1e-5:
+            raise Exception('Ce debe ser invertible')
+        
+        I  = np.eye(n_c)
+        T  = np.r_[  I,
+                    -np.linalg.solve(Ce, Cr) ] # = -inv(Ce)*Cr
+        
+        O  = np.zeros(n_c)
+        g0 = np.r_[  O,
+                     np.linalg.solve(Ce, g)  ] # =  inv(Ce)*g
+        
+        # se reordenan los GDL de K y de f
+        idx_re = np.r_[r, e].tolist()
+        
+        Kre = K[np.ix_(idx_re, idx_re)]
+        fre = f[idx_re]
+           
+        Kr = T.T @ Kre @ T
+        fr = T.T @ (fre - Kre@g0)
+        
+        # Se definen GDL conocidos y desconocidos asociados a los desplazamientos
+        # idx con la numeración original (del grafico)
+        # observe que en Kr*ar - fr = qr no hay nodos esclavos
+        d = np.setdiff1d(r, c)
+        
+        # nuevos idx de c y d con la numeración del reordenamiento [r,e], esto es idx_re
+        c_re = [ r.index(i) for i in c ]
+        d_re = [ r.index(i) for i in d ]
+        
+        # Se descomponen los vectores a, f y la matriz K
+        Krcc = Kr[np.ix_(c_re,c_re)];      Krcd = Kr[np.ix_(c_re,d_re)]
+        Krdc = Kr[np.ix_(d_re,c_re)];      Krdd = Kr[np.ix_(d_re,d_re)]
+        frc  = fr[d_re];                   frd  = fr[c_re]
+        
+        # se reordenan los GDL de a y se extrae arc
+        a = np.zeros(ngdl)
+        a[c] = ac
+        ar   = a[r]
+        arc  = ar[c_re]
+        
+        # Se calculan los vectores ard y qrd (de los GDL a retener)
+        # resuelvo el sistema de ecuaciones
+        ard = np.linalg.solve(Krdd, frc - Krdc@arc) # desplazamientos desconocidos
+        qrd = Krcc@arc + Krcd@ard - frd             # fuerzas de equilibrio desconocidas
+        
+        # armo los vectores de desplazamientos (a_re) y fuerzas (q)
+        ar = np.zeros(n_c)     # desplazamientos
+        ar[c_re] = arc
+        ar[d_re] = ard
+        a_re     = T@ar + g0
+        
+        # se calcula el vector q_re
+        q_re       = np.zeros(ngdl)  # fuerzas nodales equivalentes
+        q_re[c_re] = qrd
+        
+        # se reordena a de la indexación re a la indexación original (del gráfico)
+        idx_orig = [ idx_re.index(i) for i in range(ngdl) ]
+        a = a_re[idx_orig]
+        q = q_re[idx_orig]
+        
+    # %% bye, bye!!!
+    return a, q
 
 # %%
 def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
@@ -185,7 +371,7 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
     
     # se calculan mediante fórmulas las fuerzas, el momento y los desplazamientos
     #q = q1 - (x*(q1 - q2))/L
-    if tipo == 'EE':
+    if tipo in ['EE', 'ER_PH', 'ER_HP']:
         axial = ((b1 - b2)*x**2)/(2*L) - b1*x + (2*L**2*b1 + L**2*b2 - 6*A*E*u1 + 6*A*E*u2)/(6*L)
         V     = q1*x - (7*L**4*q1 + 3*L**4*q2 - 240*E*I*v1 + 240*E*I*v2 - 120*E*I*L*t1 - 120*E*I*L*t2)/(20*L**3) - (x**2*(q1 - q2))/(2*L)
         M     = (3*L**5*q1 + 2*L**5*q2 - 10*L**2*q1*x**3 + 30*L**3*q1*x**2 + 10*L**2*q2*x**3 - 21*L**4*q1*x - 9*L**4*q2*x - 240*E*I*L**2*t1 - 120*E*I*L**2*t2 - 360*E*I*L*v1 + 360*E*I*L*v2 + 720*E*I*v1*x - 720*E*I*v2*x + 360*E*I*L*t1*x + 360*E*I*L*t2*x)/(60*L**3)
@@ -214,7 +400,7 @@ def dibujar_deformada(tipo, A, E, I, x1,y1, x2,y2, b1,b2, q1,q2,
         v     = (10*L**3*q1*x**4 - 2*L**2*q1*x**5 - 16*L**4*q1*x**3 + 8*L**5*q1*x**2 + 2*L**2*q2*x**5 - 9*L**4*q2*x**3 + 7*L**5*q2*x**2 + 240*E*I*L**3*v1 + 120*E*I*v1*x**3 - 120*E*I*v2*x**3 + 120*E*I*L*t1*x**3 + 240*E*I*L**3*t1*x - 360*E*I*L*v1*x**2 + 360*E*I*L*v2*x**2 - 360*E*I*L**2*t1*x**2)/(240*E*I*L**3)
         #t    = (40*L**3*q1*x**3 - 10*L**2*q1*x**4 - 48*L**4*q1*x**2 + 10*L**2*q2*x**4 - 27*L**4*q2*x**2 + 16*L**5*q1*x + 14*L**5*q2*x + 240*E*I*L**3*t1 + 360*E*I*v1*x**2 - 360*E*I*v2*x**2 - 720*E*I*L*v1*x + 720*E*I*L*v2*x + 360*E*I*L*t1*x**2 - 720*E*I*L**2*t1*x)/(240*E*I*L**3)
     else:
-        raise('Tipo de EF no soportado')
+        raise Exception('Tipo de EF no soportado')
     #theta = np.arctan(t)  # Angulo de giro [rad]
     
     # rotación de la solución antes de dibujar

@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from misfunciones import dibujar_deformada, calc_Te, calc_feloc, calc_Keloc
+from misfunciones import dibujar_deformada, calc_Te, calc_feloc, calc_Keloc, resolver_Ka_f_q, crear_C_g_enlace_rigido
 
 #%% constantes que ayudarán a la lectura del código
 NL1, NL2   = 0, 1
@@ -18,8 +18,10 @@ CON_LINEAS = False  # graficar líneas verticales en diagramas de M/V/A
 #nombre_archivo = 'torre_electrica'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3'
 #nombre_archivo = 'cercha_UribeEscamilla_11_3_apoyo_inclinado'
-nombre_archivo = 'portico_UribeEscamilla_11_23'
+#nombre_archivo = 'portico_UribeEscamilla_11_23'
 #nombre_archivo = 'taller_1_2021a'
+nombre_archivo = 'rigid_link_Onate_9_6'
+nombre_archivo = 'portico_enlaces_rigidos'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
@@ -74,7 +76,7 @@ for n in range(nno):
     plt.text(xnod[n,X], xnod[n,Y], str(n+1))
     
 plt.axis('equal')
-plt.grid(b=True, which='both', color='0.65',linestyle='-')
+plt.grid(visible=True, which='both', color='0.65',linestyle='-')
 plt.title('Numeración de los nodos y barras de la estructura')
 plt.show()
 
@@ -83,6 +85,14 @@ b1  = df['carga_distr']['b1'].astype('float64').to_numpy()
 b2  = df['carga_distr']['b2'].astype('float64').to_numpy()
 q1  = df['carga_distr']['q1'].astype('float64').to_numpy()
 q2  = df['carga_distr']['q2'].astype('float64').to_numpy()
+
+# %% definiendo los enlaces rígidos
+idx_ER_PH = tipo[tipo.eq('ER_PH')].index #to_numpy()
+idx_ER_HP = tipo[tipo.eq('ER_HP')].index #to_numpy()
+idx_ER = np.r_[ LaG[np.ix_(idx_ER_PH, [NL1, NL2])],
+                LaG[np.ix_(idx_ER_HP, [NL2, NL1])]  ]
+
+CC, gg, idx_gdl_hijos = crear_C_g_enlace_rigido(xnod, idx_ER)
 
 # %% se ensambla en el vector de fuerzas nodales equivalentes global
 K   = np.zeros((ngdl,ngdl))  # separo memoria
@@ -133,9 +143,6 @@ for i in range(nres):
 # desplazamientos conocidos
 ac = restric['desplazamiento'].to_numpy()
 
-# grados de libertad del desplazamiento desconocidos
-d = np.setdiff1d(np.arange(ngdl), c)
-
 # %% introduciendo los soportes inclinados
 # rotaciones de los apoyos
 ang = np.radians(restric['rotación'].to_numpy())
@@ -152,26 +159,8 @@ for i in range(nres):
 K = T_apoyo @ K @ T_apoyo.T
 f = T_apoyo @ f
 
-#%%
-# f = vector de fuerzas nodales equivalentes
-# q = vector de fuerzas nodales de equilibrio del elemento
-# a = desplazamientos
-
-#| qd |   | Kcc Kcd || ac |   | fd |    Recuerde que siempre qc=0
-#|    | = |         ||    | - |    |
-#| qc |   | Kdc Kdd || ad |   | fc |
-
-# %% extraigo las submatrices y especifico las cantidades conocidas
-Kcc = K[np.ix_(c,c)];  Kcd = K[np.ix_(c,d)]; fd = f[c]
-Kdc = K[np.ix_(d,c)];  Kdd = K[np.ix_(d,d)]; fc = f[d]
-
-# %% resuelvo el sistema de ecuaciones
-ad = np.linalg.solve(Kdd, fc - Kdc@ac)   # desplazamientos desconocidos
-qd = Kcc@ac + Kcd@ad - fd                # fuerzas de equilibrio desconocidas
-
-# armo los vectores de desplazamientos (a) y fuerzas (q)
-a = np.zeros(ngdl); a[c] = ac; a[d] = ad # desplazamientos
-q = np.zeros(ngdl); q[c] = qd            # fuerzas nodales equivalentes
+#%% se resuelve el sistema de ecuaciones Ka - f = q
+a, q = resolver_Ka_f_q(K, f, c, ac, CC, gg, idx_gdl_hijos)
 
 # %% retorno las fuerzas y los desplazamientos en el sistema de coordenadas
 #    donde los grados de libertad son paralelos a los ejes
