@@ -1,6 +1,6 @@
 # Taller 3: modelado de una unión metálica utilizando un software profesional
 
-* Fecha y hora de entrega de los videos y del informe: Ver GOOGLE CLASSROOM. Por cada hora de retraso en la entrega del trabajo se les descontará 0.3 unidades de la nota final.
+* Fecha y hora de entrega de los videos y del informe: Ver GOOGLE CLASSROOM. Por cada hora de retraso en la entrega del trabajo se descontará 3 décimas de la nota final.
 
 La idea de este trabajo es modelar mediante un programa profesional la unión metálica mostrada:
 
@@ -12,9 +12,9 @@ Esta unión metálica es la que está en el Piso 1 del bloque C, al lado de la p
 la cual está contenida en el archivo [union_metalica_C410.iges](figs/union_metalica_C410.iges) utilizando elementos finitos de cascarón. Esta unión metálica es la que está en la esquina inferior y de la parte posterior del salón C410. El archivo fue amablemente creado por Juan Esteban Ossa Ossa (jueossaos@unal.edu.co).
 --->
 
-Las fuerzas/momentos que debe soportar la unión son:
+Las fuerzas/momentos que debe soportar la unión, a 1 metro de la placa vertical, son:
 * A = 100 kN
-* V = 50 kN (observe cuidadosamente la dirección en la cual está aplicada)
+* V = 50 kN
 * M = 70 kN-m
 
 Las propiedades del material serán:
@@ -63,7 +63,7 @@ Se solicita realizar:
 El trabajo grupal se califica sobre 5.0
 
 ## Otros criterios de calificación
-* Si no hay videos individuales se asume que no se presentó el trabajo grupal.
+* Si no están todos los videos individuales se asume que no se presentó el trabajo grupal.
 * Sonido o resolución deficiente en el video: -1 unidad.
 
 ## Consejos
@@ -71,7 +71,7 @@ El trabajo grupal se califica sobre 5.0
 * El reporte debe incluir los análisis de resultados y cualquier otra información que usted considere necesaria.
 
 ## Notas adicionales
-Recuerden que la finalidad de los grupos de trabajo es que comparen los programas que utilizaron en cuanto a facilidad de uso, forma de entrar los datos, hipótesis que utilizan los programas, etc. Obviamente, deben comparar los resultados obtenidos. La idea es que si les dan resultados diferentes (que seguramente les darán), intenten explicar el porqué les dio diferente. No los pienso penalizar por resultados diferentes, siempre y cuando me muestren en el video que todo se modeló utilizando unas hipótesis correctas.
+La finalidad de los grupos de trabajo es que comparen los programas que utilizaron en cuanto a facilidad de uso, forma de entrar los datos, hipótesis que utilizan los programas, etc. Obviamente, deben comparar los resultados obtenidos. La idea es que si les dan resultados diferentes (que seguramente les darán), intenten explicar el porqué les dio diferente. No los pienso penalizar por resultados diferentes, siempre y cuando me muestren en el video que todo se modeló utilizando unas hipótesis correctas.
 
 Espero que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe importante información sobre las hipótesis de modelado que hace cada software.
 
