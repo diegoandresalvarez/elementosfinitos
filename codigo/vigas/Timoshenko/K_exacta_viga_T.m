@@ -84,7 +84,13 @@ dNEB_dx1 - dNEB_dx2
 %% Calculo de la matriz de masa consistente "exacta"
 syms rho A
 NN = Nv.';
-M = simplify(int(rho*A*(NN.')*NN*L/2,xi,-1,1))
+M = simplify(int(rho*A*(NN.')*NN*L/2,xi,-1,1));
+disp('M_TE = (rho*A*L)/(840*(beta + 1)^2) * ')
+disp((840*(beta + 1)^2)*M/(rho*A*L))
+
+% Observe que cuando 
+M_EB = limit(M, beta, 0)
+%obtenemos la matriz de masa consistente de Euler-Bernoulli
 
 %% Bye, bye!
 return;
