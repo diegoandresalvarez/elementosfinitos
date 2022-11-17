@@ -20,8 +20,9 @@ CON_LINEAS = False  # graficar líneas verticales en diagramas de M/V/A
 #nombre_archivo = 'cercha_UribeEscamilla_11_3_apoyo_inclinado'
 #nombre_archivo = 'portico_UribeEscamilla_11_23'
 #nombre_archivo = 'taller_1_2021a'
-nombre_archivo = 'rigid_link_Onate_9_6'
-nombre_archivo = 'portico_enlaces_rigidos'
+#nombre_archivo = 'rigid_link_Onate_9_6'
+#nombre_archivo = 'portico_enlaces_rigidos'
+nombre_archivo = 'portico_carlos'
 df = pd.read_excel(f"{nombre_archivo}.xlsx", sheet_name=None)
 
 # %% posición de los nodos:
