@@ -144,6 +144,8 @@ a      = ar(1:n);
 % imponer las restricciones en los GDL.
 lambda = ar(n+1:n+num_res)
 
+fuerzas_de_enlace = -C'*lambda
+
 
 % se calcula de nuevo el vector q
 qr     = sym(zeros(n + num_res, 1));
