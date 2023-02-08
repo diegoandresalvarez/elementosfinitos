@@ -5,18 +5,18 @@
 
 
 ## Evaluaciones y trabajos
-<!---
-- 17% - Exámen 1: septiembre 27, 2019
-- 17% - Exámen 2: noviembre 6, 2019
-- 17% - Exámen 3: enero 24, 2020
-- 17% - Exámen 4: enero 31, 2020
-- 32% - Trabajos 1 y 2: talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
-- 10% - Taller final opcional.
-```
-NOTA FINAL = 0.17*Examen1 + 0.17*Examen2 + 0.17*Examen3 + 0.17*Examen4 + 0.16*Trabajo1 + 0.16*Trabajo2 + 0.10*TallerFinal
-```
---->
+* Exámenes
+   - 20% - Exámen 1
+   - 20% - Exámen 2
+   - 20% - Exámen 3
+* Talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
+   - 10% - Taller 1
+   - 10% - Taller 2
+   - 20% - Taller 3
 
+La fecha del examen se definirá dos semanas antes de su realización.
+
+<!---
 El curso se evaluará mediante exámenes orales y talleres, así:
 
 * **Examen oral 1:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
@@ -24,17 +24,14 @@ El curso se evaluará mediante exámenes orales y talleres, así:
 * **Examen oral 3:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.
 * **Ejercicios de programación:** 20%, se seleccionarán al azar dos ejercicios y se evaluarán. Se calificarán qué tan completos están y si incluyen todo lo solicitado.
 * **Trabajo final:** 20%, uso de un software profesional de elementos finitos.
-
-<!---
-En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
 --->
 
+En los exámenes siempre se preguntará: teoría, demostraciones, ejercicios numéricos y ejercicios de programación. <span style="color: #ff0000;">Se permite para los exámenes traer una hoja tamaño carta en la cual ustedes pueden escribir (POR UN SOLO LADO) todas las fórmulas y comandos de MATLAB que deseen. En la hoja no se pueden ni escribir programas, ni textos explicativos, ni se pueden escribir demostraciones. Dicha hoja debe ser de elaboración personal (no se pueden traer las hojas hechas por compañeros de este o semestres pasados) y debe hacerse a mano (se prohíbe explícitamente traer fotocopias/impresiones/reducciones).</span>
+
+<!--- 
 ## Examenes
 Los exámenes serán orales e individuales. Se realizarán siguiendo [este](https://github.com/diegoandresalvarez/solidos/blob/master/docs/protocolo_examenes_orales.md) protocolo. En ellos, más que evaluar conceptos de memoria o verificar si el estudiante entiende la matemática detrás de las ecuaciones, se evaluará la *capacidad crítica* que se tiene al momento de emplear los conceptos aprendidos.
 
-La fecha del examen se definirá dos semanas antes de su realización.
-
-<!--- 
 ## Criterios de calificación de los apuntes
 
 Se pueden presentar los apuntes en un cuaderno y/o rayando directamente sobre impresiones del libro y diapositivas:
@@ -130,13 +127,11 @@ Estos libros se pueden descargar de:
 http://bases.unal.edu.co/ `->` Springer Books `->` buscar "Oñate"
 
 ## Observaciones que se quieren dejar por escrito:
-<!--- 
 ### Asistencia al curso
 La puerta se cerrará 10 minutos después de haber iniciado la clase (de acuerdo con el reloj del computador del salón).
 
 ### Falta a los exámenes
 Siempre que usted falte a un examen, debe haber algún documento que lo exonere de dicha inasistencia. Cuando usted por algún motivo de fuerza mayor no pueda asistir al examen, usted debe avisarle al profesor con anterioridad ya sea personalmente o por correo. En esos casos en lo posible, debe demostrarlo. Por ejemplo: si le tocó viajar a su pueblo esa semana porque algo sucedió un evento familiar de trascendencia, entonces una forma de certificar que usted viajó son los tiquetes de ida y vuelta a su pueblo. Sin una excusa o una notificación previa no se repetirán los exámenes y usted tendrá como nota un cero.
---->
 
 ### Fraude en los exámenes o trabajos
 Estos se penalizarán así:
@@ -145,7 +140,5 @@ Estos se penalizarán así:
 - Carta a la Dirección del Departamento de Ingeniería Civil reportando el suceso.
 - Se pierden adicionalmente todos los privilegios que se tienen de una calificación con notas mayores a 5.0 en todas las notas obtenidas en el semestre.
 
-<!---
 ### "Minuciosamente" en los exámenes
 En todos los exámenes se debe relacionar con palabras las fórmulas y motivar físicamente el por qué de un procedimiento o fórmula (es decir, se debe escribir la explicación suponiendo que usted está escribiendo un libro). Si no se hace esto, se le rebajará en ese punto en particular el 50% de la nota.
---->

@@ -1,10 +1,10 @@
-# Recursos
+olas previamente, ya sea por correo electrónico o antes/después de la clase.# Recursos
 
 Estos son algunos buenos links que he encontrado en internet (si conoce algunos otros, por favor comparta la información):
 
 * [Celigüeta-Lizarza (2011). Análisis de estructuras con no linealidad geométrica](http://hdl.handle.net/10171/19068)
 * [Celigüeta-Lizarza (2011). Método de los elementos finitos para el análisis estructural. 4 ed.](http://hdl.handle.net/10171/19069)
-* [Ádám Kovács, István Moharos, István Oldal, András Szekrényes (2012). Finite element Methode](http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/VEM-EN.pdf). Disponible en: http://www.tankonyvtar.hu/hu/tartalom/tamop425/0029_2A_VEM_EN/adatok.html.
+* [Ádám Kovács, István Moharos, István Oldal, András Szekrényes (2012). Finite element Methode](https://www.mm.bme.hu/~szeki/files/2012_vem-en.pdf).
 
 * Carlos Felippa. Introduction To Finite Element Methods (IFEM), University of Colorado at Boulder, [disponible en línea](https://vulcanhammernet.files.wordpress.com/2017/01/ifem.pdf).
 

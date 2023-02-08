@@ -48,6 +48,8 @@
 
 * [Análisis de láminas con elementos de sólido degenerados](12_Laminas_con_elementos_de_solido_degenerados.pdf)
 
+* [Restricciones rígidas en el desplazamiento](19_constraints_rigid_links.pdf)
+
 * [Dinámica y elementos finitos (caso lineal)](20_dinamica_y_elementos_finitos.pdf) 
 
 ---

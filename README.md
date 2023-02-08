@@ -19,8 +19,8 @@ Tomado de:
 - Créditos: 3
 - Intensidad horaria semanal: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
 - Elementos finitos 1:
-  - Viernes 7:00-9:00 por ZOOM
-  - Viernes 14:00-16:00 por ZOOM
+  - Viernes 7:00-9:00 C108
+  - Viernes 14:00-16:00 C305
 <!---
 - Elementos finitos 2:
   - Viernes 7:00-9:00 por ZOOM
