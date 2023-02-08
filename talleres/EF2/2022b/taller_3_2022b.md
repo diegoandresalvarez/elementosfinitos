@@ -13,9 +13,9 @@ la cual está contenida en el archivo [union_metalica_C410.iges](figs/union_meta
 --->
 
 Las fuerzas/momentos que debe soportar la unión, a 1 metro de la placa vertical, son:
-* A = 100 kN
-* V = 50 kN
-* M = 70 kN-m
+* A = 500 kN
+* V = 100 kN
+* M = 80 kN-m
 
 Las propiedades del material serán:
 * [Acero estructural ASTM-A36](https://en.wikipedia.org/wiki/A36_steel).
