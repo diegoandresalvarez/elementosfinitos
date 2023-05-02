@@ -1,4 +1,4 @@
-# Taller 1: modelado de una viga utilizando elementos finitos triangulares de 3 nodos
+# Taller 1: modelado de una viga utilizando elementos finitos triangulares de tensión plana
 
 Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso de un software profesional de análisis estructural, se requiere hacer el análisis de los desplazamientos, diagramas de momento flector y de fuerza cortante en una viga con diferentes alturas. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que proponga soluciones a los problemas propuestos.
 
@@ -14,8 +14,8 @@ Considere la viga mostrada:
 Esta tiene una sección rectangular de 5 cm de ancho y $h$ de alto, tiene una luz de 2 metros y está hecha de un material con un módulo de Young $E$ = 2 GPa, un coeficiente de Poisson $\nu$ = 0.30 y una densidad de 7000 kg/m³. La altura $h$ tomará los valores de 0.2 m y 2.0 m. La carga de la viga valdrá 100 kN/m y 10000 kN/m para las alturas de 0.2 m y 2.0 m respectivamente.
 
 Utilizando los siguientes métodos:
-* Método de los elementos finitos 2D (tensión plana) con EFs triangulares de 3 nodos y los programas que se encuentran en GITHUB (MATLAB o PYTHON).
-* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM. NOTA: no se puede tener un software similar al de alguno de sus compañeros del curso. No necesariamente tiene que emplear EFs triangulares de 3 nodos.
+* Método de los elementos finitos 2D (tensión plana) con EFs de tensión plana y los programas que se encuentran en GITHUB (MATLAB o PYTHON).
+* Programa de análisis estructural que usted registró en GOOGLE CLASSROOM. NOTA: no se puede tener un software similar al de alguno de sus compañeros del curso.
 
 ## Se solicita
 
@@ -25,7 +25,7 @@ Se solicita calcular y graficar:
 
 * El desplazamiento vertical $v(x,y)$ en $y = 0$. (+5 décimas)
 
-* La variación de los esfuerzos $\sigma_x(y)$ y $\tau_{xy}$ en las secciones transversales de la viga indicadas ($x$=0.50m, 0.95m, 1.50m). (+5 décimas)
+* La variación de los esfuerzos $\sigma_x(y)$ y $\tau_{xy}(y)$ en las secciones transversales de la viga indicadas ($x$=0.50m, 0.95m, 1.50m). (+5 décimas)
 
 * Los gráficos con escala de colores y curvas de nivel que muestren la variación de los esfuerzos (incluyendo los esfuerzos principales con sus inclinaciones), las deformaciones y los desplazamientos. (OBLIGATORIO. Si no se realiza se descuentas 30 décimas)
 
@@ -73,7 +73,7 @@ NOTA EXTRA:
 
 * Se sugiere aprender a manejar un programa de edición de videos. Esto les facilitará grandemente su realización.
 
-* No los voy a penalizar en caso que ustedes obtengan desplazamientos diferentes a los que deberían dar. La experiencia nos ha demostrado que hay programas que simplemente no funcionan adecuadamente (aunque son pocos). Sin embargo, el estudiante debe demostrar en el video que modeló correctamente la estructura.
+* No los voy a penalizar en caso que ustedes obtengan desplazamientos diferentes a los que deberían dar. La experiencia ha demostrado que hay programas que simplemente no funcionan adecuadamente (aunque son pocos). Sin embargo, el estudiante debe demostrar en el video que modeló correctamente la estructura.
 
 * Active en el software de captura de pantalla la opción para ver el ratón.
 
@@ -85,7 +85,7 @@ NOTA EXTRA:
 
 * Si se usa un software diferente al registrado, se descontarán 30 décimas.
 
-* Si se modela una estructura diferente a la registrada, o si se modela usando EFs 3D, se tendrá menos 3.0 unidades.
+* Si se modela una estructura diferente a la registrada, o si se modela usando EFs 3D, se descontarán 30 décimas.
 
 * Si no se incluye en el video un recuadro donde se donde se vea usted hablando sobre el software se descontarán 30 décimas.
 
