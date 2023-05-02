@@ -1,4 +1,4 @@
-# Taller 1: modelado de una viga utilizando elementos finitos triangulares de tensión plana
+# Taller 1: modelado de una viga utilizando elementos finitos de tensión plana
 
 Con el objeto de contrastar la teoría aprendida y la práctica mediante el uso de un software profesional de análisis estructural, se requiere hacer el análisis de los desplazamientos, diagramas de momento flector y de fuerza cortante en una viga con diferentes alturas. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase, los conceptos nuevos vistos en el software y que proponga soluciones a los problemas propuestos.
 
