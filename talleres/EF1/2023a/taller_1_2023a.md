@@ -30,11 +30,11 @@ Se solicita calcular y graficar:
 * Los gráficos con escala de colores y curvas de nivel que muestren la variación de los esfuerzos (incluyendo los esfuerzos principales con sus inclinaciones), las deformaciones y los desplazamientos. (OBLIGATORIO. Si no se realiza se descuentas 30 décimas)
 
 * El momento flector, la fuerza cortante y la fuerza axial en las secciones transversales indicadas. Para tal fin se deben emplear las ecuaciones: (+5 décimas) 
-$$V(x) = - \iint_{A(x)}   \tau_{xy}(x,y,z) \operatorname{d}\! y \operatorname{d}\! z$$
+$$V(x) = - \iint_{A(x)}   \tau_{xy}(x,y,z) \text{d} y \text{d} z$$
 
-$$M(x) = - \iint_{A(x)} y \sigma_{x}(x,y,z) \operatorname{d}\! y \operatorname{d}\! z$$
+$$M(x) = - \iint_{A(x)} y \sigma_{x}(x,y,z) \text{d} y \text{d} z$$
 
-$$f_\text{axial}(x) = + \iint_{A(x)}   \sigma_{x}(x,y,z) \operatorname{d}\! y \operatorname{d}\! z$$
+$$f_\text{axial}(x) = + \iint_{A(x)}   \sigma_{x}(x,y,z) \text{d} y \text{d} z$$
 
 * Las reacciones en el apoyo y la distribución de dichas reacciones en la altura. (+5 décimas)
 
