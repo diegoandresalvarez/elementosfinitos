@@ -24,14 +24,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="true"
-     inkscape:zoom="1.1893044"
-     inkscape:cx="330.86567"
-     inkscape:cy="163.12056"
-     inkscape:window-width="1680"
+     inkscape:zoom="0.84096521"
+     inkscape:cx="290.1428"
+     inkscape:cy="103.45256"
+     inkscape:window-width="840"
      inkscape:window-height="963"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1">
     <inkscape:grid
        type="xygrid"
@@ -253,5 +253,18 @@
          style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.264583"
          x="186.23619"
          y="39.130753">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.23333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
+       x="161.38748"
+       y="52.916664"
+       id="text346"><tspan
+         sodipodi:role="line"
+         id="tspan344"
+         style="stroke-width:0.264583"
+         x="161.38748"
+         y="52.916664"><tspan
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic'"
+   id="tspan342">x</tspan>=2.00m</tspan></text>
   </g>
 </svg>
