@@ -57,6 +57,8 @@ $$f_\text{axial}(x) = + \iint_{A(x)} \sigma_{x}(x,y,z)\ \text{d} y \text{d} z$$
   - 1.0 Explica qué es lo que observa en los gráficos.
   - 1.0 Hace un adecuado análisis de resultados? ¿Explica el por qué de las diferencias entre los resultados?
 
+Recuerde explicar detalladamente como varían las cantidades en el espacio, donde están las cantidades máximas y mínimas, como se relacionan unas gráficas con otras, etc. No es solo ubicar donde están los colores, o los máximos y los mínimos, sino decir, **por qué razón se produce esa coloración**, entendiendo como la estructura está cargada, está apoyada, se deforma, etc. Se sugiere [**este (descargue archivo .PDF)**](https://github.com/diegoandresalvarez/solidos/blob/master/talleres/solidos1/ejemplo_analisis_graficos.pdf) formato para presentar los resultados. Por ejemplo con γxy: ¿qué quiere decir esta deformación? ¿cómo se está comportando en este punto la estructura dado ese valor de γxy? ¿por qué razón se produce? No es solo ubicar los máximos y los mínimos de dicha cantidad.
+
 NOTA EXTRA:
 * 5 décimas por programar algo novedoso que mejore notablemente algún aspecto del código. En este caso dichas décimas se agregarán de forma individual y no grupal.
 
@@ -67,7 +69,9 @@ NOTA EXTRA:
 
 * Se deben entregar las presentaciones utilizadas en los videos en formato PDF.
 
-* Informe máximo de 15 páginas.
+* En ocasiones, cuando se tienen puntos de singularidad, esos valores son tan altos, que terminan opacando los colores en la estructura, mostrándolos como uno solo. En este caso, se sugiere usar una opción del software que limita los colores a mostrar a un rango. 
+
+* Informe máximo de 25 páginas.
   * No incluir en el trabajo escrito códigos de programación, excepto pequeños bloques de máximo 10 o 15 reglones, en caso de ser necesario.
   * No es necesario escribir una introducción o un marco teórico que contenga la metodología vista en clase.
 
