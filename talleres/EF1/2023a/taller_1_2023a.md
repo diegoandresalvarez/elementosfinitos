@@ -11,7 +11,11 @@ Considere la viga mostrada:
 
 <img src="figs/viga_2023a.svg" width=800/>
 
-Esta tiene una sección rectangular de 5 cm de ancho y $h$ de alto, tiene una luz de 2 metros y está hecha de un material con un módulo de Young $E$ = 2 GPa, un coeficiente de Poisson $\nu$ = 0.30 y una densidad de 7000 kg/m³. La altura $h$ tomará los valores de 0.2 m y 2.0 m. La carga de la viga valdrá 100 kN/m y 10000 kN/m para las alturas de 0.2 m y 2.0 m respectivamente.
+Esta tiene una sección rectangular de 5 cm de ancho y $h$ de alto, tiene una luz de 2 metros y está hecha de un material con un módulo de Young $E$ = 2 GPa, un coeficiente de Poisson $\nu$ = 0.30 y una densidad de 7000 kg/m³. Se deberán analizar dos configuraciones de la viga:
+* $h$=0.2 m y $q$=100 kN/m.
+* $h$=2.0 m y $q$=10000 kN/m.
+
+Tenga en cuenta que la carga distribuída triangular es tal que esta vale $q$ en $x$=1 m y 0 en $x$=2 m.
 
 Utilizando los siguientes métodos:
 * Método de los elementos finitos 2D (tensión plana) con EFs de tensión plana y los programas que se encuentran en GITHUB (MATLAB o PYTHON).
