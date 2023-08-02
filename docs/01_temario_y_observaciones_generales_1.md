@@ -6,17 +6,18 @@
 
 ## Evaluaciones y trabajos
 * Exámenes
-   - 20% - Exámen 1
-   - 20% - Exámen 2
-   - 20% - Exámen 3
+   - 20% - Exámen 1 (viernes, septiembre 15 de 2023)
+   - 20% - Exámen 2 (viernes, octubre 27 de 2023)
+   - 20% - Exámen 3 (viernes, diciembre 1 de 2023)
 * Talleres de programación en MATLAB/Python, uso de un software profesional de elementos finitos.
-   - 10% - Taller 1
-   - 10% - Taller 2
-   - 20% - Taller 3
+   - 10% - Taller 1 
+   - 10% - Taller 2 
+   - 20% - Taller 3 
 
-La fecha del examen se definirá dos semanas antes de su realización.
 
 <!---
+La fecha del examen se definirá dos semanas antes de su realización.
+
 El curso se evaluará mediante exámenes orales y talleres, así:
 
 * **Examen oral 1:** 20%, todo el material visto en clase, diapositivas y lecturas. Tema por definir.

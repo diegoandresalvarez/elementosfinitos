@@ -10,8 +10,6 @@ Estos son algunos buenos links que he encontrado en internet (si conoce algunos 
 
 * [Prof. K.J. Bathe. 2.092 / 2.093 Finite Element Analysis of Solids and Fluids I. MIT. USA.](http://ocw.mit.edu/courses/mechanical-engineering/2-092-finite-element-analysis-of-solids-and-fluids-i-fall-2009/)
 
-* [Prof. K.J. Bathe. 2.094 Finite Element Analysis of Solids and Fluids. MIT. USA.](http://ocw.mit.edu/courses/mechanical-engineering/2-094-finite-element-analysis-of-solids-and-fluids-spring-2008/index.htm)
-
 ## Video tutoriales
 * NPTEL: buscar en https://nptel.ac.in/course.html (no pongo en enlace, porque esos links están variando constantemente)
   * Dr. R. Krishnakumar. 

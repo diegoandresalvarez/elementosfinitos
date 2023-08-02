@@ -282,6 +282,8 @@ Aquí:
 
 \section{Se reemplaza en el principio de los trabajos virtuales}
 
+El procedimiento descrito a continuación es esencialmente una aplicación del método de Galerkin.
+
 Haciendo $\ve{x} = [x,\ y]^T$, y teniendo en cuenta las fuerzas que se muestran en la Figura~\ref{eq:fuerzas_sobre_EF}, escribimos el PTV en 2D:
 \begin{figure}[p]
    \centering   
@@ -458,6 +460,9 @@ NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semipositiva definida. Tiene tres
 %donde $p, q = 1,\ 2, \ \ldots,\ n$.
 
 \section{Deducción alternativa utilizando el principio de la energía potencial mínima}
+
+Este procedimiento es equivalente al método de Rayleigh-Ritz.
+
 La energía potencial total de un sólido está dada por:
 \begin{equation}
     \Pi(\ve{u}) = \underbrace{\vphantom{\sum_{i=1}^n}\frac{t}{2}\iint_\Omega \ve{\varepsilon}(\ve{x})^T\ve{\sigma}(\ve{x}) \dd A}_{W_{\text{elást}}} - \underbrace{\left(t\iint_\Omega \ve{u}(\ve{x})^T \ve{b}(\ve{x}) \dd A + t\oint_{\partial\Omega} \ve{u}(\ve{x}(s))^T\ve{t}(\ve{x}(s)) \dd s + \sum_{i=1}^n \ve{u}(\ve{x}_i)^T\ve{p}_i + \sum_{i=1}^n \ve{u}(\ve{x}_i)^T\ve{q}_i \right)}_{W_{\text{ext}}};
