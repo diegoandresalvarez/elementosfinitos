@@ -22,7 +22,7 @@ N2 = interpolate([(-1,0), (0,1), (1,0)], xi)  # = (1+xi)*(1-xi)
 N3 = interpolate([(-1,0), (0,0), (1,1)], xi)  # = xi*(xi+1)/2
 
 # %% Interpolación de la geometría y sus derivadas
-x   = sp.simplify(N1*x1 + N2*x2 + N3*x3);       
+x      = sp.simplify(N1*x1 + N2*x2 + N3*x3)     
 dx_dxi = sp.diff(x, xi)
 
 # NOTA: el siguiente comando solo se puede realizar si x(xi) es una función

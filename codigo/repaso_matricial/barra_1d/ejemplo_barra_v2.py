@@ -59,7 +59,7 @@ def ensamblar_vec(v, idx, ve):
             
 
 # %% defino las variables
-b, E, A, L, P = sp.symbols('b E A L P')         # define las variables simbólicas
+b, E, A, L, P = sp.symbols('b E A L P')    # define las variables simbólicas
 
 long = [L,  L,  L/2]                       # longitud de la barra
 
