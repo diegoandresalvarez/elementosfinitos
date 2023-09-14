@@ -1,44 +1,41 @@
 clear, clc, close all
 
-% Integracion de:
-%
-f   = @(x) 0.2 + 25*x - 200*x.^2 +675*x.^3 - 900*x.^4 + 400*x.^5;
-%
+% Integración de:
+f   = @(x) 0.2 + 25*x - 200*x.^2 + 675*x.^3 - 900*x.^4 + 400*x.^5;
 % entre 0 y 0.8 usando cuadraturas de Gauss-Legendre
 
-a   = 0;                  % limites de integracion
+a   = 0;                  % límites de integración
 b   = 0.8;        
-sol = 3076/1875;          % solucion exacta
-err = zeros(10,1);        % separo la memoria
-for m = 1:10              % vario el numero de puntos de la cuadratura
-   [x,c] = gausslegendre_quad(m);  % calculo w y c de la cuadratura
-   err(m) = abs(((b-a)/2)*sum(c.*f((b+a)/2 + (b-a)*x/2)) - sol);
+sol = 3076/1875;          % solución exacta
+err = zeros(10,1);        % se reserva la memoria
+for m = 1:10              % se varía el número de puntos de la cuadratura
+   [xi,w] = gausslegendre_quad(m);  % cálculo de las raíces y los pesos
+   err(m) = abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol);
 end
 figure                    % creo un lienzo
 plot(err)                 % grafico el error
-xlabel('Numero de puntos en la cuadratura');
-ylabel('Error');
-title('Cuadratura de Gauss Legendre');
-grid                      % pongo la rejilla
+xlabel('Número de puntos en la cuadratura');
+ylabel('Error absoluto');
+title('Cuadratura de Gauss-Legendre');
+grid minor                % pongo la rejilla
 
 
-% Integracion de:
-%
+% Integración de:
 f   = @(x) sin(x);
-%
 % entre 0 y pi/2 usando cuadraturas de Gauss-Legendre
 
-a   = 0;                  % limites de integracion
+a   = 0;                  % límites de integración
 b   = pi/2;
-sol = 1;                  % solucion exacta
-err = zeros(10,1);        % separo la memoria
-for m = 1:10
-   [x,c] = gausslegendre_quad(m);
-   err(m) = abs(((b-a)/2)*sum(c.*f((b+a)/2 + (b-a)*x/2)) - sol);
+sol = 1;                  % solución exacta
+err = zeros(10,1);        % se reserva la memoria
+for m = 1:10              % se varía el número de puntos de la cuadratura
+   [xi,w] = gausslegendre_quad(m);  % cálculo de las raíces y los pesos
+   err(m) = abs(((b-a)/2)*sum(w.*f((b+a)/2 + (b-a)*xi/2)) - sol);
 end
 figure
-semilogy(err); % escala logaritmica para apreciar mejor el error
-xlabel('Numero de puntos en la cuadratura');
-ylabel('Error');
-title('Cuadratura de Gauss Legendre');
-grid
+semilogy(err); % escala logarítmica para apreciar mejor el error
+xlabel('Número de puntos en la cuadratura');
+ylabel('Error absoluto');
+title('Cuadratura de Gauss-Legendre');
+grid minor
+
