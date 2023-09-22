@@ -161,7 +161,7 @@ $\delta\ve{a}^{(e)}$ es el \emph{vector de desplazamientos virtuales nodales del
 
 Deformaciones al interior del elemento:
 \begin{align}
-\varepsilon^{(e)}(\xi) &= \frac{\dd u^{(e)}(\xi)}{\dd x} =
+\varepsilon_x^{(e)}(\xi) &= \frac{\dd u^{(e)}(\xi)}{\dd x} =
  \frac{\dd u^{(e)}(\xi)}{\dd \xi}\frac{\dd \xi(x)}{\dd x} = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i(\xi) u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
  &= \left(\sum_{i=1}^n \frac{\dd N_i(\xi)}{\dd \xi} u_i^{(e)}\right) \frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
@@ -178,7 +178,7 @@ Deformaciones al interior del elemento:
 
 Deformaciones virtuales al interior del elemento:
 \begin{align}
-\delta \varepsilon^{(e)}(\xi) &= \delta \left(\frac{\dd u^{(e)}(\xi)}{\dd x}\right) = \frac{\dd}{\dd x}\left(\delta u^{(e)}(\xi)\right)
+\delta \varepsilon_x^{(e)}(\xi) &= \delta \left(\frac{\dd u^{(e)}(\xi)}{\dd x}\right) = \frac{\dd}{\dd x}\left(\delta u^{(e)}(\xi)\right)
 = \frac{\dd}{\dd \xi}\left(\sum_{i=1}^n N_i(\xi) \delta u_i^{(e)}\right)\frac{\dd \xi(x)}{\dd x} \\
 &= \left(\sum_{i=1}^n \frac{\dd N_i(\xi)}{\dd \xi} \delta u_i^{(e)}\right)\frac{1}{J^{(e)}(\xi)} = 
 \underbrace{\begin{bmatrix}
@@ -199,15 +199,15 @@ $\delta\ve{a}^{(e)}$ es el \emph{vector de desplazamientos virtuales nodales del
 \newpage
 \section{Se define el campo vectorial de esfuerzos}
 \begin{align}
-\sigma^{(e)}(\xi) 
-&= E^{(e)}(\xi) \varepsilon^{(e)}(\xi) \\
+\sigma_x^{(e)}(\xi) 
+&= E^{(e)}(\xi) \varepsilon_x^{(e)}(\xi) \\
 &= E^{(e)}(\xi) \ma{B}^{(e)}(\xi) \ve{a}^{(e)}
 \end{align}
 
 Tenga en cuenta que las fuerzas axiales al interior del elemento están dadas por:
 \begin{align}
 f^{(e)}_{\text{axial}}(\xi) 
-&= A^{(e)}(\xi) \sigma^{(e)}(\xi) \\
+&= A^{(e)}(\xi) \sigma_x^{(e)}(\xi) \\
 &= \underbrace{E^{(e)}(\xi) A^{(e)}(\xi)}_{\ma{D}^{(e)}(\xi)} \ma{B}^{(e)}(\xi) \ve{a}^{(e)} \\
 &= \ma{D}^{(e)}(\xi) \ma{B}^{(e)}(\xi) \ve{a}^{(e)}
 \end{align}
@@ -222,7 +222,8 @@ $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales del elemento} $e$.
 
 A partir del PTV:
 \begin{align}
-\iiint_{V^{(e)}} \delta\varepsilon^{(e)}(x) \sigma^{(e)}(x) \dd V = \int_{x_1^{(e)}}^{x_n^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \sum_{i=1}^n \delta u_i^{(e)} R_i^{(e)}
+%\iiint_{V^{(e)}} \delta\varepsilon_x^{(e)}(x) \sigma_x^{(e)}(x) \dd V 
+\int_0^L \sigma_x(x) A(x) \delta \varepsilon_x(x) \dd x = \int_{x_1^{(e)}}^{x_n^{(e)}} \delta u^{(e)}(x) b^{(e)}(x) \dd x + \sum_{i=1}^n \delta u_i^{(e)} q_i^{(e)}
 \end{align}
 y siguiendo unos pasos similares a los que se realizaron con el EF de barra de 2 nodos, obtenemos que:
 \begin{equation}
@@ -237,10 +238,10 @@ es decir,
 
 Aquí:
 \begin{itemize}
-    \item $\ma{K}^{(e)}$ es la \emph{matriz de rigidez} del elemento $e$.
-    \item $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales} del elemento $e$.
-    \item $\ma{f}^{(e)}$ es el \emph{vector de fuerzas nodales equivalentes} del elemento $e$.    
-    \item $\ve{q}^{(e)} = [R_1^{(e)}\ R_2^{(e)}\ \cdots \ R_n^{(e)}]^T$ es el \emph{vector de fuerzas nodales de equilibrio} del elemento $e$.
+    \item $\ma{K}^{(e)}$ es la \emph{matriz de rigidez} del EF $e$.
+    \item $\ve{a}^{(e)}$ es el \emph{vector de desplazamientos nodales} del EF $e$.
+    \item $\ma{f}^{(e)}$ es el \emph{vector de fuerzas nodales equivalentes} del EF $e$.    
+    \item $\ve{q}^{(e)} = [q_1^{(e)}\ q_2^{(e)}\ \cdots \ q_n^{(e)}]^T$ es el \emph{vector de fuerzas nodales de equilibrio} del EF $e$.
 \end{itemize}
 
 En las páginas anteriores se calculó $\ma{N}$, $\ma{B}^{(e)}$ y $\ma{D}^{(e)}$ en función de $\xi$, por lo que es necesario hacer un cambio de variables en las integrales anteriores. De este modo:
@@ -251,16 +252,16 @@ En las páginas anteriores se calculó $\ma{N}$, $\ma{B}^{(e)}$ y $\ma{D}^{(e)}$
 
 Finalmente, se aproximan dichas integrales utilizando una cuadratura de $M$ puntos de Gauss-Legendre:
 \begin{align}
-\ma{K}^{(e)} &\approx \sum_{m=1}^M \ma{B}_{(e)}^T(\xi_m) \ma{D}^{(e)}(\xi_m) \ma{B}^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m\\
-\ma{f}^{(e)} &\approx \sum_{m=1}^M  \ma{N}_{(e)}^T(\xi_m) b^{(e)}(\xi_m) \frac{\dd x^{(e)}(\xi_m)}{\dd \xi} w_m
+\ma{K}^{(e)} &\approx \sum_{j=1}^M \ma{B}_{(e)}^T(\xi_j) \ma{D}^{(e)}(\xi_j) \ma{B}^{(e)}(\xi_j) \frac{\dd x^{(e)}(\xi_j)}{\dd \xi} w_j\\
+\ma{f}^{(e)} &\approx \sum_{j=1}^M  \ma{N}_{(e)}^T(\xi_j) b^{(e)}(\xi_j) \frac{\dd x^{(e)}(\xi_j)}{\dd \xi} w_j
 \end{align}
 
 NOTA: la matriz $\ma{K}^{(e)}$ es simétrica y semi-positiva definida. Tiene un valor propio nulo asociado con la translación rígida horizontal. El rango de $\ma{K}^{(e)}$ es $n-1$.
 
 Se deja como ejercicio al lector demostrar que:
 \begin{align}
-\ma{K}^{(e)}_{pq} &\approx \sum_{m=1}^M \frac{\dd N_p(\xi_m)}{\dd \xi} E^{(e)}(\xi_m) A^{(e)}(\xi_m) \frac{\dd N_q(\xi_m)}{\dd \xi} \frac{1}{J^{(e)}(\xi_m)} w_m\\
-\ma{f}^{(e)}_p &\approx \sum_{m=1}^M  N_p^{(e)}(\xi_m) b^{(e)}(\xi_m) J^{(e)}(\xi_m) w_m
+\ma{K}^{(e)}_{pq} &\approx \sum_{j=1}^M \frac{\dd N_p(\xi_j)}{\dd \xi} E^{(e)}(\xi_j) A^{(e)}(\xi_j) \frac{\dd N_q(\xi_j)}{\dd \xi} \frac{1}{J^{(e)}(\xi_j)} w_j\\
+\ma{f}^{(e)}_p &\approx \sum_{j=1}^M  N_p^{(e)}(\xi_j) b^{(e)}(\xi_j) J^{(e)}(\xi_j) w_j
 \end{align}
 donde $p, q = 1,\ 2, \ \ldots,\ n$.
 \end{document}
