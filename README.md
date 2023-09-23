@@ -14,13 +14,13 @@ Tomado de:
 * [WIKIMEDIA Fotografía de la Catedral Basílica de Manizales por Pablo Andrés Toro Arias](https://commons.wikimedia.org/wiki/File:2007-06-12_catedral_de_manizales-pablo_andres_toro_arias.jpg)
 
 ## Detalles del curso
-- Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/alvarezCV_internet.pdf) (daalvarez@unal.edu.co)
+- Profesor: [Diego Andrés Alvarez Marín](https://sites.google.com/site/diegoandresalvarezmarin/) (daalvarez@unal.edu.co)
 - Semanas: 16
 - Créditos: 3
 - Intensidad horaria semanal: 4 horas (4 horas x 16 semanas = 64 horas/semestre)
 - Elementos finitos 1:
-  - Viernes 7:00-9:00 C108
-  - Viernes 14:00-16:00 C305
+  - Lunes 10:00-12:00 I-309
+  - Viernes 14:00-16:00 C-305
 <!---
 - Elementos finitos 2:
   - Viernes 7:00-9:00 por ZOOM
