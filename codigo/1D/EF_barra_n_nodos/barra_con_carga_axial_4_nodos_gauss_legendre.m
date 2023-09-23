@@ -148,10 +148,12 @@ for e = 1:nef        % ciclo sobre todas los elementos finitos
 end
 
 %% imprimo los resultados
-format short g
-disp('Desplazamientos (m) = ');                   a
-disp('Fuerzas nodales equivalentes (N) = ');      f
-disp('Fuerzas nodales de equilibrio (N) = ');     q
+%format short g
+%disp('Desplazamientos (m) = ');                   a
+%disp('Fuerzas nodales equivalentes (N) = ');      f
+%disp('Fuerzas nodales de equilibrio (N) = ');     q
+
+tabla = array2table([a f q],"VariableNames",["Desplazamientos_m","FNOD_equivalentes_N","FNOD_equilibrio_N"])
 
 %% Grafico la solucion analitica y la solucion por el MEF
 %{
