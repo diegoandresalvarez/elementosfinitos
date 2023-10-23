@@ -6,42 +6,67 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import sympy as sp
+from sympy.polys.polyfuncs import interpolate
 
-X, Y = 1, 2
-L1, L2, L3 = 0, 1, 2
-
-nno = 10
+X,  Y      = 1, 2
 
 # %% coordenadas de los nodos y numeración local
-if nno == 10:
-   #  ^ eta
-   #  |
-   #  |
-   #  3
-   #  | \
-   #  8---7
-   #  |   | \
-   #  9--10---6
-   #  |   |   | \  
-   #  1---4---5---2----> xi
-   #
-   #                L1    L2    L3       nodo
-   nod = np.array([[1  ,  0  ,  0   ],  #  1
-                   [0  ,  1  ,  0   ],  #  2
-                   [0  ,  0  ,  1   ],  #  3
-                   [2/3,  1/3,  0   ],  #  4
-                   [1/3,  2/3,  0   ],  #  5
-                   [0  ,  2/3,  1/3 ],  #  6
-                   [0  ,  1/3,  2/3 ],  #  7
-                   [1/3,  0  ,  2/3 ],  #  8
-                   [2/3,  0  ,  1/3 ],  #  9
-                   [1/3,  1/3,  1/3 ]]) # 10
+#  ^ eta
+#  |
+#  |
+#  3
+#  | \
+#  8---7
+#  |   | \
+#  9--10---6
+#  |   |   | \  
+#  1---4---5---2----> xi
+#
+#                L1    L2    L3       nodo
+nod = np.array([[1  ,  0  ,  0   ],  #  1
+                [0  ,  1  ,  0   ],  #  2
+                [0  ,  0  ,  1   ],  #  3
+                [2/3,  1/3,  0   ],  #  4
+                [1/3,  2/3,  0   ],  #  5
+                [0  ,  2/3,  1/3 ],  #  6
+                [0  ,  1/3,  2/3 ],  #  7
+                [1/3,  0  ,  2/3 ],  #  8
+                [2/3,  0  ,  1/3 ],  #  9
+                [1/3,  1/3,  1/3 ]]) # 10
+
+nno = nod.shape[0] # = 10
 
 # %% se calculan las funciones de forma bidimensionales
-xxi  = nod[:, L2]
-eeta = nod[:, L3]
-if nno == 10:
-   A = np.c_[np.ones(nno, dtype=int), xxi, eeta,  xxi**2, xxi*eeta, eeta**2, xxi**3, xxi**2*eeta, xxi*eeta**2, eeta**3]
+# %% METODO 1: con coordenadas de área
+M = 3;
+IJK = np.rint(M*nod)
+Nm1 = nno * [None]
+
+L1, L2, L3 = sp.symbols('L1 L2 L3')
+xi, eta    = sp.symbols('xi eta')
+I,  J,  K  = 0, 1, 2
+
+def calc_N(ind, L1L2L3):
+    match ind:
+        case 0:  L = 1
+        case 1:  L = sp.nsimplify(interpolate([(0,0), (1/3,1)                ], L1L2L3))
+        case 2:  L = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,1)       ], L1L2L3))
+        case 3:  L = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,0), (1,1)], L1L2L3))    
+    return L
+    
+for i in range(10):
+    LI_L1 = calc_N(IJK[i,I], L1)
+    LJ_L2 = calc_N(IJK[i,J], L2)
+    LK_L3 = calc_N(IJK[i,K], L3)    
+    Nm1[i] = sp.simplify(LI_L1 * LJ_L2 * LK_L3)
+    Nm1[i] = Nm1[i].subs({L1:(1-xi-eta), L2:xi, L3:eta})
+
+# %% METODO 2: es el empleado para calcular las funciones de forma del EF rectangular serendípito
+L1, L2, L3 = 0, 1, 2
+
+xi  = nod[:, L2]
+eta = nod[:, L3]
+A = np.c_[np.ones(nno, dtype=int), xi, eta,  xi**2, xi*eta, eta**2, xi**3, xi**2*eta, xi*eta**2, eta**3]
 
 N = nno * [None]
 xi, eta = sp.symbols('xi eta')
@@ -50,10 +75,14 @@ for i in range(nno):
    b = np.zeros(nno);   b[i] = 1
    coef_alpha = np.linalg.solve(A, b)
    coef_alpha[np.abs(coef_alpha) < 1e-10] = 0
-   if nno == 10:
-      tmp = sp.Matrix([ 1, xi, eta, xi**2, xi*eta, eta**2, xi**3, xi**2*eta, xi*eta**2, eta**3 ])
+   tmp = sp.Matrix([ 1, xi, eta, xi**2, xi*eta, eta**2, xi**3, xi**2*eta, xi*eta**2, eta**3 ])
    N[i] = sp.nsimplify(tmp.dot(coef_alpha))
-
+   
+# %% Se verifica que ambos métodos son equivalentes
+for i in range(nno):
+    if sp.simplify(N[i] - Nm1[i]) != 0:
+        raise Exception("Los métodos no coinciden")
+   
 # %% imprimo las funciones de forma
 print(f'Funciones de forma serendípitas del elemento rectangular de {nno} nodos:')
 for i in range(nno):

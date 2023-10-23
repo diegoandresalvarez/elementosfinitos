@@ -21,19 +21,19 @@ IJK = round(M*T3.coord);
 T3.N = cell(3,1);
 for i = 1:3
    switch IJK(i,I)
-      case 0, lI = 1;
-      case 1, lI = calc_N([0 1], [0 1], L1);
+      case 0, lI_L1 = 1;
+      case 1, lI_L1 = calc_N([0 1], [0 1], L1);
    end
    switch IJK(i,J)
-      case 0, lJ = 1;
-      case 1, lJ = calc_N([0 1], [0 1], L2);
+      case 0, lJ_L2 = 1;
+      case 1, lJ_L2 = calc_N([0 1], [0 1], L2);
    end
    switch IJK(i,K)
-      case 0, lK = 1;
-      case 1, lK = calc_N([0 1], [0 1], L3);
+      case 0, lK_L3 = 1;
+      case 1, lK_L3 = calc_N([0 1], [0 1], L3);
    end
      
-   T3.N{i} = lI*lJ*lK; % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   T3.N{i} = lI_L1*lJ_L2*lK_L3;
    fprintf('N{%d} = ',i); disp(T3.N{i});
 end
 %EF = T3;
@@ -60,22 +60,22 @@ IJK = round(M*T6.coord);
 T6.N = cell(6,1);
 for i = 1:6  
    switch IJK(i,I)
-      case 0, lI = 1;
-      case 1, lI = calc_N([0  1/2   ], [0 1  ], L1);
-      case 2, lI = calc_N([0  1/2  1], [0 0 1], L1);
+      case 0, lI_L1 = 1;
+      case 1, lI_L1 = calc_N([0  1/2   ], [0 1  ], L1);
+      case 2, lI_L1 = calc_N([0  1/2  1], [0 0 1], L1);
    end
    switch IJK(i,J)
-      case 0, lJ = 1;
-      case 1, lJ = calc_N([0  1/2   ], [0 1  ], L2);
-      case 2, lJ = calc_N([0  1/2  1], [0 0 1], L2);
+      case 0, lJ_L2 = 1;
+      case 1, lJ_L2 = calc_N([0  1/2   ], [0 1  ], L2);
+      case 2, lJ_L2 = calc_N([0  1/2  1], [0 0 1], L2);
    end
    switch IJK(i,K)
-      case 0, lK = 1;
-      case 1, lK = calc_N([0  1/2   ], [0 1  ], L3);
-      case 2, lK = calc_N([0  1/2  1], [0 0 1], L3);
+      case 0, lK_L3 = 1;
+      case 1, lK_L3 = calc_N([0  1/2   ], [0 1  ], L3);
+      case 2, lK_L3 = calc_N([0  1/2  1], [0 0 1], L3);
    end
  
-   T6.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   T6.N{i} = simplify(lI_L1*lJ_L2*lK_L3);
    fprintf('N{%d} = ',i); disp(T6.N{i});
 end
 %EF = T6;
@@ -110,25 +110,25 @@ IJK = round(M*T10.coord);
 T10.N = cell(10,1);
 for i = 1:10  
    switch IJK(i,I)
-      case 0, lI = 1;
-      case 1, lI = calc_N([0  1/3        ], [0 1    ], L1);
-      case 2, lI = calc_N([0  1/3  2/3   ], [0 0 1  ], L1);
-      case 3, lI = calc_N([0  1/3  2/3  1], [0 0 0 1], L1);
+      case 0, lI_L1 = 1;                                       % L0(L1)
+      case 1, lI_L1 = calc_N([0  1/3        ], [0 1    ], L1); % L1(L1)
+      case 2, lI_L1 = calc_N([0  1/3  2/3   ], [0 0 1  ], L1); % L2(L1)
+      case 3, lI_L1 = calc_N([0  1/3  2/3  1], [0 0 0 1], L1); % L3(L1)
    end
    switch IJK(i,J)
-      case 0, lJ = 1;
-      case 1, lJ = calc_N([0  1/3        ], [0 1    ], L2);
-      case 2, lJ = calc_N([0  1/3  2/3   ], [0 0 1  ], L2);
-      case 3, lJ = calc_N([0  1/3  2/3  1], [0 0 0 1], L2);
+      case 0, lJ_L2 = 1;                                       % L0(L2)
+      case 1, lJ_L2 = calc_N([0  1/3        ], [0 1    ], L2); % L1(L2)
+      case 2, lJ_L2 = calc_N([0  1/3  2/3   ], [0 0 1  ], L2); % L2(L2)
+      case 3, lJ_L2 = calc_N([0  1/3  2/3  1], [0 0 0 1], L2); % L3(L2)
    end
    switch IJK(i,K)
-      case 0, lK = 1;
-      case 1, lK = calc_N([0  1/3        ], [0 1    ], L3);
-      case 2, lK = calc_N([0  1/3  2/3   ], [0 0 1  ], L3);
-      case 3, lK = calc_N([0  1/3  2/3  1], [0 0 0 1], L3);
+      case 0, lK_L3 = 1;                                       % L0(L3)
+      case 1, lK_L3 = calc_N([0  1/3        ], [0 1    ], L3); % L1(L3)
+      case 2, lK_L3 = calc_N([0  1/3  2/3   ], [0 0 1  ], L3); % L2(L3)
+      case 3, lK_L3 = calc_N([0  1/3  2/3  1], [0 0 0 1], L3); % L3(L3)
    end
      
-   T10.N{i} = simplify(lI*lJ*lK); % = lI^i(L1) * lJ^i(L2) * lK^i(L3)
+   T10.N{i} = simplify(lI_L1*lJ_L2*lK_L3);
    fprintf('N{%d} = %s\n',i); disp(T10.N{i});
 end
 EF = T10;
