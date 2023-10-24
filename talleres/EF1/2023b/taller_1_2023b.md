@@ -14,7 +14,7 @@ Considere el pórtico mostrado:
 Este tiene una profundidad de 30 cm y está hecho de un material ortótropo, cuyas propiedades en sus direcciones principales son $E_1 = 9000$ MPa, $E_2 = 700$ MPa, $G_{12} = 600$ MPa, $\nu_{12} = 0.21$, $\alpha_1 = 12 \times 10^{-6}/°\text{C}$ y $\alpha_2 = 9 \times 10^{-6}/°\text{C}$; la dirección principal 1 está inclinada 30° en sentido antihorario con respecto al eje $x$. Adicionalmente, el material tiene una densidad $\rho = 1200$ kg/m³ y la estructura está sujeta a un cambio de temperatura $\Delta T$ de 30°C.
 
 Utilizando los siguientes métodos:
-* Método de los elementos finitos 2D (tensión plana) con EFs de tensión plana y los programas que se encuentran en GITHUB (MATLAB o PYTHON).
+* Método de los elementos finitos 2D (tensión plana) con EFs de tensión plana lagrangianos de 9 nodos, modificando los programas que se encuentran en GITHUB (MATLAB o PYTHON).
 * Programa de análisis estructural que usted registró en GOOGLE CLASSROOM. NOTA: no se puede tener un software similar al de alguno de sus compañeros del curso.
 
 ## Se solicita
@@ -40,9 +40,9 @@ $$f_\text{axial}(x) = + \iint_{A(x)} \sigma_{x}(x,y,z)\ \text{d} y \text{d} z$$
 * Las reacciones en el apoyo y la distribución de dichas reacciones en $x$. (+10 décimas)
 
 * Análisis de resultados: compare todas las soluciones obtenidas anteriormente, incluyendo la del software profesional y la de sus compañeros. ¿Cuales son los porcentajes de diferencia entre las diferentes soluciones? (+25 décimas):
-  - 0.5 Compara adecuadamente todos los métodos empleados.
-  - 1.0 Explica qué es lo que observa en los gráficos.
-  - 1.0 Hace un adecuado análisis de resultados? ¿Explica el por qué de las diferencias entre los resultados?
+  - 5 décimas: Compara adecuadamente todos los métodos empleados.
+  - 10 décimas: Explica qué es lo que observa en los gráficos.
+  - 10 décimas: Hace un adecuado análisis de resultados? ¿Explica el por qué de las diferencias entre los resultados?
   - Recuerde explicar detalladamente como varían las cantidades en el espacio, donde están las cantidades máximas y mínimas, como se relacionan unas gráficas con otras, etc. No es solo ubicar donde están los colores, o los máximos y los mínimos, sino decir, **por qué razón se produce esa coloración**, entendiendo como la estructura está cargada, está apoyada, se deforma, etc. Se sugiere [**este (descargue archivo .PDF)**](https://github.com/diegoandresalvarez/solidos/blob/master/talleres/solidos1/ejemplo_analisis_graficos.pdf) formato para presentar los resultados. Por ejemplo con γxy: ¿qué quiere decir esta deformación? ¿cómo se está comportando en este punto la estructura dado ese valor de γxy? ¿por qué razón se produce? No es solo ubicar los máximos y los mínimos de dicha cantidad.
   - Para este análisis no hay que necesidad de poner los gráficos de todos los compañeros, sino de uno solo, ya que se espera que todas las figuras sean similares.
 
@@ -52,8 +52,8 @@ $$f_\text{axial}(x) = + \iint_{A(x)} \sigma_{x}(x,y,z)\ \text{d} y \text{d} z$$
 
 ### En el video 1 (individual):
 Haga un video de máximo 15 minutos explicando como modeló dicha estructura con el software profesional. Cada uno de los integrantes del grupo debe resolver individualmente este punto, usando un programa diferente al resto de compañeros del curso. (+10 décimas; sin embargo, si no se realiza, se descontarán 30 décimas):
-  - 0.4 Modeló adecuadamente los apoyos? la estructura? el material?
-  - 0.6 Exploró todas las capacidades de visualización de resultados que ofrece el software?
+  - 4 décimas: Modeló adecuadamente los apoyos? la estructura? el material? la malla?
+  - 6 décimas: Exploró todas las capacidades de visualización de resultados que ofrece el software?
 
 ### En el video 2 (individual):
 Haga un video de máximo 15 minutos con una reseña crítica de las capacidades teóricas y las hipótesis fundamentales que hace el programa. OJO: no es mostrar como se utiliza el software, sino mirar los manuales de referencia y mostrar que teorías, hipótesis, suposiciones, capacidades y limitaciones que tiene el programa escogido y que se utilizaron para calcular la estructura. Entregar, adicionalmente, el archivo PDF utilizado en la presentación de este video. Se sugiere para la presentación tomar capturas de pantalla de los manuales de referencia del programa en cuestión. OJO: no confunda esto con la información comercial. Lo que se está solicitando está dentro de los manuales de referencia. Algunos ejemplos de buenos análisis son:
@@ -61,9 +61,9 @@ Haga un video de máximo 15 minutos con una reseña crítica de las capacidades 
   * STRUSOFT FEM-DESIGN (análisis de losas): https://www.youtube.com/watch?v=xxPzgIl-mEg
 
 Se espera que cada uno lea a fondo el manual del usuario del software. No se queden con los videos de YouTube. En el manual del usuario generalmente existe información importante sobre las hipótesis de modelado que hace cada software. (+10 décimas; sin embargo, si no se realiza, se descontarán 30 décimas):
-  - 0.4 Hace un recuento de las teorías que soporta el programa, haciendo recortes del manual de referencia del mismo. Explica capacidades de cálculo y teorías que utiliza el software. 
-  - 0.4 Explica hipótesis fundamentales y consejos en el modelado según se detalla en el manual del programa.
-  - 0.2 Hace una reseña crítica de las ventajas/capacidades y limitaciones/suposiciones que hace el programa.
+  - 4 décimas: Hace un recuento de las teorías que soporta el programa, haciendo recortes del manual de referencia del mismo. Explica capacidades de cálculo y teorías que utiliza el software. 
+  - 4 décimas: Explica hipótesis fundamentales y consejos en el modelado según se detalla en el manual del programa.
+  - 2 décimas: Hace una reseña crítica de las ventajas/capacidades y limitaciones/suposiciones que hace el programa.
 
 # Otros criterios y notas
 * Se solicita subir todos los archivos asociados al trabajo (.XLSX, .PDF, .MP4, .MKV, etc) directamente a GOOGLE CLASSROOM. Por favor no los empaquete en un archivo .ZIP o .RAR.
