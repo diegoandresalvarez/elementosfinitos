@@ -8,10 +8,8 @@ import numpy as np
 import sympy as sp
 from sympy.polys.polyfuncs import interpolate
 
-X,  Y      = 1, 2
-
 # %% coordenadas de los nodos y numeración local
-#  ^ eta
+#  ^ eta=L3
 #  |
 #  |
 #  3
@@ -20,7 +18,7 @@ X,  Y      = 1, 2
 #  |   | \
 #  9--10---6
 #  |   |   | \  
-#  1---4---5---2----> xi
+#  1---4---5---2----> xi=L2
 #
 #                L1    L2    L3       nodo
 nod = np.array([[1  ,  0  ,  0   ],  #  1
@@ -38,28 +36,28 @@ nno = nod.shape[0] # = 10
 
 # %% se calculan las funciones de forma bidimensionales
 # %% METODO 1: con coordenadas de área
-M = 3;
-IJK = np.rint(M*nod)
-Nm1 = nno * [None]
+M = 3
+IJK = np.rint(M*nod)  # redondea al entero más próximo
+N_ = nno * [None]
 
 L1, L2, L3 = sp.symbols('L1 L2 L3')
 xi, eta    = sp.symbols('xi eta')
-I,  J,  K  = 0, 1, 2
+I, J, K    = 0, 1, 2
 
-def calc_N(ind, L1L2L3):
+def calc_N(ind, L):
     match ind:
-        case 0:  L = 1
-        case 1:  L = sp.nsimplify(interpolate([(0,0), (1/3,1)                ], L1L2L3))
-        case 2:  L = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,1)       ], L1L2L3))
-        case 3:  L = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,0), (1,1)], L1L2L3))    
-    return L
+        case 0: p = 1
+        case 1: p = sp.nsimplify(interpolate([(0,0), (1/3,1)                ], L))
+        case 2: p = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,1)       ], L))
+        case 3: p = sp.nsimplify(interpolate([(0,0), (1/3,0), (2/3,0), (1,1)], L))    
+    return p
     
-for i in range(10):
+for i in range(nno):
     LI_L1 = calc_N(IJK[i,I], L1)
     LJ_L2 = calc_N(IJK[i,J], L2)
     LK_L3 = calc_N(IJK[i,K], L3)    
-    Nm1[i] = sp.simplify(LI_L1 * LJ_L2 * LK_L3)
-    Nm1[i] = Nm1[i].subs({L1:(1-xi-eta), L2:xi, L3:eta})
+    N_[i] = sp.simplify(LI_L1 * LJ_L2 * LK_L3)
+    N_[i] = N_[i].subs({L1:(1-xi-eta), L2:xi, L3:eta})
 
 # %% METODO 2: es el empleado para calcular las funciones de forma del EF rectangular serendípito
 L1, L2, L3 = 0, 1, 2
@@ -80,7 +78,7 @@ for i in range(nno):
    
 # %% Se verifica que ambos métodos son equivalentes
 for i in range(nno):
-    if sp.simplify(N[i] - Nm1[i]) != 0:
+    if sp.simplify(N[i] - N_[i]) != 0:
         raise Exception("Los métodos no coinciden")
    
 # %% imprimo las funciones de forma
@@ -105,6 +103,8 @@ print('\nSe verifica la condición de cuerpo rígido: sum(N) == 1:')
 print(sp.simplify(sum(N)) == 1)
 
 # %% grafico las funciones de forma
+X, Y = 1, 2
+
 XI, ETA = np.mgrid[0:1:100j, 0:1:100j]
 L1 = 1 - XI - ETA
 
