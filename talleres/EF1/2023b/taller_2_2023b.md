@@ -2,24 +2,25 @@
 
 La idea de este taller es realizar una evaluación **crítica** de un programa un elementos finitos: aquel empleado en el taller 1. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase y los conceptos nuevos vistos en el software. 
 
-Se deben analizar los siguientes aspectos:
+Se deben analizar los siguientes aspectos, teniendo en cuenta de no solo nombrar los métodos sino que debe hacer una pequeña investigación de como funcionan esas técnicas y explique en detalle cuales son todas las opciones que tiene el software en la ventana donde se especifican dichos algoritmos.:
 
-* Métodos directos e iterativos que usa el software para la solución de los sistemas de ecuaciones. No basta nombrarlos, sino que haga una pequeña investigación de como funcionan dichos métodos y explique en detalle cuales son todas las opciones que tiene el sofware en la ventana donde se especifican dichos algoritmos. (+1.0 punto)
+* Métodos directos e iterativos que usa el software para la solución de los sistemas de ecuaciones. (+1.0 punto)
 * Cálculo de los esfuerzos principales y sus inclinaciones. ¿El software calcula las trayectorias de los esfuerzos principales? (OBLIGATORIO: si no se realiza -1.0 puntos)
 * Modelado de apoyos inclinados. (OBLIGATORIO: si no se realiza -1.0 puntos)
 * Opciones que tiene el software para el modelado de deformaciones y esfuerzos iniciales. (+0.5 puntos)
-* Tipos de elementos finitos que emplea el software para el modelado de EFS 1D, 2D (tensión/deformación plana y caso axisimétrico) y 3D (tetraedros, hexaedros, cuñas, pirámides, etc); elementos finitos de transición; elementos finitos lagrangiados y serendípitos. (OBLIGATORIO: si no se realiza -1.0 puntos)
+* Tipos de elementos finitos que emplea el software para el modelado de EFS 1D, 2D (tensión/deformación plana y caso axisimétrico) y 3D (tetraedros, hexaedros, cuñas, pirámides, etc); elementos finitos de transición; elementos finitos lagrangiados, serendípitos, jerárquicos, etc. (OBLIGATORIO: si no se realiza -1.0 puntos)
 * Opciones que tiene el software para el modelado de materiales anisotrópicos. (+0.5 puntos)
 * Opciones que tiene el software para el alisado o no alisado de los esfuerzos y deformaciones. (+0.5 puntos)
 * Opciones que tiene el software para el mallado. (+1.0 puntos)
 * Métodos que tiene el software para verificar la calidad de la malla de EFs. (+1.0 puntos)
-* Cuadraturas que emplea para la integración: Gauss-Legendre, Gauss-Lobatto, etc. (+0.5 puntos)
 * Teorías de fluencia/falla de soporta el software: Tresca, von Mises, Mohr-Coulomb, Drucker-Prager, etc. (+0.5 puntos)
 * Opciones que tiene el software para el modelado de la simetría. (+0.5 puntos)
 * Opciones que tiene el software para el refinado automático de la malla (método p, método h) y analizar los métodos que proponga el software para el estudio de la convergencia de la solución. (+0.5 puntos)
 * Herramientas gráficas para limitar el máximo y el mínimo esfuerzo presente en un figura y evitar las saturaciones de color cuando se tienen puntos de singularidad. (+0.5 puntos)
 
 Para cada uno de los puntos expuestos se deben realizar **al menos** dos diapositivas súper detalladas, se debe contrastar con lo visto en clase (intenta entender las fórmulas del manual de referencia al verificar su equivalencia con las que se vieron en clase) y se debe hacer un análisis crítico del software comentando sus virtudes y puntos negativos; se deben discutir las capacidades teóricas e hipótesis fundamentales que hace el programa. Las diapositivas estarán formadas por recortes del manual de referencia y capturas de pantalla del software. 
+
+No basta nombrar las metodologías. Se debe hacer una pequeña investigación de como funcionan dichos métodos y explique en detalle cuales son todas las opciones que tiene el software en la ventana donde se especifican dichos algoritmos.
 
 Utilizando esas diapositivas realizar un video de máximo 30 minutos donde se exponga el análisis de la documentación y adicionalmente se evidencie lo dicho con el uso del software.
 
