@@ -36,7 +36,7 @@ Se debe subir a GOOGLE CLASSROOM:
 * Video.
 * Diapositivas en formato PDF.
 * Manual de referencia del software.
-* Por favor empaquete los archivos en un archivo .ZIP o .RAR. Los archivos se deben subir a la plataforma individualmente, por solo uno de los miembros del grupo.
+* Por favor **no** empaquete los archivos en un archivo .ZIP o .RAR. Los archivos se deben subir a la plataforma individualmente, por solo uno de los miembros del grupo.
 
 * En cada uno de los videos incluir una ventana pequeña en una de las esquinas donde se vea a cada uno de los integrantes hablando sobre el software.
 
