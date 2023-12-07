@@ -2,7 +2,7 @@
 
 La idea de este taller es realizar una evaluación **crítica** de un programa un elementos finitos: aquel empleado en el taller 1. Se espera que el estudiante explore, comente, discuta los conceptos aprendidos en clase y los conceptos nuevos vistos en el software. 
 
-Se deben analizar los siguientes aspectos, teniendo en cuenta de no solo nombrar los métodos sino que debe hacer una pequeña investigación de como funcionan esas técnicas y explique en detalle cuales son todas las opciones que tiene el software en la ventana donde se especifican dichos algoritmos.:
+Se deben analizar los siguientes aspectos, teniendo en cuenta de no solo nombrar los métodos sino que debe hacer una pequeña investigación de como funcionan esas técnicas, explicar en detalle cuales son todas las opciones que tiene el software en la ventana donde se especifican dichos algoritmos e ilustrar el uso de dicha técnica mediante un pequeño ejemplo, creado por usted en el software:
 
 * Métodos directos e iterativos que usa el software para la solución de los sistemas de ecuaciones. (+1.0 punto)
 * Cálculo de los esfuerzos principales y sus inclinaciones. ¿El software calcula las trayectorias de los esfuerzos principales? (OBLIGATORIO: si no se realiza -1.0 puntos)
