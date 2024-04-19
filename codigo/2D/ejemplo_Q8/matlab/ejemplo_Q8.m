@@ -13,11 +13,11 @@ clear, clc, close all   % borro la memoria, la pantalla y las figuras
 X = 1; Y = 2;
 
 %% se define la estructura a calcular
-%nombre_archivo = {'malla_1', 'malla1'};
+nombre_archivo = {'malla_1', 'malla1'};
 %nombre_archivo = {'malla_2', 'malla2'};
 %nombre_archivo = {'malla_3', 'malla3'};
 %nombre_archivo = {'malla_4', 'malla4'};
-nombre_archivo = {'malla_5', 'malla5'};
+%nombre_archivo = {'malla_5', 'malla5'};
 archivo_xlsx = fullfile('..', nombre_archivo{1}, [nombre_archivo{2} '.xlsx']);
 
 %% se leen las coordenadas de los nodos
@@ -75,8 +75,7 @@ hold on;
 cg = zeros(nef,2); % almacena el centro de gravedad de los EFs
 for e = 1:nef
    % se dibuja el EF e
-   nod_ef = LaG(e,[1:8 1]);
-   plot(xnod(nod_ef,X), xnod(nod_ef,Y), 'b');
+   graficar_EF89(xnod(LaG(e,:),:), 'b'); % original   
    
    % se calcula la posición del centro de gravedad del EF e
    cg(e,:) = mean(xnod(LaG(e,:),:));
@@ -86,7 +85,6 @@ for e = 1:nef
 end
 
 % en todos los nodos se dibuja un marcador y se reporta su numeración
-plot(xnod(:,X), xnod(:,Y), 'ro');
 text(xnod(:,X), xnod(:,Y), num2str((1:nno)'));
 axis equal tight
 title('Malla de elementos finitos');
@@ -307,8 +305,8 @@ xdef = xnod + ESC_UV*delta; % posicion de la deformada
 figure
 hold on
 for e = 1:nef
-   line(xnod(LaG(e,[1:8 1]),X), xnod(LaG(e,[1:8 1]),Y), 'Color','b'); % original
-   line(xdef(LaG(e,[1:8 1]),X), xdef(LaG(e,[1:8 1]),Y), 'Color','r'); % deformada
+   graficar_EF89(xnod(LaG(e,:),:), 'b'); % original
+   graficar_EF89(xdef(LaG(e,:),:), 'r'); % deformado
 end
 xlabel(['Eje X [' U_LONG ']']);
 ylabel(['Eje Y [' U_LONG ']']);
@@ -538,4 +536,28 @@ function [esf, error_esf] = extrapolar_esf_def(xnod, LaG, esfuerzo, tipo_esf)
     error_esf = log10(abs(error_esf));
     error_esf(error_esf < log10(0.1)) = -3;
     esf       = esf.prom;                      % esfuerzo promedio
+end
+
+function graficar_EF89(xnod, color)
+    X = 1;
+    Y = 2;
+
+    xi     = linspace(-1, 1, 10);
+    xi_nod = [-1 0 1];
+
+    nodos = [ 1 2 3    % lado 1
+              3 4 5    % lado 2
+              5 6 7    % lado 3
+              7 8 1 ]; % lado 4
+
+    plot(xnod(:,X), xnod(:,Y), 'o', 'Color', color);
+
+    for idx = nodos'  % fila a fila
+        % un polinomio de orden 2 pasa por tres puntos
+        pol_xt = polyfit(xi_nod, xnod(idx,X), 2);
+        pol_yt = polyfit(xi_nod, xnod(idx,Y), 2);
+        x = polyval(pol_xt, xi);
+        y = polyval(pol_yt, xi);        
+        plot(x, y, 'Color', color);
+    end
 end
