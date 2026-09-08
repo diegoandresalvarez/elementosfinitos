@@ -58,6 +58,21 @@ La razón del porqué se deben hacer las notas en papel y no electrócamente es 
 * Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
 --->
 
+<!---
+DESCRIPIÓN DE LA ASIGNATURA EN 2000 CARACTERES (PARA EL SIA)
+Este curso de pregrado introduce al estudiante en el Método de los Elementos Finitos (MEF), la herramienta numérica fundamental para estimar desplazamientos, deformaciones y esfuerzos en sólidos unidimensionales, bidimensionales (tensión y deformación plana), tridimensionales y axisimétricos bajo comportamiento elástico lineal.
+
+El MEF resuelve problemas de ingeniería estructural, geotécnica y de pavimentos cuya solución analítica es extremadamente compleja o imposible. El estudiante aprenderá a aplicar las ecuaciones de la mecánica de sólidos, fortaleciendo su capacidad de modelar estructuras reales en tensión y deformación planas, de revolución y en 3D. Se hará énfasis en la programación de computadores como una herramienta para entender el MEF.
+
+Qué habilidades desarrolla? Programación de soluciones numéricas, formulación débil y fuerte, funciones de forma, elementos isoparamétricos, integración de Gauss-Legendre y criterios de calidad de malla (métodos h y p). Se cultivan destrezas de análisis crítico, trabajo colaborativo en proyectos y autonomía mediante talleres prácticos.
+
+Este método es esencial para que los ingenieros civiles puedan utilizar con responsabilidad y criterio los diferentes programas para el análisis estructural. Permite diseñar estructuras seguras y eficientes, optimizar recursos y validar prototipos antes de su construcción física. Se emplea ampliamente para el diseño de puentes, presas, edificios, componentes mecánicos, análisis geotécnico y validación de prototipos. Las competencias adquiridas son transferibles a cualquier campo que requiera simulación numérica.
+
+La materia se desarrollará mediante clases magistrales, talleres prácticos de programación, presentación de proyectos y trabajo dirigido fuera de clase. Se hará uso de programas de elementos finitos para reforzar el aprendizaje.
+
+Se requiere haber cursado mecánica de sólidos y programación de computadores para aprovechar plenamente los contenidos.
+--->
+
 ## Descripción de la asignatura
 En este curso se enseñará la teoría de elementos finitos para la estimación de los desplazamientos, deformaciones y esfuerzos en sólidos uni-, bi-, trimensionales y axisimétricos para materiales elásticos lineales.
 
@@ -133,6 +148,9 @@ La puerta se cerrará 10 minutos después de haber iniciado la clase (de acuerdo
 
 ### Falta a los exámenes
 Siempre que usted falte a un examen, debe haber algún documento que lo exonere de dicha inasistencia. Cuando usted por algún motivo de fuerza mayor no pueda asistir al examen, usted debe avisarle al profesor con anterioridad ya sea personalmente o por correo. En esos casos en lo posible, debe demostrarlo. Por ejemplo: si le tocó viajar a su pueblo esa semana porque algo sucedió un evento familiar de trascendencia, entonces una forma de certificar que usted viajó son los tiquetes de ida y vuelta a su pueblo. Sin una excusa o una notificación previa no se repetirán los exámenes y usted tendrá como nota un cero.
+
+### Dispositivos electrónicos durante los exámenes
+Durante los exámenes, los celulares, teléfonos, gafas inteligentes, y en general cualquier dispositivo electrónico debe permanecer apagado y guardado en el morral. Si el estudiante porta alguno de estos dispositivos electrónicos en sus manos, bolsillos o en cualquier lugar diferente del morral, independientemente de si está apagado o encendido, esto resultará en la anulación del examen. Esta medida se aplica como parte de las normas contra el fraude académico, ante la proliferación del fraude con la tecnología.
 
 ### Fraude en los exámenes o trabajos
 Estos se penalizarán así:

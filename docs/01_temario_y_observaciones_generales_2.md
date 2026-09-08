@@ -46,6 +46,19 @@ La razón del porqué se deben hacer las notas en papel y no electrócamente es 
 * Durante el semestre se tendrán 30 clases aproximadamente. Al final del semestre, el conjunto de todos los apuntes se dividirá en tres grupos y de cada uno de esos grupos se seleccionará al azar uno de los apuntes. Solamente se calificarán los 3 apuntes seleccionados.
 --->
 
+<!---
+RESUMEN DE 2000 CARACTERES PARA EL SIA
+Este curso para estudiantes avanzados de pregrado introduce al estudiante en el Método de los Elementos Finitos (MEF), para analizar vigas, losas y cascarones, incluyendo su respuesta dinámica y su aplicación en el diseño estructural.
+
+Con estas técnicas se resuelven problemas de ingeniería estructural cuya solución analítica es extremadamente compleja o imposible. El estudiante aprenderá a materializar las teoría clásicas de vigas (Euler-Bernoulli y Timoshenko-Ehrenfest) y de placas (Kirchhoff-Love y Mindlin) para el análisis de vigas, losas y cascarones. Se hará énfasis en la programación de computadores como una herramienta para entender el MEF.
+
+Este método es esencial para que los ingenieros civiles puedan utilizar con responsabilidad y criterio los diferentes programas para el análisis estructural. Permite modelar numéricamente estructuras realistas y predecir su comportamiento ante cargas estáticas y dinámicas. Resuelve el problema de la complejidad geométrica y de materiales. Permite diseñar estructuras seguras y eficientes, optimizar recursos y validar prototipos antes de su construcción física. Se emplea ampliamente para el diseño de puentes, presas, edificios, componentes mecánicos, análisis  y validación de prototipos. El curso aportará al estudiante la capacidad de programar algoritmos de simulación, interpretar críticamente resultados numéricos y tomar decisiones de diseño basadas en análisis riguroso. Fortalece habilidades de abstracción, lógica computacional y pensamiento crítico.
+
+La materia se desarrollará mediante clases magistrales, talleres prácticos de programación, presentación de proyectos y trabajo dirigido fuera de clase. Se hará uso de programas de elementos finitos para reforzar el aprendizaje.
+
+Se requiere haber cursado aplicaciones de elementos finitos 1 para aprovechar plenamente los contenidos. Es un curso avanzado; exige madurez analítica y autonomía para trabajo fuera de clase.
+--->
+
 ## Objetivos
 - Aplicar las ecuaciones básicas de la mecánica de sólidos a la solución de problemas de la ingeniería mediante la utilización del método de los elementos finitos (MEF) para el análisis de vigas, losas y cascarones.
 - Estudiar la combinación de elementos finitos y dinámica de estructuras.
@@ -109,6 +122,9 @@ La puerta se cerrará 10 minutos después de haber iniciado la clase (de acuerdo
 
 ### Falta a los exámenes
 Siempre que usted falte a un examen, debe haber algún documento que lo exonere de dicha inasistencia. Cuando usted por algún motivo de fuerza mayor no pueda asistir al examen, usted debe avisarle al profesor con anterioridad ya sea personalmente o por correo. En esos casos en lo posible, debe demostrarlo. Por ejemplo: si le tocó viajar a su pueblo esa semana porque algo sucedió un evento familiar de trascendencia, entonces una forma de certificar que usted viajó son los tiquetes de ida y vuelta a su pueblo. Sin una excusa o una notificación previa no se repetirán los exámenes y usted tendrá como nota un cero.
+
+### Dispositivos electrónicos durante los exámenes
+Durante los exámenes, los celulares, teléfonos, gafas inteligentes, y en general cualquier dispositivo electrónico debe permanecer apagado y guardado en el morral. Si el estudiante porta alguno de estos dispositivos electrónicos en sus manos, bolsillos o en cualquier lugar diferente del morral, independientemente de si está apagado o encendido, esto resultará en la anulación del examen. Esta medida se aplica como parte de las normas contra el fraude académico, ante la proliferación del fraude con la tecnología.
 
 ### Fraude en los exámenes o trabajos
 Estos se penalizarán así:
